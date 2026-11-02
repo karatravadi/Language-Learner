@@ -140,8 +140,24 @@ def cefr_lang(name, tag, latam):
         say("Word-list check only: it cannot spot grammar such as ustedes for vosotros, or regional meanings.")
 
 # ---------- Latin ----------
-AUTHORS = {"Caesar": ["caesar"], "Cicero": ["cicero"], "Catullus": ["catull"], "Ovid": ["ovid"]}
+AUTHORS = ["Caesar", "Cicero", "Catullus", "Ovid"]
 READ_FIRST = ["Caesar", "Cicero"]   # plain classical prose; the usual first real authors
+TWO_WORD = {"Quintus_Curtius", "Cornelius_Nepos", "Pliny_Younger", "Silius_Italicus", "Minucius_Felix",
+            "Velleius_Paterculus", "Ammianus_Marcellinus", "Calpernius_Siculus", "Rutilius_Namatianus",
+            "Valerius_Flaccus"}
+RENAME = {"Valerius": "Valerius Maximus"}   # Valerius_Memorable_* files
+# Caesar files that are not by Caesar: the African, Alexandrian and Spanish Wars were written by
+# his officers, and Gallic War Book 8 by Aulus Hirtius.
+NOT_CAESAR = ("Caesar_African", "Caesar_Alexandrian", "Caesar_Spanish", "Caesar_DBG_Book8")
+
+def work(f_):
+    return re.split(r"[\\/]", f_)[-1].removesuffix(".json")
+
+def author(f_):
+    w = work(f_)
+    two = "_".join(w.split("_")[:2])
+    a = two.replace("_", " ") if two in TWO_WORD else w.split("_")[0]
+    return RENAME.get(a, a)
 
 def latin(name):
     d, rows = load_all(name)
@@ -150,38 +166,66 @@ def latin(name):
     en = pick(cols, "en", "english", "eng")
     fc = pick(cols, "file")
     say(f"\n## Latin: `{name}`\n")
-    say(f"Columns: {', '.join('`'+c+'`' for c in cols)}. Splits: {', '.join(f'{s} ({len(d[s])})' for s in d)}.\n")
+    say(f"Columns: {', '.join('`'+c+'`' for c in cols)}. Splits: {', '.join(f'{s} ({len(d[s])})' for s in d)} "
+        "(all splits counted together).\n")
     files = Counter(str(r[fc]) for r in rows)
-    say(f"{len(rows)} pairs across {len(files)} distinct `file` values.\n")
-    say("| file | pairs |"); say("|---|---|")
-    for f_, c in files.most_common():
-        say(f"| {f_} | {c} |")
-
-    def author(f_):
-        low = f_.lower()
-        for a, keys in AUTHORS.items():
-            if any(k in low for k in keys):
-                return a
-        return None
-    say("")
+    by_author = Counter()
+    for f_, c in files.items():
+        by_author[author(f_)] += c
+    say(f"{len(rows)} pairs, {len(by_author)} authors, {len(files)} works (`file` values).\n")
     for a in AUTHORS:
-        n = sum(c for f_, c in files.items() if author(f_) == a)
-        say(f"- {a}: {'appears, ' + str(n) + ' pairs' if n else 'does not appear'}")
+        n = by_author.get(a, 0)
+        ws = sorted(work(f_) for f_ in files if author(f_) == a)
+        say(f"- **{a}**: {str(n) + ' pairs, ' + str(len(ws)) + ' files' if n else 'does not appear'}"
+            + (f" ({', '.join(ws)})" if ws and len(ws) <= 6 else "")
+            + (" (includes the African, Alexandrian and Spanish Wars and Gallic War Book 8, "
+               "which other writers wrote; Gallic War Books 1 to 7 are his)" if a == "Caesar" else ""))
+    say("\n### Pairs per author\n")
+    say("| Author | Pairs | Works |"); say("|---|---|---|")
+    for a, c in by_author.most_common():
+        say(f"| {a} | {c} | {sum(1 for f_ in files if author(f_) == a)} |")
+    say("\n### Pairs per work\n")
+    say("| Work | Pairs |"); say("|---|---|")
+    for f_, c in files.most_common():
+        say(f"| {work(f_)} | {c} |")
 
-    keep = []
+    keep, misaligned = [], 0
     for r in rows:
-        a = author(str(r[fc]))
-        if a in READ_FIRST and 6 <= words(r[la]) <= 25:
-            keep.append({"author": a, "file": r[fc], "la_words": words(r[la]), "la": r[la], "en": r[en]})
+        a, w = author(str(r[fc])), work(str(r[fc]))
+        if a in READ_FIRST and not w.startswith(NOT_CAESAR) and 6 <= words(r[la]) <= 25:
+            if "\n\n" in str(r[en]) or words(r[en]) > 4 * words(r[la]):
+                misaligned += 1; continue
+            keep.append({"author": a, "work": w, "la_words": words(r[la]), "la": r[la], "en": r[en]})
+    seen, dedup = set(), []
+    for k in keep:
+        if k["la"] not in seen:
+            seen.add(k["la"]); dedup.append(k)
+    if len(dedup) < len(keep):
+        odd.append(f"Latin: {len(keep) - len(dedup)} repeated Latin lines among the saved pairs (kept the first).")
+    keep = dedup
+    if misaligned:
+        odd.append(f"Latin: dropped {misaligned} likely misaligned pairs (English holds two versions or is over 4 times the Latin).")
+    nb = sum(bool(re.search(r"[<>\[\]]", k["la"])) for k in keep)
+    nc = sum(str(k["la"]).strip()[-1:] in ";:," for k in keep)
+    odd.append(f"Latin: in the saved pairs, {nb} have editors' brackets such as <et> (words an editor added), "
+               f"and {nc} end in ; : or , because the dataset splits long sentences into clauses. Left as they are.")
+    odd.append("Latin: the Caesar English is an old, literal 19th-century style; the Cicero English is modern and freer.")
     keep.sort(key=lambda x: (READ_FIRST.index(x["author"]), x["la_words"]))
     path = OUT / "latin_read_first_6-25.jsonl"
     with open(path, "w", encoding="utf-8") as f:
         for k in keep:
             f.write(json.dumps(k, ensure_ascii=False) + "\n")
-    say(f"\nSaved {len(keep)} pairs ({', '.join(READ_FIRST)}, Latin 6 to 25 words) to `out/{path.name}`, "
-        "text as given: no macrons added, English left as the dataset's paraphrase.")
+    per = Counter(k["author"] for k in keep)
+    say(f"\nSaved {len(keep)} pairs ({', '.join(f'{a} {per[a]}' for a in READ_FIRST)}; Latin 6 to 25 words) "
+        f"to `out/{path.name}`, Caesar first, then shortest first. Caesar means Gallic War Books 1 to 7 only: "
+        "the African, Alexandrian and Spanish Wars and Book 8 are by other writers and are left out. "
+        "Cicero here is only speeches (Philippics, Post Reditum). "
+        "Text as given: no macrons added, English left as the dataset's paraphrase.")
+    say("")
     if not keep:
         odd.append("Latin: no Caesar or Cicero pairs matched; check the file names in the table.")
+    odd.append(f"Latin: the Vulgate Bible is {files.most_common(1)[0][1]} of {len(rows)} pairs, a third of the set. "
+               "`file` paths use Windows backslashes. There is no Caesar Civil War and no Cicero letters or essays.")
     blank = sum(1 for r in rows if not str(r[la] or "").strip() or not str(r[en] or "").strip())
     if blank: odd.append(f"Latin: {blank} pairs with an empty side.")
     if any(re.search(r"[āēīōū]", str(r[la] or "")) for r in rows[:5000]):
