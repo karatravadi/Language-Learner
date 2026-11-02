@@ -95,9 +95,9 @@ carry over.
 ## After this phase
 - **More Spanish chapters (the main ongoing need).** Chapters 9 to 14 are on the roadmap in `course.json`.
   Then extend towards B1: preterite vs imperfect, the future, giving opinions, the subjunctive basics.
-- **French course**, in `public/courses/fr-FR/` with 4 chapters (see "French course" in CLAUDE.md). Next: chapters 5 to 12
-  from its roadmap (getting around, hotels and shopping, likes and plans, daily routine, irregular favourites, the passé
-  composé, describing people and places, A2 checkpoint), and a read of chapters 1 to 4 by someone who speaks French.
+- **French course**, in `public/courses/fr-FR/` with 8 chapters (see "French course" in CLAUDE.md). Next: chapters 9 to 12
+  from its roadmap (irregular favourites, the passé composé, describing people and places, A2 checkpoint), and a read
+  of chapters 1 to 8 by someone who speaks French.
 - **Latin course**, in `public/courses/la/` with 4 chapters (see "Latin course" in CLAUDE.md). Next:
   - Chapters 5 to 12 from its roadmap, ending in real public-domain texts (Caesar, Catullus, Ovid, Cicero).
   - A Latinist's check of the 4 chapters and the glossary.

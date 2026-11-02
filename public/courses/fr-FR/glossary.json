@@ -6,6 +6,10 @@
       "has",
       "avoir · il, elle, on"
     ],
+    "abord": [
+      "first",
+      "d'abord: first"
+    ],
     "accord": [
       "agreement",
       "d'accord: OK, agreed"
@@ -14,9 +18,16 @@
       "the bill",
       "feminine · l'addition"
     ],
+    "adore": [
+      "love",
+      "adorer, with je or il"
+    ],
     "ai": [
       "have",
       "avoir · je · j'ai: I have"
+    ],
+    "aider": [
+      "to help"
     ],
     "aime": [
       "like, love",
@@ -33,6 +44,18 @@
       "like, love",
       "aimer · vous"
     ],
+    "aller": [
+      "to go",
+      "irregular: je vais, tu vas, il va"
+    ],
+    "allez": [
+      "go",
+      "aller, with vous"
+    ],
+    "allons": [
+      "go",
+      "aller, with nous"
+    ],
     "alors": [
       "so, then, well"
     ],
@@ -47,6 +70,10 @@
     "anglaises": [
       "English",
       "feminine plural"
+    ],
+    "angleterre": [
+      "England",
+      "en Angleterre"
     ],
     "appelle": [
       "am called, is called",
@@ -68,6 +95,10 @@
       "arrives",
       "arriver · il, elle, on"
     ],
+    "arrêt": [
+      "stop",
+      "un arrêt de bus"
+    ],
     "as": [
       "have",
       "avoir · tu"
@@ -83,6 +114,10 @@
       "other, another",
       "autre chose: anything else"
     ],
+    "aux": [
+      "to the (plural)",
+      "à + les"
+    ],
     "avez": [
       "have",
       "avoir · vous"
@@ -95,6 +130,10 @@
       "baguette, a long loaf",
       "feminine"
     ],
+    "baptiste": [
+      "Baptiste",
+      "a first name"
+    ],
     "bien": [
       "well, good"
     ],
@@ -106,9 +145,15 @@
       "ticket",
       "masculine"
     ],
+    "billets": [
+      "tickets"
+    ],
     "bière": [
       "beer",
       "feminine"
+    ],
+    "bleu": [
+      "blue"
     ],
     "bof": [
       "meh, not great",
@@ -129,6 +174,9 @@
       "good evening",
       "used from the late afternoon, to say hello and goodbye"
     ],
+    "boulangerie": [
+      "bakery"
+    ],
     "bouteille": [
       "bottle",
       "feminine"
@@ -136,6 +184,9 @@
     "britannique": [
       "British",
       "same for men and women"
+    ],
+    "bus": [
+      "bus"
     ],
     "c": [
       "it, that (before a vowel)",
@@ -145,6 +196,10 @@
       "coffee, a small espresso, a café",
       "masculine"
     ],
+    "canada": [
+      "Canada",
+      "au Canada"
+    ],
     "carafe": [
       "jug",
       "une carafe d'eau: a free jug of tap water"
@@ -153,8 +208,37 @@
       "menu, card",
       "feminine · la carte: the menu"
     ],
+    "ce": [
+      "this, that",
+      "before a masculine word: ce pull"
+    ],
     "cent": [
       "one hundred"
+    ],
+    "ces": [
+      "these, those",
+      "before any plural word"
+    ],
+    "cet": [
+      "this, that",
+      "masculine, before a vowel: cet hôtel"
+    ],
+    "cette": [
+      "this, that",
+      "before a feminine word"
+    ],
+    "chambre": [
+      "bedroom, hotel room"
+    ],
+    "chaussures": [
+      "shoes"
+    ],
+    "cher": [
+      "expensive, dear"
+    ],
+    "chez": [
+      "at the home or shop of",
+      "chez moi: at my place"
     ],
     "chose": [
       "thing",
@@ -169,6 +253,9 @@
     ],
     "cinquante": [
       "fifty"
+    ],
+    "cinéma": [
+      "cinema"
     ],
     "clé": [
       "key",
@@ -186,9 +273,27 @@
       "understand",
       "comprendre · je, tu"
     ],
+    "compris": [
+      "included"
+    ],
+    "concert": [
+      "concert"
+    ],
     "cool": [
       "cool, fine",
       "informal, borrowed from English"
+    ],
+    "couche": [
+      "go to bed, goes to bed",
+      "se coucher, with je, il or elle"
+    ],
+    "coucher": [
+      "to put to bed",
+      "se coucher: to go to bed"
+    ],
+    "couches": [
+      "go to bed",
+      "se coucher, with tu"
     ],
     "coûte": [
       "costs",
@@ -209,6 +314,13 @@
     "cuisine": [
       "cooking, food, kitchen",
       "feminine · la cuisine française"
+    ],
+    "cuisiner": [
+      "to cook"
+    ],
+    "côté": [
+      "side",
+      "à côté de: next to"
     ],
     "d": [
       "of, from (before a vowel)",
@@ -243,12 +355,40 @@
     "dix": [
       "ten"
     ],
+    "dommage": [
+      "pity, shame",
+      "on its own: what a pity"
+    ],
+    "douche": [
+      "shower, have a shower",
+      "se doucher, with je, il or elle"
+    ],
+    "doucher": [
+      "to shower",
+      "se doucher: to have a shower"
+    ],
     "douze": [
       "twelve"
+    ],
+    "droit": [
+      "straight",
+      "tout droit: straight on"
+    ],
+    "droite": [
+      "right",
+      "à droite: on the right"
     ],
     "du": [
       "some, of the",
       "masculine · du pain: some bread · du matin: in the morning"
+    ],
+    "déjeune": [
+      "have lunch",
+      "déjeuner, with je, il or elle"
+    ],
+    "déjeuner": [
+      "lunch, to have lunch",
+      "le petit déjeuner is breakfast"
     ],
     "délicieux": [
       "delicious",
@@ -257,6 +397,13 @@
     "désirez": [
       "want, would like",
       "désirer · vous · vous désirez ? what would you like"
+    ],
+    "déteste": [
+      "hate",
+      "détester, with je or il"
+    ],
+    "dîner": [
+      "dinner, to have dinner"
     ],
     "eau": [
       "water",
@@ -281,6 +428,12 @@
       "end",
       "le week-end: the weekend, from English"
     ],
+    "enfin": [
+      "finally"
+    ],
+    "ensuite": [
+      "then, next"
+    ],
     "es": [
       "are",
       "être · tu"
@@ -293,6 +446,10 @@
       "Spanish",
       "feminine"
     ],
+    "espèces": [
+      "cash",
+      "en espèces: in cash"
+    ],
     "est": [
       "is",
       "être · il, elle, on"
@@ -303,9 +460,17 @@
     "euros": [
       "euros"
     ],
+    "face": [
+      "face, front",
+      "en face de: opposite"
+    ],
     "faim": [
       "hunger",
       "avoir faim: to be hungry · j'ai faim: I'm hungry"
+    ],
+    "fais": [
+      "do, make",
+      "faire, with je or tu"
     ],
     "fait": [
       "makes, does, comes to",
@@ -314,6 +479,17 @@
     "film": [
       "film",
       "masculine"
+    ],
+    "films": [
+      "films"
+    ],
+    "foot": [
+      "football (soccer)",
+      "short for football"
+    ],
+    "france": [
+      "France",
+      "en France: in France"
     ],
     "français": [
       "French",
@@ -330,6 +506,44 @@
     "frère": [
       "brother",
       "masculine"
+    ],
+    "gare": [
+      "station (train)"
+    ],
+    "gauche": [
+      "left",
+      "à gauche: on the left"
+    ],
+    "genre": [
+      "kind, type"
+    ],
+    "génial": [
+      "great, brilliant",
+      "very common in France"
+    ],
+    "habille": [
+      "get dressed",
+      "s'habiller, with je, il or elle"
+    ],
+    "habillent": [
+      "get dressed",
+      "s'habiller, with ils or elles"
+    ],
+    "habiller": [
+      "to dress",
+      "s'habiller: to get dressed"
+    ],
+    "habilles": [
+      "get dressed",
+      "s'habiller, with tu"
+    ],
+    "habillez": [
+      "get dressed",
+      "s'habiller, with vous"
+    ],
+    "habillons": [
+      "get dressed",
+      "s'habiller, with nous"
     ],
     "habite": [
       "live",
@@ -358,8 +572,14 @@
       "hours, o'clock",
       "plural · deux heures: two o'clock"
     ],
+    "hier": [
+      "yesterday"
+    ],
     "huit": [
       "eight"
+    ],
+    "hôtel": [
+      "hotel"
     ],
     "ici": [
       "here"
@@ -379,11 +599,18 @@
       "I (before a vowel)",
       "j'ai: I have · j'habite: I live"
     ],
+    "jamais": [
+      "never",
+      "with ne: je ne me couche jamais tôt"
+    ],
     "je": [
       "I"
     ],
     "jeudi": [
       "Thursday"
+    ],
+    "jouer": [
+      "to play"
     ],
     "jour": [
       "day",
@@ -413,6 +640,28 @@
       "the",
       "plural"
     ],
+    "lever": [
+      "to get up",
+      "se lever"
+    ],
+    "levez": [
+      "get up",
+      "se lever, with vous"
+    ],
+    "levons": [
+      "get up",
+      "se lever, with nous"
+    ],
+    "lire": [
+      "to read"
+    ],
+    "livre": [
+      "book"
+    ],
+    "loin": [
+      "far",
+      "loin de: far from"
+    ],
     "londres": [
       "London"
     ],
@@ -423,9 +672,25 @@
       "Lyon",
       "a city in France"
     ],
+    "lève": [
+      "get up, gets up",
+      "se lever, with je, il or elle"
+    ],
+    "lèvent": [
+      "get up",
+      "se lever, with ils or elles"
+    ],
+    "lèves": [
+      "get up",
+      "se lever, with tu"
+    ],
     "léa": [
       "Léa",
       "a girl's name"
+    ],
+    "léo": [
+      "Léo",
+      "a first name"
     ],
     "m": [
       "me (before a vowel)",
@@ -446,9 +711,16 @@
     "manger": [
       "to eat"
     ],
+    "manges": [
+      "eat",
+      "manger, with tu"
+    ],
     "mangez": [
       "eat",
       "manger · vous"
+    ],
+    "marché": [
+      "market"
     ],
     "mardi": [
       "Tuesday"
@@ -456,6 +728,10 @@
     "matin": [
       "morning",
       "du matin: in the morning"
+    ],
+    "me": [
+      "myself",
+      "je me lève"
     ],
     "menu": [
       "set menu",
@@ -473,6 +749,9 @@
     "minuit": [
       "midnight"
     ],
+    "minutes": [
+      "minutes"
+    ],
     "moi": [
       "me",
       "moi aussi: me too"
@@ -489,9 +768,18 @@
       "change, small coins",
       "feminine"
     ],
+    "musique": [
+      "music"
+    ],
+    "musée": [
+      "museum"
+    ],
     "médecin": [
       "doctor",
       "same for men and women"
+    ],
+    "métro": [
+      "underground, subway"
     ],
     "n": [
       "not (before a vowel)",
@@ -510,6 +798,12 @@
     "nous": [
       "we",
       "on is the everyday word for we"
+    ],
+    "nuit": [
+      "night"
+    ],
+    "nuits": [
+      "nights"
     ],
     "on": [
       "we, one",
@@ -536,11 +830,18 @@
       "bread",
       "masculine · du pain: some bread"
     ],
+    "par": [
+      "per, by",
+      "par nuit: per night"
+    ],
     "pardon": [
       "sorry, excuse me"
     ],
     "parfait": [
       "perfect"
+    ],
+    "parfois": [
+      "sometimes"
     ],
     "paris": [
       "Paris"
@@ -572,9 +873,35 @@
       "not",
       "comes after the verb: ne … pas"
     ],
+    "payer": [
+      "to pay"
+    ],
+    "petit": [
+      "small, little",
+      "le petit déjeuner: breakfast"
+    ],
     "peu": [
       "little",
       "un peu: a little"
+    ],
+    "peut": [
+      "can",
+      "pouvoir, with il or elle"
+    ],
+    "peuvent": [
+      "can",
+      "pouvoir, with ils or elles"
+    ],
+    "peux": [
+      "can, am able to",
+      "pouvoir, with je or tu"
+    ],
+    "pied": [
+      "foot",
+      "à pied: on foot"
+    ],
+    "plage": [
+      "beach"
     ],
     "plaît": [
       "pleases",
@@ -584,16 +911,76 @@
       "mobile phone",
       "masculine · un portable"
     ],
+    "poste": [
+      "post office",
+      "la poste"
+    ],
     "pour": [
       "for"
+    ],
+    "pourquoi": [
+      "why"
+    ],
+    "pouvez": [
+      "can, are able to",
+      "pouvoir, with vous"
+    ],
+    "pouvons": [
+      "can",
+      "pouvoir, with nous"
+    ],
+    "prend": [
+      "takes, has",
+      "prendre, with il or elle"
+    ],
+    "prendre": [
+      "to take, to have",
+      "also used for food: prendre un café"
+    ],
+    "prends": [
+      "take, have",
+      "prendre, with je or tu"
     ],
     "prenez": [
       "take, have",
       "prendre · vous · vous prenez un croissant ? are you having a croissant"
     ],
+    "prennent": [
+      "take, have",
+      "prendre, with ils or elles"
+    ],
+    "prenons": [
+      "take, have",
+      "prendre, with nous"
+    ],
+    "prochain": [
+      "next",
+      "masculine: le mois prochain"
+    ],
+    "prochaine": [
+      "next",
+      "feminine: la semaine prochaine"
+    ],
     "professeur": [
       "teacher",
       "same for men and women"
+    ],
+    "près": [
+      "near",
+      "près de: near to"
+    ],
+    "puis": [
+      "then"
+    ],
+    "pull": [
+      "jumper"
+    ],
+    "qu": [
+      "what",
+      "qu'est-ce que: what"
+    ],
+    "quand": [
+      "when"
     ],
     "quarante": [
       "forty"
@@ -608,6 +995,9 @@
     "quatre": [
       "four"
     ],
+    "que": [
+      "that, what, than"
+    ],
     "quel": [
       "which",
       "masculine · quel jour: which day"
@@ -616,8 +1006,15 @@
       "which, what",
       "feminine · quelle heure: what time"
     ],
+    "qui": [
+      "who"
+    ],
     "quinze": [
       "fifteen"
+    ],
+    "quoi": [
+      "what",
+      "used at the end: tu fais quoi ?"
     ],
     "regarde": [
       "watch, look at",
@@ -626,9 +1023,24 @@
     "regarder": [
       "to watch, to look at"
     ],
+    "regardons": [
+      "watch",
+      "regarder, with nous"
+    ],
     "rendez": [
       "make, give (in rendez-vous)",
       "rendez-vous: a meeting, an appointment"
+    ],
+    "rentre": [
+      "go home",
+      "rentrer, with je, il or elle"
+    ],
+    "rentrer": [
+      "to go home"
+    ],
+    "restez": [
+      "stay",
+      "rester, with vous"
     ],
     "retard": [
       "delay",
@@ -646,13 +1058,33 @@
       "nothing",
       "de rien: you're welcome"
     ],
+    "robe": [
+      "dress"
+    ],
     "roux": [
       "Roux",
       "a French surname"
     ],
+    "royaume": [
+      "kingdom",
+      "le Royaume-Uni: the UK"
+    ],
+    "répéter": [
+      "to repeat"
+    ],
+    "réserver": [
+      "to book"
+    ],
     "s": [
       "if, himself, herself (before a vowel)",
       "s'il vous plaît: please"
+    ],
+    "sac": [
+      "bag"
+    ],
+    "sais": [
+      "know",
+      "savoir, with je or tu: je ne sais pas"
     ],
     "salade": [
       "salad",
@@ -665,12 +1097,23 @@
     "samedi": [
       "Saturday"
     ],
+    "samedis": [
+      "Saturdays",
+      "wrong form here: say samedi"
+    ],
     "sandwich": [
       "sandwich",
       "masculine"
     ],
+    "se": [
+      "himself, herself, themselves",
+      "il se lève"
+    ],
     "seize": [
       "sixteen"
+    ],
+    "semaine": [
+      "week"
     ],
     "sept": [
       "seven"
@@ -697,6 +1140,15 @@
       "are",
       "être · ils, elles"
     ],
+    "sortir": [
+      "to go out"
+    ],
+    "souvent": [
+      "often"
+    ],
+    "sport": [
+      "sport"
+    ],
     "suis": [
       "am",
       "être · je"
@@ -709,21 +1161,48 @@
       "you (before a vowel)",
       "tu t'appelles: your name is"
     ],
+    "taille": [
+      "size"
+    ],
+    "tard": [
+      "late"
+    ],
     "te": [
       "you",
       "s'il te plaît: please, to a friend"
+    ],
+    "temps": [
+      "time, weather"
     ],
     "thé": [
       "tea",
       "masculine"
     ],
+    "toi": [
+      "you",
+      "used for emphasis: et toi ?"
+    ],
     "toilettes": [
       "toilet",
       "feminine plural · les toilettes"
     ],
+    "toujours": [
+      "always"
+    ],
+    "tournez": [
+      "turn",
+      "tourner, with vous"
+    ],
+    "tout": [
+      "all, straight",
+      "tout droit: straight on"
+    ],
     "train": [
       "train",
       "masculine"
+    ],
+    "travail": [
+      "work, job"
     ],
     "travaille": [
       "work",
@@ -745,12 +1224,18 @@
     "trois": [
       "three"
     ],
+    "trop": [
+      "too, too much"
+    ],
     "très": [
       "very"
     ],
     "tu": [
       "you",
       "for friends, family and children"
+    ],
+    "tôt": [
+      "early"
     ],
     "un": [
       "a, an, one",
@@ -760,16 +1245,48 @@
       "a, an, one",
       "feminine"
     ],
+    "uni": [
+      "united"
+    ],
+    "unis": [
+      "united"
+    ],
     "va": [
       "goes",
       "aller · il, elle, ça · ça va: how are you, I'm fine"
     ],
+    "vais": [
+      "go",
+      "aller, with je: je vais"
+    ],
+    "vas": [
+      "go",
+      "aller, with tu: tu vas"
+    ],
     "vendredi": [
       "Friday"
+    ],
+    "venir": [
+      "to come"
     ],
     "verre": [
       "glass",
       "masculine"
+    ],
+    "veste": [
+      "jacket"
+    ],
+    "veulent": [
+      "want",
+      "vouloir, with ils or elles"
+    ],
+    "veut": [
+      "wants",
+      "vouloir, with il or elle"
+    ],
+    "veux": [
+      "want",
+      "vouloir, with je or tu. Je voudrais is politer"
     ],
     "viens": [
       "come",
@@ -794,6 +1311,10 @@
       "there you are, here it is",
       "said when you hand something over"
     ],
+    "vont": [
+      "go",
+      "aller, with ils or elles"
+    ],
     "votre": [
       "your",
       "polite · votre café"
@@ -806,6 +1327,10 @@
       "want",
       "vouloir · vous"
     ],
+    "voulons": [
+      "want",
+      "vouloir, with nous"
+    ],
     "vous": [
       "you",
       "polite, or more than one person"
@@ -813,6 +1338,9 @@
     "voyage": [
       "trip, journey",
       "bon voyage: have a good trip"
+    ],
+    "voyager": [
+      "to travel"
     ],
     "végétarienne": [
       "vegetarian",
@@ -837,9 +1365,23 @@
       "it, that",
       "ça va: how are you, I am fine"
     ],
+    "école": [
+      "school"
+    ],
     "écosse": [
       "Scotland",
       "feminine · d'Écosse: from Scotland"
+    ],
+    "écouter": [
+      "to listen to"
+    ],
+    "écoutes": [
+      "listen to",
+      "écouter, with tu"
+    ],
+    "états": [
+      "states",
+      "les États-Unis: the USA"
     ],
     "étudiant": [
       "student",
@@ -855,6 +1397,10 @@
     "êtes": [
       "are",
       "être · vous"
+    ],
+    "être": [
+      "to be",
+      "used here in peut-être: maybe"
     ]
   }
 }
