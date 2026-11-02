@@ -10,6 +10,7 @@ if errorlevel 1 (
   pause
   exit /b
 )
+if not exist settings.env copy settings.example.env settings.env >nul
 node server.js
 echo.
 echo The trainer has stopped.
