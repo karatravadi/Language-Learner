@@ -35,8 +35,10 @@ Columns: `title`, `lang`, `source_name`, `format`, `category`, `cefr_level`, `li
 | C1 | 52 | 165 | 350 | 436 | 660 | 1251 | 0 | 0 | 52 |
 | all | 344 | | | | | | | | |
 
-Saved 2 rows to `out/french_a2_b1_20-80.jsonl` (A2 1, B1 1), shortest first.
-Dropped: 1 fragment (no final punctuation).
+Rows are whole articles, so they are split at blank lines into 3636 paragraphs before filtering. The first paragraph is usually the heading and is dropped as a fragment.
+
+Saved 532 rows to `out/french_a2_b1_20-80.jsonl` (A2 41, B1 491), shortest first.
+Dropped: 121 fragment (no final punctuation), 52 dialogue line, 26 interview, 8 audio, 8 fragment (numbered step), 5 duplicate, 3 fragment (starts lowercase), 1 url.
 
 ## Latin: `grosenthal/latin_english_parallel`
 
@@ -390,5 +392,5 @@ Saved 4661 pairs (Cornelius Nepos 254, Phaedrus 599, Caesar 1211, Cicero 2597; L
 - Latin: the Vulgate Bible is 33036 of 101371 pairs, a third of the set. `file` paths use Windows backslashes. There is no Caesar Civil War and no Cicero letters or essays.
 - Spanish: every saved row has title `na`, so there is no link back to the source article.
 - Spanish: some saved rows are about Latin America as a topic (Mexico in 6 rows, Colombia 2, Argentina, Chile, Peru 1 each). The vocabulary checked looks like Spain's, but the content is not all about Spain.
-- French: kwiziq rows are whole articles (median 195 to 280 words at A2 and B1), so only 2 fit 20 to 80 words. Their text also starts with the article heading followed by a blank line.
+- French: kwiziq rows are whole articles (median 195 to 280 words at A2 and B1), so only 2 fit 20 to 80 words as whole rows. The output uses paragraphs instead, with `title` and `paragraph` to find the article. Many articles are dialogues, whose lines are dropped. Some text has a no-break space before ! ? : (French typography), left as is.
 - Filters are heuristics: a dropped row may be fine, and a kept one may still be a fragment. Read before use.

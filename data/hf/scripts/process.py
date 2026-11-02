@@ -68,6 +68,10 @@ def reject_reason(t):
         return "fragment (no final punctuation)"
     if re.match(r"\d+\s*[.)]", t):
         return "fragment (numbered step)"
+    if re.match(r"[A-ZÀ-Ý][A-ZÀ-Ý .'-]{0,30}\s?:", t):
+        return "interview"
+    if re.match(r"[-–—]\s", t):
+        return "dialogue line"
     first = t.lstrip("¿¡«\"'(—–- ")[:1]
     if first and first.islower():
         return "fragment (starts lowercase)"
@@ -75,7 +79,7 @@ def reject_reason(t):
         return "fragment (unbalanced brackets/quotes)"
     return None
 
-def cefr_lang(name, tag, latam):
+def cefr_lang(name, tag, latam, split=False):
     d, rows = load_all(name)
     cols = d[list(d)[0]].column_names
     tcol = pick(cols, "text", "sentence", "content")
@@ -105,8 +109,19 @@ def cefr_lang(name, tag, latam):
     if odd_levels: odd.append(f"{tag}: unexpected level labels {odd_levels}.")
 
     keep, why, seen = [], Counter(), set()
+    units = []   # (row, text, paragraph number or None)
     for r in rows:
-        lv, t = str(r[lcol]).strip().upper(), str(r[tcol] or "").strip()
+        t = str(r[tcol] or "").strip()
+        if split:
+            paras = [x.strip() for x in re.split(r"\n\s*\n", t) if x.strip()]
+            units += [(r, x, i) for i, x in enumerate(paras, 1)]
+        else:
+            units.append((r, t, None))
+    if split:
+        say(f"\nRows are whole articles, so they are split at blank lines into {len(units)} paragraphs "
+            "before filtering. The first paragraph is usually the heading and is dropped as a fragment.")
+    for r, t, para in units:
+        lv = str(r[lcol]).strip().upper()
         if lv not in {"A2", "B1"} or not 20 <= words(t) <= 80:
             continue
         reason = reject_reason(t) or ("duplicate" if t in seen else None)
@@ -114,6 +129,8 @@ def cefr_lang(name, tag, latam):
             why[reason] += 1; continue
         seen.add(t)
         rec = {"level": lv, "words": words(t), "text": t}
+        if para:
+            rec["paragraph"] = para
         for extra in ("title", "category", "source_name"):
             if extra in r and r[extra]:
                 rec[extra] = r[extra]
@@ -237,7 +254,7 @@ def latin(name):
 say("# Hugging Face reading data\n")
 say("Made by `scripts/process.py`. Rerun it to regenerate this file and `out/`.")
 cefr_lang("UniversalCEFR/hablacultura_es", "Spanish", latam=True)
-cefr_lang("UniversalCEFR/kwiqiz_fr", "French", latam=False)
+cefr_lang("UniversalCEFR/kwiqiz_fr", "French", latam=False, split=True)
 try:
     latin("grosenthal/latin_english_parallel")
 except Exception as e:
@@ -248,8 +265,9 @@ odd += [
     "Spanish: every saved row has title `na`, so there is no link back to the source article.",
     "Spanish: some saved rows are about Latin America as a topic (Mexico in 6 rows, Colombia 2, Argentina, Chile, Peru 1 each). "
     "The vocabulary checked looks like Spain's, but the content is not all about Spain.",
-    "French: kwiziq rows are whole articles (median 195 to 280 words at A2 and B1), so only 2 fit 20 to 80 words. "
-    "Their text also starts with the article heading followed by a blank line.",
+    "French: kwiziq rows are whole articles (median 195 to 280 words at A2 and B1), so only 2 fit 20 to 80 words "
+    "as whole rows. The output uses paragraphs instead, with `title` and `paragraph` to find the article. "
+    "Many articles are dialogues, whose lines are dropped. Some text has a no-break space before ! ? : (French typography), left as is.",
 ]
 say("\n## Odd things\n")
 for o in odd or ["Nothing the script checks for (empty rows, duplicates, odd level labels, empty pairs)."]:
