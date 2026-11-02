@@ -246,6 +246,15 @@ function check(dir = COURSES) {
     else if (new Set(opts).size !== opts.length) err(label + ' options repeat');
   }
 
+  // Glossary: every Spanish word a course shows must have a meaning, so tapping a word always answers.
+  for (const entry of (index.courses || [])) {
+    const file = path.join(dir, entry.file); const course = readJson(file);
+    if (!course || !course.glossary) continue;
+    const g = readJson(path.join(path.dirname(file), course.glossary));
+    if (!g || !g.words) { errors.push(course.id + ': glossary ' + course.glossary + ' is missing or has no "words"'); continue; }
+    for (const [w, v] of Object.entries(g.words)) if (!Array.isArray(v) || !v.length || v.length > 2 || v.some(x => typeof x !== 'string' || !x)) errors.push(course.id + ' › glossary › ' + w + ': must be [meaning] or [meaning, note]');
+    for (const [w, where] of require('./spanish-text.js').missing(path.dirname(file), course, g)) errors.push(course.id + ' › glossary: no meaning for "' + w + '" (' + where + ')');
+  }
   return { errors, warnings };
 }
 

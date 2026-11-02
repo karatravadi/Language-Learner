@@ -14,6 +14,7 @@
     "chapters/04-food-ordering.json"
   ],
   "words": "words.json",
+  "glossary": "glossary.json",
   "roadmap": [
     { "n": 5, "title": "Getting around", "can": "Ask directions, buy tickets, understand recto and a la izquierda" },
     { "n": 6, "title": "Hostels and shopping", "can": "Use hay and tener, ask for what you need, compare prices" },
