@@ -1,0 +1,73 @@
+ESPAÑOL TRAINER: SETUP (Windows, about 5 minutes, everything free)
+=====================================================================
+
+You need ONE thing installed: Node.js. It is free and runs the little local
+server behind the app. Nothing else.
+
+STEP 1  Install Node.js (once)
+   - Go to https://nodejs.org and download the "LTS" version.
+   - Run the installer and click Next through it (the defaults are fine).
+   - Check it worked: press the Windows key, type "cmd", press Enter, then type
+         node --version
+     You should see v18 or higher (e.g. v22.x.x).
+
+STEP 2  Unzip the trainer
+   - Right-click espanol-trainer.zip, choose "Extract All", and put the folder
+     somewhere permanent (e.g. Documents). Do NOT run it from inside the zip.
+
+STEP 3  Start it
+   - Open the folder and double-click  start.bat
+   - A black window opens and your browser opens the app at
+     http://localhost:3000
+   - Keep the black window open while you study. Close it to stop the app.
+   - If Windows SmartScreen warns about start.bat: click "More info", then
+     "Run anyway". (It only runs "node server.js".)
+
+That's it. Chapter 1, the word of the day, quizzes and spaced-repetition review
+all work right now, with NO account, key or internet needed.
+
+---------------------------------------------------------------------
+OPTIONAL: switch on the AI tutor (corrects your own sentences, chat with Lucía)
+---------------------------------------------------------------------
+
+STEP 4  Get a free API key
+   Option A (recommended, free tier): Google Gemini
+     - Go to https://aistudio.google.com and sign in with a Google account.
+     - Click "Get API key" and create one. Copy it.
+     - Free-tier limits are daily and Google does not publish them; developers
+       report roughly 20-500 requests a day depending on model. Google says
+       free-tier prompts may be used to improve its products, so don't type
+       anything private into the AI parts.
+   Option B: DeepSeek
+     - https://platform.deepseek.com , create an account and an API key.
+     - New accounts have reportedly had a small free credit, then it is
+       pay-as-you-go. Check their pricing page for the current price.
+
+STEP 5  Put the key in settings.env
+   - Right-click settings.env, "Open with" > Notepad.
+   - For Gemini: paste your key after  GEMINI_API_KEY=   and keep PROVIDER=gemini
+     For DeepSeek: paste after  DEEPSEEK_API_KEY=   and set PROVIDER=deepseek
+   - No quotes, no spaces. Save the file.
+
+STEP 6  Restart
+   - Close the black window, then double-click start.bat again.
+   - The home screen chip should now say "AI tutor is on".
+
+If the AI says it can't find the model: open Google AI Studio, copy the exact
+name of a "Flash-Lite" model, and paste it after GEMINI_MODEL= in settings.env.
+(The default name in the file is my best guess; I could not confirm it.)
+
+---------------------------------------------------------------------
+GOOD TO KNOW
+---------------------------------------------------------------------
+- Your progress (XP, streak, review cards) is saved in the browser you use, at
+  the address http://localhost:3000 . Use the same browser and the same port
+  each time. A different browser or a changed PORT looks like a fresh start.
+- Audio: the speaker buttons use your computer's built-in Spanish voice.
+  Microsoft Edge usually has the best Spanish voices. If you see no speaker
+  buttons, Windows has no Spanish voice installed: Settings > Time & language >
+  Speech > Add voices. (Listening exercises are skipped until a voice exists.)
+- "Port 3000 is already in use": the trainer is probably already open in
+  another black window. Close it, or change PORT in settings.env.
+- "node is not recognized": restart your computer after installing Node.js.
+- Your API key never leaves your computer except to go to Google/DeepSeek.
