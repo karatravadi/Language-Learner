@@ -1,0 +1,129 @@
+{
+  "n": 7,
+  "title": "Likes and plans",
+  "sub": "J'aime, je vais manger",
+  "can": "Say what you like and do not like, make plans with aller and a verb, and ask questions.",
+  "mins": 15,
+  "doneText": "You can now say what you like, talk about what you are going to do, and ask a friend a question.",
+  "skills": {
+    "aimer": "Liking things",
+    "futur": "Going to: aller + verb",
+    "questions": "Asking questions",
+    "freetime": "Free time words",
+    "when": "When: tonight, tomorrow"
+  },
+  "discover": {
+    "intro": "Blue sentences say what happens now. Orange sentences say what will happen. Spot how the verb changes.",
+    "groups": [
+      { "label": "Blue", "tone": "blue", "lines": [["Je mange.", "I eat. I'm eating."], ["Je travaille.", "I work. I'm working."], ["Je regarde un film.", "I watch a film."]] },
+      { "label": "Orange", "tone": "orange", "lines": [["Je vais manger.", "I'm going to eat."], ["Je vais travailler.", "I'm going to work."], ["Je vais regarder un film.", "I'm going to watch a film."]] }
+    ],
+    "question": "How do the orange sentences say what is going to happen?",
+    "options": [
+      "They use a form of aller (je vais) and then the infinitive: the verb ending in -er, like manger.",
+      "They add -ra to the end of the verb.",
+      "They put the verb at the end of the sentence."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Look for a new little word before the verb in each orange sentence, and look at how the verb ends.",
+    "reveal": "Je vais plus an infinitive means I'm going to. It is the easy way to talk about the future, and the verb after it never changes. You can also ask questions in three ways:",
+    "hooks": [
+      { "title": "Going to", "tone": "orange", "rows": [
+        ["je vais", "I'm going to", "Je vais manger.", "I'm going to eat."],
+        ["tu vas", "you're going to", "Tu vas travailler ?", "Are you going to work?"],
+        ["il va", "he's going to", "Il va regarder un film.", "He's going to watch a film."],
+        ["nous allons", "we're going to", "Nous allons manger.", "We're going to eat."]
+      ] },
+      { "title": "Asking questions", "tone": "blue", "rows": [
+        ["voice up", "just raise your voice", "Tu viens ?", "Are you coming?"],
+        ["est-ce que", "at the start", "Est-ce que tu viens ?", "Are you coming?"],
+        ["où, quand", "at the end (everyday)", "Tu viens quand ?", "When are you coming?"]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "Likes, plans and questions",
+    "sub": "Tap any word to hear it",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "Liking things", "speak": "form", "rows": [["I like", "j'aime"], ["I love", "j'adore"], ["I don't like", "je n'aime pas"], ["I hate", "je déteste"]] },
+        { "title": "Question words", "speak": "form", "rows": [["where", "où"], ["when", "quand"], ["why", "pourquoi"], ["who", "qui"], ["how", "comment"], ["how much", "combien"], ["what", "quoi"]] }
+      ] },
+      { "type": "list", "title": "Free time", "rows": [["regarder un film", "to watch a film"], ["écouter de la musique", "to listen to music"], ["jouer au foot", "to play football"], ["voyager", "to travel"], ["cuisiner", "to cook"], ["sortir", "to go out"], ["lire", "to read"]] },
+      { "type": "list", "title": "When", "rows": [["ce soir", "tonight"], ["demain", "tomorrow"], ["ce week-end", "this weekend"], ["samedi prochain", "next Saturday"], ["la semaine prochaine", "next week"], ["bientôt", "soon"]] },
+      { "type": "twist", "title": "A thing or an action", "a": ["J'aime la musique.", "I like music."], "b": ["J'aime écouter de la musique.", "I like listening to music."], "note": "After aimer, a thing takes le, la or les: j'aime la musique, j'aime les frites. An action takes the infinitive: j'aime voyager, j'aime cuisiner." },
+      { "type": "note", "kind": "tip", "text": "After je vais, the next verb never changes. It stays as the infinitive: je vais manger, nous allons manger, ils vont manger. Only aller changes." },
+      { "type": "note", "kind": "warn", "text": "Est-ce que is only a way to start a question. Est-ce que tu aimes le café ? means the same as Tu aimes le café ? In writing and polite speech you will see est-ce que a lot." },
+      { "type": "note", "kind": "culture", "text": "To suggest something to friends, French uses on, not nous: on va au cinéma ? means shall we go to the cinema? You will hear pourquoi pas ?, why not, for yes." }
+    ]
+  },
+  "phrases": [
+    { "id": "c7-like", "es": "Qu'est-ce que tu aimes ?", "en": "What do you like?", "alts": [] },
+    { "id": "c7-music", "es": "J'aime la musique.", "en": "I like music.", "alts": [] },
+    { "id": "c7-sport", "es": "Je n'aime pas le sport.", "en": "I don't like sport.", "alts": [] },
+    { "id": "c7-film", "es": "Je vais regarder un film ce soir.", "en": "I'm going to watch a film tonight.", "alts": [] },
+    { "id": "c7-cinema", "es": "On va au cinéma ?", "en": "Shall we go to the cinema?", "alts": [] },
+    { "id": "c7-come", "es": "Tu viens ?", "en": "Are you coming?", "alts": [] },
+    { "id": "c7-whynot", "es": "Pourquoi pas ?", "en": "Why not?", "alts": [] },
+    { "id": "c7-know", "es": "Je ne sais pas.", "en": "I don't know.", "alts": [] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "futur", "q": "Je vais ___ un film.", "sub": "(I'm going to watch a film.)", "options": ["regarder", "regarde", "regardons"], "answer": 0, "why": "After je vais, use the infinitive: regarder." },
+    { "type": "mc", "skill": "futur", "prompt": "Which sentence means I'm going to eat?", "q": "", "options": ["Je vais manger.", "Je mange vais.", "Je va manger."], "answer": 0, "why": "Je vais plus the infinitive: je vais manger." },
+    { "type": "listen", "skill": "when", "say": "On va au cinéma ce soir ?", "options": ["Shall we go to the cinema tonight?", "Are we going to the café tonight?", "Is there a film tonight?"], "answer": 0, "why": "On va au cinéma ? is shall we go to the cinema? Ce soir is tonight." },
+    {
+      "type": "rapid", "skill": "futur", "prompt": "Rapid fire: now or later?",
+      "choices": [{ "key": "now", "label": "now", "tone": "blue" }, { "key": "later", "label": "later", "tone": "orange" }],
+      "items": [
+        { "text": "Je mange.", "full": "Je mange.", "answer": "now", "skill": "futur", "why": "No form of aller: it is happening now." },
+        { "text": "Je vais manger.", "full": "Je vais manger.", "answer": "later", "skill": "futur", "why": "Je vais plus infinitive: later." },
+        { "text": "Nous regardons un film.", "full": "Nous regardons un film.", "answer": "now", "skill": "futur", "why": "No form of aller: now." },
+        { "text": "Nous allons regarder un film.", "full": "Nous allons regarder un film.", "answer": "later", "skill": "futur", "why": "Allons plus infinitive: later." },
+        { "text": "Il travaille.", "full": "Il travaille.", "answer": "now", "skill": "futur", "why": "No form of aller: now." },
+        { "text": "Il va travailler.", "full": "Il va travailler.", "answer": "later", "skill": "futur", "why": "Va plus infinitive: later." },
+        { "text": "Tu écoutes de la musique.", "full": "Tu écoutes de la musique.", "answer": "now", "skill": "futur", "why": "No form of aller: now." },
+        { "text": "Tu vas écouter de la musique.", "full": "Tu vas écouter de la musique.", "answer": "later", "skill": "futur", "why": "Vas plus infinitive: later." }
+      ]
+    },
+    { "type": "gap", "skill": "futur", "q": "Je ___ manger.", "hint": "am going", "hintLabel": "Verb", "answer": ["vais"], "why": "Je goes with vais." },
+    { "type": "gap", "skill": "futur", "q": "Nous ___ regarder un film.", "hint": "are going", "hintLabel": "Verb", "answer": ["allons"], "why": "Nous goes with allons." },
+    { "type": "gap", "skill": "questions", "q": "Tu viens ___ ?", "hint": "when", "hintLabel": "Word", "answer": ["quand"], "why": "A question word at the end is everyday French." },
+    { "type": "match", "skill": "questions", "prompt": "Match the question words.", "pairs": [["où", "where"], ["quand", "when"], ["pourquoi", "why"], ["qui", "who"], ["comment", "how"]] },
+    { "type": "fix", "skill": "futur", "prompt": "Tap the word that is wrong.", "sentence": "Je vais mange.", "wrong": 2, "fixed": "Je vais manger.", "why": "After vais, use the infinitive: manger." },
+    { "type": "fix", "skill": "futur", "prompt": "Tap the word that is wrong.", "sentence": "Nous allons regardons un film.", "wrong": 2, "fixed": "Nous allons regarder un film.", "why": "After allons, use the infinitive: regarder." },
+    { "type": "translate", "skill": "aimer", "q": "I like music.", "answer": ["j'aime la musique"], "why": "Things you like take le, la or les: la musique." },
+    { "type": "translate", "skill": "futur", "q": "I'm going to work tomorrow.", "answer": ["je vais travailler demain", "demain je vais travailler"], "why": "Je vais plus the infinitive, and demain can go first or last." },
+    { "type": "translate", "skill": "questions", "q": "To a friend: are you coming?", "answer": ["tu viens", "est-ce que tu viens"], "who": ["", "a little more formal"], "why": "Tu viens ? with a rising voice is the everyday way to ask." },
+    { "type": "translate", "skill": "aimer", "q": "I don't like sport.", "answer": ["je n'aime pas le sport"], "why": "N'aime pas wraps the verb, and sport takes le." },
+    { "type": "order", "skill": "when", "prompt": "I'm going to watch a film tonight.", "words": ["Je", "vais", "regarder", "un", "film", "ce", "soir"], "answer": "Je vais regarder un film ce soir.", "why": "Je vais, then the infinitive, then when." },
+    { "type": "mc", "skill": "aimer", "q": "J'aime ___ musique.", "sub": "(I like music.)", "options": ["la", "du", "une"], "answer": 0, "why": "For things you like in general, use le, la or les: la musique." },
+    { "type": "mc", "skill": "questions", "prompt": "A friend says: On va au cinéma ? Who does on mean?", "q": "", "options": ["We, you and me", "One person", "They"], "answer": 0, "why": "On is the everyday word for we." }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Tell a friend one thing you like, and one thing you are going to do this weekend.",
+    "starter": "J'aime…  Ce week-end, je vais…",
+    "model": "J'aime la musique et le cinéma. Ce week-end, je vais regarder un film.",
+    "checklist": ["J'aime with le, la or les for things", "Je vais plus an infinitive", "Je n'aime pas if you want to say you do not like something"]
+  },
+  "boss": {
+    "title": "Making plans with Inès",
+    "who": "Inès",
+    "skill": "futur",
+    "persona": "You are Inès, a friendly French student who has become a friend of the learner. You are texting about the weekend. Talk about films, music, and plans for Saturday. Address the learner as tu. Keep every message to one short sentence.",
+    "turns": [
+      { "npc": "Salut. Tu fais quoi ce week-end ?", "en": "Hi. What are you doing this weekend?", "skill": "futur",
+        "choices": [["Je vais regarder un film. Et toi ?", true, ""], ["Je regarder un film. Et toi ?", false, "After je you need vais: je vais regarder."], ["Je vais regarde un film. Et toi ?", false, "After vais, use the infinitive: regarder."]] },
+      { "npc": "Cool. Tu aimes le cinéma ?", "en": "Cool. Do you like the cinema?", "skill": "aimer",
+        "choices": [["Oui, j'aime le cinéma.", true, ""], ["Oui, j'aime cinéma.", false, "Things you like take le, la or les: le cinéma."], ["Oui, j'aime du cinéma.", false, "Du is for an amount. For things you like, use le: le cinéma."]] },
+      { "npc": "Moi, j'adore ça. On va au cinéma samedi ?", "en": "I love it. Shall we go to the cinema on Saturday?", "skill": "questions",
+        "choices": [["Pourquoi pas ? À quelle heure ?", true, ""], ["Pourquoi pas ? À quel heure ?", false, "Heure is feminine: quelle heure."], ["Pourquoi pas ? En quelle heure ?", false, "At a time is à: à quelle heure ?"]] },
+      { "npc": "À huit heures ? Je vais réserver les billets.", "en": "At eight? I'm going to book the tickets.", "skill": "when",
+        "choices": [["D'accord. À samedi.", true, ""], ["D'accord. À samedis.", false, "Samedi has no s here: à samedi means see you Saturday."], ["D'accord. Au samedi.", false, "See you Saturday is à samedi, with no le."]] }
+    ],
+    "closing": "À samedi.",
+    "closingEn": "See you Saturday.",
+    "chatOpening": "Tu aimes quel genre de films ?",
+    "chatOpeningEn": "What kind of films do you like?"
+  }
+}

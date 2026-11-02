@@ -1,0 +1,131 @@
+{
+  "n": 8,
+  "title": "Daily routine",
+  "sub": "Je me lève à sept heures",
+  "can": "Describe your day with reflexive verbs, say when you do things, and say how often.",
+  "mins": 15,
+  "doneText": "You can now describe your day, from getting up to going to bed, and say how often you do things.",
+  "skills": {
+    "reflexive": "Reflexive verbs: me, te, se",
+    "routine": "Daily routine words",
+    "order": "First, then, finally",
+    "often": "How often",
+    "morning": "Le matin or du matin"
+  },
+  "discover": {
+    "intro": "Blue sentences have a small extra word before the verb. Orange sentences do not. Spot what it is.",
+    "groups": [
+      { "label": "Blue", "tone": "blue", "lines": [["Je me lève à sept heures.", "I get up at seven."], ["Tu te lèves à huit heures.", "You get up at eight."], ["Elle se lève à neuf heures.", "She gets up at nine."]] },
+      { "label": "Orange", "tone": "orange", "lines": [["Je travaille à huit heures.", "I start work at eight."], ["Tu manges à midi.", "You eat at noon."], ["Elle regarde un film.", "She watches a film."]] }
+    ],
+    "question": "What is the extra word in the blue sentences?",
+    "options": [
+      "Me, te or se. The action is done to yourself, and the little word changes with the person: je me, tu te, elle se.",
+      "A word for the time, like à.",
+      "A word for the place."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Look straight before each verb in blue: lève, lèves, lève. What comes just before?",
+    "reveal": "These are reflexive verbs: the action goes back to the person who does it. Je me lève is literally I raise myself. The little word matches the person:",
+    "hooks": [
+      { "title": "Me, te, se", "tone": "blue", "rows": [
+        ["je me", "myself", "Je me lève.", "I get up."],
+        ["tu te", "yourself", "Tu te lèves.", "You get up."],
+        ["il / elle / on se", "himself, herself", "Elle se lève.", "She gets up."],
+        ["nous nous", "ourselves", "Nous nous levons.", "We get up."],
+        ["vous vous", "yourself, yourselves", "Vous vous levez.", "You get up."],
+        ["ils / elles se", "themselves", "Ils se lèvent.", "They get up."]
+      ] },
+      { "title": "The order of the day", "tone": "orange", "rows": [
+        ["d'abord", "first", "D'abord, je me lève.", "First, I get up."],
+        ["ensuite", "then", "Ensuite, je prends le petit déjeuner.", "Then I have breakfast."],
+        ["après", "afterwards", "Après, je vais au travail.", "Afterwards, I go to work."],
+        ["enfin", "finally", "Enfin, je me couche.", "Finally, I go to bed."]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "Reflexive verbs and your day",
+    "sub": "Tap any form to hear it",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "Se lever, to get up", "speak": "form", "rows": [["je", "me lève"], ["tu", "te lèves"], ["il / elle / on", "se lève"], ["nous", "nous levons"], ["vous", "vous levez"], ["ils / elles", "se lèvent"]] },
+        { "title": "S'habiller, to get dressed", "speak": "form", "rows": [["je", "m'habille"], ["tu", "t'habilles"], ["il / elle / on", "s'habille"], ["nous", "nous habillons"], ["vous", "vous habillez"], ["ils / elles", "s'habillent"]] }
+      ] },
+      { "type": "list", "title": "My day", "rows": [["se lever", "to get up"], ["se doucher", "to have a shower"], ["s'habiller", "to get dressed"], ["prendre le petit déjeuner", "to have breakfast"], ["aller au travail", "to go to work"], ["déjeuner", "to have lunch"], ["rentrer", "to go home"], ["dîner", "to have dinner"], ["se coucher", "to go to bed"]] },
+      { "type": "list", "title": "How often", "rows": [["toujours", "always"], ["souvent", "often"], ["parfois", "sometimes"], ["jamais", "never (with ne)"], ["tôt", "early"], ["tard", "late"]] },
+      { "type": "twist", "title": "Le matin or du matin", "a": ["Je me lève à sept heures du matin.", "I get up at seven in the morning."], "b": ["Le matin, je me lève tôt.", "In the morning, I get up early."], "note": "Du matin comes after a clock time: sept heures du matin. Le matin on its own means in the morning in general. It works the same with le soir and l'après-midi." },
+      { "type": "note", "kind": "tip", "text": "The little word goes straight before the verb: je me lève, never je lève me. With a vowel, me and te shorten: je m'habille, tu t'habilles." },
+      { "type": "note", "kind": "warn", "text": "In a negative, ne … pas wraps the little word and the verb together: je ne me lève pas tôt. Ne goes before me. Jamais works like pas: je ne me couche jamais tôt." },
+      { "type": "note", "kind": "culture", "text": "Breakfast in France is small: a coffee, and bread with butter and jam, or a croissant. Lunch is often the main meal, and dinner is usually around eight." }
+    ]
+  },
+  "phrases": [
+    { "id": "c8-getup", "es": "Je me lève à sept heures.", "en": "I get up at seven.", "alts": [] },
+    { "id": "c8-late", "es": "Je me couche tard.", "en": "I go to bed late.", "alts": [] },
+    { "id": "c8-shower", "es": "Je me douche le matin.", "en": "I have a shower in the morning.", "alts": [] },
+    { "id": "c8-work", "es": "Je vais au travail en métro.", "en": "I go to work by métro.", "alts": [] },
+    { "id": "c8-lunch", "es": "Je déjeune à midi.", "en": "I have lunch at noon.", "alts": [] },
+    { "id": "c8-home", "es": "Je rentre à six heures.", "en": "I get home at six.", "alts": [] },
+    { "id": "c8-notearly", "es": "Je ne me lève pas tôt.", "en": "I don't get up early.", "alts": [] },
+    { "id": "c8-first", "es": "D'abord, je prends un café.", "en": "First, I have a coffee.", "alts": [] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "reflexive", "q": "Je ___ lève à sept heures.", "sub": "(I get up at seven.)", "options": ["me", "te", "se"], "answer": 0, "why": "Je goes with me." },
+    { "type": "mc", "skill": "reflexive", "q": "Elle ___ couche tard.", "sub": "(She goes to bed late.)", "options": ["se", "me", "te"], "answer": 0, "why": "Elle goes with se." },
+    { "type": "listen", "skill": "routine", "say": "Je me couche à onze heures.", "options": ["I go to bed at eleven", "I get up at eleven", "I have lunch at eleven"], "answer": 0, "why": "Je me couche is I go to bed." },
+    {
+      "type": "rapid", "skill": "reflexive", "prompt": "Rapid fire: me, te or se?",
+      "choices": [{ "key": "me", "label": "me", "tone": "blue" }, { "key": "te", "label": "te", "tone": "orange" }, { "key": "se", "label": "se", "tone": "green" }],
+      "items": [
+        { "blank": "Je ___ couche tard.", "full": "Je me couche tard.", "fill": "me", "answer": "me", "skill": "reflexive", "why": "Je goes with me." },
+        { "blank": "Tu ___ lèves à huit heures.", "full": "Tu te lèves à huit heures.", "fill": "te", "answer": "te", "skill": "reflexive", "why": "Tu goes with te." },
+        { "blank": "On ___ couche à minuit.", "full": "On se couche à minuit.", "fill": "se", "answer": "se", "skill": "reflexive", "why": "On goes with se, like il." },
+        { "blank": "Je ___ douche le matin.", "full": "Je me douche le matin.", "fill": "me", "answer": "me", "skill": "reflexive", "why": "Je goes with me." },
+        { "blank": "Elle ___ lève tôt.", "full": "Elle se lève tôt.", "fill": "se", "answer": "se", "skill": "reflexive", "why": "Elle goes with se." },
+        { "blank": "Tu ___ couches tard ?", "full": "Tu te couches tard ?", "fill": "te", "answer": "te", "skill": "reflexive", "why": "Tu goes with te." },
+        { "blank": "Il ___ douche à sept heures.", "full": "Il se douche à sept heures.", "fill": "se", "answer": "se", "skill": "reflexive", "why": "Il goes with se." },
+        { "blank": "Je ___ lève tôt.", "full": "Je me lève tôt.", "fill": "me", "answer": "me", "skill": "reflexive", "why": "Je goes with me." }
+      ]
+    },
+    { "type": "gap", "skill": "reflexive", "q": "Tu te ___ à huit heures.", "hint": "get up", "hintLabel": "Verb", "answer": ["lèves"], "why": "Tu goes with lèves, with an s." },
+    { "type": "gap", "skill": "reflexive", "q": "Nous nous ___ à sept heures.", "hint": "get up", "hintLabel": "Verb", "answer": ["levons"], "why": "Nous goes with levons." },
+    { "type": "gap", "skill": "reflexive", "q": "Je ne me ___ pas tôt.", "hint": "get up", "hintLabel": "Verb", "answer": ["lève"], "why": "Je ne me lève pas: the verb stays in the middle." },
+    { "type": "match", "skill": "routine", "prompt": "Match the verbs.", "pairs": [["se lever", "to get up"], ["se coucher", "to go to bed"], ["se doucher", "to have a shower"], ["déjeuner", "to have lunch"], ["rentrer", "to go home"]] },
+    { "type": "fix", "skill": "reflexive", "prompt": "Tap the word that is wrong.", "sentence": "Tu me lèves à huit heures.", "wrong": 1, "fixed": "Tu te lèves à huit heures.", "why": "Tu goes with te." },
+    { "type": "fix", "skill": "reflexive", "prompt": "Tap the word that is wrong.", "sentence": "Il se couches tard.", "wrong": 2, "fixed": "Il se couche tard.", "why": "Il goes with couche, with no s." },
+    { "type": "translate", "skill": "reflexive", "q": "I get up at seven.", "answer": ["je me lève à sept heures"], "why": "Je me lève: the little word me goes before the verb." },
+    { "type": "translate", "skill": "reflexive", "q": "She goes to bed late.", "answer": ["elle se couche tard"], "why": "Elle goes with se." },
+    { "type": "translate", "skill": "often", "q": "I don't get up early.", "answer": ["je ne me lève pas tôt"], "why": "Ne goes before me, and pas goes after the verb." },
+    { "type": "order", "skill": "order", "prompt": "First, I get up. Then I have breakfast.", "words": ["D'abord", "je", "me", "lève", "ensuite", "je", "prends", "le", "petit", "déjeuner"], "answer": "D'abord, je me lève. Ensuite, je prends le petit déjeuner.", "why": "D'abord and ensuite put your day in order." },
+    { "type": "mc", "skill": "reflexive", "prompt": "Which is right for I go to bed?", "q": "", "options": ["Je me couche.", "Je couche me.", "Je se couche."], "answer": 0, "why": "The little word goes before the verb, and je goes with me." },
+    { "type": "mc", "skill": "morning", "prompt": "Which means in the morning, in general?", "q": "", "options": ["Le matin", "Du matin", "À matin"], "answer": 0, "why": "Le matin is in the morning in general. Du matin follows a clock time." }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Describe your morning, using d'abord and ensuite.",
+    "starter": "D'abord, je me lève à…  Ensuite…",
+    "model": "D'abord, je me lève à sept heures. Ensuite, je prends le petit déjeuner. Après, je vais au travail.",
+    "checklist": ["Me, te or se goes before the verb", "D'abord, ensuite and après put it in order", "Times use à and heures"]
+  },
+  "boss": {
+    "title": "Chatting with your flatmate Baptiste",
+    "who": "Baptiste",
+    "skill": "reflexive",
+    "persona": "You are Baptiste, a friendly student who shares a flat in Lyon with the learner. Talk about your morning and evening routines and what time you get up and go to bed. Address the learner as tu. Keep every message to one short sentence.",
+    "turns": [
+      { "npc": "Salut. Tu te lèves à quelle heure, toi ?", "en": "Hi. What time do you get up?", "skill": "reflexive",
+        "choices": [["Je me lève à sept heures.", true, ""], ["Je lève à sept heures.", false, "The little word is missing: je me lève."], ["Je me lèves à sept heures.", false, "Je goes with lève, with no s."]] },
+      { "npc": "Tôt ! Moi, je me lève à dix heures le week-end.", "en": "Early. Me, I get up at ten at the weekend.", "skill": "often",
+        "choices": [["Moi, je ne me lève pas tard.", true, ""], ["Moi, je ne lève pas me tard.", false, "Me goes straight before the verb: je ne me lève pas."], ["Moi, je me ne lève pas tard.", false, "Ne comes before me: je ne me lève pas."]] },
+      { "npc": "Et le soir, tu te couches à quelle heure ?", "en": "And in the evening, what time do you go to bed?", "skill": "reflexive",
+        "choices": [["Je me couche à onze heures.", true, ""], ["Je me couches à onze heures.", false, "Je goes with couche, with no s."], ["Tu te couches à onze heures.", false, "You are talking about yourself, so je me couche, not tu te couches."]] },
+      { "npc": "Bon, je vais me coucher. Bonne nuit.", "en": "Right, I'm going to bed. Good night.", "skill": "routine",
+        "choices": [["Bonne nuit, Baptiste. À demain.", true, ""], ["Bon matin, Baptiste. À demain.", false, "Bon matin is not what people say in France. At night, say bonne nuit."], ["Bonne nuit, Baptiste. À hier.", false, "Hier is yesterday. See you tomorrow is à demain."]] }
+    ],
+    "closing": "À demain.",
+    "closingEn": "See you tomorrow.",
+    "chatOpening": "Tu te couches souvent tard ?",
+    "chatOpeningEn": "Do you often go to bed late?"
+  }
+}

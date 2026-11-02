@@ -131,8 +131,9 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
 
 ## French course (public/courses/fr-FR)
 - Kara's third course (added 2 Nov 2026): French (European), meaning French as spoken in France, A1 then A2, 25 min a day (`goalMins` 25, plan 2/7/8).
-  Chapters 1 to 4 are written (être and tu or vous, avoir and -er verbs and ne … pas, numbers and time, food and
-  ordering). The roadmap in course.json plans 5 to 12 and ends in an A2 checkpoint, like Spanish.
+  Chapters 1 to 8 are written (être and tu or vous, avoir and -er verbs and ne … pas, numbers and time, food and
+  ordering, aller and directions, hotels with vouloir and pouvoir, likes and plans, daily routine with reflexive verbs).
+  The roadmap in course.json plans 9 to 12 and ends in an A2 checkpoint, like Spanish.
 - Settings that differ from Spanish: `lang` fr-FR, `languageName` French, `genderedExamples` false (no `{o}` in French
   content: write both forms as answers, e.g. "je suis français" and "je suis française", with `who` labels),
   `invertedQuestion` false, `brand.mark` ç, `speaker` a person from France, and `ui` praise and labels in French.

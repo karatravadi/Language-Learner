@@ -1,0 +1,133 @@
+{
+  "n": 5,
+  "title": "Getting around",
+  "sub": "Je vais à la gare",
+  "can": "Say where you are going, ask the way, understand directions and take the métro.",
+  "mins": 15,
+  "doneText": "You can now say where you are going, ask the way, follow directions and buy a ticket.",
+  "skills": {
+    "aller": "Aller, to go",
+    "au-a-la": "À la, au, à l', aux",
+    "directions": "Directions",
+    "transport": "Transport",
+    "countries": "Countries and cities"
+  },
+  "discover": {
+    "intro": "Every sentence says where someone is going. Look at what happens to à and the word after it.",
+    "groups": [
+      { "label": "Blue", "tone": "blue", "lines": [["Je vais à la gare.", "I'm going to the station."], ["Je vais à la poste.", "I'm going to the post office."], ["Je vais à la plage.", "I'm going to the beach."]] },
+      { "label": "Orange", "tone": "orange", "lines": [["Je vais au café.", "I'm going to the café."], ["Je vais au musée.", "I'm going to the museum."], ["Je vais au marché.", "I'm going to the market."]] }
+    ],
+    "question": "Why à la in blue but au in orange?",
+    "options": [
+      "Gare, poste and plage are feminine, so it is à la. Café, musée and marché are masculine, and à + le joins into au.",
+      "Au is for places that are far away.",
+      "Au is for places where you eat or drink."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Think about un and une from the last chapter. Which nouns are masculine and which are feminine?",
+    "reveal": "À joins with le to make au, and with les to make aux. With la and l', nothing changes. And aller, to go, has its own forms:",
+    "hooks": [
+      { "title": "À and the", "tone": "blue", "rows": [
+        ["à la", "to the (feminine)", "Je vais à la gare.", "I'm going to the station."],
+        ["au", "to the (masculine)", "Je vais au musée.", "I'm going to the museum."],
+        ["à l'", "to the, before a vowel", "Je vais à l'hôtel.", "I'm going to the hotel."],
+        ["aux", "to the (several)", "Je vais aux toilettes.", "I'm going to the toilet."]
+      ] },
+      { "title": "Aller, to go", "tone": "orange", "rows": [
+        ["je vais", "I go", "Je vais à Lyon.", "I'm going to Lyon."],
+        ["tu vas", "you go (a friend)", "Tu vas où ?", "Where are you going?"],
+        ["il va", "he goes", "Il va au travail.", "He goes to work."],
+        ["nous allons", "we go", "Nous allons à la gare.", "We're going to the station."],
+        ["vous allez", "you go (polite)", "Vous allez où ?", "Where are you going?"],
+        ["ils vont", "they go", "Ils vont au café.", "They're going to the café."]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "Aller, prendre and places",
+    "sub": "Tap any form to hear it",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "Aller, to go", "speak": "form", "rows": [["je", "vais"], ["tu", "vas"], ["il / elle / on", "va"], ["nous", "allons"], ["vous", "allez"], ["ils / elles", "vont"]] },
+        { "title": "Prendre, to take", "speak": "form", "rows": [["je", "prends"], ["tu", "prends"], ["il / elle / on", "prend"], ["nous", "prenons"], ["vous", "prenez"], ["ils / elles", "prennent"]] }
+      ] },
+      { "type": "list", "title": "Finding the way", "rows": [["tout droit", "straight on"], ["à gauche", "on the left, to the left"], ["à droite", "on the right, to the right"], ["près d'ici", "near here"], ["loin", "far"], ["en face de", "opposite"], ["à côté de", "next to"]] },
+      { "type": "list", "title": "Transport", "rows": [["le métro", "the underground"], ["le bus", "the bus"], ["le train", "the train"], ["la gare", "the station"], ["l'arrêt", "the stop"], ["un billet", "a ticket"]] },
+      { "type": "list", "title": "Going to a country", "rows": [["en France", "to France (feminine)"], ["en Angleterre", "to England (feminine)"], ["au Royaume-Uni", "to the United Kingdom (masculine)"], ["au Canada", "to Canada (masculine)"], ["aux États-Unis", "to the United States (several)"]] },
+      { "type": "twist", "title": "À or chez", "a": ["Je vais à la boulangerie.", "I'm going to the bakery."], "b": ["Je vais chez le médecin.", "I'm going to the doctor's."], "note": "Chez means at the home or place of. Use it for people: chez moi is my place, chez Léo is Léo's place, chez le médecin is the doctor's. For other places, use à." },
+      { "type": "note", "kind": "warn", "text": "Cities take à: je vais à Lyon, je vais à Paris. Countries take en if they are feminine (most end in -e) and au if they are masculine. Do not say je vais en Lyon." },
+      { "type": "note", "kind": "tip", "text": "A feminine country name ends in -e, like la France and l'Espagne. Exceptions exist, so learn the common ones: au Canada, au Portugal, au Royaume-Uni." },
+      { "type": "note", "kind": "culture", "text": "On the métro, pick the line by its number, then follow the signs with the name of the last station in your direction. The sign says direction, and then that station's name. Say bonjour to staff before you ask a question." }
+    ]
+  },
+  "phrases": [
+    { "id": "c5-where", "es": "Où est la gare ?", "en": "Where is the station?", "alts": [] },
+    { "id": "c5-far", "es": "C'est loin ?", "en": "Is it far?", "alts": [] },
+    { "id": "c5-near", "es": "C'est près d'ici ?", "en": "Is it near here?", "alts": [] },
+    { "id": "c5-straight", "es": "Tout droit, puis à gauche.", "en": "Straight on, then left.", "alts": [] },
+    { "id": "c5-go", "es": "Je vais à Lyon.", "en": "I'm going to Lyon.", "alts": [] },
+    { "id": "c5-metro", "es": "Je prends le métro.", "en": "I'm taking the métro.", "alts": [] },
+    { "id": "c5-ticket", "es": "Un billet pour Lyon, s'il vous plaît.", "en": "A ticket to Lyon, please.", "alts": [] },
+    { "id": "c5-opposite", "es": "C'est en face de la gare.", "en": "It's opposite the station.", "alts": [] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "au-a-la", "q": "Je vais ___ gare.", "sub": "(I'm going to the station.)", "options": ["à la", "au", "aux"], "answer": 0, "why": "Gare is feminine: à la gare." },
+    { "type": "mc", "skill": "au-a-la", "q": "Je vais ___ café.", "sub": "(I'm going to the café.)", "options": ["au", "à la", "à l'"], "answer": 0, "why": "Café is masculine, and à + le joins into au." },
+    { "type": "listen", "skill": "directions", "say": "Tournez à gauche.", "options": ["Turn left", "Turn right", "Go straight on"], "answer": 0, "why": "À gauche is on the left." },
+    {
+      "type": "rapid", "skill": "au-a-la", "prompt": "Rapid fire: au, à la or à l'?",
+      "choices": [{ "key": "au", "label": "au", "tone": "blue" }, { "key": "ala", "label": "à la", "tone": "orange" }, { "key": "al", "label": "à l'", "tone": "green" }],
+      "items": [
+        { "blank": "Je vais ___ musée.", "full": "Je vais au musée.", "fill": "au", "answer": "au", "skill": "au-a-la", "why": "Musée is masculine." },
+        { "blank": "Je vais ___ gare.", "full": "Je vais à la gare.", "fill": "à la", "answer": "ala", "skill": "au-a-la", "why": "Gare is feminine." },
+        { "blank": "Je vais ___ hôtel.", "full": "Je vais à l'hôtel.", "fill": "à l'", "answer": "al", "skill": "au-a-la", "why": "Hôtel starts with a vowel sound." },
+        { "blank": "Nous allons ___ marché.", "full": "Nous allons au marché.", "fill": "au", "answer": "au", "skill": "au-a-la", "why": "Marché is masculine." },
+        { "blank": "Il va ___ poste.", "full": "Il va à la poste.", "fill": "à la", "answer": "ala", "skill": "au-a-la", "why": "Poste is feminine." },
+        { "blank": "Elle va ___ école.", "full": "Elle va à l'école.", "fill": "à l'", "answer": "al", "skill": "au-a-la", "why": "École starts with a vowel sound." },
+        { "blank": "Tu vas ___ cinéma ?", "full": "Tu vas au cinéma ?", "fill": "au", "answer": "au", "skill": "au-a-la", "why": "Cinéma is masculine." },
+        { "blank": "Ils vont ___ boulangerie.", "full": "Ils vont à la boulangerie.", "fill": "à la", "answer": "ala", "skill": "au-a-la", "why": "Boulangerie is feminine." }
+      ]
+    },
+    { "type": "gap", "skill": "aller", "q": "Je ___ à Paris.", "hint": "go", "hintLabel": "Verb", "answer": ["vais"], "why": "Je goes with vais." },
+    { "type": "gap", "skill": "aller", "q": "Nous ___ à la gare.", "hint": "go", "hintLabel": "Verb", "answer": ["allons"], "why": "Nous goes with allons." },
+    { "type": "gap", "skill": "transport", "q": "Je ___ le métro.", "hint": "take", "hintLabel": "Verb", "answer": ["prends"], "why": "Je prends: prendre is to take." },
+    { "type": "match", "skill": "directions", "prompt": "Match the directions.", "pairs": [["à gauche", "left"], ["à droite", "right"], ["tout droit", "straight on"], ["loin", "far"], ["près d'ici", "near here"]] },
+    { "type": "fix", "skill": "countries", "prompt": "Tap the word that is wrong.", "sentence": "Je vais en Lyon.", "wrong": 2, "fixed": "Je vais à Lyon.", "why": "Cities take à: à Lyon. En is for feminine countries." },
+    { "type": "fix", "skill": "aller", "prompt": "Tap the word that is wrong.", "sentence": "Tu vais au café.", "wrong": 1, "fixed": "Tu vas au café.", "why": "Tu goes with vas. Vais goes with je." },
+    { "type": "translate", "skill": "directions", "q": "Where is the station?", "answer": ["où est la gare", "c'est où la gare"], "who": ["", "everyday speech"], "why": "Où est la gare ? is the standard way to ask." },
+    { "type": "translate", "skill": "aller", "q": "I'm going to the museum.", "answer": ["je vais au musée"], "why": "À + le joins into au: au musée." },
+    { "type": "translate", "skill": "directions", "q": "Is it far?", "answer": ["c'est loin"], "why": "C'est loin ? Raise your voice at the end to ask." },
+    { "type": "order", "skill": "directions", "prompt": "Straight on, then left.", "words": ["Tout", "droit", "puis", "à", "gauche"], "answer": "Tout droit, puis à gauche.", "why": "Tout droit means straight on, and puis means then." },
+    { "type": "mc", "skill": "au-a-la", "prompt": "A friend says: Je vais chez Léo. Where is the friend going?", "q": "", "options": ["To Léo's place", "To a café called Léo", "To Léo's office"], "answer": 0, "why": "Chez Léo means at Léo's place." },
+    { "type": "mc", "skill": "countries", "q": "Je vais ___ France.", "sub": "(I'm going to France.)", "options": ["en", "à", "au"], "answer": 0, "why": "France is feminine, so en France." },
+    { "type": "gap", "skill": "countries", "q": "Je vais ___ États-Unis.", "hint": "to the", "hintLabel": "Word", "answer": ["aux"], "why": "États-Unis is several, so aux États-Unis." }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Ask a stranger where the station is, and say you are going to take the métro.",
+    "starter": "Pardon, où est…  Je prends…",
+    "model": "Pardon, où est la gare, s'il vous plaît ? Je prends le métro.",
+    "checklist": ["Où est for where is", "La gare is feminine, so la", "Je prends for I take"]
+  },
+  "boss": {
+    "title": "Asking the way in Lyon",
+    "who": "Camille",
+    "skill": "directions",
+    "persona": "You are Camille, a friendly passer-by in Lyon. The learner is a visitor who needs to find the station. Give simple directions: tout droit, à gauche, à droite, près, loin. Address the learner as vous. Keep every message to one short sentence.",
+    "turns": [
+      { "npc": "Bonjour. Je peux vous aider ?", "en": "Hello. Can I help you?", "skill": "directions",
+        "choices": [["Oui, pardon. Où est la gare, s'il vous plaît ?", true, ""], ["Oui, pardon. Où est le gare, s'il vous plaît ?", false, "Gare is feminine: la gare."], ["Oui, pardon. Où vas la gare, s'il vous plaît ?", false, "Où est means where is. Vas is a form of aller, to go."]] },
+      { "npc": "La gare ? C'est tout droit, puis à gauche.", "en": "The station? It's straight on, then left.", "skill": "directions",
+        "choices": [["Tout droit, puis à gauche. C'est loin ?", true, ""], ["Tout droit, puis à droite. C'est loin ?", false, "À droite is right. She said left: à gauche."], ["À gauche, puis tout droit. C'est loin ?", false, "She said straight on first, then left."]] },
+      { "npc": "Non, c'est à cinq minutes à pied.", "en": "No, it's five minutes on foot.", "skill": "au-a-la",
+        "choices": [["Très bien. Je vais à la gare, alors.", true, ""], ["Très bien. Je vais au gare, alors.", false, "Gare is feminine: à la gare."], ["Très bien. Je va à la gare, alors.", false, "Je goes with vais: je vais."]] },
+      { "npc": "Vous prenez le train ?", "en": "Are you taking the train?", "skill": "transport",
+        "choices": [["Oui, je prends le train pour Paris.", true, ""], ["Oui, je prend le train pour Paris.", false, "Je takes prends, with an s: je prends."], ["Oui, je prends le train à Paris.", false, "A train going to a place is pour: un train pour Paris."]] }
+    ],
+    "closing": "Bon voyage.",
+    "closingEn": "Have a good trip.",
+    "chatOpening": "Vous allez où ?",
+    "chatOpeningEn": "Where are you going?"
+  }
+}

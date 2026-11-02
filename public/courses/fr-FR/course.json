@@ -33,15 +33,15 @@
     "chapters/01-etre-tu-vous.json",
     "chapters/02-avoir-er-verbs.json",
     "chapters/03-numbers-time.json",
-    "chapters/04-food-ordering.json"
+    "chapters/04-food-ordering.json",
+    "chapters/05-getting-around.json",
+    "chapters/06-hotels-shopping.json",
+    "chapters/07-likes-plans.json",
+    "chapters/08-daily-routine.json"
   ],
   "words": "words.json",
   "glossary": "glossary.json",
   "roadmap": [
-    { "n": 5, "title": "Getting around", "can": "Ask the way and take the métro: aller, prendre, à la, au, à l'" },
-    { "n": 6, "title": "Hotels and shopping", "can": "Ask for what you need and read prices: vouloir, pouvoir, ce, cette" },
-    { "n": 7, "title": "Likes and plans", "can": "Say what you like and what you are going to do: aimer, aller plus infinitive" },
-    { "n": 8, "title": "Daily routine", "can": "Describe your day with verbs like se lever and se coucher" },
     { "n": 9, "title": "Irregular favourites", "can": "Master faire, venir, devoir, savoir and voir" },
     { "n": 10, "title": "What happened", "can": "Tell a short story with the passé composé: j'ai mangé, je suis allé" },
     { "n": 11, "title": "Describing people and places", "can": "Describe, compare and give opinions, with adjectives that agree" },

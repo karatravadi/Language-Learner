@@ -1,0 +1,130 @@
+{
+  "n": 6,
+  "title": "Hotels and shopping",
+  "sub": "Je voudrais une chambre",
+  "can": "Book a room, ask for what you need, say what you want and what you can do, and understand prices.",
+  "mins": 15,
+  "doneText": "You can now ask for a room, point at what you want to buy, ask politely and pay.",
+  "skills": {
+    "ce": "Ce, cet, cette, ces",
+    "vouloir": "Vouloir, to want",
+    "pouvoir": "Pouvoir, can",
+    "hotel": "Hotel and shopping words",
+    "polite": "Polite requests"
+  },
+  "discover": {
+    "intro": "Every sentence picks out one thing to buy. Spot what decides ce or cette.",
+    "groups": [
+      { "label": "Blue", "tone": "blue", "lines": [["Je prends ce pull.", "I'll take this jumper."], ["Je prends ce sac.", "I'll take this bag."], ["Je prends ce livre.", "I'll take this book."]] },
+      { "label": "Orange", "tone": "orange", "lines": [["Je prends cette robe.", "I'll take this dress."], ["Je prends cette veste.", "I'll take this jacket."], ["Je prends cette chambre.", "I'll take this room."]] }
+    ],
+    "question": "What decides ce or cette?",
+    "options": [
+      "The noun. Ce goes with masculine nouns and cette with feminine ones, like un and une.",
+      "The price of the thing.",
+      "Whether you are in a shop or a hotel."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Think about un and une. Pull, sac and livre are masculine. Robe, veste and chambre are feminine.",
+    "reveal": "Ce means this or that. It changes with the noun, just like un and une. Ask politely with je voudrais, and use vouloir and pouvoir for wanting and being able:",
+    "hooks": [
+      { "title": "This and these", "tone": "blue", "rows": [
+        ["ce", "this (masculine)", "Je prends ce pull.", "I'll take this jumper."],
+        ["cet", "this (masculine, before a vowel)", "Je prends cet hôtel.", "I'll take this hotel."],
+        ["cette", "this (feminine)", "Je prends cette chambre.", "I'll take this room."],
+        ["ces", "these (several)", "Je prends ces chaussures.", "I'll take these shoes."]
+      ] },
+      { "title": "Asking and wanting", "tone": "orange", "rows": [
+        ["je voudrais", "I would like", "Je voudrais une chambre.", "I'd like a room."],
+        ["vous avez", "do you have", "Vous avez une chambre ?", "Have you got a room?"],
+        ["je peux", "can I", "Je peux payer par carte ?", "Can I pay by card?"],
+        ["vous pouvez", "can you", "Vous pouvez répéter ?", "Can you repeat that?"]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "Vouloir, pouvoir and ce",
+    "sub": "Tap any form to hear it",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "Vouloir, to want", "speak": "form", "rows": [["je", "veux"], ["tu", "veux"], ["il / elle / on", "veut"], ["nous", "voulons"], ["vous", "voulez"], ["ils / elles", "veulent"]] },
+        { "title": "Pouvoir, can", "speak": "form", "rows": [["je", "peux"], ["tu", "peux"], ["il / elle / on", "peut"], ["nous", "pouvons"], ["vous", "pouvez"], ["ils / elles", "peuvent"]] },
+        { "title": "This and these", "speak": "form", "rows": [["this (masculine)", "ce"], ["this (masculine, before a vowel)", "cet"], ["this (feminine)", "cette"], ["these", "ces"]] }
+      ] },
+      { "type": "note", "kind": "tip", "text": "Je veux means I want, and it sounds blunt, like a child asking. Je voudrais means I would like, and it is what you say to a stranger. In a shop or hotel, ask with je voudrais or vous avez ... ?" },
+      { "type": "list", "title": "Hotel and shop words", "rows": [["une chambre", "a room"], ["une nuit", "a night"], ["le petit déjeuner", "breakfast"], ["la clé", "the key"], ["cher", "expensive"], ["pas cher", "cheap"], ["la taille", "the size"], ["un sac", "a bag"], ["des chaussures", "shoes"], ["payer par carte", "to pay by card"], ["en espèces", "in cash"]] },
+      { "type": "twist", "title": "Je peux or je voudrais", "a": ["Je peux payer par carte ?", "Can I pay by card? (asking if it is allowed)"], "b": ["Je voudrais payer par carte.", "I'd like to pay by card. (saying what you want)"], "note": "Je peux asks if something is allowed. Je voudrais says what you want. Both are polite. Vous pouvez is how you ask someone to do something: vous pouvez répéter ?" },
+      { "type": "note", "kind": "warn", "text": "In a shop, an assistant will ask je peux vous aider ?, can I help you? If you want to look on your own, say je regarde, merci. Do not just ignore the question." },
+      { "type": "note", "kind": "culture", "text": "In a French hotel, breakfast is often not included in the room price. Ask le petit déjeuner est compris ? to check. Say bonjour when you walk up to the desk, even if the receptionist is busy." }
+    ]
+  },
+  "phrases": [
+    { "id": "c6-room", "es": "Vous avez une chambre ?", "en": "Have you got a room?", "alts": [] },
+    { "id": "c6-nights", "es": "Je voudrais une chambre pour deux nuits.", "en": "I'd like a room for two nights.", "alts": [] },
+    { "id": "c6-breakfast", "es": "Le petit déjeuner est compris ?", "en": "Is breakfast included?", "alts": [] },
+    { "id": "c6-card", "es": "Je peux payer par carte ?", "en": "Can I pay by card?", "alts": [] },
+    { "id": "c6-expensive", "es": "C'est trop cher.", "en": "It's too expensive.", "alts": [] },
+    { "id": "c6-blue", "es": "Vous avez ça en bleu ?", "en": "Have you got this in blue?", "alts": [] },
+    { "id": "c6-take", "es": "Je prends ça.", "en": "I'll take this.", "alts": [] },
+    { "id": "c6-look", "es": "Je regarde, merci.", "en": "I'm just looking, thanks.", "alts": [] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "ce", "q": "Je prends ___ chambre.", "sub": "(I'll take this room.)", "options": ["cette", "ce", "ces"], "answer": 0, "why": "Chambre is feminine: cette chambre." },
+    { "type": "mc", "skill": "ce", "q": "Je prends ___ pull.", "sub": "(I'll take this jumper.)", "options": ["ce", "cette", "cet"], "answer": 0, "why": "Pull is masculine: ce pull." },
+    { "type": "listen", "skill": "hotel", "say": "Le petit déjeuner est compris ?", "options": ["Is breakfast included?", "What time is breakfast?", "Can I have breakfast in my room?"], "answer": 0, "why": "Compris means included." },
+    {
+      "type": "rapid", "skill": "pouvoir", "prompt": "Rapid fire: peux or peut?",
+      "choices": [{ "key": "peux", "label": "peux", "tone": "blue" }, { "key": "peut", "label": "peut", "tone": "orange" }],
+      "items": [
+        { "blank": "Je ___ payer par carte ?", "full": "Je peux payer par carte ?", "fill": "peux", "answer": "peux", "skill": "pouvoir", "why": "Je goes with peux." },
+        { "blank": "Il ___ payer par carte.", "full": "Il peut payer par carte.", "fill": "peut", "answer": "peut", "skill": "pouvoir", "why": "Il goes with peut." },
+        { "blank": "Tu ___ venir demain ?", "full": "Tu peux venir demain ?", "fill": "peux", "answer": "peux", "skill": "pouvoir", "why": "Tu goes with peux." },
+        { "blank": "Elle ___ parler anglais.", "full": "Elle peut parler anglais.", "fill": "peut", "answer": "peut", "skill": "pouvoir", "why": "Elle goes with peut." },
+        { "blank": "On ___ payer ici ?", "full": "On peut payer ici ?", "fill": "peut", "answer": "peut", "skill": "pouvoir", "why": "On takes the same form as il: peut." },
+        { "blank": "Je ___ vous aider.", "full": "Je peux vous aider.", "fill": "peux", "answer": "peux", "skill": "pouvoir", "why": "Je goes with peux." },
+        { "blank": "Léo ___ venir samedi.", "full": "Léo peut venir samedi.", "fill": "peut", "answer": "peut", "skill": "pouvoir", "why": "One person, like il: peut." },
+        { "blank": "Tu ___ répéter ?", "full": "Tu peux répéter ?", "fill": "peux", "answer": "peux", "skill": "pouvoir", "why": "Tu goes with peux." }
+      ]
+    },
+    { "type": "gap", "skill": "vouloir", "q": "Je ___ une chambre.", "hint": "would like", "hintLabel": "Verb", "answer": ["voudrais"], "why": "Je voudrais is the polite way to say I would like." },
+    { "type": "gap", "skill": "pouvoir", "q": "Vous ___ répéter ?", "hint": "can", "hintLabel": "Verb", "answer": ["pouvez"], "why": "Vous goes with pouvez." },
+    { "type": "gap", "skill": "ce", "q": "Je prends ___ chaussures.", "hint": "these", "hintLabel": "Word", "answer": ["ces"], "why": "Chaussures is several, so ces." },
+    { "type": "match", "skill": "hotel", "prompt": "Match the words.", "pairs": [["une chambre", "a room"], ["une nuit", "a night"], ["la clé", "the key"], ["cher", "expensive"], ["la taille", "the size"]] },
+    { "type": "fix", "skill": "ce", "prompt": "Tap the word that is wrong.", "sentence": "Je prends ce chambre.", "wrong": 2, "fixed": "Je prends cette chambre.", "why": "Chambre is feminine: cette chambre." },
+    { "type": "fix", "skill": "pouvoir", "prompt": "Tap the word that is wrong.", "sentence": "Je peut payer par carte ?", "wrong": 1, "fixed": "Je peux payer par carte ?", "why": "Je goes with peux. Peut goes with il, elle and on." },
+    { "type": "translate", "skill": "polite", "q": "Have you got a room?", "answer": ["vous avez une chambre"], "why": "Vous avez ... ? is the everyday way to ask in a hotel or shop." },
+    { "type": "translate", "skill": "pouvoir", "q": "Can I pay by card?", "answer": ["je peux payer par carte", "puis-je payer par carte"], "who": ["", "more formal"], "why": "Je peux ... ? asks if something is allowed." },
+    { "type": "translate", "skill": "hotel", "q": "It's too expensive.", "answer": ["c'est trop cher"], "why": "Trop means too much." },
+    { "type": "order", "skill": "polite", "prompt": "I would like a room for two nights.", "words": ["Je", "voudrais", "une", "chambre", "pour", "deux", "nuits"], "answer": "Je voudrais une chambre pour deux nuits.", "why": "Je voudrais, then what you want, then pour plus the number of nights." },
+    { "type": "mc", "skill": "polite", "prompt": "A shop assistant asks: Je peux vous aider ? You only want to look. What do you say?", "q": "", "options": ["Je regarde, merci.", "Je voudrais payer.", "Non, je ne peux pas."], "answer": 0, "why": "Je regarde, merci is the polite way to say you are just looking." },
+    { "type": "mc", "skill": "vouloir", "prompt": "Which is the polite way to ask for a room?", "q": "", "options": ["Je voudrais une chambre.", "Je veux une chambre."], "answer": 0, "why": "Je veux sounds blunt. Je voudrais is polite." },
+    { "type": "translate", "skill": "polite", "q": "I'll take this.", "answer": ["je prends ça"], "why": "Je prends ça is what you say when you have chosen." }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "You arrive at a hotel in Paris. Ask for a room for two nights and ask if breakfast is included.",
+    "starter": "Bonjour, je voudrais…  Le petit déjeuner…",
+    "model": "Bonjour, je voudrais une chambre pour deux nuits. Le petit déjeuner est compris ?",
+    "checklist": ["Je voudrais for a polite request", "Une chambre: chambre is feminine", "Pour plus the number of nights"]
+  },
+  "boss": {
+    "title": "Checking in at a hotel in Paris",
+    "who": "Monsieur Bernard",
+    "skill": "polite",
+    "persona": "You are Monsieur Bernard, a receptionist at a small hotel in Paris. The learner is a guest who wants a room. Ask how many nights, give the price, and talk about breakfast and paying by card. Address the learner as vous. Keep every message to one short sentence.",
+    "turns": [
+      { "npc": "Bonsoir. Je peux vous aider ?", "en": "Good evening. Can I help you?", "skill": "polite",
+        "choices": [["Bonsoir. Vous avez une chambre, s'il vous plaît ?", true, ""], ["Bonsoir. Je veux une chambre.", false, "Je veux is blunt. Je voudrais or vous avez ... ? is more polite."], ["Bonsoir. Vous avez un chambre, s'il vous plaît ?", false, "Chambre is feminine: une chambre."]] },
+      { "npc": "Oui. C'est pour combien de nuits ?", "en": "Yes. For how many nights?", "skill": "hotel",
+        "choices": [["Pour deux nuits, s'il vous plaît.", true, ""], ["Pour deux nuit, s'il vous plaît.", false, "More than one night is plural: nuits."], ["En deux nuits, s'il vous plaît.", false, "For a length of stay, say pour: pour deux nuits."]] },
+      { "npc": "Très bien. C'est quatre-vingts euros la nuit.", "en": "Fine. It's eighty euros a night.", "skill": "hotel",
+        "choices": [["Quatre-vingts euros ? Le petit déjeuner est compris ?", true, ""], ["Soixante euros ? Le petit déjeuner est compris ?", false, "Soixante is 60. Quatre-vingts is 80."], ["Quatorze euros ? Le petit déjeuner est compris ?", false, "Quatorze is 14. Quatre-vingts is 80."]] },
+      { "npc": "Non, le petit déjeuner est à dix euros.", "en": "No, breakfast is ten euros.", "skill": "pouvoir",
+        "choices": [["D'accord. Je peux payer par carte ?", true, ""], ["D'accord. Je peut payer par carte ?", false, "Je goes with peux: je peux."], ["D'accord. Je voudrais payer par carte ?", false, "Je voudrais says what you want. To ask if it is allowed, use je peux ?"]] }
+    ],
+    "closing": "Voici votre clé. Bonne nuit.",
+    "closingEn": "Here is your key. Good night.",
+    "chatOpening": "Vous restez combien de temps ?",
+    "chatOpeningEn": "How long are you staying?"
+  }
+}
