@@ -24,10 +24,28 @@ Read this first, then `HANDOVER.md` for the next phase of work.
 - AI tutor: key in `settings.env` (`PROVIDER=gemini` with `GEMINI_API_KEY`, or DeepSeek). The model name
   `gemini-3.5-flash-lite` in settings.env is unverified; the hosted Worker uses `gemini-3.5-flash-lite` (500 free requests a day), confirmed in AI Studio.
 
+## Hosted version (live since 2 Nov 2026)
+- https://espanol-trainer.karatravadi.workers.dev: one Cloudflare Worker (`worker/index.js`, `wrangler.jsonc`) serves
+  `public/` and answers `/api/*`. Free plan. Cloudflare Access (team `divine-mouse-214c`, All traffic) asks for sign-in
+  on every address; the Worker also verifies the `Cf-Access-Jwt-Assertion` token (issuer + AUD in `wrangler.jsonc`)
+  and fails closed if they are blank.
+- Who can sign in: Zero Trust → Access → Policies (currently Kara's Cloudflare account; add an Emails policy for friends).
+- D1 database `espanol-trainer` (WEUR): `progress` (sync, versioned saves) and `ai_usage` (daily AI caps).
+  Schema changes go in `migrations/`; `npm run deploy` applies them, then deploys.
+- AI: Gemini 3.5 Flash-Lite, free tier 15 a minute and 500 a day for the whole project. Caps: 60 per person, 450 total.
+  Key is a Worker secret (`npx wrangler secret put GEMINI_API_KEY`, Kara types it herself).
+- Local copy of the hosted version: `npm run dev:hosted` (port 3132, local database). `.dev.vars` (git-ignored) sets
+  `DEV_USER`, a test login honoured on localhost only; switch person with an `X-Dev-User` header.
+- Sync rules are `L.mergeState` in logic.js (unit-tested). The app only syncs when `/api/status` says `sync: true`,
+  so `start.bat` keeps working exactly as before.
+
 ## Layout
 ```
 server.js                 zero-dependency Node server: static files + /api/status + /api/ai (localhost only)
-lib/ai.js                 AI tutor core shared with the hosted function: provider, prompts, model call, shape()
+lib/ai.js                 AI tutor core shared with the hosted Worker: provider, prompts, model call, shape()
+worker/index.js           hosted Worker: Access check, /api/status, /api/ai (daily caps), /api/progress (sync)
+wrangler.jsonc            Worker config: assets, D1 binding, model, Access team and AUD, AI caps
+migrations/               D1 schema
 public/index.html         shell
 public/app.js             all screens, exercise engine, review, word of the day, practice timer
 public/logic.js           pure logic, unit-tested: judge(), spaced repetition, word picker, streaks
@@ -71,14 +89,16 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
 - No confetti, no looping or bouncy motion. One easing curve, `cubic-bezier(.22, 1, .36, 1)`.
 
 ## Safety rails to keep
-- The API key never reaches the browser. `/api/*` only answers localhost (Host and Origin checked), is rate-limited
-  (40 AI calls a minute), caps request bodies at 20 KB, wraps learner text in `<learner>` tags and reshapes model
+- The API key never reaches the browser. Locally, `/api/*` only answers localhost (Host and Origin checked) and is
+  rate-limited (40 AI calls a minute); hosted, it needs a verified Access token, same origin, and has daily caps.
+  Both cap AI request bodies at 20 KB, wraps learner text in `<learner>` tags and reshapes model
   output into fixed JSON before it reaches the page.
 - `confirm()` guards destructive actions (reset progress, leaving a lesson).
 
 ## Known gaps
-- Never run against live Gemini/DeepSeek, only a mock AI. Tests pass on Windows (2 Nov 2026).
+- Tests use a mock AI. Live Gemini and Access sign-in were checked by hand on 2 Nov 2026.
 - Listening exercises and speaker buttons need a Spanish voice in the browser (Edge on Windows usually has good ones).
   Headless Chrome has none, so the tests skip listening exercises.
-- Progress lives in one browser's localStorage, behind `store` in app.js, with export/import in Settings.
-  Syncing is the next phase (`HANDOVER.md`).
+- Locally, progress lives in one browser's localStorage, behind `store` in app.js, with export/import in Settings.
+- Hosted, the app needs the network to load (no service worker yet): offline use is Step 5 in `HANDOVER.md`.
+- `npm run e2e` covers the local server only; the hosted Worker was checked by hand with `wrangler dev`.

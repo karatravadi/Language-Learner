@@ -1,5 +1,9 @@
 # Handover: putting Español Trainer online for Kara and friends
 
+> Status, 2 Nov 2026: Steps 0 to 4 are done and live (see the Hosted version section of `CLAUDE.md`). We chose a
+> Worker with static assets rather than Pages. Left: friends' Emails policy, Step 5 (phone polish, offline),
+> and automated tests for the Worker and the merge-on-conflict path in the browser.
+
 Written 2 November 2026 at the end of a build session in Claude's cloud workspace. That workspace could not reach
 hosting providers, auth services or the AI APIs, and could not hold Kara's logins, so this phase moves to
 Claude Code on her Windows PC. Read `CLAUDE.md` first.
@@ -79,13 +83,13 @@ carry over.
 - Spanish voices on phones are usually good. Test the listening exercises on a real phone.
 
 ## Acceptance checklist
-- [ ] Kara signs in on PC and phone and sees the same streak, chapters and review cards
+- [ ] Kara signs in on PC and phone and sees the same streak, chapters and review cards (PC done 2 Nov; phone to check)
 - [ ] A friend signs in with their own email and starts from zero. A stranger can't get in
 - [ ] Offline on the phone: lessons still work, and progress syncs when back online without losing anything
-- [ ] The AI key is not visible in page source, network responses or the repo
+- [x] The AI key is not visible in page source, network responses or the repo
 - [ ] Per-person AI limit works, and the global cap works
 - [ ] `npm test` and `npm run e2e` pass. Add tests for the merge rules
-- [ ] Monthly cost confirmed with Kara (target £0)
+- [x] Monthly cost confirmed with Kara (target £0): Cloudflare free plans, Gemini free tier
 
 ## After this phase
 - **More Spanish chapters (the main ongoing need).** Chapters 5 to 12 are on the roadmap in `course.json`.
