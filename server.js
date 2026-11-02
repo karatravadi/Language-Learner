@@ -1,6 +1,6 @@
 'use strict';
 /*
-  Español Trainer: tiny local server. No dependencies. Needs Node.js 18+.
+  Stilus: tiny local server. No dependencies. Needs Node.js 18+.
   - Serves the app from ./public
   - Keeps your AI API key on this computer (never sent to the browser)
   - Exposes /api/status and /api/ai for the optional AI tutor features
@@ -140,7 +140,7 @@ server.on('error', err => {
 
 const listen = () => server.listen(PORT, '127.0.0.1', () => {
   const addr = 'http://localhost:' + PORT;
-  console.log('\n  Español Trainer is running at ' + addr);
+  console.log('\n  Stilus is running at ' + addr);
   console.log('  AI tutor: ' + (API_KEY ? 'ON (' + P.label + ', model ' + MODEL + ')' : 'OFF (add a key in settings.env to switch it on)'));
   console.log('  Leave this window open while you study. Close it to stop.\n');
   if (S.OPEN_BROWSER !== '0') {

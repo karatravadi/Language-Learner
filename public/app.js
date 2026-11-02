@@ -1,4 +1,4 @@
-/* Español Trainer: front end. Plain JavaScript, no dependencies.
+/* Stilus: front end. Plain JavaScript, no dependencies.
    Content (chapters, words, roadmap) is loaded from public/courses/, so adding a chapter or a whole course
    is a data change, not a code change. Icons: Lucide (ISC licence). */
 (function () {
@@ -312,7 +312,7 @@
     return (/\?\s*$/.test(q || '') ? o + s + '?' : s + '.') + (who && who[i] ? ' (' + who[i] + ')' : '');
   }).join(' / ');
   const brand = () => h('div', { class: 'brand' }, h('div', { class: 'mark', 'aria-hidden': 'true' }, (COURSE && COURSE.brand && COURSE.brand.mark) || 'ñ'),
-    h('div', { class: 'wordmark' }, (COURSE && COURSE.brand && COURSE.brand.name) || 'Español Trainer'));
+    h('div', { class: 'wordmark' }, (COURSE && COURSE.brand && COURSE.brand.name) || 'Stilus'));
   // The red pen: your words struck through, the right words written in.
   function pen(wrong, right) {
     return h('div', { class: 'pen' }, wrong ? h('span', { class: 'pen-x' }, wrong) : null, wrong ? h('span', { class: 'pen-arrow', 'aria-hidden': 'true' }, '→') : null, h('span', { class: 'pen-ok' }, right));
@@ -1416,14 +1416,14 @@
       UI = Object.assign({}, UI_DEFAULTS, COURSE.ui || {});
       PLAN = Object.assign({}, PLAN_DEFAULTS, COURSE.plan || {});
       TL = String(COURSE.lang || 'es').split('-')[0];
-      document.title = (COURSE.brand && COURSE.brand.name) || 'Español Trainer';
+      document.title = (COURSE.brand && COURSE.brand.name) || 'Stilus';
       try { localStorage.setItem(COURSE_KEY, COURSE.id); } catch (e) { /* private mode */ }
       // Other courses' storage keys, so a first visit can offer the name given there
       await Promise.all(COURSES.filter(c => c.id !== COURSE.id).map(async c => { try { c.storageKey = (await getJson('courses/' + c.file)).storageKey; } catch (e) { /* not needed */ } }));
       S = load(); pruneTime(); save();
       pickVoice();
     } catch (e) {
-      mount(h('div', { class: 'page' }, h('div', { class: 'top' }, h('div', { class: 'wordmark' }, 'Español Trainer')),
+      mount(h('div', { class: 'page' }, h('div', { class: 'top' }, h('div', { class: 'wordmark' }, 'Stilus')),
         h('h1', { class: 'page-title' }, 'The lessons could not load'),
         h('p', {}, 'Start the trainer with start.bat and open it at the address it shows (http://localhost:3000). Opening index.html directly does not work.'),
         h('p', { class: 'meta' }, String(e.message || e))));

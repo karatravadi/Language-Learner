@@ -1,5 +1,5 @@
 /*
-  Español Trainer, hosted: a Cloudflare Worker. Static files in public/ are served by Cloudflare before this runs;
+  Stilus, hosted: a Cloudflare Worker. Static files in public/ are served by Cloudflare before this runs;
   only /api/* reaches this code (see run_worker_first in wrangler.jsonc).
   - Who you are comes from Cloudflare Access: every API call checks the signed Cf-Access-Jwt-Assertion token.
   - The AI key is a Worker secret, never sent to the page. Prompts and output shaping are shared with server.js (lib/ai.js).

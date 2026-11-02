@@ -1,5 +1,5 @@
-ESPAÑOL TRAINER: SETUP (Windows, about 5 minutes, everything free)
-=====================================================================
+STILUS: SETUP (Windows, about 5 minutes, everything free)
+=========================================================
 
 You need ONE thing installed: Node.js. It is free and runs the little local
 server behind the app. Nothing else.

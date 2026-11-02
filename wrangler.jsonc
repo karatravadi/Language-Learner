@@ -1,4 +1,4 @@
-// Hosted Español Trainer: one Worker serves public/ as static files and answers /api/*.
+// Hosted Stilus: one Worker serves public/ as static files and answers /api/*.
 // Deploy: npx wrangler deploy. Local: npm run dev:hosted (uses a local database and .dev.vars).
 {
   "$schema": "node_modules/wrangler/config-schema.json",

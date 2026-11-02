@@ -1,4 +1,4 @@
-# Handover: putting Español Trainer online for Kara and friends
+# Handover: putting Stilus online for Kara and friends
 
 > Status, 2 Nov 2026: Steps 0 to 4 are done and live (see the Hosted version section of `CLAUDE.md`). We chose a
 > Worker with static assets rather than Pages. Left: friends' Emails policy, Step 5 (phone polish, offline),
@@ -95,14 +95,10 @@ carry over.
 ## After this phase
 - **More Spanish chapters (the main ongoing need).** Chapters 9 to 14 are on the roadmap in `course.json`.
   Then extend towards B1: preterite vs imperfect, the future, giving opinions, the subjunctive basics.
-- **Latin course**, as `public/courses/la/`. The engine is course-aware, but Latin needs:
-  - Reading-first chapters: declension and conjugation tables, labelling cases, Latin to English.
-  - A macron-tolerant answer checker (extend `stripAcc` in logic.js).
-  - Flexible word order in `order` exercises (accept several orders, or drop the type).
-  - Classical pronunciation. Browsers rarely have a Latin voice.
-  - Real public-domain texts (Caesar, Cicero, Catullus, Ovid) with your own glosses.
-  - Roman history as the content of example sentences.
-  - Links to Romance descendants (aqua → agua, acqua, eau), shown on both courses' word of the day.
+- **Latin course**, in `public/courses/la/` with 4 chapters (see "Latin course" in CLAUDE.md). Next:
+  - Chapters 5 to 12 from its roadmap, ending in real public-domain texts (Caesar, Catullus, Ovid, Cicero).
+  - A Latinist's check of the 4 chapters and the glossary.
+  - Romance descendants are on the Latin word of the day; the Spanish one could show its Latin root too.
 
   Free references to check against: Perseus Digital Library, Whitaker's Words, Dickinson College Commentaries.
 

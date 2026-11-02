@@ -1,4 +1,4 @@
-# Español Trainer: project notes for Claude Code
+# Stilus: project notes for Claude Code
 
 Read this first, then `HANDOVER.md` for the next phase of work.
 
@@ -8,16 +8,17 @@ Read this first, then `HANDOVER.md` for the next phase of work.
   audio-only format she finds easy to switch off from, so variety and active practice matter more than volume.
 - She studies about **45 minutes a day** in the app. The home screen plans that day: word of the day (3 min), review (10),
   one chapter (15), then weak spots or AI chat (15). Practice time only counts while she is active on the page.
-- Later: 2 to 3 friends with their own synced progress (see `HANDOVER.md`), and a **Latin** course
-  (reading classical texts, Roman history, roots of the Romance languages) taking about 30 to 40% of her time.
-  Spanish stays the priority.
+- Later: 2 to 3 friends with their own synced progress (see `HANDOVER.md`). A **Latin** course (reading classical
+  texts, Roman history, roots of the Romance languages) has 4 chapters, about 25 minutes a day next to the Spanish.
+  Spanish stays the priority and the default course. See "Latin course" below.
 - Kara is on Windows. Always lead with free options and state the price of anything paid upfront.
 
 ## Run and test
 - `start.bat` (Windows) or `npm start`: local server at http://localhost:3000. No `npm install` needed to run.
 - `npm test`: unit tests (answer checking, spaced repetition, every chapter's answers) plus the content checker.
 - `npm run check`: content checker only. Run it after every content edit.
-- `npm run e2e`: plays every chapter in headless Chrome with a fake AI and without AI, at desktop and phone width.
+- `npm run e2e`: plays every chapter in headless Chrome with a fake AI and without AI, at desktop and phone width:
+  Spanish three times, Latin twice, then switches course and back.
   Needs `npm install` once (puppeteer, dev only). It also fails on emoji, `null/undefined/NaN` text or horizontal overflow.
   On Kara's PC, use the installed Chrome instead of Puppeteer's download (npm 11 blocks that script):
   `CHROME="C:/Program Files/Google/Chrome/Application/chrome.exe" npm run e2e`.
@@ -51,9 +52,11 @@ public/app.js             all screens, exercise engine, review, word of the day,
 public/logic.js           pure logic, unit-tested: judge(), spaced repetition, word picker, streaks
 public/style.css          design tokens and components (direction in the header comment)
 public/fonts/             Instrument Sans + Newsreader (OFL), bundled so it works offline
-public/courses/index.json list of courses
-public/courses/es-ES/     course.json (meta, skills, roadmap), chapters/*.json, words.json
+public/courses/index.json list of courses, each with a label for the course switch in the header
+public/courses/es-ES/     course.json (meta, skills, roadmap), chapters/*.json, words.json, glossary.json
+public/courses/la/        the Latin course, same shape
 tools/check-content.js    validates every course file; tests/unit.js runs it too
+tools/spanish-text.js     the course-language text a learner can tap; lists words still missing from the glossary
 tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.js, mock-ai.js
 ```
 
@@ -102,3 +105,20 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
 - Locally, progress lives in one browser's localStorage, behind `store` in app.js, with export/import in Settings.
 - Hosted, the app needs the network to load (no service worker yet): offline use is Step 5 in `HANDOVER.md`.
 - `npm run e2e` covers the local server only; the hosted Worker was checked by hand with `wrangler dev`.
+
+## Latin course (public/courses/la)
+- Kara's second course, about 25 min a day next to 45 min of Spanish. Reading first: classical Latin,
+  Roman history as content, Romance roots (note kind `roots`, word-of-the-day `kin` lines).
+- Course choice: `?course=<id>`, then the last course used on the device (`trainer-course` in localStorage), then the
+  first in index.json. The header switch (Español | Latīna) reloads with `?course=`. Each course has its own
+  `storageKey`, so progress, streak, goal, review deck and sync row are separate.
+- course.json drives the differences, and Spanish needs none of it: `ui` labels (merged over `UI_DEFAULTS` in app.js),
+  `plan` minutes, `goalMins` 25, `ui.marksOptional` (macrons never count as mistakes), `ui.invertedQuestion` false,
+  `genderedExamples` false, `scenarioReplies: "en"` (scenario replies are English, so only the character's lines are
+  tappable Latin), `brand`, and for the AI `languageName`, `roleplayRules`, `speaker`, `glossNote`.
+- Exercise extras: translate `"dir": "toEn"` (Latin to English, compared ignoring articles and contractions, and
+  no review card on a miss), order `"promptStyle": "target"` with optional `alts`. No listen type: browsers have no
+  Latin voice, so there are no speaker buttons either.
+- Every Latin word shown needs an entry in `la/glossary.json` (same checker rule as Spanish). Gaps can be endings
+  (`Puell___`): the checker reads the sentence with the answer written in, and the app leaves the stem untappable.
+- Macrons in all Latin text. Check new Latin against Whitaker's Words or Wheelock (both free online).

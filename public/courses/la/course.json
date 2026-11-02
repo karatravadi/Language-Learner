@@ -6,7 +6,7 @@
   "languageName": "Latin",
   "voice": ["^la"],
   "storageKey": "latin-trainer-v1",
-  "brand": { "name": "Latin Trainer", "mark": "Æ" },
+  "brand": { "name": "Stilus", "mark": "Æ" },
   "goalMins": 25,
   "plan": { "word": 2, "review": 6, "practise": 5 },
   "genderedExamples": false,
