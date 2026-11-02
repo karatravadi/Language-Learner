@@ -12,7 +12,7 @@ const L = require('../public/logic.js');
 const PUBLIC = path.join(__dirname, '..', 'public');
 const COURSES = path.join(PUBLIC, 'courses');
 const TONES = new Set(['blue', 'orange', 'green']);
-const NOTE_KINDS = new Set(['tip', 'spain', 'warn', 'culture']);
+const NOTE_KINDS = new Set(['tip', 'spain', 'warn', 'culture', 'roots']);
 const TOKEN = /\{(?!name\}|o\})[^}]*\}/; // only {name} and {o} are allowed
 
 function check(dir = COURSES) {
@@ -43,12 +43,17 @@ function check(dir = COURSES) {
   for (const entry of index.courses || []) {
     where.length = 0; where.push('course ' + entry.id);
     if (courseIds.has(entry.id)) err('duplicate course id');
+    if (!isStr(entry.label)) err('index.json entry needs a short label for the course switch');
     courseIds.add(entry.id);
     const course = readJson(path.join(dir, entry.file));
     if (!course) continue;
     if (course.id !== entry.id) err('course.json id "' + course.id + '" does not match index.json');
     for (const k of ['title', 'level', 'lang', 'storageKey', 'tutor', 'words']) if (!isStr(course[k])) err('missing ' + k);
     if (!Array.isArray(course.voice) || !course.voice.length) err('voice must be a list of patterns');
+    if (course.goalMins != null && typeof course.goalMins !== 'number') err('goalMins must be a number');
+    if (course.plan != null && (typeof course.plan !== 'object' || Object.values(course.plan).some(v => typeof v !== 'number'))) err('plan must give minutes as numbers: {word, review, practise}');
+    if (course.ui && course.ui.praise && (!Array.isArray(course.ui.praise) || !course.ui.praise.length)) err('ui.praise must be a list');
+    if (course.scenarioReplies != null && course.scenarioReplies !== 'en') err('scenarioReplies can only be "en" (scenario replies in English); leave it out for replies in the course language');
     const base = path.dirname(path.join(dir, entry.file));
     const skillNames = Object.assign({}, course.skills || {});
     const cardIds = new Set();
@@ -160,6 +165,7 @@ function check(dir = COURSES) {
             break;
           case 'translate':
             need(e, 'q'); answers(e.answer); need(e, 'why');
+            if (e.dir != null && e.dir !== 'toEn') err('dir can only be "toEn" (translate into English); leave it out for into the course language');
             (e.answer || []).forEach(a => { if (/[¿?¡!.,]/.test(a)) warn('answer "' + a + '" has punctuation (ignored when checking, but keep answers plain)'); });
             // who: one label per answer (tú, usted, said by a woman…), shown in the feedback; "" for none
             if (e.who !== undefined && (!Array.isArray(e.who) || e.who.length !== (e.answer || []).length || e.who.some(x => typeof x !== 'string'))) err('"who" needs one label (or "") per answer');
@@ -168,6 +174,8 @@ function check(dir = COURSES) {
             need(e, 'prompt'); need(e, 'answer');
             if (!Array.isArray(e.words) || e.words.length < 2) err('needs at least 2 word tiles');
             else if (L.judge(e.words.join(' '), [e.answer]) !== 'ok') err('tiles in the given order do not build the answer "' + e.answer + '"');
+            if (e.promptStyle != null && e.promptStyle !== 'target') err('promptStyle can only be "target" (prompt in the course language, build the English)');
+            if (e.alts != null && (!Array.isArray(e.alts) || !e.alts.every(isStr))) err('alts must be a list of other right answers');
             break;
           }
           case 'fix': {
@@ -248,7 +256,7 @@ function check(dir = COURSES) {
     else if (new Set(opts).size !== opts.length) err(label + ' options repeat');
   }
 
-  // Glossary: every Spanish word a course shows must have a meaning, so tapping a word always answers.
+  // Glossary: every word a course shows in its language must have a meaning, so tapping a word always answers.
   for (const entry of (index.courses || [])) {
     const file = path.join(dir, entry.file); const course = readJson(file);
     if (!course || !course.glossary) continue;

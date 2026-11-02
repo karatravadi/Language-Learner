@@ -40,6 +40,16 @@ t('pickWord: skips used', () => assert.equal(L.pickWord({ byDate: { '2026-11-01'
 t('pickWord: cycles to oldest when exhausted', () => assert.equal(L.pickWord({ byDate: { '2026-10-30': 'b', '2026-10-31': 'a', '2026-11-01': 'c' }, learned: [] }, ids, '2026-11-02'), 'b'));
 t('shuffle keeps elements', () => assert.deepEqual(L.shuffle([1, 2, 3, 4]).sort(), [1, 2, 3, 4]));
 
+// ---------- English answers (Latin → English) and optional macrons ----------
+t('english: articles do not matter', () => assert.equal(L.judge('Island is small', ['the island is small'], { english: true }), 'ok'));
+t('english: a / the swap is fine', () => assert.equal(L.judge('A girl sees the farmer.', ['the girl sees the farmer'], { english: true }), 'ok'));
+t('english: contractions are expanded', () => assert.equal(L.judge("I'm not afraid", ['i am not afraid'], { english: true }), 'ok'));
+t("english: don't = do not", () => assert.equal(L.judge("I don't fear", ['i do not fear'], { english: true }), 'ok'));
+t('english: swapped roles are still wrong', () => assert.equal(L.judge('The farmer sees the girl', ['the girl sees the farmer'], { english: true }), 'no'));
+t('macrons optional: typed without macrons is ok', () => assert.equal(L.judge('Roma est magna', ['Rōma est magna.'], { marksOptional: true }), 'ok'));
+t('macrons count when not optional (Spanish accents)', () => assert.equal(L.judge('estais', ['estáis']), 'accent'));
+t('macrons optional: a wrong ending is still wrong', () => assert.equal(L.judge('puella', ['puellam'], { marksOptional: true }), 'no'));
+
 // ---------- sync merge (this device a, server b) ----------
 const M = L.mergeState;
 t('srsGrade stamps seen', () => assert.equal(L.srsGrade({ id: 'a', box: 1 }, true, now).seen, now));
@@ -108,7 +118,8 @@ for (const entry of readJson(path.join(COURSES, 'index.json')).courses) {
   for (const f of course.chapters) {
     const ch = readJson(path.join(base, f));
     const tag = course.id + ' ch' + ch.n;
-    t(tag + ': gap and translate answers accept themselves', () => ch.exercises.filter(e => e.type === 'gap' || e.type === 'translate').forEach(e => e.answer.forEach(a => assert.equal(L.judge(a, e.answer), 'ok', a))));
+    t(tag + ': gap and translate answers accept themselves', () => ch.exercises.filter(e => e.type === 'gap' || e.type === 'translate').forEach(e => e.answer.forEach(a => assert.equal(L.judge(a, e.answer, { english: e.dir === 'toEn' }), 'ok', a))));
+    if (course.ui && course.ui.marksOptional) t(tag + ': answers typed without macrons are accepted', () => ch.exercises.filter(e => e.type === 'gap' || e.type === 'translate').forEach(e => e.answer.forEach(a => assert.equal(L.judge(L.stripAcc(a), e.answer, { english: e.dir === 'toEn', marksOptional: true }), 'ok', a))));
     t(tag + ': translate answers match with punctuation and a capital, as typed', () => ch.exercises.filter(e => e.type === 'translate').forEach(e => { const a = e.answer[0]; assert.notEqual(L.judge('¿' + a.charAt(0).toUpperCase() + a.slice(1) + '?', e.answer), 'no'); }));
     t(tag + ': phrase cards accept their own Spanish and alternatives', () => ch.phrases.forEach(p => [p.es].concat(p.alts || []).forEach(a => assert.equal(L.judge(a, [p.es].concat(p.alts || [])), 'ok', a))));
     t(tag + ': fix sentences keep the same word count once fixed', () => ch.exercises.filter(e => e.type === 'fix').forEach(e => assert.equal(e.fixed.split(' ').length, e.sentence.split(' ').length, e.sentence)));
@@ -157,6 +168,17 @@ const AI = require('../lib/ai.js');
     assert.ok(m[0].content.includes('¿Necesitas algo?')); assert.ok(m[1].content.includes('Sí') && m[1].content.includes('Un mapa'));
   });
   t('ai: unknown mode is rejected', () => assert.equal(AI.buildMessages(courses, { mode: 'free' }), null));
+  t('ai: Latin prompts name Latin, use its role-play rules and never count macrons', () => {
+    const r = AI.buildMessages(courses, { mode: 'roleplay', course: 'la', chapter: 1, user: 'salve' })[0].content;
+    assert.match(r, /Magistra Līvia/); assert.match(r, /mostly in plain English/); assert.match(r, /next line in Latin/); assert.doesNotMatch(r, /Spanish:/);
+    const c = AI.buildMessages(courses, { mode: 'correct', course: 'la', task: 't', sentence: 'Roma est magna' })[1].content;
+    assert.match(c, /learner's Latin/); assert.match(c, /never count a missing macron/);
+  });
+  t('ai: Spanish prompts are unchanged by the course options', () => {
+    const c = AI.buildMessages(courses, { mode: 'correct', course: 'es-ES', task: 't', sentence: 'hola' })[1].content;
+    assert.match(c, /learner's Spanish/); assert.match(c, /Treat missing accents as a minor mistake/);
+    assert.match(AI.buildMessages(courses, { mode: 'wotd', course: 'es-ES', word: 'w', meaning: 'm', question: 'q', sentence: 's' })[1].content, /a person from Spain/);
+  });
   t('ai: shape keeps only known fields', () => assert.deepEqual(Object.keys(AI.shape('correct', { verdict: 'wow', injected: 1 })), ['verdict', 'corrected', 'mistakes', 'praise', 'tip']));
   t('ai: shape replaces an unknown verdict', () => assert.equal(AI.shape('correct', { verdict: 'wow' }).verdict, 'good'));
   t('ai: provider picks gemini when only its key is set', () => assert.equal(AI.providerFrom({ GEMINI_API_KEY: 'k' }).name, 'gemini'));

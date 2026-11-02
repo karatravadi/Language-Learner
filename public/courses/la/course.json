@@ -1,0 +1,59 @@
+{
+  "id": "la",
+  "title": "Classical Latin",
+  "level": "Beginner · reading first",
+  "lang": "la",
+  "languageName": "Latin",
+  "voice": ["^la"],
+  "storageKey": "latin-trainer-v1",
+  "brand": { "name": "Latin Trainer", "mark": "Æ" },
+  "goalMins": 25,
+  "plan": { "word": 2, "review": 6, "practise": 5 },
+  "genderedExamples": false,
+  "scenarioReplies": "en",
+  "speaker": "a Roman writer",
+  "glossNote": "amāre · tū",
+  "tutor": "classical Latin, reading-first, with links to Spanish and other Romance languages (macrons are optional: never count a missing macron as a mistake)",
+  "roleplayRules": "Stay in character. Talk mostly in plain English, and give one very short classical Latin sentence at a time (with macrons) for the learner to read, translate or answer. Use only grammar and words from the chapter and earlier ones. Point out Spanish, Italian, French and English words that come from the Latin when it helps.",
+  "ui": {
+    "praise": ["Rēctē!", "Optimē!", "Bene!", "Euge!", "Ita vērō!"],
+    "wordOfDay": "Verbum diēī · Word of the day",
+    "chapterDone": "Caput {n} perfectum",
+    "wordUsed": "Optimē! You used it well",
+    "translateTo": "Translate into Latin",
+    "placeholderTo": "In Latin",
+    "translateFrom": "Translate into English",
+    "placeholderFrom": "In English",
+    "bossHelp": "Read each line, then pick what it means. Tap Hint for a word you don't know.",
+    "enLabel": "Hint",
+    "chatPlaceholder": "Ask in English, or try a Latin sentence",
+    "chatHelp": "",
+    "chatEnd": "Valē! That was a long conversation, well done.",
+    "welcome": "The examples use your name. You can change it later in Settings.",
+    "invertedQuestion": false,
+    "marksOptional": true
+  },
+  "skills": {
+    "roots": "Roots in Spanish and other languages",
+    "culture": "Roman life and history",
+    "sound": "Classical pronunciation"
+  },
+  "chapters": [
+    "chapters/01-est-sunt.json",
+    "chapters/02-accusative.json",
+    "chapters/03-verbs.json",
+    "chapters/04-ablative-caesar.json"
+  ],
+  "words": "words.json",
+  "glossary": "glossary.json",
+  "roadmap": [
+    { "n": 5, "title": "Describing words", "can": "Adjectives in -us, -a, -um, and the vocative: Et tū, Brūte?" },
+    { "n": 6, "title": "Was and will be", "can": "The imperfect and future: erat, amābat, amābit" },
+    { "n": 7, "title": "The third declension", "can": "rēx, urbs, nox, lūx: the nouns behind most Spanish words in -ión and -dad" },
+    { "n": 8, "title": "Vēnī, vīdī, vīcī", "can": "The perfect tense, and reading Caesar's most famous boast" },
+    { "n": 9, "title": "Reading Caesar", "can": "A real passage from the Gallic War, with notes" },
+    { "n": 10, "title": "Catullus", "can": "Love poems from the first century BC: Ōdī et amō" },
+    { "n": 11, "title": "Ovid", "can": "Myths from the Metamorphōsēs: Daedalus and Icarus" },
+    { "n": 12, "title": "Cicero", "can": "Speeches and letters: Ō tempora, ō mōrēs" }
+  ]
+}

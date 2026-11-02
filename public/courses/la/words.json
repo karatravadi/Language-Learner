@@ -1,0 +1,379 @@
+[
+  {
+    "id": "la-aqua",
+    "es": "aqua",
+    "en": "water",
+    "pos": "noun",
+    "ex": {
+      "es": "Aqua est frīgida.",
+      "en": "The water is cold."
+    },
+    "q": "Write a short Latin sentence describing it, like the example: \"Aqua est…\"",
+    "starter": "Aqua est…",
+    "forms": [
+      "aqu"
+    ],
+    "alts": [],
+    "kin": "Spanish agua · Italian acqua · French eau · English aquarium"
+  },
+  {
+    "id": "la-terra",
+    "es": "terra",
+    "en": "land, earth",
+    "pos": "noun",
+    "ex": {
+      "es": "Terra est magna.",
+      "en": "The land is big."
+    },
+    "q": "Write a short Latin sentence describing it, like the example: \"Terra est…\"",
+    "starter": "Terra est…",
+    "forms": [
+      "terr"
+    ],
+    "alts": [],
+    "kin": "Spanish tierra · Italian terra · French terre · English terrain"
+  },
+  {
+    "id": "la-vita",
+    "es": "vīta",
+    "en": "life",
+    "pos": "noun",
+    "ex": {
+      "es": "Vīta est pulchra.",
+      "en": "Life is beautiful."
+    },
+    "q": "Write a short Latin sentence describing it, like the example: \"Vīta est…\"",
+    "starter": "Vīta est…",
+    "forms": [
+      "vit"
+    ],
+    "alts": [],
+    "kin": "Spanish vida · Italian vita · French vie · English vital"
+  },
+  {
+    "id": "la-amicus",
+    "es": "amīcus",
+    "en": "friend",
+    "pos": "noun",
+    "ex": {
+      "es": "Marcus est amīcus.",
+      "en": "Marcus is a friend."
+    },
+    "q": "Write a short Latin sentence describing it, like the example: \"Amīcus est…\"",
+    "starter": "Amīcus est…",
+    "forms": [
+      "amic"
+    ],
+    "alts": [],
+    "kin": "Spanish amigo · Italian amico · French ami · English amicable"
+  },
+  {
+    "id": "la-luna",
+    "es": "lūna",
+    "en": "moon",
+    "pos": "noun",
+    "ex": {
+      "es": "Lūna est clāra.",
+      "en": "The moon is bright."
+    },
+    "q": "Write a short Latin sentence describing it, like the example: \"Lūna est…\"",
+    "starter": "Lūna est…",
+    "forms": [
+      "lun"
+    ],
+    "alts": [],
+    "kin": "Spanish luna · Italian luna · French lune · English lunar"
+  },
+  {
+    "id": "la-stella",
+    "es": "stella",
+    "en": "star",
+    "pos": "noun",
+    "ex": {
+      "es": "Stellae sunt pulchrae.",
+      "en": "The stars are beautiful."
+    },
+    "q": "Write a short Latin sentence describing it, like the example: \"Stella est…\"",
+    "starter": "Stella est…",
+    "forms": [
+      "stell"
+    ],
+    "alts": [],
+    "kin": "Spanish estrella · Italian stella · French étoile · English stellar"
+  },
+  {
+    "id": "la-porta",
+    "es": "porta",
+    "en": "gate, door",
+    "pos": "noun",
+    "ex": {
+      "es": "Porta est magna.",
+      "en": "The gate is big."
+    },
+    "q": "Write a short Latin sentence describing it, like the example: \"Porta est…\"",
+    "starter": "Porta est…",
+    "forms": [
+      "port"
+    ],
+    "alts": [],
+    "kin": "Spanish puerta · Italian porta · French porte · English portal"
+  },
+  {
+    "id": "la-filia",
+    "es": "fīlia",
+    "en": "daughter",
+    "pos": "noun",
+    "ex": {
+      "es": "Fīlia est laeta.",
+      "en": "The daughter is happy."
+    },
+    "q": "Write a short Latin sentence describing it, like the example: \"Fīlia est…\"",
+    "starter": "Fīlia est…",
+    "forms": [
+      "fili"
+    ],
+    "alts": [],
+    "kin": "Spanish hija · Italian figlia · French fille · English filial"
+  },
+  {
+    "id": "la-lingua",
+    "es": "lingua",
+    "en": "tongue, language",
+    "pos": "noun",
+    "ex": {
+      "es": "Lingua Latīna est antīqua.",
+      "en": "The Latin language is ancient."
+    },
+    "q": "Write a short Latin sentence describing it, like the example: \"Lingua est…\"",
+    "starter": "Lingua est…",
+    "forms": [
+      "lingu"
+    ],
+    "alts": [],
+    "kin": "Spanish lengua · Italian lingua · French langue · English language"
+  },
+  {
+    "id": "la-liber",
+    "es": "liber",
+    "en": "book",
+    "pos": "noun",
+    "ex": {
+      "es": "Liber est novus.",
+      "en": "The book is new."
+    },
+    "q": "Write a short Latin sentence describing it, like the example: \"Liber est…\"",
+    "starter": "Liber est…",
+    "forms": [
+      "liber",
+      "libr"
+    ],
+    "alts": [],
+    "kin": "Spanish libro · Italian libro · French livre · English library"
+  },
+  {
+    "id": "la-annus",
+    "es": "annus",
+    "en": "year",
+    "pos": "noun",
+    "ex": {
+      "es": "Annus est longus.",
+      "en": "The year is long."
+    },
+    "q": "Write a short Latin sentence describing it, like the example: \"Annus est…\"",
+    "starter": "Annus est…",
+    "forms": [
+      "ann"
+    ],
+    "alts": [],
+    "kin": "Spanish año · Italian anno · French an · English annual"
+  },
+  {
+    "id": "la-bonus",
+    "es": "bonus",
+    "en": "good",
+    "pos": "describing word",
+    "ex": {
+      "es": "Amīcus est bonus.",
+      "en": "The friend is good."
+    },
+    "q": "Use it to describe something in a short Latin sentence: \"… est bonus.\"",
+    "starter": "… est bonus.",
+    "forms": [
+      "bon"
+    ],
+    "alts": [],
+    "kin": "Spanish bueno · Italian buono · French bon · English bonus"
+  },
+  {
+    "id": "la-novus",
+    "es": "novus",
+    "en": "new",
+    "pos": "describing word",
+    "ex": {
+      "es": "Templum est novum.",
+      "en": "The temple is new."
+    },
+    "q": "Use it to describe something in a short Latin sentence: \"… est novus.\"",
+    "starter": "… est novus.",
+    "forms": [
+      "nov"
+    ],
+    "alts": [],
+    "kin": "Spanish nuevo · Italian nuovo · French nouveau · English novel"
+  },
+  {
+    "id": "la-caelum",
+    "es": "caelum",
+    "en": "sky",
+    "pos": "noun",
+    "ex": {
+      "es": "Caelum est clārum.",
+      "en": "The sky is clear."
+    },
+    "q": "Write a short Latin sentence describing it, like the example: \"Caelum est…\"",
+    "starter": "Caelum est…",
+    "forms": [
+      "cael"
+    ],
+    "alts": [],
+    "kin": "Spanish cielo · Italian cielo · French ciel · English celestial"
+  },
+  {
+    "id": "la-verbum",
+    "es": "verbum",
+    "en": "word",
+    "pos": "noun",
+    "ex": {
+      "es": "Verbum est Latīnum.",
+      "en": "The word is Latin."
+    },
+    "q": "Write a short Latin sentence describing it, like the example: \"Verbum est…\"",
+    "starter": "Verbum est…",
+    "forms": [
+      "verb"
+    ],
+    "alts": [],
+    "kin": "Spanish verbo · Italian verbo · French verbe · English verb"
+  },
+  {
+    "id": "la-formosa",
+    "es": "fōrmōsa",
+    "en": "beautiful",
+    "pos": "describing word",
+    "ex": {
+      "es": "Rosa est fōrmōsa.",
+      "en": "The rose is beautiful."
+    },
+    "q": "Use it to describe something in a short Latin sentence: \"… est fōrmōsa.\"",
+    "starter": "… est fōrmōsa.",
+    "forms": [
+      "formos"
+    ],
+    "alts": [],
+    "kin": "Spanish hermosa · Portuguese formosa · Romanian frumoasă"
+  },
+  {
+    "id": "la-fabula",
+    "es": "fābula",
+    "en": "story",
+    "pos": "noun",
+    "ex": {
+      "es": "Fābula est longa.",
+      "en": "The story is long."
+    },
+    "q": "Write a short Latin sentence describing it, like the example: \"Fābula est…\"",
+    "starter": "Fābula est…",
+    "forms": [
+      "fabul"
+    ],
+    "alts": [],
+    "kin": "Spanish fábula and habla (speech) · Italian favola · French fable"
+  },
+  {
+    "id": "la-oculus",
+    "es": "oculus",
+    "en": "eye",
+    "pos": "noun",
+    "ex": {
+      "es": "Oculus est parvus.",
+      "en": "The eye is small."
+    },
+    "q": "Write a short Latin sentence describing it, like the example: \"Oculus est…\"",
+    "starter": "Oculus est…",
+    "forms": [
+      "ocul"
+    ],
+    "alts": [],
+    "kin": "Spanish ojo · Italian occhio · French œil · English ocular"
+  },
+  {
+    "id": "la-nox",
+    "es": "nox",
+    "en": "night",
+    "pos": "noun",
+    "ex": {
+      "es": "Nox est longa.",
+      "en": "The night is long."
+    },
+    "q": "Write a short Latin sentence describing it, like the example: \"Nox est…\"",
+    "starter": "Nox est…",
+    "forms": [
+      "nox",
+      "noct"
+    ],
+    "alts": [],
+    "kin": "Spanish noche · Italian notte · French nuit · English nocturnal"
+  },
+  {
+    "id": "la-dicere",
+    "es": "dīcere",
+    "en": "to say",
+    "pos": "verb",
+    "ex": {
+      "es": "Quid dīcis?",
+      "en": "What are you saying?"
+    },
+    "q": "Ask a friend the question in the example, or answer it in Latin.",
+    "starter": "Quid…",
+    "forms": [
+      "dic"
+    ],
+    "alts": [],
+    "kin": "Spanish decir · Italian dire · French dire · English dictate"
+  },
+  {
+    "id": "la-facere",
+    "es": "facere",
+    "en": "to make, to do",
+    "pos": "verb",
+    "ex": {
+      "es": "Quid facis?",
+      "en": "What are you doing?"
+    },
+    "q": "Ask a friend the question in the example, or answer it in Latin.",
+    "starter": "Quid…",
+    "forms": [
+      "fac"
+    ],
+    "alts": [],
+    "kin": "Spanish hacer · Italian fare · French faire · English factory"
+  },
+  {
+    "id": "la-carpe-diem",
+    "es": "carpe diem",
+    "en": "seize the day",
+    "pos": "phrase · Horace",
+    "ex": {
+      "es": "Carpe diem!",
+      "en": "Seize the day!"
+    },
+    "q": "Write the phrase, then add a short Latin sentence of your own.",
+    "starter": "Carpe diem! …",
+    "forms": [
+      "carpe",
+      "diem"
+    ],
+    "alts": [],
+    "kin": "Horace, Odes 1.11. Spanish día comes from diēs, day"
+  }
+]

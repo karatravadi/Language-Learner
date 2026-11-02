@@ -1,0 +1,125 @@
+{
+  "n": 4,
+  "title": "Gallia est omnis dīvīsa",
+  "sub": "in, ad, ex, cum: places, and Caesar",
+  "can": "Say where things are and where people are going, then read Caesar's famous first line.",
+  "mins": 20,
+  "doneText": "You can now tell staying from going, use in, ad, ex and cum, and you've read Caesar himself.",
+  "skills": {
+    "abl": "Staying: in, ex, cum + -ā, -ō",
+    "motion": "Going: ad, in + -am, -um",
+    "places": "Places in the Roman world",
+    "caesar": "Reading Caesar"
+  },
+  "discover": {
+    "intro": "Both colours use the same little word, in. Spot why the ending after it changes.",
+    "groups": [
+      { "label": "Blue", "tone": "blue", "lines": [["Marcus in vīllā est.", "Marcus is in the villa."], ["Puella in viā ambulat.", "The girl is walking in the street."], ["Servī in oppidō labōrant.", "The slaves are working in the town."]] },
+      { "label": "Orange", "tone": "orange", "lines": [["Marcus in vīllam ambulat.", "Marcus walks into the villa."], ["Puella in viam ambulat.", "The girl walks into the street."], ["Servī in oppidum ambulant.", "The slaves walk into the town."]] }
+    ],
+    "question": "Why vīllā in blue but vīllam in orange?",
+    "options": [
+      "Blue is where someone is (ending -ā or -ō). Orange is movement into a place (ending -am or -um).",
+      "Blue is one person, orange is several.",
+      "Blue is the past tense, orange the present."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. In each pair, is someone staying put or going somewhere?",
+    "reveal": "Staying put takes the ablative (-ā, -ō). Going into or towards takes the receiver ending (-am, -um), as if the place receives you. The little words that go with each:",
+    "hooks": [
+      { "title": "Staying: + ablative", "tone": "blue", "rows": [
+        ["in", "in, on", "in vīllā", "in the villa"],
+        ["ex, ē", "out of", "ex oppidō", "out of the town"],
+        ["cum", "with", "cum amīcō", "with a friend"],
+        ["ā, ab", "from", "ā Rōmā", "from Rome"]
+      ] },
+      { "title": "Going: + receiver ending", "tone": "orange", "rows": [
+        ["in", "into", "in vīllam", "into the villa"],
+        ["ad", "to, towards", "ad templum", "to the temple"],
+        ["per", "through", "per viās", "through the streets"]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "The ablative",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "vīlla", "tone": "blue", "speak": "form", "rows": [["doer", "vīlla"], ["receiver", "vīllam"], ["ablative", "vīllā"]] },
+        { "title": "oppidum", "tone": "orange", "speak": "form", "rows": [["doer", "oppidum"], ["receiver", "oppidum"], ["ablative", "oppidō"]] },
+        { "title": "amīcus", "tone": "green", "speak": "form", "rows": [["doer", "amīcus"], ["receiver", "amīcum"], ["ablative", "amīcō"]] }
+      ] },
+      { "type": "note", "kind": "tip", "text": "The ablative -ā looks like the doer -a. Only the macron (a long vowel) tells them apart, which is why textbooks print macrons. Roman inscriptions had none: context did the work." },
+      { "type": "note", "kind": "roots", "text": "Spanish con and en come from Latin cum and in. Latin mēcum (with me) survives in Spanish conmigo, which says \"with\" twice: con + migo." },
+      { "type": "twist", "title": "in + ablative or receiver", "a": ["In Britanniā sumus.", "We are in Britain."], "b": ["In Britanniam nāvigāmus.", "We are sailing to Britain."], "note": "Same little word, two meanings. The ending decides: -ā means in (staying), -am means into or to (going)." },
+      { "type": "note", "kind": "culture", "text": "Julius Caesar invaded Britain twice, in 55 and 54 BC, and wrote about his campaigns himself in the Gallic War, the book generations of Latin students start with. You'll read its famous first line in the scenario." },
+      { "type": "list", "title": "Places in the Roman world", "rows": [["Rōma", "Rome"], ["Italia", "Italy"], ["Gallia", "Gaul (roughly France)"], ["Britannia", "Britain"], ["Hispānia", "Spain"], ["prōvincia", "province (hence Provence)"], ["vīlla", "country house"], ["habitāre", "to live (somewhere)"]] }
+    ]
+  },
+  "phrases": [
+    { "id": "l4-villa", "es": "Marcus in vīllā est.", "en": "Marcus is in the villa.", "alts": ["Marcus est in vīllā."] },
+    { "id": "l4-friend", "es": "cum amīcō", "en": "with a friend", "alts": [] },
+    { "id": "l4-rome", "es": "ā Rōmā", "en": "from Rome", "alts": ["ab Rōmā"] },
+    { "id": "l4-sail", "es": "In Britanniam nāvigāmus.", "en": "We are sailing to Britain.", "alts": ["Nāvigāmus in Britanniam."] },
+    { "id": "l4-gaul", "es": "Gallia est omnis dīvīsa in partēs trēs.", "en": "All Gaul is divided into three parts.", "alts": [] },
+    { "id": "l4-mecum", "es": "Venī mēcum.", "en": "Come with me.", "alts": [] },
+    { "id": "l4-temple", "es": "Ad templum ambulō.", "en": "I'm walking to the temple.", "alts": [] },
+    { "id": "l4-spain", "es": "In Hispāniā habitāmus.", "en": "We live in Spain.", "alts": ["Habitāmus in Hispāniā."] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "abl", "q": "Marcus in ___ est.", "sub": "(Marcus is in the villa.)", "options": ["vīllā", "vīllam", "vīllae"], "answer": 0, "why": "Est means he's staying put: in + ablative, vīllā." },
+    {
+      "type": "rapid", "skill": "abl", "prompt": "Rapid fire: staying or going?",
+      "choices": [{ "key": "stay", "label": "staying", "tone": "blue" }, { "key": "go", "label": "going", "tone": "orange" }],
+      "items": [
+        { "text": "in vīllā", "full": "in vīllā: in the villa", "answer": "stay", "skill": "abl", "why": "-ā: ablative, staying." },
+        { "text": "in oppidum", "full": "in oppidum: into the town", "answer": "go", "skill": "motion", "why": "-um: going into." },
+        { "text": "in forō", "full": "in forō: in the forum", "answer": "stay", "skill": "abl", "why": "-ō: ablative, staying." },
+        { "text": "in Britanniam", "full": "in Britanniam: to Britain", "answer": "go", "skill": "motion", "why": "-am: going to." },
+        { "text": "in viā", "full": "in viā: in the street", "answer": "stay", "skill": "abl", "why": "-ā: ablative, staying." },
+        { "text": "ad templum", "full": "ad templum: to the temple", "answer": "go", "skill": "motion", "why": "Ad always means going towards." },
+        { "text": "in Italiā", "full": "in Italiā: in Italy", "answer": "stay", "skill": "abl", "why": "-ā: ablative, staying." },
+        { "text": "in Galliam", "full": "in Galliam: into Gaul", "answer": "go", "skill": "motion", "why": "-am: going into." }
+      ]
+    },
+    { "type": "gap", "skill": "abl", "q": "Servī in oppid___ labōrant.", "hint": "staying: ablative", "hintLabel": "Ending", "answer": ["ō"], "why": "They work in the town, staying put: oppidō." },
+    { "type": "gap", "skill": "motion", "q": "Puella ad templ___ ambulat.", "hint": "going towards", "hintLabel": "Ending", "answer": ["um"], "why": "Ad takes the receiver ending: ad templum." },
+    { "type": "translate", "dir": "toEn", "skill": "abl", "q": "Cum amīcō ambulō.", "answer": ["i am walking with a friend", "i walk with a friend", "i am walking with my friend", "i walk with my friend"], "why": "Cum (with) + ablative amīcō. Ambulō: I walk." },
+    { "type": "match", "skill": "places", "prompt": "Match the places.", "pairs": [["Gallia", "Gaul"], ["Britannia", "Britain"], ["Hispānia", "Spain"], ["prōvincia", "province"], ["vīlla", "country house"]] },
+    { "type": "fix", "skill": "motion", "prompt": "Tap the word that is wrong.", "sentence": "Marcus ad templō ambulat.", "wrong": 2, "fixed": "Marcus ad templum ambulat.", "why": "Ad (towards) takes the receiver ending: templum." },
+    { "type": "order", "skill": "motion", "promptStyle": "target", "prompt": "In Britanniam nāvigāmus.", "words": ["We", "are", "sailing", "to", "Britain"], "answer": "We are sailing to Britain.", "alts": ["We sail to Britain.", "We are sailing into Britain."], "why": "In + Britanniam (-am): going to. Nāvigāmus: we sail." },
+    { "type": "mc", "skill": "roots", "prompt": "Spanish conmigo (with me) comes from Latin…", "q": "", "options": ["mēcum", "cum amīcō", "in mē"], "answer": 0, "why": "Mēcum, with cum stuck on the end. Spanish later added con at the front too." },
+    { "type": "translate", "skill": "abl", "q": "We live in Spain.", "answer": ["in hispāniā habitāmus", "habitāmus in hispāniā"], "why": "Living somewhere is staying put: in + ablative, Hispāniā. Habitāmus: we live." },
+    { "type": "mc", "skill": "caesar", "prompt": "Caesar opens the Gallic War with this line. Into how many parts is Gaul divided?", "q": "Gallia est omnis dīvīsa in partēs trēs.", "options": ["three", "two", "four"], "answer": 0, "why": "Trēs is three, like Spanish tres. Caesar goes on to name the peoples of each part." },
+    { "type": "gap", "skill": "abl", "q": "Marcus ā Rōm___ venit.", "hint": "from: ablative", "hintLabel": "Ending", "answer": ["ā"], "why": "Ā (from) takes the ablative: ā Rōmā. Venit: he comes." },
+    { "type": "translate", "dir": "toEn", "skill": "abl", "q": "Ex oppidō ambulant.", "answer": ["they walk out of the town", "they are walking out of the town", "they walk out of town", "they are walking out of town"], "why": "Ex (out of) + ablative oppidō. -nt: they." },
+    { "type": "fix", "skill": "abl", "prompt": "Tap the word that is wrong.", "sentence": "In vīllam sumus.", "wrong": 1, "fixed": "In vīllā sumus.", "why": "Sumus means staying put, so in + ablative: in vīllā." },
+    { "type": "translate", "skill": "abl", "q": "with a friend", "answer": ["cum amīcō"], "why": "Cum + ablative: amīcō." }
+  ],
+  "write": {
+    "title": "Write it in Latin",
+    "task": "Write three Latin sentences about a journey: where you are, where you're going, and who you're with.",
+    "starter": "In … sum.  Ad … ambulō.  Cum …",
+    "model": "In Hispāniā sum. Ad oppidum ambulō. Cum amīcō in Galliam nāvigō.",
+    "checklist": ["Staying: in + -ā or -ō", "Going: ad or in + -am or -um", "With someone: cum + -ā or -ō"]
+  },
+  "boss": {
+    "title": "Reading: Caesar's Gaul",
+    "who": "Magistra Līvia",
+    "skill": "caesar",
+    "persona": "You are Magistra Līvia, a warm Latin teacher who loves Julius Caesar's Gallic War. The learner knows the present tense, nouns in -a, -us and -um as doer, receiver and ablative, and in, ad, ex, ā, cum. Chat in English about Caesar, Gaul and Britain, and give very short Latin sentences in Caesar's style for them to read, gently glossing any new word.",
+    "turns": [
+      { "npc": "Gallia est omnis dīvīsa in partēs trēs.", "en": "omnis = all, dīvīsa = divided, partēs trēs = three parts", "skill": "caesar",
+        "choices": [["All Gaul is divided into three parts.", true, ""], ["Gaul is divided into many parts.", false, "Trēs is three: think Spanish tres."], ["All Italy is divided into three parts.", false, "Gallia is Gaul, roughly modern France."]] },
+      { "npc": "Belgae, Aquītānī et Celtae in Galliā habitant.", "en": "habitant = they live", "skill": "abl",
+        "choices": [["The Belgae, the Aquitani and the Celts live in Gaul.", true, ""], ["The Belgae and the Aquitani live in Italy.", false, "In Galliā: in Gaul."], ["The Belgae, the Aquitani and the Celts are moving into Gaul.", false, "Galliā ends in -ā: staying put, so they live there."]] },
+      { "npc": "Caesar cum mīlitibus in Galliam venit.", "en": "mīlitibus = soldiers, venit = comes", "skill": "motion",
+        "choices": [["Caesar comes into Gaul with soldiers.", true, ""], ["Caesar comes out of Gaul with soldiers.", false, "In + Galliam (-am) means into. Out of would be ex Galliā."], ["Caesar is in Gaul with soldiers.", false, "Galliam ends in -am: going into, not staying."]] },
+      { "npc": "Posteā in Britanniam nāvigat.", "en": "posteā = afterwards", "skill": "motion",
+        "choices": [["Afterwards he sails to Britain.", true, ""], ["Afterwards he sails from Britain.", false, "From would be ā Britanniā. In + -am means to or into."], ["Afterwards they sail to Britain.", false, "Nāvigat ends in -t: he. They would be -nt."]] }
+    ],
+    "closing": "Optimē! Caesarem ipsum lēgistī.",
+    "closingEn": "Excellent! You've read Caesar himself.",
+    "chatOpening": "Quid dē Caesare scīs?",
+    "chatOpeningEn": "What do you know about Caesar? Ask me anything about him, or try a sentence in Latin."
+  }
+}

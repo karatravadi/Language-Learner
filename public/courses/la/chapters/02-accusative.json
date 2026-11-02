@@ -1,0 +1,126 @@
+{
+  "n": 2,
+  "title": "Who does what to whom",
+  "sub": "The object: -am and -um",
+  "can": "Read sentences where someone sees, loves or has something, whatever the word order.",
+  "mins": 18,
+  "doneText": "You can now tell the doer from the receiver by their endings, whatever order the words are in.",
+  "skills": {
+    "acc": "The receiver (object): -am, -um",
+    "verb-3": "Verbs: -t and -nt",
+    "word-order": "Reading free word order",
+    "decl2": "Nouns in -us and -um"
+  },
+  "discover": {
+    "intro": "In each colour the words move around, but the meaning stays the same. Work out how Latin shows who sees whom.",
+    "groups": [
+      { "label": "Blue", "tone": "blue", "lines": [["Puella agricolam videt.", "The girl sees the farmer."], ["Agricolam puella videt.", "The girl sees the farmer."]] },
+      { "label": "Orange", "tone": "orange", "lines": [["Agricola puellam videt.", "The farmer sees the girl."], ["Puellam agricola videt.", "The farmer sees the girl."]] }
+    ],
+    "question": "How does Latin show who sees whom?",
+    "options": [
+      "The one being seen gets -m on the end: puellam, agricolam.",
+      "The first word is always the one doing the seeing.",
+      "The verb changes depending on who sees whom."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. The order changes inside each colour but the meaning doesn't. Look at the word endings instead.",
+    "reveal": "Endings show each word's job, not word order. The doer (subject) ends in -a; the one on the receiving end (object) ends in -am. Romans usually put the verb last.",
+    "hooks": [
+      { "title": "Doer and receiver", "tone": "blue", "rows": [
+        ["-a", "doer, 1st group", "puella", "the girl (does it)"],
+        ["-am", "receiver, 1st group", "puellam", "(sees) the girl"],
+        ["-us", "doer, 2nd group", "servus", "the slave (does it)"],
+        ["-um", "receiver, 2nd group", "servum", "(sees) the slave"]
+      ] },
+      { "title": "The verb comes last", "tone": "orange", "rows": [
+        ["-t", "he / she / it", "videt", "sees"],
+        ["-nt", "they", "vident", "see"],
+        ["-at", "verbs like amāre", "amat", "loves"],
+        ["-et", "verbs like vidēre", "habet", "has"]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "Three kinds of noun",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "puella (1st)", "tone": "blue", "speak": "form", "rows": [["doer", "puella · puellae"], ["receiver", "puellam · puellās"]] },
+        { "title": "servus (2nd)", "tone": "orange", "speak": "form", "rows": [["doer", "servus · servī"], ["receiver", "servum · servōs"]] },
+        { "title": "templum (2nd, neuter)", "tone": "green", "speak": "form", "rows": [["doer", "templum · templa"], ["receiver", "templum · templa"]] }
+      ] },
+      { "type": "note", "kind": "tip", "text": "Each table shows one · more than one. To read a sentence: find the verb (usually last), then the doer (-a, -us, -ae, -ī), then the receiver (-am, -um, -ās, -ōs)." },
+      { "type": "note", "kind": "roots", "text": "Spanish nouns mostly come from the Latin receiver form: rosam became rosa, mūrum became muro, amīcum became amigo, templum became templo." },
+      { "type": "twist", "title": "Same words, opposite meaning", "a": ["Servus dominum videt.", "The slave sees the master."], "b": ["Servum dominus videt.", "The master sees the slave."], "note": "Only the endings swapped. The -us word does the seeing, the -um word gets seen, whatever the order." },
+      { "type": "note", "kind": "culture", "text": "Slavery was everywhere in Rome. Servī worked in houses, on farms and in mines, and many were prisoners of war. Latin texts mention them constantly, so servus is one of the first words you need." },
+      { "type": "list", "title": "Words for this chapter", "rows": [["servus", "slave"], ["dominus", "master"], ["amīcus", "friend"], ["equus", "horse"], ["templum", "temple"], ["oppidum", "town"], ["videt", "sees"], ["amat", "loves"], ["habet", "has"], ["laudat", "praises"]] }
+    ]
+  },
+  "phrases": [
+    { "id": "l2-sees", "es": "Puella agricolam videt.", "en": "The girl sees the farmer.", "alts": ["Agricolam puella videt."] },
+    { "id": "l2-horse", "es": "Dominus equum amat.", "en": "The master loves the horse.", "alts": ["Equum dominus amat."] },
+    { "id": "l2-friends", "es": "Amīcī templum vident.", "en": "The friends see the temple.", "alts": ["Templum amīcī vident."] },
+    { "id": "l2-praise", "es": "Poēta Rōmam laudat.", "en": "The poet praises Rome.", "alts": ["Rōmam poēta laudat."] },
+    { "id": "l2-has", "es": "Agricola equum habet.", "en": "The farmer has a horse.", "alts": ["Equum agricola habet."] },
+    { "id": "l2-town", "es": "Oppidum est parvum.", "en": "The town is small.", "alts": ["Oppidum parvum est."] },
+    { "id": "l2-err", "es": "Errāre hūmānum est.", "en": "To err is human.", "alts": [] },
+    { "id": "l2-carpe", "es": "Carpe diem.", "en": "Seize the day.", "alts": [] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "acc", "q": "Agricola ___ videt.", "sub": "(The farmer sees the girl.)", "options": ["puellam", "puella", "puellae"], "answer": 0, "why": "The girl is the one being seen: receiver, so puellam." },
+    {
+      "type": "rapid", "skill": "acc", "prompt": "Rapid fire: doer or receiver?",
+      "choices": [{ "key": "doer", "label": "doer", "tone": "blue" }, { "key": "rec", "label": "receiver", "tone": "orange" }],
+      "items": [
+        { "text": "puella", "full": "puella: doer", "answer": "doer", "skill": "acc", "why": "-a is the doer." },
+        { "text": "servum", "full": "servum: receiver", "answer": "rec", "skill": "acc", "why": "-um is the receiver." },
+        { "text": "amīcus", "full": "amīcus: doer", "answer": "doer", "skill": "acc", "why": "-us is the doer." },
+        { "text": "agricolam", "full": "agricolam: receiver", "answer": "rec", "skill": "acc", "why": "-am is the receiver." },
+        { "text": "equus", "full": "equus: doer", "answer": "doer", "skill": "acc", "why": "-us is the doer." },
+        { "text": "Rōmam", "full": "Rōmam: receiver", "answer": "rec", "skill": "acc", "why": "-am is the receiver." },
+        { "text": "dominum", "full": "dominum: receiver", "answer": "rec", "skill": "acc", "why": "-um is the receiver." },
+        { "text": "puellae", "full": "puellae: doers", "answer": "doer", "skill": "acc", "why": "-ae is more than one doer." }
+      ]
+    },
+    { "type": "translate", "dir": "toEn", "skill": "acc", "q": "Servus dominum videt.", "answer": ["the slave sees the master", "the slave is looking at the master", "the slave is watching the master"], "why": "Servus (-us) does the seeing, dominum (-um) is seen." },
+    { "type": "translate", "dir": "toEn", "skill": "word-order", "q": "Dominum servus videt.", "answer": ["the slave sees the master", "the slave is looking at the master", "the slave is watching the master"], "why": "Same meaning as before: -us is still the doer, even in second place." },
+    { "type": "gap", "skill": "acc", "q": "Puella amīc___ videt.", "hint": "receiver, -us word", "hintLabel": "Ending", "answer": ["um"], "why": "Amīcus is being seen, so amīcum." },
+    { "type": "gap", "skill": "verb-3", "q": "Puellae templum vide___.", "hint": "they", "hintLabel": "Ending", "answer": ["nt"], "why": "Puellae is plural, so the verb ends in -nt: vident." },
+    { "type": "match", "skill": "decl2", "prompt": "Match the Latin with the English.", "pairs": [["servus", "slave"], ["dominus", "master"], ["equus", "horse"], ["templum", "temple"], ["oppidum", "town"]] },
+    { "type": "fix", "skill": "acc", "prompt": "Tap the word that is wrong.", "sentence": "Agricola equus habet.", "wrong": 1, "fixed": "Agricola equum habet.", "why": "The horse is what the farmer has: the receiver, so equum." },
+    { "type": "order", "skill": "word-order", "promptStyle": "target", "prompt": "Poēta Rōmam laudat.", "words": ["The", "poet", "praises", "Rome"], "answer": "The poet praises Rome.", "why": "Poēta is a doer (-a), Rōmam the receiver (-am), laudat the verb." },
+    { "type": "mc", "skill": "word-order", "prompt": "Who loves whom?", "q": "Puellam amat agricola.", "options": ["The farmer loves the girl.", "The girl loves the farmer.", "The girls love the farmer."], "answer": 0, "why": "Puellam (-am) is the one loved, agricola (-a) does the loving." },
+    { "type": "translate", "skill": "acc", "q": "The friend has a horse.", "answer": ["amīcus equum habet", "equum amīcus habet", "amīcus habet equum"], "why": "Amīcus (doer) equum (receiver) habet, with the verb last as Romans liked it." },
+    { "type": "match", "skill": "roots", "prompt": "Match each Latin receiver form with its Spanish descendant.", "pairs": [["amīcum", "amigo"], ["templum", "templo"], ["mūrum", "muro"], ["dominum", "dueño"], ["rosam", "rosa"]] },
+    { "type": "gap", "skill": "verb-3", "q": "Servī dominum lauda___.", "hint": "they", "hintLabel": "Ending", "answer": ["nt"], "why": "Servī (-ī) is plural, so laudant." },
+    { "type": "translate", "dir": "toEn", "skill": "decl2", "q": "Amīcī oppidum vident.", "answer": ["the friends see the town", "the friends can see the town"], "why": "Amīcī is plural (-ī), and vident ends in -nt." },
+    { "type": "mc", "skill": "decl2", "prompt": "Which word means more than one slave doing something?", "q": "", "options": ["servī", "servus", "servum"], "answer": 0, "why": "-ī is the plural doer form of -us words." }
+  ],
+  "write": {
+    "title": "Write it in Latin",
+    "task": "Write three Latin sentences about a Roman farm: who sees, loves or has what. Put the verb last.",
+    "starter": "Agricola equum…  Servus…  Puella…",
+    "model": "Agricola equum habet. Servus dominum videt. Puella equum amat.",
+    "checklist": ["The doer ends in -a or -us, the receiver in -am or -um", "The verb comes last and ends in -t (one) or -nt (more than one)", "No word for \"the\" or \"a\""]
+  },
+  "boss": {
+    "title": "Reading: the farmer and the horse",
+    "who": "Magistra Līvia",
+    "skill": "acc",
+    "persona": "You are Magistra Līvia, a warm Latin teacher. The learner knows est and sunt, nouns in -a and -us (doer and receiver forms, singular and plural), neuter -um nouns and 3rd-person verbs (videt, vident, amat, habet, laudat). Chat in English and give very short Latin sentences about a Roman farm using only these, so they can practise finding the doer and the receiver.",
+    "turns": [
+      { "npc": "Agricola equum habet.", "en": "habet = has", "skill": "acc",
+        "choices": [["The farmer has a horse.", true, ""], ["The horse has a farmer.", false, "Equum ends in -um: the horse is what the farmer has."], ["The farmers have a horse.", false, "Agricola and habet are singular."]] },
+      { "npc": "Equum puella amat.", "en": "amat = loves", "skill": "word-order",
+        "choices": [["The girl loves the horse.", true, ""], ["The horse loves the girl.", false, "Equum (-um) is the receiver and puella (-a) the doer, whatever the order."], ["The girl loves the horses.", false, "Equum is one horse. Horses would be equōs."]] },
+      { "npc": "Servī templum vident et laudant.", "en": "et = and", "skill": "verb-3",
+        "choices": [["The slaves see the temple and praise it.", true, ""], ["The slave sees the temple and praises it.", false, "Servī and the -nt verbs are plural: slaves."], ["The temple sees the slaves and praises them.", false, "Servī (-ī) is the plural doer, and the -nt verbs agree with it."]] },
+      { "npc": "Dominus servōs nōn laudat.", "en": "servōs = the slaves (receiving), nōn = not", "skill": "acc",
+        "choices": [["The master does not praise the slaves.", true, ""], ["The slaves do not praise the master.", false, "Dominus (-us) is the doer, servōs (-ōs) the receivers."], ["The master praises the slaves.", false, "Nōn means not."]] }
+    ],
+    "closing": "Optimē! Nunc Latīnē legis.",
+    "closingEn": "Excellent! Now you're reading Latin.",
+    "chatOpening": "Quid agricola habet?",
+    "chatOpeningEn": "What does the farmer have? Answer in Latin if you can."
+  }
+}

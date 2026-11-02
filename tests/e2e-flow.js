@@ -1,4 +1,5 @@
 // End-to-end: plays every chapter through in headless Chrome, plus word of the day, review, weak spots, chat, settings.
+// The course comes from the page (BASE can end in ?course=la), so the same run checks Spanish and Latin.
 let puppeteer; try { puppeteer = require('puppeteer'); } catch (e) { puppeteer = require('puppeteer-core'); }
 const assert = require('assert');
 const path = require('path');
@@ -12,7 +13,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
 
 (async () => {
   require('fs').mkdirSync(SP, { recursive: true });
-  const shot = (name) => page.screenshot({ path: path.join(SP, name + (AI_ON ? '' : '-noai') + '-' + W + '.png') });
+  const shot = (name) => page.screenshot({ path: path.join(SP, name + (BASE.includes('course=la') ? '-la' : '') + (AI_ON ? '' : '-noai') + '-' + W + '.png') });
   const browser = await puppeteer.launch({ executablePath: process.env.CHROME || undefined, headless: 'new', args: ['--no-sandbox', '--disable-gpu'] });
   const page = await browser.newPage();
   await page.setViewport({ width: W, height: 900 });
@@ -58,12 +59,17 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
 
   // ---------- home ----------
   let t = await text();
-  assert.doesNotMatch(t, /¡Hola/); assert.match(t, /Today/); assert.match(t, /of 45 min/); assert.match(t, /Palabra del día/);
-  assert.match(t, /Who you are and where you are/); assert.match(t, /Everyday verbs/); assert.match(t, /Numbers, time and dates/); assert.match(t, /Food and ordering/);
-  assert.match(t, /Getting around/); assert.match(t, AI_ON ? /AI tutor on/ : /AI tutor off/);
+  const meta = await page.evaluate(() => ({ course: window.__trainer.course, ui: window.__trainer.ui, titles: window.__trainer.chapters.map(c => c.title) }));
+  const UI = meta.ui; const COURSE = meta.course; const TL = COURSE.lang.split('-')[0];
+  const plain = s => String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // an answer typed without accents or macrons
+  console.log('  course: ' + COURSE.title);
+  assert.doesNotMatch(t, /¡Hola/); assert.match(t, /Today/); assert.ok(t.includes('of ' + (COURSE.goalMins || 45) + ' min')); assert.ok(t.includes(UI.wordOfDay));
+  meta.titles.forEach(x => assert.ok(t.includes(x), 'chapter title on home: ' + x));
+  assert.ok(t.includes(COURSE.roadmap[0].title)); assert.match(t, AI_ON ? /AI tutor on/ : /AI tutor off/);
+  if (COURSE.id === 'es-ES') assert.match(t, /Who you are and where you are/);
   const fonts = await page.evaluate(async () => { await document.fonts.ready; return [document.fonts.check('16px "Instrument Sans"'), document.fonts.check('16px "Newsreader"')]; });
   assert.deepStrictEqual(fonts, [true, true], 'bundled fonts should load');
-  ok('home: plan for 45 min, chapters + roadmap, no greeting, no emoji, bundled fonts load');
+  ok('home: plan for ' + (COURSE.goalMins || 45) + ' min, ' + meta.titles.length + ' chapters + roadmap, no greeting, no emoji, bundled fonts load');
   await shot('01-home');
 
   // ---------- word of the day ----------
@@ -119,7 +125,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
         case 'mc': case 'listen':
           await page.evaluate(i => document.querySelectorAll('.ex .opt')[i].click(), miss ? (ex.answer + 1) % ex.options.length : ex.answer); break;
         case 'gap': case 'translate':
-          await page.type('.ex input.text', miss ? 'xyz' : ex.answer[0]); break;
+          await page.type('.ex input.text', miss ? 'xyz' : UI.marksOptional ? plain(ex.answer[0]) : ex.answer[0]); break;
         case 'order':
           for (const word of ex.words) await page.evaluate(wd => [...document.querySelectorAll('.tiles.bank .tile')].find(b => b.innerText === wd).click(), word);
           break;
@@ -147,6 +153,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
         const label = await page.evaluate(b => b.innerText, checkBtn);
         if (label === 'Check') { await checkBtn.click(); await sleep(60); }
       }
+      if (UI.marksOptional && ['gap', 'translate'].includes(ex.type) && !miss) assert.doesNotMatch(await text(), /watch the accents/, 'missing macrons are not a mistake');
       if (miss) {
         missedOne = true;
         t = await text();
@@ -186,7 +193,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
     }
     await clickText('button', 'Finish chapter'); await sleep(150);
     t = await text();
-    assert.ok(t.includes('Capítulo ' + n + ' completado'));
+    assert.ok(t.includes(UI.chapterDone.replace('{n}', n)));
     s = await state();
     assert.ok(s.done[n], 'chapter ' + n + ' recorded');
     const expectAcc = deliberateMiss ? s.done[n].acc < 100 : s.done[n].acc === (n === 1 ? s.done[n].acc : 100);
@@ -222,11 +229,12 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   ok('review: 4 cards, a miss is struck through in red pen, re-asked, and stays in box 1');
 
   // ---------- weak spots ----------
-  await page.evaluate(() => { const S = window.__trainer.state(); S.skills['es-son'] = { r: 1, w: 40 }; window.__trainer.home(); });
+  const weakKey = await page.evaluate(() => { const c = window.__trainer.chapters[2]; const k = c.exercises.find(e => e.type !== 'rapid').skill; const S = window.__trainer.state(); S.skills[k] = { r: 1, w: 40 }; window.__trainer.home(); return k; });
+  const weakName = await page.evaluate(k => Object.assign({}, window.__trainer.course.skills, ...window.__trainer.chapters.map(c => c.skills))[k], weakKey);
   await sleep(80);
-  t = await text(); assert.match(t, /Weak spots/); assert.match(t, /Es la una or son las/);
+  t = await text(); assert.match(t, /Weak spots/); assert.ok(t.includes(weakName));
   await clickText('.plan-row', 'Weak spots'); await sleep(100);
-  assert.match(await text(), /Weak spots · Es la una/);
+  assert.ok((await text()).includes('Weak spots · ' + weakName));
   ok('weak spots: skill names come from the course files and the drill opens');
   await page.evaluate(() => window.__trainer.home()); await sleep(80);
 
@@ -247,12 +255,13 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   await page.evaluate(() => { const S = window.__trainer.state(); S.lesson = { n: 1, step: 4, ex: 0, stats: { right: 5, total: 6 } }; window.__trainer.home(); });
   await sleep(80);
   assert.match(await text(), /Carry on/);
-  await clickText('.chap', 'Who you are'); await sleep(120);
-  assert.match(await text(), /Say it in your own words/);
+  const ch1 = await page.evaluate(() => window.__trainer.chapters[0]);
+  await clickText('.chap', ch1.title); await sleep(120);
+  assert.ok((await text()).includes(ch1.write.title));
   const locked = await page.evaluate(() => [...document.querySelectorAll('button')].find(b => b.innerText.includes('Continue to the scenario')).disabled);
   assert.equal(locked, true, 'the writing step cannot be skipped before checking');
   await page.click('button[aria-label="Patterns"]'); await sleep(120);
-  assert.match(await text(), /Patterns · Ser vs estar/); assert.match(await text(), /Who's who/);
+  assert.ok((await text()).includes('Patterns · ' + T(ch1.sub))); assert.ok((await text()).includes(ch1.learn.blocks.find(b => b.type === 'tables').tables[0].title));
   await clickText('.modal button', 'Close'); await sleep(80);
   await page.click('button[aria-label="Back"]'); await sleep(120);
   assert.match(await text(), /1 of \d+/); assert.equal((await state()).lesson.step, 3);
@@ -269,7 +278,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   await clickText('.wcard button', 'Add to my words'); await sleep(60);
   let sv = await state();
   assert.ok(sv.vocab[target] && !sv.vocab[target].off && sv.srs['v-' + target], 'saved word joins the review deck');
-  await page.evaluate(() => { const s = document.createElement('div'); s.lang = 'es'; s.id = 'probe'; s.textContent = 'zzpalabra'; document.querySelector('.step').append(s); });
+  await page.evaluate(() => { const s = document.createElement('div'); s.lang = TL; s.id = 'probe'; s.textContent = 'zzpalabra'; document.querySelector('.step').append(s); });
   await sleep(60);
   await page.click('#probe .w'); await sleep(60);
   assert.match(await text(), /Not in the glossary yet/);
@@ -311,6 +320,24 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   assert.match(await text(), /of 30 min/);
   fs.rmSync(dl, { recursive: true, force: true });
   ok('export / import: a downloaded file restores chapters, review cards and settings after a reset; a wrong file is refused');
+
+  // ---------- course switch: each course keeps its own progress ----------
+  const others = await page.evaluate(() => [...document.querySelectorAll('.switch-b:not(.on)')].map(b => b.innerText));
+  if (others.length) {
+    const mine = await page.evaluate(() => document.querySelector('.switch-b.on').innerText);
+    const doneHere = Object.keys((await state()).done).length;
+    await Promise.all([page.waitForNavigation({ waitUntil: 'networkidle0' }), clickText('.switch-b', others[0])]); await sleep(200);
+    t = await text(); assert.match(t, /Before you start/, 'a new course starts fresh');
+    assert.equal(await page.evaluate(() => document.querySelector('input.text').value), 'Kara', 'the name from the other course is offered');
+    await clickText('button', 'Start'); await sleep(150);
+    const other = await page.evaluate(() => window.__trainer.course);
+    t = await text(); assert.ok(t.includes(other.title)); assert.ok(t.includes('of ' + (other.goalMins || 45) + ' min'));
+    assert.equal(Object.keys((await state()).done).length, 0, 'the other course has its own progress');
+    await Promise.all([page.waitForNavigation({ waitUntil: 'networkidle0' }), clickText('.switch-b', mine)]); await sleep(200);
+    assert.equal(Object.keys((await state()).done).length, doneHere, 'switching back keeps this course\'s progress');
+    assert.ok((await text()).includes(COURSE.title));
+    ok('course switch: ' + mine + ' → ' + others[0] + ' starts fresh with the name offered, and back again keeps the progress');
+  }
 
   if (problems.length) { console.log(problems.join('\n')); process.exit(1); }
   console.log('\n' + steps + ' checks passed, no console errors.');

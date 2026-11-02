@@ -1,0 +1,126 @@
+{
+  "n": 1,
+  "title": "Rōma est magna",
+  "sub": "est, sunt, -a and -ae",
+  "can": "Read and write simple sentences about Rome, and pronounce Latin the way Romans did.",
+  "mins": 18,
+  "doneText": "You can now read simple Latin sentences, spot plurals and pronounce Latin like a Roman.",
+  "skills": {
+    "est-sunt": "est or sunt",
+    "nom-sg-pl": "One or many: -a and -ae",
+    "adj-agree": "Describing words that match",
+    "vocab": "Core words"
+  },
+  "discover": {
+    "intro": "Your first Latin. There's no word for \"the\" anywhere. See what changes when there's more than one.",
+    "groups": [
+      { "label": "Blue", "tone": "blue", "lines": [["Puella est laeta.", "The girl is happy."], ["Rōma est magna.", "Rome is great."], ["Via est longa.", "The road is long."]] },
+      { "label": "Orange", "tone": "orange", "lines": [["Puellae sunt laetae.", "The girls are happy."], ["Viae sunt longae.", "The roads are long."], ["Statuae sunt pulchrae.", "The statues are beautiful."]] }
+    ],
+    "question": "What changes when there is more than one?",
+    "options": [
+      "The -a ending becomes -ae, on the noun and on the describing word, and est becomes sunt.",
+      "A word for \"many\" is added at the start.",
+      "Nothing changes: Latin shows plurals from context only."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Compare puella with puellae, and laeta with laetae.",
+    "reveal": "Latin has no \"the\" or \"a\": puella is \"the girl\" or \"a girl\". For more than one, the ending changes, the describing word changes to match, and est (is) becomes sunt (are). Two hooks:",
+    "hooks": [
+      { "title": "One and many", "tone": "blue", "rows": [
+        ["-a", "one", "puella", "girl"],
+        ["-ae", "more than one", "puellae", "girls"],
+        ["est", "is", "Via est longa.", "The road is long."],
+        ["sunt", "are", "Viae sunt longae.", "The roads are long."]
+      ] },
+      { "title": "Say it like a Roman", "tone": "orange", "rows": [
+        ["c", "always hard, like k", "Cicerō", "KIK-er-oh"],
+        ["v", "like w", "vīlla", "WEEL-la"],
+        ["ae", "like eye", "puellae", "pu-EL-lye"],
+        ["ī", "long ee (the line means long)", "vīta", "WEE-ta"],
+        ["i", "like y before a vowel", "iam", "yam (now)"]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "Your first Latin",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "sum: to be", "tone": "green", "speak": "form", "rows": [["I am", "sum"], ["you are", "es"], ["he / she / it is", "est"], ["we are", "sumus"], ["you (all) are", "estis"], ["they are", "sunt"]] },
+        { "title": "Nouns in -a", "tone": "blue", "speak": "form", "rows": [["girl", "puella"], ["road, street", "via"], ["island", "īnsula"], ["farmer", "agricola"], ["life", "vīta"], ["water", "aqua"]] }
+      ] },
+      { "type": "note", "kind": "roots", "text": "Spanish es and son come straight from Latin est and sunt. Spot the family: Latin sum, es, est; Spanish soy, eres, es; Italian sono, sei, è." },
+      { "type": "note", "kind": "tip", "text": "No articles: Rōma est magna is \"Rome is great\", and puella est laeta can be \"the girl\" or \"a girl is happy\". Choose whichever English sounds natural." },
+      { "type": "twist", "title": "The describing word follows its noun", "a": ["Īnsula est parva.", "The island is small."], "b": ["Īnsulae sunt parvae.", "The islands are small."], "note": "Parva, magna, longa and laeta take the same ending as their noun. That's how Latin shows which word describes which, even when they're far apart." },
+      { "type": "note", "kind": "culture", "text": "Most -a nouns are feminine. A few are masculine because of what they mean: agricola (farmer), nauta (sailor), poēta (poet). Romans assumed those were men's jobs." },
+      { "type": "list", "title": "Describing words", "rows": [["magna", "big, great"], ["parva", "small"], ["longa", "long"], ["laeta", "happy"], ["pulchra", "beautiful"], ["antīqua", "old, ancient"], ["nova", "new"], ["clāra", "famous, bright"]] }
+    ]
+  },
+  "phrases": [
+    { "id": "l1-salve", "es": "Salvē!", "en": "Hello! (to one person)", "alts": [] },
+    { "id": "l1-salvete", "es": "Salvēte!", "en": "Hello! (to several people)", "alts": [] },
+    { "id": "l1-vale", "es": "Valē!", "en": "Goodbye!", "alts": [] },
+    { "id": "l1-roma", "es": "Rōma est magna.", "en": "Rome is great.", "alts": ["Rōma magna est."] },
+    { "id": "l1-girls", "es": "Puellae sunt laetae.", "en": "The girls are happy.", "alts": ["Puellae laetae sunt."] },
+    { "id": "l1-island", "es": "Īnsula est parva.", "en": "The island is small.", "alts": ["Īnsula parva est."] },
+    { "id": "l1-water", "es": "Aqua est frīgida.", "en": "The water is cold.", "alts": ["Aqua frīgida est."] },
+    { "id": "l1-road", "es": "Via est longa.", "en": "The road is long.", "alts": ["Via longa est."] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "est-sunt", "q": "Puellae ___ laetae.", "sub": "(The girls are happy.)", "options": ["sunt", "est", "es"], "answer": 0, "why": "Puellae is plural, so sunt (are)." },
+    { "type": "mc", "skill": "nom-sg-pl", "prompt": "Which word means \"roads\"?", "q": "", "options": ["viae", "via", "viā"], "answer": 0, "why": "-a for one, -ae for more than one: viae." },
+    {
+      "type": "rapid", "skill": "est-sunt", "prompt": "Rapid fire: est or sunt?",
+      "choices": [{ "key": "est", "label": "est", "tone": "blue" }, { "key": "sunt", "label": "sunt", "tone": "orange" }],
+      "items": [
+        { "blank": "Rōma ___ magna.", "full": "Rōma est magna.", "fill": "est", "answer": "est", "skill": "est-sunt", "why": "One city: est." },
+        { "blank": "Viae ___ longae.", "full": "Viae sunt longae.", "fill": "sunt", "answer": "sunt", "skill": "est-sunt", "why": "-ae, more than one: sunt." },
+        { "blank": "Īnsulae ___ parvae.", "full": "Īnsulae sunt parvae.", "fill": "sunt", "answer": "sunt", "skill": "est-sunt", "why": "-ae, more than one: sunt." },
+        { "blank": "Aqua ___ frīgida.", "full": "Aqua est frīgida.", "fill": "est", "answer": "est", "skill": "est-sunt", "why": "-a, one: est." },
+        { "blank": "Statuae ___ antīquae.", "full": "Statuae sunt antīquae.", "fill": "sunt", "answer": "sunt", "skill": "est-sunt", "why": "-ae, more than one: sunt." },
+        { "blank": "Vīta ___ longa.", "full": "Vīta est longa.", "fill": "est", "answer": "est", "skill": "est-sunt", "why": "-a, one: est." },
+        { "blank": "Puellae ___ pulchrae.", "full": "Puellae sunt pulchrae.", "fill": "sunt", "answer": "sunt", "skill": "est-sunt", "why": "-ae, more than one: sunt." },
+        { "blank": "Fāma ___ clāra.", "full": "Fāma est clāra.", "fill": "est", "answer": "est", "skill": "est-sunt", "why": "-a, one: est." }
+      ]
+    },
+    { "type": "translate", "dir": "toEn", "skill": "vocab", "q": "Īnsula est parva.", "answer": ["the island is small", "the island is little"], "why": "Īnsula = island, parva = small. Add \"the\" or \"a\" as English needs." },
+    { "type": "gap", "skill": "nom-sg-pl", "q": "Puell___ sunt laetae.", "hint": "more than one", "hintLabel": "Ending", "answer": ["ae"], "why": "Sunt and laetae are plural, so puellae." },
+    { "type": "match", "skill": "vocab", "prompt": "Match the Latin with the English.", "pairs": [["puella", "girl"], ["via", "road"], ["īnsula", "island"], ["aqua", "water"], ["agricola", "farmer"]] },
+    { "type": "fix", "skill": "adj-agree", "prompt": "Tap the word that is wrong.", "sentence": "Viae sunt longa.", "wrong": 2, "fixed": "Viae sunt longae.", "why": "Viae is plural, so its describing word is plural too: longae." },
+    { "type": "match", "skill": "roots", "prompt": "Match each Latin word with its Spanish descendant.", "pairs": [["aqua", "agua"], ["vīta", "vida"], ["īnsula", "isla"], ["terra", "tierra"], ["fīlia", "hija"]] },
+    { "type": "order", "skill": "vocab", "promptStyle": "target", "prompt": "Statuae sunt antīquae.", "words": ["The", "statues", "are", "old"], "answer": "The statues are old.", "alts": ["The statues are ancient."], "why": "Statuae (plural) sunt (are) antīquae (old, ancient)." },
+    { "type": "translate", "skill": "est-sunt", "q": "Rome is great.", "answer": ["rōma est magna", "rōma magna est"], "why": "Rōma magna est, with the verb last, sounds very Roman. Both orders are right." },
+    { "type": "mc", "skill": "sound", "prompt": "How did Cicero say his own name?", "q": "Cicerō", "options": ["KIK-er-oh", "SIS-er-oh", "CHEE-cher-oh"], "answer": 0, "why": "In classical Latin c is always hard, like k. The soft sounds came later, in Church Latin and in Italian." },
+    { "type": "gap", "skill": "est-sunt", "q": "Nōs ___ laetae.", "sub": "(We are happy.)", "hint": "we are", "hintLabel": "Verb", "hintTone": "green", "answer": ["sumus"], "why": "Sum, es, est, sumus: we are." },
+    { "type": "translate", "dir": "toEn", "skill": "vocab", "q": "Aqua est frīgida.", "answer": ["the water is cold", "the water is freezing"], "why": "Frīgida = cold. English frigid and Spanish frío come from the same root." },
+    { "type": "fix", "skill": "est-sunt", "prompt": "Tap the word that is wrong.", "sentence": "Īnsulae est parvae.", "wrong": 1, "fixed": "Īnsulae sunt parvae.", "why": "Īnsulae is plural: sunt." },
+    { "type": "mc", "skill": "roots", "prompt": "Spanish soy, eres, es comes from which Latin verb?", "q": "", "options": ["sum, es, est", "amō, amās, amat", "videō, vidēs, videt"], "answer": 0, "why": "Spanish ser grew out of Latin esse (sum, es, est) and sedēre (to sit)." }
+  ],
+  "write": {
+    "title": "Write it in Latin",
+    "task": "Describe a Roman street in three short sentences: the road, the statues and the girls. Use est and sunt.",
+    "starter": "Via est…  Statuae sunt…  Puellae…",
+    "model": "Via est longa. Statuae sunt antīquae et pulchrae. Puellae sunt laetae.",
+    "checklist": ["One thing: est. More than one: sunt", "Describing words match: -a with -a, -ae with -ae", "No word for \"the\" needed. Et means and"]
+  },
+  "boss": {
+    "title": "Reading: a Roman street",
+    "who": "Magistra Līvia",
+    "skill": "est-sunt",
+    "persona": "You are Magistra Līvia, a warm Latin teacher. The learner has just read their first Latin: est, sunt, sum, nouns ending in -a and -ae, and describing words (magna, parva, longa, laeta, pulchra, antīqua, nova, clāra). Chat in English and give very short Latin sentences using only these for them to translate or answer.",
+    "turns": [
+      { "npc": "Rōma est magna.", "en": "magna = big, great", "skill": "vocab",
+        "choices": [["Rome is great.", true, ""], ["Rome is small.", false, "Magna is big or great. Small is parva."], ["The Romans are great.", false, "Rōma is the city, and est means one thing: is."]] },
+      { "npc": "Viae sunt longae et antīquae.", "en": "et = and", "skill": "nom-sg-pl",
+        "choices": [["The roads are long and old.", true, ""], ["The road is long and old.", false, "Viae and sunt are plural: the roads are."], ["The roads are new and long.", false, "Antīquae is old. New would be novae."]] },
+      { "npc": "Puella est laeta, sed via nōn est longa.", "en": "sed = but, nōn = not", "skill": "est-sunt",
+        "choices": [["The girl is happy, but the road is not long.", true, ""], ["The girl is happy and the road is long.", false, "Sed is but, and nōn is not."], ["The girls are happy, but the road is not long.", false, "Puella and est are singular: one girl."]] },
+      { "npc": "Īnsula Sicilia est clāra.", "en": "clāra = famous", "skill": "adj-agree",
+        "choices": [["The island of Sicily is famous.", true, ""], ["Sicily is a small island.", false, "Clāra is famous. Small would be parva."], ["The islands of Sicily are famous.", false, "Īnsula and est are singular: one island."]] }
+    ],
+    "closing": "Optimē! Prīmam fābulam Latīnam lēgistī.",
+    "closingEn": "Excellent! You've read your first Latin story.",
+    "chatOpening": "Salvē! Quālis est Rōma?",
+    "chatOpeningEn": "Hello! What is Rome like? Try answering in Latin: Rōma est…"
+  }
+}

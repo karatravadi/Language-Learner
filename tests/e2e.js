@@ -1,4 +1,5 @@
-// Runs the browser test twice: with a fake AI tutor and with none, at desktop and phone width.
+// Runs the browser test five times: Spanish with a fake AI tutor and with none, at desktop and phone width,
+// then Latin with the AI on (desktop) and off (phone width).
 // Needs:  npm install   (installs puppeteer, dev only; the app itself has no dependencies)
 // Run:    npm run e2e    (set CHROME=path\to\chrome.exe to use an installed Chrome instead)
 const { spawn } = require('child_process');
@@ -15,7 +16,8 @@ const run = env => new Promise(res => { const p = spawn(process.execPath, [path.
   start(['server.js'], { PORT: '3131', OPEN_BROWSER: '0', PROVIDER: 'gemini', GEMINI_API_KEY: '', DEEPSEEK_API_KEY: '' });
   await sleep(1500);
   let failed = 0;
-  for (const [label, env] of [['AI on, desktop', { BASE: 'http://localhost:3130' }], ['AI off, desktop', { BASE: 'http://localhost:3131', AI_ON: '0' }], ['AI on, phone width', { BASE: 'http://localhost:3130', W: '390' }]]) {
+  for (const [label, env] of [['AI on, desktop', { BASE: 'http://localhost:3130' }], ['AI off, desktop', { BASE: 'http://localhost:3131', AI_ON: '0' }], ['AI on, phone width', { BASE: 'http://localhost:3130', W: '390' }],
+    ['Latin, AI on, desktop', { BASE: 'http://localhost:3130/?course=la' }], ['Latin, AI off, phone width', { BASE: 'http://localhost:3131/?course=la', AI_ON: '0', W: '390' }]]) {
     console.log('\n' + label);
     if (await run(env)) failed++;
   }

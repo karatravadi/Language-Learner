@@ -5,11 +5,26 @@
   'use strict';
 
   const L = window.Logic;
-  const PRAISE = ['¡Correcto!', '¡Muy bien!', '¡Eso es!', '¡Perfecto!', '¡Genial!', '¡Exacto!'];
-  const NOTE_LABEL = { tip: 'Tip', spain: 'In Spain', warn: 'Careful', culture: 'Culture' };
-  const GOALS = [20, 30, 45, 60];
+  const NOTE_LABEL = { tip: 'Tip', spain: 'In Spain', warn: 'Careful', culture: 'Culture', roots: 'Roots' };
+  const GOALS = [15, 20, 25, 30, 45, 60];
+  // Interface words that depend on the course. Spanish is the default; a course.json "ui" block overrides them.
+  const UI_DEFAULTS = {
+    praise: ['¡Correcto!', '¡Muy bien!', '¡Eso es!', '¡Perfecto!', '¡Genial!', '¡Exacto!'],
+    wordOfDay: 'Palabra del día · Word of the day', chapterDone: 'Capítulo {n} completado', wordUsed: '¡Perfecto! You used it well',
+    translateTo: 'Say it in Spanish', placeholderTo: 'In Spanish', translateFrom: 'Translate into English', placeholderFrom: 'In English',
+    bossHelp: 'Pick the right reply. Tap EN on a message for the English.', enLabel: 'EN', chatHelp: ' Tap EN for the English.',
+    chatPlaceholder: 'Escribe en español', chatEnd: '¡Hasta luego! That was a long conversation, well done.',
+    welcome: 'The examples use your name, and Spanish endings change with gender, so pick the ones that fit you. You can change both later in Settings.',
+    invertedQuestion: true, marksOptional: false
+  };
+  const PLAN_DEFAULTS = { word: 3, review: 10, practise: 15 };
 
-  let COURSE = null; let CHAPTERS = []; let ROADMAP = []; let WORDS = []; let SKILLS = {}; let GLOSS = {};
+  let COURSE = null; let CHAPTERS = []; let ROADMAP = []; let WORDS = []; let SKILLS = {}; let GLOSS = {}; let COURSES = [];
+  let UI = UI_DEFAULTS; let PLAN = PLAN_DEFAULTS;
+  // TL: the lang attribute of text in the course's language, which makes its words tappable (es, la).
+  let TL = 'es';
+  const praise = () => UI.praise[Math.floor(Math.random() * UI.praise.length)];
+  const judgeT = (input, answers, english) => L.judge(input, answers, { english: !!english, marksOptional: UI.marksOptional });
   let KEY = 'espanol-trainer-v1';
   let S = null;
 
@@ -67,7 +82,7 @@
   // ---------- state ----------
   function defaults() {
     return {
-      name: '', fem: true, goalMins: 45, xp: 0, streak: { last: null, count: 0 }, dayXp: { date: '', xp: 0 },
+      name: '', fem: true, goalMins: (COURSE && COURSE.goalMins) || 45, xp: 0, streak: { last: null, count: 0 }, dayXp: { date: '', xp: 0 },
       time: {}, reviewed: {}, done: {}, srs: {}, skills: {}, vocab: {}, wotd: { byDate: {}, learned: [], done: {}, answers: {} }
     };
   }
@@ -290,10 +305,14 @@
     return overlay;
   }
   // Answers as sentences: a capital, ¿…? when the English was a question, and the label from `who` if given.
-  const prettyAns = (list, q, who) => list.map((a, i) => {
+  // open: '¿' for Spanish, '' for English answers and for languages without an opening question mark.
+  const prettyAns = (list, q, who, open) => list.map((a, i) => {
     const s = a.charAt(0).toUpperCase() + a.slice(1);
-    return (/\?\s*$/.test(q || '') ? '¿' + s + '?' : s + '.') + (who && who[i] ? ' (' + who[i] + ')' : '');
+    const o = open == null ? (UI.invertedQuestion ? '¿' : '') : open;
+    return (/\?\s*$/.test(q || '') ? o + s + '?' : s + '.') + (who && who[i] ? ' (' + who[i] + ')' : '');
   }).join(' / ');
+  const brand = () => h('div', { class: 'brand' }, h('div', { class: 'mark', 'aria-hidden': 'true' }, (COURSE && COURSE.brand && COURSE.brand.mark) || 'ñ'),
+    h('div', { class: 'wordmark' }, (COURSE && COURSE.brand && COURSE.brand.name) || 'Español Trainer'));
   // The red pen: your words struck through, the right words written in.
   function pen(wrong, right) {
     return h('div', { class: 'pen' }, wrong ? h('span', { class: 'pen-x' }, wrong) : null, wrong ? h('span', { class: 'pen-arrow', 'aria-hidden': 'true' }, '→') : null, h('span', { class: 'pen-ok' }, right));
@@ -333,14 +352,14 @@
       onclick ? icon('next') : h('span'));
 
     let practise;
-    if (weak.length) practise = planRow(false, 'Weak spots', skillName(weak[0]), '15 min', drillWeak);
-    else if (AI.on && lastDone) practise = planRow(false, 'Free chat with ' + lastDone.boss.who, 'Use what you learned in chapter ' + lastDone.n, '15 min', () => chatScreen(lastDone));
-    else if (lastDone) practise = planRow(false, 'Replay a chapter', 'Chapter ' + lastDone.n + ': ' + lastDone.title, '15 min', () => chapterFlow(lastDone));
-    else practise = planRow(false, 'Practise', 'Opens after your first chapter', '15 min', null);
+    if (weak.length) practise = planRow(false, 'Weak spots', skillName(weak[0]), PLAN.practise + ' min', drillWeak);
+    else if (AI.on && lastDone) practise = planRow(false, 'Free chat with ' + lastDone.boss.who, 'Use what you learned in chapter ' + lastDone.n, PLAN.practise + ' min', () => chatScreen(lastDone));
+    else if (lastDone) practise = planRow(false, 'Replay a chapter', 'Chapter ' + lastDone.n + ': ' + lastDone.title, PLAN.practise + ' min', () => chapterFlow(lastDone));
+    else practise = planRow(false, 'Practise', 'Opens after your first chapter', PLAN.practise + ' min', null);
 
     const plan = h('div', { class: 'plan' },
-      planRow(wdone, 'Word of the day', word.es, '3 min', wotdScreen),
-      planRow(reviewedToday && due === 0, 'Review', due ? due + ' cards due' : (reviewedToday ? 'All caught up' : 'Nothing due yet'), '10 min', due ? reviewFlow : null),
+      planRow(wdone, 'Word of the day', word.es, PLAN.word + ' min', wotdScreen),
+      planRow(reviewedToday && due === 0, 'Review', due ? due + ' cards due' : (reviewedToday ? 'All caught up' : 'Nothing due yet'), PLAN.review + ' min', due ? reviewFlow : null),
       planRow(chapterToday && !inProgress(nextCh), chapterToday && !inProgress(nextCh) ? 'Chapter done today' : (inProgress(nextCh) ? 'Carry on: chapter ' : 'Chapter ') + nextCh.n, nextCh.title, nextCh.mins + ' min', () => chapterFlow(nextCh)),
       practise);
 
@@ -352,16 +371,17 @@
       plan);
 
     const wotd = h('button', { class: 'card wotd', type: 'button', onclick: wotdScreen },
-      h('div', { class: 'wotd-k' }, 'Palabra del día · Word of the day'),
+      h('div', { class: 'wotd-k' }, UI.wordOfDay),
       h('div', { class: 'wotd-w' }, word.es),
       h('div', { class: 'wotd-m' }, word.en),
+      word.kin ? h('div', { class: 'wotd-kin' }, word.kin) : null,
       h('div', { class: 'wotd-ex' }, word.ex.es),
       h('div', { class: 'wotd-go' }, wdone ? [icon('check'), 'Done'] : ['Use it in a sentence', icon('next')]));
 
     const nWords = myWords().length;
     const wordsCard = h('button', { class: 'card wotd', type: 'button', onclick: wordsScreen },
       h('div', { class: 'wotd-k' }, 'My words'),
-      h('div', { class: 'wotd-m' }, nWords ? nWords + (nWords === 1 ? ' word saved' : ' words saved') + ', in your review deck' : 'Tap any Spanish word in a lesson to see what it means and save it here'),
+      h('div', { class: 'wotd-m' }, nWords ? nWords + (nWords === 1 ? ' word saved' : ' words saved') + ', in your review deck' : 'Tap any ' + (COURSE.languageName || 'Spanish') + ' word in a lesson to see what it means and save it here'),
       h('div', { class: 'wotd-go' }, nWords ? 'See them' : 'How it works', icon('next')));
 
     const path = CHAPTERS.map(ch => {
@@ -381,9 +401,9 @@
       AI.on ? 'AI tutor on · ' + AI.provider : 'AI tutor off · Set up');
 
     mount(h('div', { class: 'page home' },
-      h('header', { class: 'top' },
-        h('div', { class: 'brand' }, h('div', { class: 'mark', 'aria-hidden': 'true' }, 'ñ'), h('div', { class: 'wordmark' }, 'Español Trainer')),
-        h('div', { class: 'top-r' }, h('button', { class: 'icon-btn', 'aria-label': 'Settings', onclick: settings }, icon('settings', 'lg')))),
+      h('header', { class: 'top' }, brand(),
+        h('div', { class: 'top-r' }, courseSwitch(),
+          h('button', { class: 'icon-btn', 'aria-label': 'Settings', onclick: settings }, icon('settings', 'lg')))),
       h('div', { class: 'home-grid' },
         h('div', { class: 'home-side' }, todayCard, wotd, wordsCard),
         h('div', {},
@@ -393,20 +413,22 @@
   }
 
   // ---------- tap a word: its meaning, and My words ----------
-  // Any text marked lang="es" has its words made tappable (buttons, inputs and the red pen are left alone).
+  // Any text marked with the course's language (lang="es", lang="la") has its words made tappable
+  // (buttons, inputs and the red pen are left alone).
   // Meanings come from the course glossary; a word it lacks can be asked of the AI tutor.
-  const WORD_RE = /(?<![\/A-Za-zÁÉÍÓÚÜÑáéíóúüñ])[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+/g;
+  const WORD_RE = /(?<![\/\p{L}])\p{L}+/gu;
+  const zoneSel = () => '[lang="' + TL + '"]';
   function wordify(root) {
     if (!root || root.nodeType !== 1) return;
-    const zones = root.matches('[lang="es"]') ? [root] : [];
-    zones.push(...root.querySelectorAll('[lang="es"]'));
-    if (!zones.length && root.closest && root.closest('[lang="es"]')) zones.push(root);
+    const zones = root.matches(zoneSel()) ? [root] : [];
+    zones.push(...root.querySelectorAll(zoneSel()));
+    if (!zones.length && root.closest && root.closest(zoneSel())) zones.push(root);
     for (const zone of zones) {
       const walker = document.createTreeWalker(zone, NodeFilter.SHOW_TEXT);
       const texts = [];
       while (walker.nextNode()) {
         const t = walker.currentNode;
-        if (!t.parentElement.closest('.w, .wcard, textarea, input, select, .pen, .mini')) texts.push(t);
+        if (!t.parentElement.closest('.w, .nw, .wcard, textarea, input, select, .pen, .mini')) texts.push(t);
       }
       for (const t of texts) {
         const str = t.nodeValue; WORD_RE.lastIndex = 0;
@@ -423,10 +445,10 @@
       }
     }
   }
-  new MutationObserver(list => list.forEach(r => r.addedNodes.forEach(n => { if (n.nodeType === 1) wordify(n); else if (n.nodeType === 3 && n.parentElement && n.parentElement.closest('[lang="es"]')) wordify(n.parentElement); })))
+  new MutationObserver(list => list.forEach(r => r.addedNodes.forEach(n => { if (n.nodeType === 1) wordify(n); else if (n.nodeType === 3 && n.parentElement && n.parentElement.closest(zoneSel())) wordify(n.parentElement); })))
     .observe(document.body, { childList: true, subtree: true });
 
-  const myWords = () => Object.keys(S.vocab || {}).filter(k => !S.vocab[k].off).sort((a, b) => a.localeCompare(b, 'es'));
+  const myWords = () => Object.keys(S.vocab || {}).filter(k => !S.vocab[k].off).sort((a, b) => a.localeCompare(b, TL));
   function saveWord(key, en, note) {
     const now = Date.now();
     S.vocab[key] = { es: key, en, note: note || '', at: now };
@@ -449,11 +471,11 @@
   function openWord(el) {
     closeWord();
     const word = el.textContent; const key = word.toLowerCase();
-    const zone = el.closest('[lang="es"]');
+    const zone = el.closest(zoneSel());
     const sentence = zone ? zone.textContent.trim().slice(0, 300) : word;
     const body = h('div', { class: 'wcard-b' });
     const card = h('div', { class: 'wcard', role: 'dialog', 'aria-label': 'Meaning of ' + word },
-      h('div', { class: 'wcard-h' }, h('span', { class: 'wcard-w', lang: 'es' }, key), speakBtn(key),
+      h('div', { class: 'wcard-h' }, h('span', { class: 'wcard-w', lang: TL }, key), speakBtn(key),
         h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Close', onclick: closeWord }, icon('close'))),
       body);
     function show(en, note) {
@@ -502,7 +524,7 @@
           h('div', {}, h('div', { class: 'es' }, v.es), h('div', { class: 'en' }, v.en + (v.note ? ' · ' + v.note : ''))),
           h('div', { class: 'row', style: { 'margin-top': '0' } }, speakBtn(v.es),
             h('button', { class: 'btn quiet', type: 'button', onclick: () => { dropWord(k); draw(); } }, 'Remove')));
-      }) : h('p', { class: 'muted' }, 'No words yet. In any lesson, tap a Spanish word to see what it means, then choose Add to my words. Saved words join your review deck.'));
+      }) : h('p', { class: 'muted' }, 'No words yet. In any lesson, tap a ' + (COURSE.languageName || 'Spanish') + ' word to see what it means, then choose Add to my words. Saved words join your review deck.'));
     }
     draw();
     mount(h('div', { class: 'page lesson' }, backBar('My words', home),
@@ -511,7 +533,7 @@
 
   // ---------- first use: name and endings ----------
   function welcome() {
-    const name = h('input', { class: 'text', maxlength: '30', 'aria-label': 'Your name', autocomplete: 'given-name', style: { 'font-family': 'var(--sans)', 'font-size': '16px' } });
+    const name = h('input', { class: 'text', maxlength: '30', 'aria-label': 'Your name', autocomplete: 'given-name', value: nameElsewhere(), style: { 'font-family': 'var(--sans)', 'font-size': '16px' } });
     const fem = h('input', { type: 'radio', name: 'g', checked: S.fem, id: 'w-f' });
     const masc = h('input', { type: 'radio', name: 'g', checked: !S.fem, id: 'w-m' });
     const msg = h('p', { class: 'meta', role: 'status' });
@@ -522,12 +544,11 @@
     };
     name.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
     mount(h('div', { class: 'page' },
-      h('header', { class: 'top' },
-        h('div', { class: 'brand' }, h('div', { class: 'mark', 'aria-hidden': 'true' }, 'ñ'), h('div', { class: 'wordmark' }, 'Español Trainer'))),
+      h('header', { class: 'top' }, brand(), h('div', { class: 'top-r' }, courseSwitch())),
       h('h1', { class: 'page-title' }, 'Before you start'),
-      h('p', { class: 'muted' }, 'The examples use your name, and Spanish endings change with gender, so pick the ones that fit you. You can change both later in Settings.'),
+      h('p', { class: 'muted' }, UI.welcome),
       h('label', { class: 'field', style: { 'margin-top': '24px' } }, h('span', {}, 'Your name'), name),
-      h('div', { class: 'field' }, h('span', {}, 'Endings in examples'),
+      COURSE.genderedExamples === false ? null : h('div', { class: 'field' }, h('span', {}, 'Endings in examples'),
         h('div', { class: 'radios' }, h('label', {}, fem, 'cansada (-a)'), h('label', {}, masc, 'cansado (-o)'))),
       msg,
       h('div', { class: 'row' }, h('button', { class: 'btn primary big', type: 'button', onclick: go }, 'Start'))));
@@ -539,7 +560,7 @@
     const name = h('input', { class: 'text', value: S.name, maxlength: '30', 'aria-label': 'Your name', style: { 'font-family': 'var(--sans)', 'font-size': '16px' } });
     const fem = h('input', { type: 'radio', name: 'g', checked: S.fem, id: 'g-f' });
     const masc = h('input', { type: 'radio', name: 'g', checked: !S.fem, id: 'g-m' });
-    const goal = h('select', { class: 'text', 'aria-label': 'Daily goal' }, GOALS.map(g => h('option', { value: String(g), selected: g === S.goalMins }, g + ' minutes')));
+    const goal = h('select', { class: 'text', 'aria-label': 'Daily goal' }, GOALS.concat(GOALS.includes(S.goalMins) ? [] : [S.goalMins]).sort((a, b) => a - b).map(g => h('option', { value: String(g), selected: g === S.goalMins }, g + ' minutes')));
     const msg = h('p', { class: 'meta', role: 'status' });
     const file = h('input', { type: 'file', accept: '.json,application/json', hidden: true, 'aria-label': 'Progress file',
       onchange: async () => {
@@ -551,11 +572,11 @@
     const ov = modal(h('div', {},
       h('h2', {}, 'Settings'),
       h('label', { class: 'field' }, h('span', {}, 'Your name'), name),
-      h('div', { class: 'field' }, h('span', {}, 'Endings in examples'),
+      COURSE.genderedExamples === false ? null : h('div', { class: 'field' }, h('span', {}, 'Endings in examples'),
         h('div', { class: 'radios' }, h('label', {}, fem, 'cansada (-a)'), h('label', {}, masc, 'cansado (-o)'))),
       h('label', { class: 'field' }, h('span', {}, 'Daily goal'), goal),
       h('div', { class: 'row' },
-        h('button', { class: 'btn primary', onclick: () => { S.name = name.value.trim() || S.name; S.fem = fem.checked; S.goalMins = Number(goal.value) || 45; S.prefsAt = Date.now(); save(); ov.remove(); home(); } }, 'Save'),
+        h('button', { class: 'btn primary', onclick: () => { S.name = name.value.trim() || S.name; S.fem = fem.checked; S.goalMins = Number(goal.value) || COURSE.goalMins || 45; S.prefsAt = Date.now(); save(); ov.remove(); home(); } }, 'Save'),
         h('button', { class: 'btn quiet danger', onclick: () => { if (confirm(SYNC.on ? 'Erase all progress, review cards and streak, on every device?' : 'Erase all progress, review cards and streak on this device?')) { S = defaults(); save(); pushReplace(); ov.remove(); welcome(); } } }, 'Reset progress')),
       h('div', { class: 'field', style: { 'margin-top': '16px' } }, h('span', {}, 'Backup'),
         h('div', { class: 'row', style: { 'margin-top': '0' } },
@@ -564,7 +585,8 @@
       file, msg,
       h('p', { class: 'meta', style: { 'margin-top': '16px' } }, SYNC.on
         ? 'Signed in as ' + SYNC.user + '. Progress syncs to your account, so every device you sign in on sees the same streak and review cards. Practice time only counts while you are active on the page.'
-        : 'Progress is saved in this browser on this device. Export it to keep a copy or move it to another browser. Practice time only counts while you are active on the page.')));
+        : 'Progress is saved in this browser on this device. Export it to keep a copy or move it to another browser. Practice time only counts while you are active on the page.'),
+      COURSES.length > 1 ? h('p', { class: 'meta' }, 'Each course keeps its own progress, streak, daily goal and review deck.') : null));
   }
 
   function aiHelp() {
@@ -638,7 +660,7 @@
 
   function discoverStep(ch, next) {
     const d = ch.discover;
-    const line = ([es, en]) => h('button', { class: 'ex-line', type: 'button', onclick: () => say(T(es)) }, h('span', { class: 'es', lang: 'es' }, T(es)), h('span', { class: 'en' }, T(en)));
+    const line = ([es, en]) => h('button', { class: 'ex-line', type: 'button', onclick: () => say(T(es)) }, h('span', { class: 'es', lang: TL }, T(es)), h('span', { class: 'en' }, T(en)));
     const reveal = h('div', { class: 'reveal hidden' });
     const msg = h('p', { class: 'nudge hidden' });
     const opts = d.options.map((o, i) => h('button', {
@@ -658,7 +680,7 @@
       }
     }, T(o)));
     const hookRow = r => h('div', { class: 'hook-row' }, h('div', { class: 'hook-b' }, r[0]),
-      h('div', {}, h('div', { class: 'hook-l' }, r[1]), h('div', { class: 'hook-e', lang: 'es' }, T(r[2])), h('div', { class: 'hook-t' }, T(r[3]))));
+      h('div', {}, h('div', { class: 'hook-l' }, r[1]), h('div', { class: 'hook-e', lang: TL }, T(r[2])), h('div', { class: 'hook-t' }, T(r[3]))));
     const hooks = d.hooks || [];
     push(reveal,
       h('p', { class: 'lead' }, T(d.reveal)),
@@ -677,19 +699,19 @@
     if (b.type === 'tables') {
       return h('div', { class: 'cols', style: { '--n': String(b.tables.length) } }, b.tables.map(t => h('div', { class: 'conj ' + tone(t.tone) }, h('h3', {}, t.title),
         t.rows.map(([p, f]) => h('button', { class: 'conj-row', type: 'button', onclick: () => say(t.speak === 'form' ? f.replace(/·/g, ',') : p.split(' ')[0].replace(/\/.*/, '') + ' ' + f) },
-          h('span', { class: 'pron' }, p), h('span', { class: 'form', lang: 'es' }, f))))));
+          h('span', { class: 'pron' }, p), h('span', { class: 'form', lang: TL }, f))))));
     }
     if (b.type === 'note') return h('div', { class: 'note ' + b.kind }, h('span', { class: 'note-k' }, NOTE_LABEL[b.kind]), h('span', {}, T(b.text)));
     if (b.type === 'twist') {
       return h('div', { class: 'twist' }, h('h3', {}, b.title),
         h('div', { class: 'cols' },
-          h('div', { class: 'pair tone-blue' }, h('div', { class: 'es', lang: 'es' }, T(b.a[0])), h('div', { class: 'en' }, T(b.a[1]))),
-          h('div', { class: 'pair tone-orange' }, h('div', { class: 'es', lang: 'es' }, T(b.b[0])), h('div', { class: 'en' }, T(b.b[1])))),
+          h('div', { class: 'pair tone-blue' }, h('div', { class: 'es', lang: TL }, T(b.a[0])), h('div', { class: 'en' }, T(b.a[1]))),
+          h('div', { class: 'pair tone-orange' }, h('div', { class: 'es', lang: TL }, T(b.b[0])), h('div', { class: 'en' }, T(b.b[1])))),
         h('p', {}, T(b.note)));
     }
     if (b.type === 'list') {
       return h('div', { class: 'list-block' }, h('h3', {}, b.title),
-        h('div', { class: 'phrases' }, b.rows.map(([es, en]) => h('div', { class: 'phrase' }, h('div', {}, h('div', { class: 'es', lang: 'es' }, T(es)), h('div', { class: 'en' }, T(en))), speakBtn(T(es))))));
+        h('div', { class: 'phrases' }, b.rows.map(([es, en]) => h('div', { class: 'phrase' }, h('div', {}, h('div', { class: 'es', lang: TL }, T(es)), h('div', { class: 'en' }, T(en))), speakBtn(T(es))))));
     }
     return null;
   }
@@ -709,7 +731,7 @@
       h('h2', {}, 'Phrases to keep'),
       h('p', { class: 'muted' }, 'These are now in your review deck, so they come back just before you would forget them.'),
       h('div', { class: 'phrases' }, ch.phrases.map(p => h('div', { class: 'phrase' },
-        h('div', {}, h('div', { class: 'es', lang: 'es' }, T(p.es)), h('div', { class: 'en' }, T(p.en))),
+        h('div', {}, h('div', { class: 'es', lang: TL }, T(p.es)), h('div', { class: 'en' }, T(p.en))),
         speakBtn(T(p.es))))),
       contBtn('Start practising', next));
   }
@@ -718,8 +740,16 @@
   function sentenceEl(q) {
     const parts = T(q).split('___');
     const slot = h('span', { class: 'slot' }, ' ');
-    const el = h('div', { class: 'sentence', lang: 'es' });
-    parts.forEach((p, i) => { if (i) push(el, slot); push(el, p); });
+    const el = h('div', { class: 'sentence', lang: TL });
+    // A stem right next to the gap (Puell___) is part of the missing word, so it is not tappable on its own.
+    const stem = s => h('span', { class: 'nw' }, s);
+    parts.forEach((p, i) => {
+      if (i) push(el, slot);
+      const lead = i ? (p.match(/^\p{L}+/u) || [''])[0] : '';
+      const rest = p.slice(lead.length);
+      const tail = i < parts.length - 1 ? (rest.match(/\p{L}+$/u) || [''])[0] : '';
+      push(el, lead ? stem(lead) : null, rest.slice(0, rest.length - tail.length), tail ? stem(tail) : null);
+    });
     return { el, slot, hasSlot: parts.length > 1 };
   }
 
@@ -772,12 +802,14 @@
         api.enable(chosen.length === items.length);
       }
       draw();
-      push(el, h('p', { class: 'prompt' }, 'Build the sentence'), h('p', { class: 'sub big-en' }, ex.prompt), ans, bank);
+      const toEn = ex.promptStyle === 'target';
+      push(el, h('p', { class: 'prompt' }, toEn ? 'Build the English translation' : 'Build the sentence'),
+        toEn ? h('div', { class: 'sentence', lang: TL }, T(ex.prompt)) : h('p', { class: 'sub big-en' }, ex.prompt), ans, bank);
       return {
         check() {
           const got = chosen.map(c => c.w).join(' ');
-          const r = L.judge(got, [ex.answer]);
-          return { ok: r !== 'no', almost: r === 'accent', yours: r === 'no' ? got : null, answer: ex.answer, hear: ex.answer, why: ex.why };
+          const r = judgeT(got, [ex.answer].concat(ex.alts || []), toEn);
+          return { ok: r !== 'no', almost: r === 'accent', yours: r === 'no' ? got : null, answer: ex.answer, hear: toEn ? null : ex.answer, why: ex.why };
         }
       };
     },
@@ -829,7 +861,7 @@
           return;
         }
         const it = ex.items[i];
-        const s = it.blank ? sentenceEl(it.blank) : { el: h('div', { class: 'sentence' }, T(it.text)), slot: null };
+        const s = it.blank ? sentenceEl(it.blank) : { el: h('div', { class: 'sentence', lang: TL }, T(it.text)), slot: null };
         const fb = h('div', { class: 'rapid-fb', 'aria-live': 'polite' });
         const btns = ex.choices.map(c => h('button', { class: 'btn big ' + (c.tone ? tone(c.tone) : 'ghost'), type: 'button', onclick: () => choose(c.key) }, c.label));
         function choose(key) {
@@ -838,7 +870,7 @@
           api.record(it.skill || ex.skill, ok);
           if (ok) right++;
           fb.className = 'rapid-fb ' + (ok ? 'good' : 'bad');
-          put(fb, h('b', {}, ok ? '' : 'No: ', h('span', { lang: 'es' }, T(it.full))), h('span', { class: 'muted' }, ' ' + it.why));
+          put(fb, h('b', {}, ok ? '' : 'No: ', h('span', { lang: it.blank ? TL : null }, T(it.full))), h('span', { class: 'muted' }, ' ' + it.why));
           if (s.slot) s.slot.textContent = it.fill;
           const nextBtn = h('button', { class: 'btn primary', type: 'button', onclick: () => { i++; show(); } }, i + 1 === ex.items.length ? 'Finish' : 'Next');
           fb.append(h('div', { class: 'row end' }, nextBtn));
@@ -854,23 +886,25 @@
 
   function textType(ex, api, el, isGap) {
     const s = isGap ? sentenceEl(ex.q) : null;
-    const input = h('input', { class: 'text', type: 'text', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': 'Your answer', placeholder: isGap ? 'Missing word' : 'In Spanish' });
+    const toEn = !isGap && ex.dir === 'toEn';
+    const input = h('input', { class: 'text' + (toEn ? ' en-in' : ''), type: 'text', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': 'Your answer', placeholder: isGap ? 'Missing word' : (toEn ? UI.placeholderFrom : UI.placeholderTo) });
     input.addEventListener('input', () => { api.enable(input.value.trim().length > 0); if (s && s.hasSlot) s.slot.textContent = input.value || ' '; });
     input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); api.submit(); } });
     push(el,
-      h('p', { class: 'prompt' }, isGap ? 'Fill the gap' : 'Say it in Spanish'),
-      isGap ? s.el : h('div', { class: 'sentence en-q' }, T(ex.q)),
+      h('p', { class: 'prompt' }, isGap ? 'Fill the gap' : (toEn ? UI.translateFrom : UI.translateTo)),
+      isGap ? s.el : toEn ? h('div', { class: 'sentence', lang: TL }, T(ex.q)) : h('div', { class: 'sentence en-q' }, T(ex.q)),
       isGap && ex.hint ? h('p', { class: 'sub' }, (ex.hintLabel || 'Hint') + ' ', h('span', { class: 'hintchip ' + tone(ex.hintTone) }, ex.hint)) : null,
       input);
     setTimeout(() => input.focus(), 50);
     return {
       check() {
         if (!input.value.trim()) return null;
-        const r = L.judge(input.value, ex.answer);
+        const r = judgeT(input.value, ex.answer, toEn);
         // Labelled answers show the differences that matter (¿Vives aquí? (tú) / ¿Vive aquí? (usted)), up to four.
-        const shown = isGap ? ex.answer[0] : prettyAns(ex.answer.slice(0, ex.who ? 4 : 2), ex.q, ex.who);
-        const res = { ok: r !== 'no', almost: r === 'accent', yours: input.value.trim(), answer: shown, hear: isGap ? null : ex.answer[0], why: ex.why };
-        if (!isGap && r === 'no') res.card = { id: 'x-' + ex.q.toLowerCase().replace(/[^a-z]/g, '').slice(0, 24), es: prettyAns([ex.answer[0]], ex.q), en: ex.q, alts: ex.answer.slice(1).map(a => prettyAns([a], ex.q)) };
+        const shown = isGap ? ex.answer[0] : prettyAns(ex.answer.slice(0, ex.who ? 4 : 2), ex.q, ex.who, toEn ? '' : null);
+        const res = { ok: r !== 'no', almost: r === 'accent', yours: input.value.trim(), answer: shown, hear: isGap || toEn ? null : ex.answer[0], why: ex.why };
+        // A review card always asks for the course's language, so a missed translation into English makes none.
+        if (!isGap && !toEn && r === 'no') res.card = { id: 'x-' + ex.q.toLowerCase().replace(/[^a-z]/g, '').slice(0, 24), es: prettyAns([ex.answer[0]], ex.q), en: ex.q, alts: ex.answer.slice(1).map(a => prettyAns([a], ex.q)) };
         return res;
       }
     };
@@ -939,7 +973,7 @@
 
         const good = res.ok;
         fb.className = 'feedback ' + (good ? (res.almost ? 'warn' : 'good') : 'bad');
-        const head = res.head || (good ? (res.almost ? 'Right, but watch the accents' : PRAISE[Math.floor(Math.random() * PRAISE.length)]) : (item.retry ? 'Not quite. Moving on' : 'Not quite'));
+        const head = res.head || (good ? (res.almost ? 'Right, but watch the accents' : praise()) : (item.retry ? 'Not quite. Moving on' : 'Not quite'));
         let mark = null;
         if (res.penFrom && !good) mark = pen(res.penFrom, res.penTo);
         else if (!good && res.yours) mark = pen(res.yours, res.answer);
@@ -948,8 +982,8 @@
         put(fb,
           h('div', { class: 'fb-head' }, head),
           mark,
-          res.show && good && !res.almost ? h('div', { class: 'fb-ans', lang: 'es' }, res.show) : null,
-          !good && res.penFrom ? h('div', { class: 'fb-ans', lang: 'es' }, res.show) : null,
+          res.show && good && !res.almost ? h('div', { class: 'fb-ans', lang: TL }, res.show) : null,
+          !good && res.penFrom ? h('div', { class: 'fb-ans', lang: TL }, res.show) : null,
           res.why ? h('div', { class: 'fb-why' }, res.why) : null,
           res.hear ? speakBtn(res.hear, 'Hear it') : null);
         fb.classList.remove('hidden');
@@ -981,7 +1015,7 @@
       d.mistakes.length
         ? h('div', { class: 'mistakes' }, d.mistakes.map(m => h('div', { class: 'mistake' }, pen(m.wrong, m.right), h('div', { class: 'why' }, m.why))))
         : h('p', { class: 'praise' }, 'No mistakes found.'),
-      d.corrected ? h('div', { class: 'corrected' }, h('div', { class: 'label' }, 'Polished version'), h('div', { class: 'big', lang: 'es' }, d.corrected), speakBtn(d.corrected, 'Hear it')) : null,
+      d.corrected ? h('div', { class: 'corrected' }, h('div', { class: 'label' }, 'Polished version'), h('div', { class: 'big', lang: TL }, d.corrected), speakBtn(d.corrected, 'Hear it')) : null,
       d.praise ? h('p', { class: 'praise' }, h('b', {}, 'What worked: '), d.praise) : null,
       d.tip ? h('p', { class: 'tip' }, h('b', {}, 'Tip: '), d.tip) : null);
   }
@@ -997,7 +1031,7 @@
     const lock = h('p', { class: 'meta' }, 'Write your sentences and check them to continue.');
     const unlock = () => { contB.disabled = false; lock.remove(); };
     const modelAnswer = () => [
-      h('div', { class: 'corrected' }, h('div', { class: 'label' }, 'Model answer'), h('div', { class: 'big', lang: 'es' }, T(w.model)), speakBtn(T(w.model), 'Hear it')),
+      h('div', { class: 'corrected' }, h('div', { class: 'label' }, 'Model answer'), h('div', { class: 'big', lang: TL }, T(w.model)), speakBtn(T(w.model), 'Hear it')),
       h('p', { class: 'muted' }, 'Compare yours with it and tick off:'),
       h('ul', { class: 'check-list' }, w.checklist.map(c => h('li', {}, h('label', {}, h('input', { type: 'checkbox' }), c))))];
     btn.addEventListener('click', async () => {
@@ -1006,7 +1040,7 @@
       if (!AI.on) {
         unlock();
         put(out,
-          h('div', { class: 'corrected' }, h('div', { class: 'label' }, 'Model answer'), h('div', { class: 'big', lang: 'es' }, T(w.model)), speakBtn(T(w.model), 'Hear it')),
+          h('div', { class: 'corrected' }, h('div', { class: 'label' }, 'Model answer'), h('div', { class: 'big', lang: TL }, T(w.model)), speakBtn(T(w.model), 'Hear it')),
           h('p', { class: 'muted' }, 'Compare yours with it and tick off:'),
           h('ul', { class: 'check-list' }, w.checklist.map(c => h('li', {}, h('label', {}, h('input', { type: 'checkbox' }), c)))),
           h('p', { class: 'meta' }, 'With the AI tutor on, it corrects your exact sentences and explains why.'));
@@ -1033,14 +1067,16 @@
   }
 
   // ---------- boss level ----------
-  function bubble(who, text, en, hearable) {
+  const englishReplies = () => COURSE.scenarioReplies === 'en';
+  function bubble(who, text, en, hearable, inTarget) {
     const enEl = h('div', { class: 'en hidden' }, en || '');
+    const target = inTarget != null ? inTarget : !englishReplies();
     return h('div', { class: 'bubble ' + (who ? 'npc' : 'me') },
       who ? h('span', { class: 'who' }, who) : null,
-      h('div', { class: 'es', lang: 'es' }, text),
+      h('div', { class: 'es', lang: target ? TL : null }, text),
       who ? h('div', { class: 'bub-tools' },
         hearable ? speakBtn(text) : null,
-        en ? h('button', { class: 'mini lbl', type: 'button', 'aria-label': 'Show English', onclick: () => enEl.classList.toggle('hidden') }, 'EN') : null) : null,
+        en ? h('button', { class: 'mini lbl', type: 'button', 'aria-label': UI.enLabel === 'EN' ? 'Show English' : 'Show ' + UI.enLabel.toLowerCase(), onclick: () => enEl.classList.toggle('hidden') }, UI.enLabel) : null) : null,
       enEl);
   }
 
@@ -1051,12 +1087,12 @@
     const choices = h('div', { class: 'choices' });
     const why = h('p', { class: 'nudge hidden' });
     const footer = h('div', { class: 'boss-foot' });
-    const wrap = h('div', { class: 'step boss' }, h('h2', {}, T(b.title)), h('p', { class: 'muted' }, 'Pick the right reply. Tap EN on a message for the English.'), log, choices, why, footer);
+    const wrap = h('div', { class: 'step boss' }, h('h2', {}, T(b.title)), h('p', { class: 'muted' }, UI.bossHelp), log, choices, why, footer);
 
     function showTurn() {
       const turn = b.turns[t];
       missedThisTurn = false;
-      log.append(bubble(b.who, T(turn.npc), T(turn.en), true));
+      log.append(bubble(b.who, T(turn.npc), T(turn.en), true, true));
       say(T(turn.npc));
       why.classList.add('hidden');
       const shuffled = L.shuffle(turn.choices);
@@ -1086,7 +1122,7 @@
     function finish() {
       put(choices);
       why.classList.add('hidden');
-      log.append(bubble(b.who, T(b.closing), T(b.closingEn), true));
+      log.append(bubble(b.who, T(b.closing), T(b.closingEn), true, true));
       put(footer,
         h('p', { class: 'lead' }, slips === 0 ? 'No mistakes.' : slips + (slips === 1 ? ' fix' : ' fixes') + ', added to your weak spots.'),
         AI.on
@@ -1106,10 +1142,10 @@
     let lastHint = ''; let sent = 0; let busy = false;
     const MAX = 14;
     const hintOut = h('p', { class: 'nudge hidden' });
-    const input = h('input', { class: 'text', type: 'text', autocomplete: 'off', placeholder: 'Escribe en español', 'aria-label': 'Your message' });
+    const input = h('input', { class: 'text', type: 'text', autocomplete: 'off', placeholder: UI.chatPlaceholder, 'aria-label': 'Your message' });
     const sendBtn = h('button', { class: 'btn primary', type: 'button', 'aria-label': 'Send' }, icon('send'), 'Send');
     const hintBtn = h('button', { class: 'btn quiet', type: 'button', onclick: () => { hintOut.textContent = lastHint ? 'Try: ' + lastHint : 'Try answering the question in one short sentence.'; hintOut.classList.remove('hidden'); } }, icon('hint'), 'Hint');
-    log.append(bubble(b.who, T(b.chatOpening), T(b.chatOpeningEn), true));
+    log.append(bubble(b.who, T(b.chatOpening), T(b.chatOpeningEn), true, true));
 
     async function send() {
       const text = input.value.trim();
@@ -1133,14 +1169,14 @@
         log.append(h('p', { class: 'error' }, r.error || 'Something went wrong.'));
       }
       busy = false; sendBtn.disabled = false;
-      if (sent >= MAX) { input.disabled = true; sendBtn.disabled = true; log.append(h('p', { class: 'lead' }, '¡Hasta luego! That was a long conversation, well done.')); }
+      if (sent >= MAX) { input.disabled = true; sendBtn.disabled = true; log.append(h('p', { class: 'lead' }, UI.chatEnd)); }
       else input.focus();
     }
     sendBtn.addEventListener('click', send);
     input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); send(); } });
     put(wrap,
       h('h2', {}, 'Free chat with ' + b.who),
-      h('p', { class: 'muted' }, 'Say anything. Mistakes are fine: ' + b.who + ' points them out gently. Tap EN for the English.'),
+      h('p', { class: 'muted' }, 'Say anything. Mistakes are fine: ' + b.who + ' points them out gently.' + UI.chatHelp),
       log, hintOut,
       h('div', { class: 'chat-input' }, input, sendBtn, hintBtn),
       next ? contBtn('Finish chapter', next) : h('div', { class: 'row end sticky' }, h('button', { class: 'btn ghost big', onclick: home }, 'Back to today')));
@@ -1163,7 +1199,7 @@
     const due = L.dueCards(S.srs, Date.now()).length;
     const mins = Math.max(1, Math.round((Date.now() - stats.t0) / 60000));
     return h('div', { class: 'step result' },
-      h('div', { class: 'result-k' }, 'Capítulo ' + ch.n + ' completado'),
+      h('div', { class: 'result-k' }, UI.chapterDone.replace('{n}', ch.n)),
       h('div', { class: 'result-fig' }, acc + '%'),
       h('div', { class: 'result-k' }, 'right first time' + (prev.best != null ? ' · best before ' + prev.best + '%' : '')),
       h('div', { class: 'stat-row' },
@@ -1214,14 +1250,14 @@
       const card = queue.shift();
       if (!card) { done(); return; }
       let checked = false;
-      const input = h('input', { class: 'text', type: 'text', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', placeholder: 'In Spanish', 'aria-label': 'Your answer' });
+      const input = h('input', { class: 'text', type: 'text', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', placeholder: UI.placeholderTo, 'aria-label': 'Your answer' });
       const fb = h('div', { class: 'feedback hidden' });
       const btn = h('button', { class: 'btn primary big', type: 'button' }, 'Check');
       function check() {
         if (checked) { next(); return; }
         if (!input.value.trim()) return;
         checked = true;
-        const r = L.judge(input.value, variants(card));
+        const r = judgeT(input.value, variants(card));
         const ok = r !== 'no';
         const relearn = lapsed.has(card.id);
         if (ok && relearn) S.srs[card.id] = Object.assign({}, S.srs[card.id], { box: 1, due: Date.now() + L.INTERVALS[1] * L.DAY });
@@ -1232,8 +1268,8 @@
         save();
         fb.className = 'feedback ' + (ok ? (r === 'accent' ? 'warn' : 'good') : 'bad');
         put(fb,
-          h('div', { class: 'fb-head' }, ok ? (r === 'accent' ? 'Right, but watch the accents' : PRAISE[Math.floor(Math.random() * PRAISE.length)]) : 'Not quite'),
-          ok && r !== 'accent' ? h('div', { class: 'fb-ans', lang: 'es' }, card.es) : pen(input.value.trim(), card.es),
+          h('div', { class: 'fb-head' }, ok ? (r === 'accent' ? 'Right, but watch the accents' : praise()) : 'Not quite'),
+          ok && r !== 'accent' ? h('div', { class: 'fb-ans', lang: TL }, card.es) : pen(input.value.trim(), card.es),
           card.alts && card.alts.length ? h('div', { class: 'meta' }, 'Also right: ' + card.alts.join(', ')) : null,
           card.ex ? h('div', { class: 'fb-why' }, card.ex) : null,
           speakBtn(card.es, 'Hear it'));
@@ -1302,7 +1338,7 @@
         const fixedDiff = d.corrected && d.corrected.trim() !== sentence;
         put(out,
           h('div', { class: 'verdict ' + (d.used ? (d.correct ? 'v-great' : 'v-good') : 'v-keep-going') },
-            d.used ? (d.correct ? '¡Perfecto! You used it well' : 'You used it, nearly there') : 'Try to include "' + w.es + '"'),
+            d.used ? (d.correct ? UI.wordUsed : 'You used it, nearly there') : 'Try to include "' + w.es + '"'),
           d.used && fixedDiff ? pen(sentence, d.corrected) : null,
           d.feedback ? h('p', {}, d.feedback) : null,
           d.natural ? h('p', { class: 'tip' }, h('b', {}, 'More natural: '), d.natural) : null,
@@ -1318,13 +1354,14 @@
     });
 
     const learned = S.wotd.learned.map(id => WORDS.find(x => x.id === id)).filter(Boolean);
-    mount(h('div', { class: 'page lesson' }, backBar('Palabra del día · Word of the day', home),
+    mount(h('div', { class: 'page lesson' }, backBar(UI.wordOfDay, home),
       h('div', { class: 'step' },
         h('div', { class: 'wotd-hero' },
           h('div', { class: 'meta' }, w.pos),
           h('div', { class: 'wotd-big' }, w.es, speakBtn(w.es)),
-          h('div', { class: 'wotd-en' }, w.en)),
-        h('div', { class: 'example' }, h('div', { class: 'es', lang: 'es' }, w.ex.es, ' ', speakBtn(w.ex.es)), h('div', { class: 'en' }, w.ex.en)),
+          h('div', { class: 'wotd-en' }, w.en),
+          w.kin ? h('div', { class: 'wotd-kin' }, w.kin) : null),
+        h('div', { class: 'example' }, h('div', { class: 'es', lang: TL }, w.ex.es, ' ', speakBtn(w.ex.es)), h('div', { class: 'en' }, w.ex.en)),
         h('div', { class: 'wq' }, h('div', { class: 'label' }, 'Your turn'), h('p', { class: 'lead' }, w.q)),
         ta, h('div', { class: 'row' }, btn), out,
         done ? h('p', { class: 'meta', style: { 'margin-top': '16px' } }, 'Done for today. A new word arrives tomorrow, and this one is in your review deck.') : null,
@@ -1333,6 +1370,29 @@
   }
 
   // ---------- go ----------
+  // Which course: ?course=<id>, then the last one used on this device, then the first in index.json.
+  // Each course keeps its own progress under its own storageKey.
+  const COURSE_KEY = 'trainer-course';
+  function courseSwitch() {
+    if (COURSES.length < 2) return null;
+    return h('div', { class: 'switch', role: 'group', 'aria-label': 'Course' }, COURSES.map(c => h('button', {
+      class: 'switch-b' + (c.id === COURSE.id ? ' on' : ''), type: 'button', 'aria-pressed': c.id === COURSE.id ? 'true' : 'false',
+      onclick: () => { if (c.id !== COURSE.id) switchCourse(c.id); }
+    }, c.label)));
+  }
+  function switchCourse(id) {
+    if (S) save();
+    try { localStorage.setItem(COURSE_KEY, id); } catch (e) { /* private mode */ }
+    location.href = location.pathname + '?course=' + encodeURIComponent(id);
+  }
+  // On first use of a second course, offer the name already given in the other one.
+  function nameElsewhere() {
+    for (const c of COURSES) {
+      if (c.id === COURSE.id || !c.storageKey) continue;
+      try { const o = JSON.parse(localStorage.getItem(c.storageKey) || 'null'); if (o && typeof o.name === 'string' && o.name) return o.name.slice(0, 30); } catch (e) { /* ignore */ }
+    }
+    return '';
+  }
   async function getJson(url) {
     const r = await fetch(url, { cache: 'no-cache' });
     if (!r.ok) throw new Error(url + ' (' + r.status + ')');
@@ -1341,7 +1401,10 @@
   async function boot() {
     try {
       const idx = await getJson('courses/index.json');
-      const entry = idx.courses[0];
+      COURSES = idx.courses.map(c => Object.assign({}, c));
+      let wanted = new URLSearchParams(location.search).get('course');
+      try { wanted = wanted || localStorage.getItem(COURSE_KEY); } catch (e) { /* private mode */ }
+      const entry = idx.courses.find(c => c.id === wanted) || idx.courses[0];
       const base = 'courses/' + entry.file.replace(/[^/]+$/, '');
       COURSE = await getJson('courses/' + entry.file);
       CHAPTERS = (await Promise.all(COURSE.chapters.map(f => getJson(base + f)))).sort((a, b) => a.n - b.n);
@@ -1350,6 +1413,13 @@
       ROADMAP = COURSE.roadmap || [];
       SKILLS = Object.assign({}, COURSE.skills, ...CHAPTERS.map(c => c.skills || {}));
       KEY = COURSE.storageKey;
+      UI = Object.assign({}, UI_DEFAULTS, COURSE.ui || {});
+      PLAN = Object.assign({}, PLAN_DEFAULTS, COURSE.plan || {});
+      TL = String(COURSE.lang || 'es').split('-')[0];
+      document.title = (COURSE.brand && COURSE.brand.name) || 'Español Trainer';
+      try { localStorage.setItem(COURSE_KEY, COURSE.id); } catch (e) { /* private mode */ }
+      // Other courses' storage keys, so a first visit can offer the name given there
+      await Promise.all(COURSES.filter(c => c.id !== COURSE.id).map(async c => { try { c.storageKey = (await getJson('courses/' + c.file)).storageKey; } catch (e) { /* not needed */ } }));
       S = load(); pruneTime(); save();
       pickVoice();
     } catch (e) {
@@ -1359,7 +1429,7 @@
         h('p', { class: 'meta' }, String(e.message || e))));
       return;
     }
-    window.__trainer = { state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE };
+    window.__trainer = { state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE, ui: UI };
     await aiStatus();
     if (SYNC.on) await syncStart();
     if (S.name) home(); else welcome();

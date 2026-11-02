@@ -1,0 +1,752 @@
+{
+  "n": 3,
+  "title": "Amō, amās, amat",
+  "sub": "Verbs for I, you and we",
+  "can": "Say what you, I and we do, ask yes or no questions, and see where Spanish verbs come from.",
+  "mins": 18,
+  "doneText": "You can now use verbs for every person, ask yes or no questions, and you've seen where Spanish verbs come from.",
+  "skills": {
+    "conj1": "amō, amās, amat",
+    "conj2": "videō, vidēs, videt",
+    "sum": "sum, es, est",
+    "neg-q": "nōn and -ne questions"
+  },
+  "discover": {
+    "intro": "One colour is Latin, the other is Spanish. Compare them.",
+    "groups": [
+      {
+        "label": "Blue: Latin",
+        "tone": "blue",
+        "lines": [
+          [
+            "Amō.",
+            "I love."
+          ],
+          [
+            "Amās.",
+            "You love."
+          ],
+          [
+            "Amat.",
+            "He / she loves."
+          ],
+          [
+            "Amant.",
+            "They love."
+          ]
+        ]
+      },
+      {
+        "label": "Orange: Spanish",
+        "tone": "orange",
+        "lines": [
+          [
+            "Amo.",
+            "I love."
+          ],
+          [
+            "Amas.",
+            "You love."
+          ],
+          [
+            "Ama.",
+            "He / she loves."
+          ],
+          [
+            "Aman.",
+            "They love."
+          ]
+        ]
+      }
+    ],
+    "question": "What do you notice?",
+    "options": [
+      "They're almost identical: Spanish verb endings come from the Latin ones.",
+      "It's a coincidence: the two languages are unrelated.",
+      "Latin borrowed its endings from Spanish."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Spanish grew out of Latin. Which way round would the borrowing go?",
+    "reveal": "Spanish inherited its verb endings from Latin almost unchanged, so your Spanish present tense gives you a head start. The Latin endings are -ō, -s, -t, -mus, -tis, -nt:",
+    "hooks": [
+      {
+        "title": "Latin and Spanish side by side",
+        "tone": "blue",
+        "rows": [
+          [
+            "-ō",
+            "I",
+            "amō · amo",
+            "I love"
+          ],
+          [
+            "-s",
+            "you",
+            "amās · amas",
+            "you love"
+          ],
+          [
+            "-t",
+            "he / she",
+            "amat · ama",
+            "he / she loves"
+          ],
+          [
+            "-mus",
+            "we",
+            "amāmus · amamos",
+            "we love"
+          ],
+          [
+            "-tis",
+            "you all",
+            "amātis · amáis",
+            "you all love"
+          ],
+          [
+            "-nt",
+            "they",
+            "amant · aman",
+            "they love"
+          ]
+        ]
+      },
+      {
+        "title": "Not, and questions",
+        "tone": "orange",
+        "rows": [
+          [
+            "nōn",
+            "not",
+            "Nōn amō.",
+            "I do not love."
+          ],
+          [
+            "-ne",
+            "yes or no question",
+            "Amāsne Rōmam?",
+            "Do you love Rome?"
+          ],
+          [
+            "quis",
+            "who",
+            "Quis videt?",
+            "Who sees?"
+          ],
+          [
+            "quid",
+            "what",
+            "Quid vidēs?",
+            "What do you see?"
+          ],
+          [
+            "ubi",
+            "where",
+            "Ubi est Marcus?",
+            "Where is Marcus?"
+          ]
+        ]
+      }
+    ]
+  },
+  "learn": {
+    "title": "The present tense",
+    "blocks": [
+      {
+        "type": "tables",
+        "tables": [
+          {
+            "title": "amāre: to love",
+            "tone": "blue",
+            "speak": "form",
+            "rows": [
+              [
+                "I",
+                "amō"
+              ],
+              [
+                "you",
+                "amās"
+              ],
+              [
+                "he / she / it",
+                "amat"
+              ],
+              [
+                "we",
+                "amāmus"
+              ],
+              [
+                "you (all)",
+                "amātis"
+              ],
+              [
+                "they",
+                "amant"
+              ]
+            ]
+          },
+          {
+            "title": "vidēre: to see",
+            "tone": "orange",
+            "speak": "form",
+            "rows": [
+              [
+                "I",
+                "videō"
+              ],
+              [
+                "you",
+                "vidēs"
+              ],
+              [
+                "he / she / it",
+                "videt"
+              ],
+              [
+                "we",
+                "vidēmus"
+              ],
+              [
+                "you (all)",
+                "vidētis"
+              ],
+              [
+                "they",
+                "vident"
+              ]
+            ]
+          },
+          {
+            "title": "esse: to be",
+            "tone": "green",
+            "speak": "form",
+            "rows": [
+              [
+                "I",
+                "sum"
+              ],
+              [
+                "you",
+                "es"
+              ],
+              [
+                "he / she / it",
+                "est"
+              ],
+              [
+                "we",
+                "sumus"
+              ],
+              [
+                "you (all)",
+                "estis"
+              ],
+              [
+                "they",
+                "sunt"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "note",
+        "kind": "tip",
+        "text": "No need for \"I\" or \"you\": the ending says it, just like in Spanish. Ego (I) and tū (you) are added only for emphasis."
+      },
+      {
+        "type": "note",
+        "kind": "roots",
+        "text": "Spanish amar and ver come from amāre and vidēre, and Spanish haber from habēre. Italian keeps them closer still: amare, vedere, avere. French: aimer, voir, avoir."
+      },
+      {
+        "type": "twist",
+        "title": "Questions with -ne",
+        "a": [
+          "Marcus Rōmam amat.",
+          "Marcus loves Rome."
+        ],
+        "b": [
+          "Amatne Marcus Rōmam?",
+          "Does Marcus love Rome?"
+        ],
+        "note": "Latin makes a yes or no question by adding -ne to the first word, usually the verb. There's no \"do\", just as in Spanish."
+      },
+      {
+        "type": "note",
+        "kind": "culture",
+        "text": "Roman names: Marcus Tullius Cicerō had a first name (Marcus), a family name (Tullius) and a nickname that stuck. Cicerō means \"chickpea\", perhaps after an ancestor's nose."
+      },
+      {
+        "type": "list",
+        "title": "Verbs in this chapter",
+        "rows": [
+          [
+            "amāre",
+            "to love"
+          ],
+          [
+            "laudāre",
+            "to praise"
+          ],
+          [
+            "labōrāre",
+            "to work"
+          ],
+          [
+            "ambulāre",
+            "to walk"
+          ],
+          [
+            "vidēre",
+            "to see"
+          ],
+          [
+            "habēre",
+            "to have"
+          ],
+          [
+            "timēre",
+            "to fear"
+          ],
+          [
+            "esse",
+            "to be"
+          ]
+        ]
+      }
+    ]
+  },
+  "phrases": [
+    {
+      "id": "l3-love",
+      "es": "Rōmam amō.",
+      "en": "I love Rome.",
+      "alts": [
+        "Amō Rōmam."
+      ]
+    },
+    {
+      "id": "l3-work",
+      "es": "Labōrāmus.",
+      "en": "We are working.",
+      "alts": [
+        "Nōs labōrāmus."
+      ]
+    },
+    {
+      "id": "l3-see",
+      "es": "Quid vidēs?",
+      "en": "What do you see?",
+      "alts": []
+    },
+    {
+      "id": "l3-fear",
+      "es": "Nōn timeō.",
+      "en": "I'm not afraid.",
+      "alts": []
+    },
+    {
+      "id": "l3-where",
+      "es": "Ubi es?",
+      "en": "Where are you?",
+      "alts": []
+    },
+    {
+      "id": "l3-question",
+      "es": "Amāsne Rōmam?",
+      "en": "Do you love Rome?",
+      "alts": []
+    },
+    {
+      "id": "l3-veni",
+      "es": "Vēnī, vīdī, vīcī.",
+      "en": "I came, I saw, I conquered.",
+      "alts": []
+    },
+    {
+      "id": "l3-ego",
+      "es": "Ego sum Marcus.",
+      "en": "I am Marcus.",
+      "alts": [
+        "Sum Marcus."
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "type": "mc",
+      "skill": "conj1",
+      "q": "___ Rōmam.",
+      "sub": "(I love Rome.)",
+      "options": [
+        "Amō",
+        "Amat",
+        "Amant"
+      ],
+      "answer": 0,
+      "why": "-ō is I: amō."
+    },
+    {
+      "type": "rapid",
+      "skill": "conj1",
+      "prompt": "Rapid fire: who is doing it?",
+      "choices": [
+        {
+          "key": "ego",
+          "label": "I"
+        },
+        {
+          "key": "tu",
+          "label": "you"
+        },
+        {
+          "key": "is",
+          "label": "he / she"
+        },
+        {
+          "key": "nos",
+          "label": "we"
+        }
+      ],
+      "items": [
+        {
+          "text": "Labōrat.",
+          "full": "Labōrat: he or she works.",
+          "answer": "is",
+          "skill": "conj1",
+          "why": "-t is he or she."
+        },
+        {
+          "text": "Vidēmus.",
+          "full": "Vidēmus: we see.",
+          "answer": "nos",
+          "skill": "conj2",
+          "why": "-mus is we."
+        },
+        {
+          "text": "Amō.",
+          "full": "Amō: I love.",
+          "answer": "ego",
+          "skill": "conj1",
+          "why": "-ō is I."
+        },
+        {
+          "text": "Habēs.",
+          "full": "Habēs: you have.",
+          "answer": "tu",
+          "skill": "conj2",
+          "why": "-s is you."
+        },
+        {
+          "text": "Timet.",
+          "full": "Timet: he or she fears.",
+          "answer": "is",
+          "skill": "conj2",
+          "why": "-t is he or she."
+        },
+        {
+          "text": "Ambulāmus.",
+          "full": "Ambulāmus: we walk.",
+          "answer": "nos",
+          "skill": "conj1",
+          "why": "-mus is we."
+        },
+        {
+          "text": "Laudās.",
+          "full": "Laudās: you praise.",
+          "answer": "tu",
+          "skill": "conj1",
+          "why": "-s is you."
+        },
+        {
+          "text": "Videō.",
+          "full": "Videō: I see.",
+          "answer": "ego",
+          "skill": "conj2",
+          "why": "-ō is I."
+        }
+      ]
+    },
+    {
+      "type": "gap",
+      "skill": "conj1",
+      "q": "Nōs labōrā___.",
+      "hint": "we",
+      "hintLabel": "Ending",
+      "answer": [
+        "mus"
+      ],
+      "why": "-mus is we: labōrāmus. Spanish: trabajamos."
+    },
+    {
+      "type": "translate",
+      "dir": "toEn",
+      "skill": "conj2",
+      "q": "Quid vidēs?",
+      "answer": [
+        "what do you see",
+        "what can you see",
+        "what are you looking at"
+      ],
+      "why": "Quid = what, vidēs = you see."
+    },
+    {
+      "type": "match",
+      "skill": "roots",
+      "prompt": "Match each Latin verb with its Spanish descendant.",
+      "pairs": [
+        [
+          "amāre",
+          "amar"
+        ],
+        [
+          "vidēre",
+          "ver"
+        ],
+        [
+          "habēre",
+          "haber"
+        ],
+        [
+          "labōrāre",
+          "laborar"
+        ],
+        [
+          "timēre",
+          "temer"
+        ]
+      ]
+    },
+    {
+      "type": "fix",
+      "skill": "sum",
+      "prompt": "Tap the word that is wrong.",
+      "sentence": "Nōs est laetae.",
+      "wrong": 1,
+      "fixed": "Nōs sumus laetae.",
+      "why": "Nōs (we) needs sumus."
+    },
+    {
+      "type": "mc",
+      "skill": "neg-q",
+      "prompt": "How do you ask \"Do you love Rome?\"",
+      "q": "",
+      "options": [
+        "Amāsne Rōmam?",
+        "Amās Rōmamne nōn?",
+        "Ne amās Rōmam?"
+      ],
+      "answer": 0,
+      "why": "Add -ne to the first word, usually the verb: Amāsne?"
+    },
+    {
+      "type": "gap",
+      "skill": "conj2",
+      "q": "Ego nōn time___.",
+      "hint": "I",
+      "hintLabel": "Ending",
+      "answer": [
+        "ō"
+      ],
+      "why": "-ō is I: timeō. Spanish temo."
+    },
+    {
+      "type": "order",
+      "skill": "neg-q",
+      "promptStyle": "target",
+      "prompt": "Amatne Marcus Rōmam?",
+      "words": [
+        "Does",
+        "Marcus",
+        "love",
+        "Rome?"
+      ],
+      "answer": "Does Marcus love Rome?",
+      "why": "-ne on amat makes it a yes or no question."
+    },
+    {
+      "type": "translate",
+      "skill": "conj1",
+      "q": "We are working.",
+      "answer": [
+        "labōrāmus",
+        "nōs labōrāmus"
+      ],
+      "why": "Labōrāmus: the -mus already says we."
+    },
+    {
+      "type": "mc",
+      "skill": "sum",
+      "q": "Ubi ___?",
+      "sub": "(Where are you?)",
+      "options": [
+        "es",
+        "est",
+        "sum"
+      ],
+      "answer": 0,
+      "why": "You are: es. Spanish eres."
+    },
+    {
+      "type": "translate",
+      "dir": "toEn",
+      "skill": "neg-q",
+      "q": "Nōn timeō.",
+      "answer": [
+        "i am not afraid",
+        "i do not fear",
+        "i am not scared",
+        "i fear not"
+      ],
+      "why": "Nōn = not, timeō = I fear."
+    },
+    {
+      "type": "gap",
+      "skill": "sum",
+      "q": "Ego ___ Marcus.",
+      "hint": "I am",
+      "hintLabel": "Verb",
+      "hintTone": "green",
+      "answer": [
+        "sum"
+      ],
+      "why": "I am: sum."
+    },
+    {
+      "type": "translate",
+      "skill": "neg-q",
+      "q": "Do you see the temple?",
+      "answer": [
+        "vidēsne templum",
+        "templumne vidēs"
+      ],
+      "why": "Vidēs (you see) + -ne for the question. Templum stays the same as receiver."
+    },
+    {
+      "type": "mc",
+      "skill": "culture",
+      "prompt": "Cicero's nickname, Cicerō, means…",
+      "q": "",
+      "options": [
+        "chickpea",
+        "speaker",
+        "lion"
+      ],
+      "answer": 0,
+      "why": "Cicer is a chickpea. Romans loved a blunt nickname."
+    }
+  ],
+  "write": {
+    "title": "Write it in Latin",
+    "task": "Introduce yourself in Latin: say who you are, two things you love or see, and one thing you don't fear.",
+    "starter": "Ego sum…  Rōmam amō…  Nōn timeō…",
+    "model": "Ego sum {name}. Rōmam amō et templa antīqua videō. Equōs nōn timeō.",
+    "checklist": [
+      "Verb endings: -ō for I, -s for you, -mus for we",
+      "Things you love or see take the receiver ending: -am, -um, -ās, -ōs, or -a for neuter plurals",
+      "Nōn goes just before the verb"
+    ]
+  },
+  "boss": {
+    "title": "Reading: Marcus in the forum",
+    "who": "Magistra Līvia",
+    "skill": "conj1",
+    "persona": "You are Magistra Līvia, a warm Latin teacher. The learner knows the present tense of amāre, vidēre and esse for all persons, nōn, -ne questions, quis, quid, ubi, and nouns in -a, -us and -um as doer or receiver. Chat in English about Marcus walking in the Roman forum, and give very short Latin sentences for them to translate or answer.",
+    "turns": [
+      {
+        "npc": "Ego sum Marcus. Rōmam amō.",
+        "en": "ego = I",
+        "skill": "sum",
+        "choices": [
+          [
+            "I am Marcus. I love Rome.",
+            true,
+            ""
+          ],
+          [
+            "He is Marcus. He loves Rome.",
+            false,
+            "Sum and amō end in -m and -ō: I."
+          ],
+          [
+            "I am Marcus. Rome loves me.",
+            false,
+            "Rōmam ends in -am: Rome is what's loved."
+          ]
+        ]
+      },
+      {
+        "npc": "In forō ambulāmus et templa vidēmus.",
+        "en": "in forō = in the forum",
+        "skill": "conj1",
+        "choices": [
+          [
+            "We walk in the forum and see the temples.",
+            true,
+            ""
+          ],
+          [
+            "They walk in the forum and see the temples.",
+            false,
+            "-mus means we. They would be -nt."
+          ],
+          [
+            "We walk in the forum and see the temple.",
+            false,
+            "Templa is the plural of templum: temples."
+          ]
+        ]
+      },
+      {
+        "npc": "Vidēsne statuās? Statuae sunt pulchrae.",
+        "en": "statuās = the statues (receiving)",
+        "skill": "neg-q",
+        "choices": [
+          [
+            "Do you see the statues? The statues are beautiful.",
+            true,
+            ""
+          ],
+          [
+            "I see the statues. The statues are beautiful.",
+            false,
+            "Vidēs with -ne is a question: do you see?"
+          ],
+          [
+            "Do you see the statue? It is beautiful.",
+            false,
+            "Statuās and statuae are plural."
+          ]
+        ]
+      },
+      {
+        "npc": "Hodiē nōn labōrō. Ambulō et Rōmam laudō.",
+        "en": "hodiē = today",
+        "skill": "conj1",
+        "choices": [
+          [
+            "I'm not working today. I'm walking and praising Rome.",
+            true,
+            ""
+          ],
+          [
+            "We aren't working today. We walk and praise Rome.",
+            false,
+            "-ō endings mean I. We would be -mus."
+          ],
+          [
+            "I'm working today. I walk and praise Rome.",
+            false,
+            "Nōn means not."
+          ]
+        ]
+      }
+    ],
+    "closing": "Optimē! Marcus et tū Rōmam amātis.",
+    "closingEn": "Excellent! Marcus and you both love Rome.",
+    "chatOpening": "Salvē! Quid in forō vidēs?",
+    "chatOpeningEn": "Hello! What do you see in the forum?"
+  }
+}

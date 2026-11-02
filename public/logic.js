@@ -18,17 +18,38 @@
   }
   const norm = s => dropPron(clean(s));
 
+  // English answers (Latin → English translation): contractions and articles don't matter,
+  // because Latin has no "the" or "a" and "I'm" is as good as "I am".
+  const CONTRACT = [[/\b(can)['’]t\b/g, 'can not'], [/\bcannot\b/g, 'can not'], [/\bwon['’]t\b/g, 'will not'], [/n['’]t\b/g, ' not'],
+    [/\bi['’]m\b/g, 'i am'], [/['’]re\b/g, ' are'], [/\b(he|she|it|that|there|what|who)['’]s\b/g, '$1 is'], [/['’]ve\b/g, ' have'], [/['’]ll\b/g, ' will']];
+  function english(s) {
+    let t = String(s).toLowerCase();
+    CONTRACT.forEach(([re, rep]) => { t = t.replace(re, rep); });
+    return clean(t).split(' ').filter(w => w !== 'the' && w !== 'a' && w !== 'an').join(' ');
+  }
+
   // 'ok' exact, 'accent' = right apart from accents, 'no' = wrong.
-  function judge(input, answers) {
+  // opts.english: compare as English (see above). opts.marksOptional: accents and macrons never count (Latin).
+  function judge(input, answers, opts) {
+    opts = opts || {};
+    const r = judgeRaw(input, answers, opts);
+    return r === 'accent' && opts.marksOptional ? 'ok' : r;
+  }
+  function judgeRaw(input, answers, opts) {
+    const raw = (Array.isArray(answers) ? answers : [answers]);
+    if (opts.english) {
+      const i = english(input);
+      if (!i) return 'no';
+      return raw.some(a => english(a) === i) ? 'ok' : 'no';
+    }
     const i = norm(input);
     if (!i) return 'no';
-    const list = (Array.isArray(answers) ? answers : [answers]).map(norm);
+    const list = raw.map(norm);
     if (list.includes(i)) return 'ok';
     const ia = stripAcc(i);
     if (list.some(a => stripAcc(a) === ia)) return 'accent';
     // Pronouns kept on both sides: "El es médico" vs "Él es médico" is an accent slip, not a wrong answer.
     const full = stripAcc(clean(input));
-    const raw = (Array.isArray(answers) ? answers : [answers]);
     if (raw.some(a => stripAcc(clean(a)) === full)) return 'accent';
     return 'no';
   }

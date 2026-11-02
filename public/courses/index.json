@@ -1,6 +1,7 @@
 {
   "version": 1,
   "courses": [
-    { "id": "es-ES", "file": "es-ES/course.json" }
+    { "id": "es-ES", "label": "Español", "file": "es-ES/course.json" },
+    { "id": "la", "label": "Latīna", "file": "la/course.json" }
   ]
 }
