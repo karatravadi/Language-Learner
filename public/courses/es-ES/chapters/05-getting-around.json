@@ -1,0 +1,128 @@
+{
+  "n": 5,
+  "title": "Getting around",
+  "sub": "¿Hay…? or ¿Dónde está…?",
+  "can": "Ask where things are, follow directions, and buy a return ticket.",
+  "mins": 15,
+  "doneText": "You can now find what you need in a Spanish town, ask the way and follow the answer.",
+  "skills": {
+    "hay-esta": "Hay or está",
+    "directions": "Directions",
+    "al-del": "al and del",
+    "places": "Places in town",
+    "transport": "Tickets and transport"
+  },
+  "discover": {
+    "intro": "All six sentences are about where things are. See if you can spot when Spanish says hay and when it says está.",
+    "groups": [
+      { "label": "Blue", "tone": "blue", "lines": [["¿Hay una farmacia por aquí?", "Is there a pharmacy around here?"], ["Hay un bar en la esquina.", "There's a bar on the corner."], ["No hay metro aquí.", "There's no metro here."]] },
+      { "label": "Orange", "tone": "orange", "lines": [["¿Dónde está la farmacia?", "Where is the pharmacy?"], ["El bar está en la esquina.", "The bar is on the corner."], ["La estación está cerca.", "The station is nearby."]] }
+    ],
+    "question": "When does Spanish use hay, and when está?",
+    "options": [
+      "Hay introduces something new (un, una, or no article). Está locates a specific thing you already know (el, la, my, a name).",
+      "Hay is for places, está is for people.",
+      "Hay is the past tense of está."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Look at the little word in front of each place: una and un in blue, la and el in orange.",
+    "reveal": "Hay means \"there is\" or \"there are\" and introduces something new. Está (están for plurals) says where a specific thing is. Two hooks:",
+    "hooks": [
+      { "title": "hay: there is, there are", "tone": "blue", "rows": [
+        ["un", "a", "¿Hay un cajero por aquí?", "Is there a cash machine around here?"],
+        ["una", "a", "Hay una parada de autobús.", "There's a bus stop."],
+        ["unos", "some", "Hay unos bares muy buenos.", "There are some very good bars."],
+        ["no", "none", "No hay taxis.", "There are no taxis."]
+      ] },
+      { "title": "está: where it is", "tone": "orange", "rows": [
+        ["el", "the", "¿Dónde está el museo?", "Where is the museum?"],
+        ["la", "the", "La playa está lejos.", "The beach is far."],
+        ["mi", "my", "Mi hotel está en el centro.", "My hotel is in the centre."],
+        ["están", "plural", "Los servicios están al fondo.", "The toilets are at the back."]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "Finding your way",
+    "sub": "Tap any row to hear it",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "Directions", "speak": "form", "rows": [["straight on", "todo recto"], ["turn right", "gira a la derecha"], ["turn left", "gira a la izquierda"], ["take the second street", "coge la segunda calle"], ["cross", "cruza"], ["keep going", "sigue"]] },
+        { "title": "Where", "speak": "form", "rows": [["near", "cerca de"], ["far from", "lejos de"], ["next to", "al lado de"], ["opposite", "enfrente de"], ["on the corner", "en la esquina"], ["between", "entre"]] }
+      ] },
+      { "type": "note", "kind": "tip", "text": "a + el = al and de + el = del: al final de la calle, al lado del hotel. With la nothing joins up: al lado de la estación." },
+      { "type": "note", "kind": "spain", "text": "In Spain, coger means to take (a bus, a street, a train): coge la segunda a la derecha. In much of Latin America it is rude, so keep it for Spain." },
+      { "type": "twist", "title": "Recto or derecha", "a": ["Sigue todo recto.", "Keep going straight on."], "b": ["Gira a la derecha.", "Turn right."], "note": "Recto sounds like \"right\", but todo recto means straight on. Right is a la derecha." },
+      { "type": "note", "kind": "warn", "text": "Gira, sigue, cruza and coge are commands for tú. They look just like the él / ella form (gira = she turns), which makes them easy to remember. To a stranger you may hear the usted forms: gire, siga, cruce, coja." },
+      { "type": "list", "title": "Around town", "rows": [["la estación", "the station"], ["la parada de autobús", "the bus stop"], ["el metro", "the underground"], ["el cajero", "the cash machine"], ["la farmacia", "the pharmacy"], ["el billete", "the ticket"], ["ida y vuelta", "return (there and back)"], ["el andén", "the platform"]] }
+    ]
+  },
+  "phrases": [
+    { "id": "c5-pharmacy", "es": "¿Hay una farmacia por aquí?", "en": "Is there a pharmacy around here?", "alts": ["¿Hay una farmacia cerca?"] },
+    { "id": "c5-station", "es": "¿Dónde está la estación?", "en": "Where is the station?", "alts": [] },
+    { "id": "c5-far", "es": "¿Está lejos?", "en": "Is it far?", "alts": [] },
+    { "id": "c5-straight", "es": "Sigue todo recto.", "en": "Keep going straight on.", "alts": ["Siga todo recto."] },
+    { "id": "c5-right", "es": "Gira a la derecha.", "en": "Turn right.", "alts": ["Gire a la derecha."] },
+    { "id": "c5-left", "es": "Gira a la izquierda.", "en": "Turn left.", "alts": ["Gire a la izquierda."] },
+    { "id": "c5-return", "es": "Un billete de ida y vuelta, por favor.", "en": "A return ticket, please.", "alts": [] },
+    { "id": "c5-centre", "es": "¿Cómo llego al centro?", "en": "How do I get to the centre?", "alts": [] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "hay-esta", "q": "¿___ un cajero por aquí?", "sub": "(Is there a cash machine around here?)", "options": ["Hay", "Está", "Es"], "answer": 0, "why": "Un cajero is any cash machine, something new: hay." },
+    { "type": "mc", "skill": "hay-esta", "q": "¿Dónde ___ el museo?", "options": ["está", "hay", "es"], "answer": 0, "why": "El museo is a specific place: está." },
+    {
+      "type": "rapid", "skill": "hay-esta", "prompt": "Rapid fire: hay or está?",
+      "choices": [{ "key": "hay", "label": "hay", "tone": "blue" }, { "key": "esta", "label": "está", "tone": "orange" }],
+      "items": [
+        { "blank": "¿___ una farmacia cerca?", "full": "¿Hay una farmacia cerca?", "fill": "Hay", "answer": "hay", "skill": "hay-esta", "why": "Una farmacia, any one: hay." },
+        { "blank": "La farmacia ___ en la esquina.", "full": "La farmacia está en la esquina.", "fill": "está", "answer": "esta", "skill": "hay-esta", "why": "La farmacia, a specific one: está." },
+        { "blank": "___ muchos bares en esta calle.", "full": "Hay muchos bares en esta calle.", "fill": "Hay", "answer": "hay", "skill": "hay-esta", "why": "Introducing them: hay. Hay never changes for plurals." },
+        { "blank": "Mi hotel ___ en el centro.", "full": "Mi hotel está en el centro.", "fill": "está", "answer": "esta", "skill": "hay-esta", "why": "Mi hotel is specific: está." },
+        { "blank": "No ___ metro en este pueblo.", "full": "No hay metro en este pueblo.", "fill": "hay", "answer": "hay", "skill": "hay-esta", "why": "No article: hay." },
+        { "blank": "¿Dónde ___ la parada?", "full": "¿Dónde está la parada?", "fill": "está", "answer": "esta", "skill": "hay-esta", "why": "La parada, a specific stop: está." },
+        { "blank": "___ un supermercado al lado del hotel.", "full": "Hay un supermercado al lado del hotel.", "fill": "Hay", "answer": "hay", "skill": "hay-esta", "why": "Un supermercado, something new: hay." },
+        { "blank": "El Prado ___ cerca.", "full": "El Prado está cerca.", "fill": "está", "answer": "esta", "skill": "hay-esta", "why": "A name is always specific: está." }
+      ]
+    },
+    { "type": "listen", "skill": "directions", "say": "Gira a la izquierda y sigue todo recto.", "options": ["Turn left and keep going straight on.", "Turn right and take the second street.", "It's next to the station."], "answer": 0, "why": "Izquierda is left, todo recto is straight on." },
+    { "type": "gap", "skill": "al-del", "q": "El cajero está al lado ___ hotel.", "hint": "de + el", "hintLabel": "Hint", "answer": ["del"], "why": "De + el always joins up: del." },
+    { "type": "match", "skill": "directions", "prompt": "Match the directions.", "pairs": [["todo recto", "straight on"], ["a la derecha", "on the right"], ["a la izquierda", "on the left"], ["enfrente de", "opposite"], ["al lado de", "next to"]] },
+    { "type": "fix", "skill": "hay-esta", "prompt": "Tap the word that is wrong.", "sentence": "El museo hay en el centro.", "wrong": 2, "fixed": "El museo está en el centro.", "why": "El museo is specific, so está. Hay introduces something new: hay un museo en el centro." },
+    { "type": "translate", "skill": "places", "q": "Is there a bus stop around here?", "answer": ["hay una parada de autobús por aquí", "hay una parada por aquí", "hay una parada de autobús cerca", "hay una parada cerca"], "why": "Any bus stop, something new: ¿Hay una parada…?" },
+    { "type": "order", "skill": "directions", "prompt": "Take the second street on the right.", "words": ["Coge", "la", "segunda", "calle", "a", "la", "derecha"], "answer": "Coge la segunda calle a la derecha.", "why": "Coger = to take, in Spain. A la derecha = on the right." },
+    { "type": "gap", "skill": "al-del", "q": "Gira a la derecha ___ final de la calle.", "hint": "a + el", "hintLabel": "Hint", "answer": ["al"], "why": "A + el always joins up: al final." },
+    { "type": "mc", "skill": "transport", "prompt": "You want to go to Toledo and come back the same day. Ask for…", "q": "", "options": ["un billete de ida y vuelta", "un billete de ida", "un andén"], "answer": 0, "why": "Ida y vuelta is there and back. Ida alone is one way." },
+    { "type": "translate", "skill": "hay-esta", "q": "Where is the station?", "answer": ["dónde está la estación"], "why": "A specific station: está." },
+    { "type": "fix", "skill": "directions", "prompt": "Tap the word that is wrong.", "sentence": "Sigue todo derecha.", "wrong": 2, "fixed": "Sigue todo recto.", "why": "Straight on is todo recto. Derecha means right." },
+    { "type": "translate", "skill": "directions", "q": "Turn left.", "answer": ["gira a la izquierda", "gire a la izquierda"], "who": ["tú", "usted"], "why": "Gira to a friend, gire to a stranger. Left is izquierda." },
+    { "type": "gap", "skill": "places", "q": "El hotel está ___ de la estación.", "hint": "opposite", "hintLabel": "Word", "answer": ["enfrente"], "why": "Enfrente de = opposite." },
+    { "type": "translate", "skill": "hay-esta", "q": "Is it far?", "answer": ["está lejos"], "why": "A specific place you've already mentioned: está. Lejos = far." }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Give a friend directions from your hostel to a café: use at least two directions, then say where the café is.",
+    "starter": "Gira a la…  Sigue…  El café está…",
+    "model": "Gira a la derecha y sigue todo recto. Coge la segunda calle a la izquierda. El café está al lado de la farmacia, enfrente del parque.",
+    "checklist": ["Directions use gira, sigue or coge", "The café is specific, so está", "de + el becomes del, a + el becomes al"]
+  },
+  "boss": {
+    "title": "Lost near Puerta del Sol",
+    "who": "Marta",
+    "skill": "directions",
+    "persona": "You are Marta, a friendly woman from Madrid near the Puerta del Sol. The learner is lost and asks you for directions. Give simple directions (todo recto, a la derecha, a la izquierda, al lado de, enfrente de) to places like the metro, a pharmacy, the Prado museum or a café. Use tú.",
+    "turns": [
+      { "npc": "¡Hola! ¿Te puedo ayudar? ¿Estás perdid{o}?", "en": "Hi! Can I help you? Are you lost?", "skill": "hay-esta",
+        "choices": [["Sí. ¿Dónde está el metro, por favor?", true, ""], ["Sí. ¿Dónde hay el metro, por favor?", false, "El metro is a specific place: ¿Dónde está…?"], ["Sí. ¿Dónde es el metro, por favor?", false, "Location uses estar: ¿Dónde está…?"]] },
+      { "npc": "Sigue todo recto y gira a la izquierda. Está enfrente de la farmacia.", "en": "Go straight on and turn left. It's opposite the pharmacy.", "skill": "directions",
+        "choices": [["Todo recto, a la izquierda, enfrente de la farmacia. Gracias.", true, ""], ["A la derecha, al lado de la farmacia. Gracias.", false, "She said a la izquierda (left) and enfrente de (opposite)."], ["Todo recto, a la derecha, enfrente de la farmacia. Gracias.", false, "She said a la izquierda: left. Derecha is right."]] },
+      { "npc": "De nada. ¿Necesitas algo más?", "en": "You're welcome. Do you need anything else?", "skill": "hay-esta",
+        "choices": [["Sí, ¿hay un cajero por aquí?", true, ""], ["Sí, ¿está un cajero por aquí?", false, "Any cash machine is something new: ¿Hay un cajero…?"], ["Sí, ¿dónde hay el cajero?", false, "With el (a specific one), use está. For any cash machine: ¿Hay un cajero…?"]] },
+      { "npc": "Sí, hay uno al lado del banco, en la esquina.", "en": "Yes, there's one next to the bank, on the corner.", "skill": "al-del",
+        "choices": [["¿Al lado del banco? Perfecto, muchas gracias.", true, ""], ["¿Al lado de el banco? Perfecto, muchas gracias.", false, "De + el always joins up: del banco."], ["¿Lejos del banco? Perfecto, muchas gracias.", false, "She said al lado (next to), not lejos (far)."]] }
+    ],
+    "closing": "¡De nada! ¡Que tengas un buen día!",
+    "closingEn": "You're welcome! Have a good day!",
+    "chatOpening": "¿Y adónde vas después? ¿Al Prado?",
+    "chatOpeningEn": "And where are you going afterwards? To the Prado?"
+  }
+}

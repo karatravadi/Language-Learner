@@ -1,0 +1,130 @@
+{
+  "n": 8,
+  "title": "Daily routine",
+  "sub": "me levanto, me ducho, me acuesto",
+  "can": "Describe your day in order, from waking up to going to bed.",
+  "mins": 15,
+  "doneText": "You can now talk through your day in order with reflexive verbs.",
+  "skills": {
+    "reflexive": "Reflexive verbs: me, te, se",
+    "sequence": "Putting a day in order",
+    "routine-time": "Times in the day",
+    "stem": "Boot verbs: me acuesto, me despierto"
+  },
+  "discover": {
+    "intro": "The same verbs appear in both colours. Spot what the little word me changes.",
+    "groups": [
+      { "label": "Blue", "tone": "blue", "lines": [["Me levanto a las ocho.", "I get up at eight."], ["Me ducho por la mañana.", "I shower in the morning."], ["Me acuesto tarde.", "I go to bed late."]] },
+      { "label": "Orange", "tone": "orange", "lines": [["Levanto la maleta.", "I lift the suitcase."], ["Ducho al perro.", "I shower the dog."], ["Acuesto a los niños.", "I put the children to bed."]] }
+    ],
+    "question": "What does me add in the blue sentences?",
+    "options": [
+      "It shows you do the action to yourself: I get myself up, I shower myself.",
+      "It makes the sentence more polite.",
+      "It means the action happens in the morning."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. In orange, who or what gets lifted, showered or put to bed? And in blue?",
+    "reveal": "These are reflexive verbs: the action comes back to you. Their dictionary form ends in -se (levantarse), and you put me, te, se, nos, os or se in front of the verb:",
+    "hooks": [
+      { "title": "levantarse", "tone": "blue", "rows": [
+        ["me", "yo", "me levanto", "I get up"],
+        ["te", "tú", "te levantas", "you get up"],
+        ["se", "él / ella / usted", "se levanta", "he / she gets up"],
+        ["nos", "nosotros", "nos levantamos", "we get up"],
+        ["os", "vosotros", "os levantáis", "you all get up"],
+        ["se", "ellos / ellas", "se levantan", "they get up"]
+      ] },
+      { "title": "Putting a day in order", "tone": "orange", "rows": [
+        ["1", "first", "Primero me levanto.", "First I get up."],
+        ["2", "then", "Luego me ducho.", "Then I shower."],
+        ["3", "after that", "Después desayuno.", "After that I have breakfast."],
+        ["4", "at night", "Por la noche leo un poco.", "At night I read a little."],
+        ["5", "finally", "Al final me acuesto.", "Finally I go to bed."]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "Your day",
+    "sub": "Tap any row to hear it",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "levantarse", "tone": "blue", "speak": "form", "rows": [["yo", "me levanto"], ["tú", "te levantas"], ["él / ella / usted", "se levanta"], ["nosotros/as", "nos levantamos"], ["vosotros/as", "os levantáis"], ["ellos / ellas / ustedes", "se levantan"]] },
+        { "title": "acostarse", "tone": "orange", "speak": "form", "rows": [["yo", "me acuesto"], ["tú", "te acuestas"], ["él / ella / usted", "se acuesta"], ["nosotros/as", "nos acostamos"], ["vosotros/as", "os acostáis"], ["ellos / ellas / ustedes", "se acuestan"]] }
+      ] },
+      { "type": "note", "kind": "tip", "text": "Acostarse (to go to bed) and despertarse (to wake up) are boot verbs, like tener and querer. In acostarse the o becomes ue, in despertarse the e becomes ie: me acuesto, me despierto. Nosotros and vosotros keep the plain vowel: nos acostamos, nos despertamos." },
+      { "type": "note", "kind": "spain", "text": "Spanish days run late: a light breakfast, lunch at 2 or 3pm, sometimes a siesta, dinner at 9 or 10pm, and bed well after midnight at the weekend." },
+      { "type": "twist", "title": "You already know one", "a": ["Me llamo {name}.", "My name is {name} (literally: I call myself {name})."], "b": ["Llamo a mi madre.", "I call my mum."], "note": "Llamarse is reflexive. Without me, llamar just means to call someone." },
+      { "type": "note", "kind": "warn", "text": "With parts of the body Spanish uses el or los, not \"my\": me lavo los dientes (I brush my teeth), me lavo el pelo (I wash my hair)." },
+      { "type": "list", "title": "Routine verbs", "rows": [["despertarse", "to wake up"], ["levantarse", "to get up"], ["ducharse", "to have a shower"], ["vestirse", "to get dressed"], ["desayunar", "to have breakfast"], ["lavarse los dientes", "to brush your teeth"], ["echarse la siesta", "to have a nap"], ["acostarse", "to go to bed"]] }
+    ]
+  },
+  "phrases": [
+    { "id": "c8-wake", "es": "Me despierto a las siete.", "en": "I wake up at seven.", "alts": [] },
+    { "id": "c8-early", "es": "Me levanto temprano.", "en": "I get up early.", "alts": [] },
+    { "id": "c8-shower", "es": "Me ducho por la mañana.", "en": "I shower in the morning.", "alts": [] },
+    { "id": "c8-teeth", "es": "Me lavo los dientes.", "en": "I brush my teeth.", "alts": [] },
+    { "id": "c8-bedtime", "es": "¿A qué hora te acuestas?", "en": "What time do you go to bed?", "alts": ["¿A qué hora se acuesta?"] },
+    { "id": "c8-late", "es": "Me acuesto tarde.", "en": "I go to bed late.", "alts": [] },
+    { "id": "c8-siesta", "es": "Me echo la siesta.", "en": "I have a nap.", "alts": [] },
+    { "id": "c8-weekend", "es": "Los fines de semana no madrugo.", "en": "I don't get up early at the weekend.", "alts": [] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "reflexive", "q": "___ levanto a las ocho.", "options": ["Me", "Te", "Se"], "answer": 0, "why": "Levanto is yo, so me: me levanto." },
+    { "type": "gap", "skill": "reflexive", "q": "¿A qué hora ___ duchas?", "hint": "tú", "hintLabel": "Who", "answer": ["te"], "why": "Duchas is tú, so te: te duchas." },
+    {
+      "type": "rapid", "skill": "reflexive", "prompt": "Rapid fire: me, te, se or nos?",
+      "choices": [{ "key": "me", "label": "me" }, { "key": "te", "label": "te" }, { "key": "se", "label": "se" }, { "key": "nos", "label": "nos" }],
+      "items": [
+        { "blank": "___ levantamos a las siete.", "full": "Nos levantamos a las siete.", "fill": "Nos", "answer": "nos", "skill": "reflexive", "why": "-amos is nosotros: nos." },
+        { "blank": "___ acuesto tarde.", "full": "Me acuesto tarde.", "fill": "Me", "answer": "me", "skill": "reflexive", "why": "-o is yo: me." },
+        { "blank": "¿___ duchas por la noche?", "full": "¿Te duchas por la noche?", "fill": "Te", "answer": "te", "skill": "reflexive", "why": "-as is tú: te." },
+        { "blank": "Mi madre ___ levanta temprano.", "full": "Mi madre se levanta temprano.", "fill": "se", "answer": "se", "skill": "reflexive", "why": "She: se." },
+        { "blank": "___ despertamos con el sol.", "full": "Nos despertamos con el sol.", "fill": "Nos", "answer": "nos", "skill": "reflexive", "why": "-amos is nosotros: nos." },
+        { "blank": "Ellos ___ acuestan a las doce.", "full": "Ellos se acuestan a las doce.", "fill": "se", "answer": "se", "skill": "reflexive", "why": "They: se." },
+        { "blank": "___ lavo los dientes.", "full": "Me lavo los dientes.", "fill": "Me", "answer": "me", "skill": "reflexive", "why": "-o is yo: me." },
+        { "blank": "¿___ echas la siesta?", "full": "¿Te echas la siesta?", "fill": "Te", "answer": "te", "skill": "reflexive", "why": "-as is tú: te." }
+      ]
+    },
+    { "type": "listen", "skill": "sequence", "say": "Primero me ducho y luego desayuno.", "options": ["First I shower and then I have breakfast.", "First I have breakfast and then I shower.", "I shower after dinner."], "answer": 0, "why": "Primero = first, luego = then." },
+    { "type": "gap", "skill": "stem", "q": "Me ___ a las once.", "hint": "acostarse", "hintLabel": "Verb", "hintTone": "orange", "answer": ["acuesto"], "why": "Boot verb: the o becomes ue. Me acuesto." },
+    { "type": "fix", "skill": "reflexive", "prompt": "Tap the word that is wrong.", "sentence": "Me lavo mis dientes.", "wrong": 2, "fixed": "Me lavo los dientes.", "why": "With parts of the body, use los or el, not \"my\"." },
+    { "type": "order", "skill": "sequence", "prompt": "First I get up, then I have a shower.", "words": ["Primero", "me", "levanto,", "luego", "me", "ducho"], "answer": "Primero me levanto, luego me ducho.", "why": "Me goes right before each reflexive verb." },
+    { "type": "match", "skill": "sequence", "prompt": "Match the order words.", "pairs": [["primero", "first"], ["luego", "then"], ["después", "after that"], ["al final", "finally"], ["por la noche", "at night"]] },
+    { "type": "translate", "skill": "routine-time", "q": "I wake up at seven.", "answer": ["me despierto a las siete"], "why": "Boot verb: me despierto. A las siete for the time." },
+    { "type": "mc", "skill": "stem", "q": "Nosotros nos ___ tarde.", "options": ["acostamos", "acuestamos", "acostemos"], "answer": 0, "why": "Nosotros is outside the boot: nos acostamos." },
+    { "type": "translate", "skill": "reflexive", "q": "What time do you go to bed?", "answer": ["a qué hora te acuestas", "a qué hora se acuesta", "a qué hora se acuesta usted", "a qué hora os acostáis"], "who": ["tú", "usted", "usted", "vosotros"], "why": "¿A qué hora te acuestas? Acostarse is a boot verb." },
+    { "type": "gap", "skill": "reflexive", "q": "Los domingos ___ echo la siesta.", "hint": "yo", "hintLabel": "Who", "answer": ["me"], "why": "Echo is yo, so me: me echo la siesta." },
+    { "type": "fix", "skill": "stem", "prompt": "Tap the word that is wrong.", "sentence": "Nos acuestamos a las doce.", "wrong": 1, "fixed": "Nos acostamos a las doce.", "why": "Nosotros is outside the boot, so the o stays: nos acostamos." },
+    { "type": "translate", "skill": "reflexive", "q": "I have a shower in the morning.", "answer": ["me ducho por la mañana", "me ducho por las mañanas"], "who": ["", "mornings in general"], "why": "Me ducho. In Spain: por la mañana." },
+    { "type": "mc", "skill": "routine-time", "prompt": "In Spain, dinner is usually…", "q": "", "options": ["around 9 or 10pm", "around 6pm", "straight after lunch"], "answer": 0, "why": "Spanish dinner is late, often 9 or 10pm." },
+    { "type": "translate", "skill": "sequence", "q": "Then I have breakfast.", "answer": ["luego desayuno", "después desayuno"], "why": "Luego or después, then the verb. Desayunar is not reflexive." }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Describe a normal day on your trip, in order: when you wake up, three things you do, and when you go to bed.",
+    "starter": "Primero me despierto a las…  Luego…  Al final…",
+    "model": "Primero me despierto a las ocho y me ducho. Luego desayuno y salgo a pasear. Por la tarde me echo la siesta. Al final me acuesto a las doce.",
+    "checklist": ["Reflexive verbs have me in front: me levanto, me ducho", "Order words: primero, luego, después, al final", "Boot verbs: me acuesto, me despierto"]
+  },
+  "boss": {
+    "title": "Sharing a dorm in Barcelona",
+    "who": "Jordi",
+    "skill": "reflexive",
+    "persona": "You are Jordi, a friendly guy from Barcelona sharing a hostel dorm with the learner. You chat about daily routines (what time people get up, shower, eat and go to bed) so you don't disturb each other, and about plans in Barcelona. Speak Spanish, not Catalan. Use tú.",
+    "turns": [
+      { "npc": "¡Buenas! Oye, ¿a qué hora te levantas mañana?", "en": "Hi! Hey, what time are you getting up tomorrow?", "skill": "reflexive",
+        "choices": [["Me levanto a las siete.", true, ""], ["Te levantas a las siete.", false, "Te levantas is \"you get up\". About yourself: me levanto."], ["Levanto a las siete.", false, "Without me it means \"I lift\" something. Getting up is me levanto."]] },
+      { "npc": "Vale. ¿Y te duchas por la mañana o por la noche?", "en": "OK. And do you shower in the morning or at night?", "skill": "reflexive",
+        "choices": [["Me ducho por la mañana.", true, ""], ["Se ducha por la mañana.", false, "Se ducha is he or she. About yourself: me ducho."], ["Ducho por la mañana.", false, "Without me, you'd be showering someone else. Me ducho."]] },
+      { "npc": "¿Y a qué hora te acuestas normalmente?", "en": "And what time do you usually go to bed?", "skill": "stem",
+        "choices": [["Normalmente me acuesto a las once.", true, ""], ["Normalmente me acosto a las once.", false, "Acostarse is a boot verb: me acuesto."], ["Normalmente me acuesta a las once.", false, "Acuesta is he or she. About yourself: me acuesto."]] },
+      { "npc": "¡Uf, muy temprano para Barcelona! ¿Cenamos juntos primero, a las diez?", "en": "Wow, very early for Barcelona! Shall we have dinner together first, at ten?", "skill": "sequence",
+        "choices": [["Vale, primero cenamos y luego nos acostamos.", true, ""], ["Vale, primero cenamos y luego nos acuestamos.", false, "Nosotros is outside the boot: nos acostamos."], ["Vale, primero cenamos y luego me acostamos.", false, "Acostamos is nosotros, so nos: nos acostamos."]] }
+    ],
+    "closing": "¡Perfecto! Buenas noches, hasta mañana.",
+    "closingEn": "Perfect! Good night, see you tomorrow.",
+    "chatOpening": "¿Y qué vas a hacer mañana en Barcelona?",
+    "chatOpeningEn": "And what are you going to do tomorrow in Barcelona?"
+  }
+}

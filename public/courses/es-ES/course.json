@@ -11,15 +11,15 @@
     "chapters/01-ser-estar.json",
     "chapters/02-everyday-verbs.json",
     "chapters/03-numbers-time.json",
-    "chapters/04-food-ordering.json"
+    "chapters/04-food-ordering.json",
+    "chapters/05-getting-around.json",
+    "chapters/06-hostels-shopping.json",
+    "chapters/07-likes-plans.json",
+    "chapters/08-daily-routine.json"
   ],
   "words": "words.json",
   "glossary": "glossary.json",
   "roadmap": [
-    { "n": 5, "title": "Getting around", "can": "Ask directions, buy tickets, understand recto and a la izquierda" },
-    { "n": 6, "title": "Hostels and shopping", "can": "Use hay and tener, ask for what you need, compare prices" },
-    { "n": 7, "title": "Likes, wants and plans", "can": "Use gustar, querer, apetecer and ir a + infinitive" },
-    { "n": 8, "title": "Daily routine", "can": "Describe your day with reflexive verbs: levantarse, ducharse" },
     { "n": 9, "title": "Irregular favourites", "can": "Master ir, hacer, tener, poder and querer" },
     { "n": 10, "title": "What happened", "can": "Tell a short story with the pretérito perfecto: he perdido, he comido" },
     { "n": 11, "title": "Describing people and places", "can": "Describe, compare and give opinions" },

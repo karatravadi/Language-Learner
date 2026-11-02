@@ -9,7 +9,8 @@ hosting providers, auth services or the AI APIs, and could not hold Kara's login
 Claude Code on her Windows PC. Read `CLAUDE.md` first.
 
 ## Where things stand
-- v2 works locally: 4 chapters (ser/estar, present tense, numbers and time, food and ordering), 29 words of the day,
+- v2 works locally: 8 chapters (ser/estar, present tense, numbers and time, food and ordering, getting around,
+  hostels and shopping, likes and plans, daily routine), 29 words of the day,
   spaced-repetition review, weak-spot drills, a 45-minute daily plan with an active-time tracker, optional AI tutor
   (sentence correction, word-of-the-day check, free chat with each chapter's character).
 - Content lives in JSON files with a checker. The UI was redesigned with the unslop skill.
@@ -92,7 +93,7 @@ carry over.
 - [x] Monthly cost confirmed with Kara (target £0): Cloudflare free plans, Gemini free tier
 
 ## After this phase
-- **More Spanish chapters (the main ongoing need).** Chapters 5 to 12 are on the roadmap in `course.json`.
+- **More Spanish chapters (the main ongoing need).** Chapters 9 to 14 are on the roadmap in `course.json`.
   Then extend towards B1: preterite vs imperfect, the future, giving opinions, the subjunctive basics.
 - **Latin course**, as `public/courses/la/`. The engine is course-aware, but Latin needs:
   - Reading-first chapters: declension and conjugation tables, labelling cases, Latin to English.

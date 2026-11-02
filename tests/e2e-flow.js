@@ -63,7 +63,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   assert.match(t, /Getting around/); assert.match(t, AI_ON ? /AI tutor on/ : /AI tutor off/);
   const fonts = await page.evaluate(async () => { await document.fonts.ready; return [document.fonts.check('16px "Instrument Sans"'), document.fonts.check('16px "Newsreader"')]; });
   assert.deepStrictEqual(fonts, [true, true], 'bundled fonts should load');
-  ok('home: plan for 45 min, 4 chapters + roadmap, no greeting, no emoji, bundled fonts load');
+  ok('home: plan for 45 min, chapters + roadmap, no greeting, no emoji, bundled fonts load');
   await shot('01-home');
 
   // ---------- word of the day ----------

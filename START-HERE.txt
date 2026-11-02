@@ -23,7 +23,7 @@ STEP 3  Start it
    - If Windows SmartScreen warns about start.bat: click "More info", then
      "Run anyway". (It only runs "node server.js".)
 
-That's it. All 4 chapters, the word of the day, quizzes and spaced-repetition
+That's it. All 8 chapters, the word of the day, quizzes and spaced-repetition
 review work right now, with NO account, key or internet needed.
 
 Your day: the home screen plans about 45 minutes (word of the day, review, a

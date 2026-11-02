@@ -73,7 +73,7 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
 - Accuracy: the Spanish is written by an AI and checked by tests for consistency, not for correctness.
   Flag anything unusual for Kara. A native speaker reviewing each batch is the best safeguard.
 - Pace: at 45 min a day Kara finishes a chapter every 1 to 2 days. Write chapters in batches of 4, run
-  `npm test` and `npm run e2e`, then hand over. The roadmap in course.json lists chapters 5 to 12.
+  `npm test` and `npm run e2e`, then hand over. The roadmap in course.json lists the next chapters (9 onwards).
 - The `boss.persona` text is the AI character's brief. Only the server reads it (from disk), so the page can never
   inject its own prompt.
 

@@ -1,0 +1,133 @@
+{
+  "n": 7,
+  "title": "Likes, wants and plans",
+  "sub": "gustar, querer, ir a…",
+  "can": "Say what you like and what you fancy, and make plans for the weekend.",
+  "mins": 15,
+  "doneText": "You can now say what you like, suggest something and make plans with ir a.",
+  "skills": {
+    "gustar": "Me gusta or me gustan",
+    "querer": "Forms of querer",
+    "ir-a": "Plans: ir a + verb",
+    "apetecer": "Me apetece",
+    "ir": "Forms of ir"
+  },
+  "discover": {
+    "intro": "All six sentences mean \"I like…\". Spot why the verb changes between blue and orange.",
+    "groups": [
+      { "label": "Blue", "tone": "blue", "lines": [["Me gusta el café.", "I like coffee."], ["Me gusta bailar.", "I like dancing."], ["Me gusta Madrid.", "I like Madrid."]] },
+      { "label": "Orange", "tone": "orange", "lines": [["Me gustan los gatos.", "I like cats."], ["Me gustan las tapas.", "I like tapas."], ["Me gustan tus zapatos.", "I like your shoes."]] }
+    ],
+    "question": "Why gusta in blue but gustan in orange?",
+    "options": [
+      "The verb agrees with the thing you like: one thing or an action takes gusta, plural things take gustan.",
+      "Gustan means you like it a lot.",
+      "Gustan is for animals and people, gusta for objects."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Look at what comes after the verb: el café and bailar against los gatos and las tapas.",
+    "reveal": "Gustar works back to front. \"Me gusta el café\" is literally \"coffee pleases me\", so the verb agrees with the coffee, not with you. Me, te, le show who does the liking:",
+    "hooks": [
+      { "title": "Who likes it", "tone": "blue", "rows": [
+        ["me", "I like", "Me gusta el mar.", "I like the sea."],
+        ["te", "you like", "¿Te gusta el flamenco?", "Do you like flamenco?"],
+        ["le", "he / she likes", "Le gustan los perros.", "He likes dogs."],
+        ["nos", "we like", "Nos gusta viajar.", "We like travelling."],
+        ["os", "you all like", "¿Os gusta la paella?", "Do you (all) like paella?"],
+        ["les", "they like", "Les gustan las fiestas.", "They like parties."]
+      ] },
+      { "title": "Plans: ir a + verb", "tone": "orange", "rows": [
+        ["voy a", "I'm going to", "Voy a visitar Granada.", "I'm going to visit Granada."],
+        ["vas a", "you're going to", "¿Vas a salir esta noche?", "Are you going out tonight?"],
+        ["va a", "it's going to", "Va a llover.", "It's going to rain."],
+        ["vamos a", "we're going to", "Vamos a cenar fuera.", "We're going to eat out."],
+        ["vais a", "you all are going to", "¿Vais a venir?", "Are you (all) coming?"],
+        ["van a", "they're going to", "Van a quedarse en casa.", "They're going to stay at home."]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "Want, go and fancy",
+    "sub": "Tap any row to hear it",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "querer", "tone": "green", "rows": [["yo", "quiero"], ["tú", "quieres"], ["él / ella / usted", "quiere"], ["nosotros/as", "queremos"], ["vosotros/as", "queréis"], ["ellos / ellas / ustedes", "quieren"]] },
+        { "title": "ir", "tone": "orange", "rows": [["yo", "voy"], ["tú", "vas"], ["él / ella / usted", "va"], ["nosotros/as", "vamos"], ["vosotros/as", "vais"], ["ellos / ellas / ustedes", "van"]] }
+      ] },
+      { "type": "note", "kind": "tip", "text": "Querer is a boot verb like tener: quiero, quieres, quiere, but queremos and queréis. Add a verb for what you want to do: quiero ver la Alhambra." },
+      { "type": "note", "kind": "spain", "text": "Apetecer is very Spain: ¿Te apetece un café? (Do you fancy a coffee?). It works like gustar: me apetece, te apetece, nos apetece." },
+      { "type": "twist", "title": "Me gusta or quiero", "a": ["Me gusta el vino.", "I like wine (in general)."], "b": ["Quiero un vino.", "I want a wine (now)."], "note": "Gustar is for what you like in general. Querer and apetecer are for what you want or fancy right now." },
+      { "type": "note", "kind": "warn", "text": "Never say \"yo gusto\" for \"I like\": it means \"I am pleasing\". It's always me gusta." },
+      { "type": "note", "kind": "tip", "text": "To name the person who likes something, put a in front and keep the le: a mi hermana le gustan los perros (my sister likes dogs), a Pedro le gusta el café. For yourself, a mí me gusta stresses the I: I like it (even if you don't)." },
+      { "type": "list", "title": "Plans and free time", "rows": [["salir", "to go out"], ["quedar con amigos", "to meet up with friends"], ["ir de tapas", "to go for tapas"], ["ver una peli", "to watch a film"], ["ir a la playa", "to go to the beach"], ["me encanta", "I love it"], ["esta noche", "tonight"], ["el fin de semana que viene", "next weekend"]] }
+    ]
+  },
+  "phrases": [
+    { "id": "c7-flamenco", "es": "¿Te gusta el flamenco?", "en": "Do you like flamenco?", "alts": ["¿Le gusta el flamenco?"] },
+    { "id": "c7-love", "es": "Me encanta.", "en": "I love it.", "alts": [] },
+    { "id": "c7-fancy", "es": "¿Te apetece un café?", "en": "Do you fancy a coffee?", "alts": [] },
+    { "id": "c7-want", "es": "Quiero ver la Alhambra.", "en": "I want to see the Alhambra.", "alts": [] },
+    { "id": "c7-tonight", "es": "¿Qué vas a hacer esta noche?", "en": "What are you going to do tonight?", "alts": [] },
+    { "id": "c7-going", "es": "Voy a salir con amigos.", "en": "I'm going to go out with friends.", "alts": ["Voy a salir con unos amigos."] },
+    { "id": "c7-meet", "es": "¿Quedamos mañana?", "en": "Shall we meet tomorrow?", "alts": [] },
+    { "id": "c7-notatall", "es": "No me gusta nada.", "en": "I don't like it at all.", "alts": [] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "gustar", "q": "Me ___ las tapas.", "options": ["gustan", "gusta", "gusto"], "answer": 0, "why": "Las tapas is plural: gustan." },
+    {
+      "type": "rapid", "skill": "gustar", "prompt": "Rapid fire: gusta or gustan?",
+      "choices": [{ "key": "gusta", "label": "gusta", "tone": "blue" }, { "key": "gustan", "label": "gustan", "tone": "orange" }],
+      "items": [
+        { "blank": "Me ___ el café.", "full": "Me gusta el café.", "fill": "gusta", "answer": "gusta", "skill": "gustar", "why": "One thing: gusta." },
+        { "blank": "Me ___ los gatos.", "full": "Me gustan los gatos.", "fill": "gustan", "answer": "gustan", "skill": "gustar", "why": "Plural: gustan." },
+        { "blank": "¿Te ___ bailar?", "full": "¿Te gusta bailar?", "fill": "gusta", "answer": "gusta", "skill": "gustar", "why": "An action always takes gusta." },
+        { "blank": "Nos ___ las playas de Cádiz.", "full": "Nos gustan las playas de Cádiz.", "fill": "gustan", "answer": "gustan", "skill": "gustar", "why": "Las playas is plural: gustan." },
+        { "blank": "Le ___ Madrid.", "full": "Le gusta Madrid.", "fill": "gusta", "answer": "gusta", "skill": "gustar", "why": "One city: gusta." },
+        { "blank": "¿Os ___ los churros?", "full": "¿Os gustan los churros?", "fill": "gustan", "answer": "gustan", "skill": "gustar", "why": "Los churros is plural: gustan." },
+        { "blank": "Me ___ viajar y leer.", "full": "Me gusta viajar y leer.", "fill": "gusta", "answer": "gusta", "skill": "gustar", "why": "Actions, even two of them: gusta." },
+        { "blank": "No me ___ las fiestas.", "full": "No me gustan las fiestas.", "fill": "gustan", "answer": "gustan", "skill": "gustar", "why": "Las fiestas is plural: gustan." }
+      ]
+    },
+    { "type": "gap", "skill": "ir-a", "q": "Mañana ___ a visitar Toledo.", "hint": "ir, yo", "hintLabel": "Verb", "hintTone": "orange", "answer": ["voy"], "why": "Ir with yo: voy. Voy a + verb = I'm going to." },
+    { "type": "listen", "skill": "apetecer", "say": "¿Te apetece ir de tapas esta noche?", "options": ["Do you fancy going for tapas tonight?", "Do you like tapas?", "Are you going to cook tonight?"], "answer": 0, "why": "¿Te apetece…? = do you fancy…? Ir de tapas = to go for tapas." },
+    { "type": "fix", "skill": "gustar", "prompt": "Tap the word that is wrong.", "sentence": "Me gusto el chocolate.", "wrong": 1, "fixed": "Me gusta el chocolate.", "why": "Gusta agrees with el chocolate. Gusto would mean \"I am pleasing\"." },
+    { "type": "gap", "skill": "querer", "q": "¿Tú ___ venir al concierto?", "hint": "querer", "hintLabel": "Verb", "hintTone": "green", "answer": ["quieres"], "why": "Boot verb, tú: quieres." },
+    { "type": "match", "skill": "ir-a", "prompt": "Match the plans.", "pairs": [["salir", "to go out"], ["ir de tapas", "to go for tapas"], ["esta noche", "tonight"], ["me encanta", "I love it"], ["ver una peli", "to watch a film"]] },
+    { "type": "translate", "skill": "ir-a", "q": "We're going to eat out.", "answer": ["vamos a cenar fuera", "vamos a comer fuera"], "who": ["dinner", "lunch"], "why": "Vamos a + verb. Cenar fuera = to have dinner out (comer fuera for lunch)." },
+    { "type": "mc", "skill": "querer", "q": "Nosotros ___ ver la Alhambra.", "options": ["queremos", "quieremos", "queramos"], "answer": 0, "why": "Nosotros is outside the boot: queremos." },
+    { "type": "order", "skill": "ir-a", "prompt": "What are you going to do tonight?", "words": ["¿Qué", "vas", "a", "hacer", "esta", "noche?"], "answer": "¿Qué vas a hacer esta noche?", "why": "Vas a hacer = you're going to do." },
+    { "type": "translate", "skill": "gustar", "q": "Do you like flamenco?", "answer": ["te gusta el flamenco", "le gusta el flamenco", "os gusta el flamenco"], "who": ["tú", "usted", "vosotros"], "why": "Te gusta, with el flamenco as the thing that pleases." },
+    { "type": "gap", "skill": "gustar", "q": "A mi hermana le ___ los perros.", "hint": "gustar", "hintLabel": "Verb", "answer": ["gustan"], "why": "Los perros is plural: gustan." },
+    { "type": "mc", "skill": "apetecer", "prompt": "A friend asks: ¿Te apetece un café? You do. Reply:", "q": "", "options": ["Sí, me apetece mucho.", "Sí, apetezco mucho.", "Sí, te apetece mucho."], "answer": 0, "why": "Apetecer works like gustar: me apetece." },
+    { "type": "translate", "skill": "querer", "q": "I want to see the Alhambra.", "answer": ["quiero ver la alhambra"], "why": "Quiero + verb: quiero ver." },
+    { "type": "fix", "skill": "ir-a", "prompt": "Tap the word that is wrong.", "sentence": "Vamos a salimos esta noche.", "wrong": 2, "fixed": "Vamos a salir esta noche.", "why": "After ir a, the second verb stays in its dictionary form: vamos a salir." },
+    { "type": "translate", "skill": "ir", "q": "I'm going to the beach.", "answer": ["voy a la playa"], "why": "Ir a + a place: voy a la playa." }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Message a friend: say two things you like (one with gusta, one with gustan) and suggest a plan for the weekend with ir a.",
+    "starter": "Me gusta…  Me gustan…  El sábado vamos a…",
+    "model": "Me gusta mucho bailar y me gustan las tapas. ¿Te apetece salir el sábado? Vamos a ir de tapas por La Latina.",
+    "checklist": ["Gusta for one thing or an action, gustan for plural things", "Plans: voy a or vamos a + verb", "To suggest something: ¿Te apetece…?"]
+  },
+  "boss": {
+    "title": "Weekend plans in Granada",
+    "who": "Nuria",
+    "skill": "gustar",
+    "persona": "You are Nuria, a friendly woman from Granada the learner met at a language exchange. You chat about likes, dislikes and plans for the weekend, and suggest things to do in Granada: the Alhambra, free tapas, flamenco, the Albaicín. Use tú.",
+    "turns": [
+      { "npc": "¡Hola! Oye, ¿te gusta el flamenco?", "en": "Hi! Hey, do you like flamenco?", "skill": "gustar",
+        "choices": [["¡Sí, me encanta!", true, ""], ["¡Sí, yo gusto mucho!", false, "\"Yo gusto\" means \"I am pleasing\". Say me gusta or me encanta."], ["¡Sí, me gustan mucho!", false, "El flamenco is one thing: me gusta."]] },
+      { "npc": "¡Genial! ¿Qué vas a hacer el sábado?", "en": "Great! What are you going to do on Saturday?", "skill": "ir-a",
+        "choices": [["Voy a visitar la Alhambra.", true, ""], ["Voy visitar la Alhambra.", false, "Plans need the a: voy a visitar."], ["Vas a visitar la Alhambra.", false, "Vas a is \"you're going to\". About yourself: voy a."]] },
+      { "npc": "¡Qué bien! ¿Y te apetece ir a un tablao por la noche?", "en": "How nice! And do you fancy going to a flamenco show in the evening?", "skill": "apetecer",
+        "choices": [["Sí, me apetece mucho.", true, ""], ["Sí, apetezco mucho.", false, "Apetecer works like gustar: me apetece."], ["Sí, te apetece mucho.", false, "Te apetece is \"you fancy\". About yourself: me apetece."]] },
+      { "npc": "Perfecto. ¿Quieres cenar antes? Hay unas tapas muy buenas en el Albaicín.", "en": "Perfect. Do you want to have dinner first? There are some very good tapas in the Albaicín.", "skill": "querer",
+        "choices": [["Sí, quiero probar las tapas de Granada.", true, ""], ["Sí, quero probar las tapas de Granada.", false, "Querer is a boot verb: quiero."], ["Sí, me gustan probar las tapas de Granada.", false, "An action takes gusta, not gustan. But here you want it now: quiero probar."]] }
+    ],
+    "closing": "¡Hecho! Quedamos el sábado a las ocho en la Plaza Nueva.",
+    "closingEn": "Done! Let's meet on Saturday at eight in Plaza Nueva.",
+    "chatOpening": "¿Y qué más te gusta hacer cuando viajas?",
+    "chatOpeningEn": "And what else do you like doing when you travel?"
+  }
+}

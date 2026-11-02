@@ -1,0 +1,133 @@
+{
+  "n": 6,
+  "title": "Hostels and shopping",
+  "sub": "tener, necesitar, este / ese",
+  "can": "Check in, ask for what you need, point at things and compare prices.",
+  "mins": 15,
+  "doneText": "You can now check into a hostel, ask for what you need and choose the cheaper one.",
+  "skills": {
+    "tener": "Forms of tener",
+    "necesitar": "Asking for what you need",
+    "demonstratives": "este, esta, ese, esa",
+    "compare": "Comparing: más … que",
+    "shopping": "Hostel and shop phrases"
+  },
+  "discover": {
+    "intro": "Every sentence uses tener, to have. Look closely at how the verb starts in each colour.",
+    "groups": [
+      { "label": "Blue", "tone": "blue", "lines": [["Tenemos una reserva.", "We have a booking."], ["¿Tenéis toallas?", "Do you (all) have towels?"]] },
+      { "label": "Orange", "tone": "orange", "lines": [["¿Tienes una toalla?", "Do you have a towel?"], ["La habitación tiene baño.", "The room has a bathroom."], ["Tienen wifi gratis.", "They have free wifi."]] }
+    ],
+    "question": "Compare tenemos and tenéis with tienes, tiene and tienen. What changes?",
+    "options": [
+      "In the orange forms the e stretches to ie. Nosotros and vosotros keep the plain e.",
+      "The orange sentences are in the past tense.",
+      "The orange sentences are more formal."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Look only at the letters after the t: te… in blue, tie… in orange.",
+    "reveal": "Tener is a \"boot\" verb: the e becomes ie everywhere except nosotros and vosotros. Draw the table and the ie forms make the shape of a boot. Yo is irregular: tengo.",
+    "hooks": [
+      { "title": "tener: the boot", "tone": "orange", "rows": [
+        ["tengo", "yo", "Tengo una reserva.", "I have a booking."],
+        ["tienes", "tú", "¿Tienes una toalla?", "Do you have a towel?"],
+        ["tiene", "él / ella / usted", "¿Tiene wifi?", "Does it have wifi?"],
+        ["tenemos", "nosotros", "Tenemos dos camas.", "We have two beds."],
+        ["tenéis", "vosotros", "¿Tenéis toallas?", "Do you (all) have towels?"],
+        ["tienen", "ellos / ellas", "Tienen habitaciones libres.", "They have free rooms."]
+      ] },
+      { "title": "Asking for things", "tone": "blue", "rows": [
+        ["necesito", "I need", "Necesito una toalla.", "I need a towel."],
+        ["¿tienes…?", "do you have…?", "¿Tienes un candado?", "Do you have a padlock?"],
+        ["¿hay…?", "is there…?", "¿Hay cocina?", "Is there a kitchen?"],
+        ["¿puedo…?", "can I…?", "¿Puedo pagar con tarjeta?", "Can I pay by card?"]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "Have, need, this and that",
+    "sub": "Tap any row to hear it",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "tener", "tone": "orange", "rows": [["yo", "tengo"], ["tú", "tienes"], ["él / ella / usted", "tiene"], ["nosotros/as", "tenemos"], ["vosotros/as", "tenéis"], ["ellos / ellas / ustedes", "tienen"]] },
+        { "title": "necesitar", "tone": "blue", "rows": [["yo", "necesito"], ["tú", "necesitas"], ["él / ella / usted", "necesita"], ["nosotros/as", "necesitamos"], ["vosotros/as", "necesitáis"], ["ellos / ellas / ustedes", "necesitan"]] }
+      ] },
+      { "type": "note", "kind": "warn", "text": "Tener covers some things English says with \"be\": tengo hambre (I'm hungry), tengo frío (I'm cold), tengo prisa (I'm in a hurry)." },
+      { "type": "tables", "tables": [
+        { "title": "this, these", "speak": "form", "rows": [["masculine", "este · estos"], ["feminine", "esta · estas"]] },
+        { "title": "that, those", "speak": "form", "rows": [["masculine", "ese · esos"], ["feminine", "esa · esas"]] }
+      ] },
+      { "type": "twist", "title": "Comparing: más … que", "a": ["Esta camiseta es más barata que esa.", "This T-shirt is cheaper than that one."], "b": ["Este hostal es menos caro que el hotel.", "This hostel is less expensive than the hotel."], "note": "Más … que means more … than, menos … que means less … than. Good and bad have their own words: mejor (better), peor (worse)." },
+      { "type": "note", "kind": "spain", "text": "Shop assistants in Spain often ask ¿Te puedo ayudar? or ¿Qué buscas? If you're just browsing: Solo estoy mirando, gracias." },
+      { "type": "list", "title": "At the hostel", "rows": [["la habitación", "the room"], ["la cama", "the bed"], ["la litera", "the bunk bed"], ["la toalla", "the towel"], ["la taquilla", "the locker"], ["el candado", "the padlock"], ["la llave", "the key"], ["la cocina compartida", "the shared kitchen"]] }
+    ]
+  },
+  "phrases": [
+    { "id": "c6-booking", "es": "Tengo una reserva.", "en": "I have a booking.", "alts": [] },
+    { "id": "c6-towel", "es": "¿Tienes una toalla?", "en": "Do you have a towel?", "alts": ["¿Tiene una toalla?", "¿Tenéis toallas?"] },
+    { "id": "c6-padlock", "es": "Necesito un candado.", "en": "I need a padlock.", "alts": [] },
+    { "id": "c6-card", "es": "¿Puedo pagar con tarjeta?", "en": "Can I pay by card?", "alts": [] },
+    { "id": "c6-looking", "es": "Solo estoy mirando, gracias.", "en": "I'm just looking, thanks.", "alts": ["Solo estoy mirando."] },
+    { "id": "c6-cheaper", "es": "¿Tienes algo más barato?", "en": "Do you have anything cheaper?", "alts": ["¿Tiene algo más barato?"] },
+    { "id": "c6-take", "es": "Me llevo esta.", "en": "I'll take this one.", "alts": ["Me llevo este."] },
+    { "id": "c6-wifi", "es": "¿Cuál es la contraseña del wifi?", "en": "What's the wifi password?", "alts": [] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "tener", "q": "___ una reserva para dos noches.", "sub": "(I have a booking for two nights.)", "options": ["Tengo", "Teno", "Tiengo"], "answer": 0, "why": "The yo form of tener is irregular: tengo." },
+    { "type": "gap", "skill": "tener", "q": "¿Vosotros ___ toallas?", "hint": "tener", "hintLabel": "Verb", "hintTone": "orange", "answer": ["tenéis"], "why": "Vosotros keeps the plain e: tenéis." },
+    {
+      "type": "rapid", "skill": "tener", "prompt": "Rapid fire: ten… or tien…?",
+      "choices": [{ "key": "e", "label": "ten…", "tone": "blue" }, { "key": "ie", "label": "tien…", "tone": "orange" }],
+      "items": [
+        { "blank": "¿___ wifi el hostal?", "full": "¿Tiene wifi el hostal?", "fill": "Tiene", "answer": "ie", "skill": "tener", "why": "Él / ella form, inside the boot: tiene." },
+        { "blank": "Nosotros ___ dos camas.", "full": "Nosotros tenemos dos camas.", "fill": "tenemos", "answer": "e", "skill": "tener", "why": "Nosotros is outside the boot: tenemos." },
+        { "blank": "Ellos ___ prisa.", "full": "Ellos tienen prisa.", "fill": "tienen", "answer": "ie", "skill": "tener", "why": "Ellos, inside the boot: tienen." },
+        { "blank": "¿Tú ___ hambre?", "full": "¿Tú tienes hambre?", "fill": "tienes", "answer": "ie", "skill": "tener", "why": "Tú, inside the boot: tienes." },
+        { "blank": "¿Vosotros ___ frío?", "full": "¿Vosotros tenéis frío?", "fill": "tenéis", "answer": "e", "skill": "tener", "why": "Vosotros is outside the boot: tenéis." },
+        { "blank": "Usted ___ la habitación cinco.", "full": "Usted tiene la habitación cinco.", "fill": "tiene", "answer": "ie", "skill": "tener", "why": "Usted uses the él / ella form: tiene." },
+        { "blank": "Nosotras ___ una reserva.", "full": "Nosotras tenemos una reserva.", "fill": "tenemos", "answer": "e", "skill": "tener", "why": "Nosotras is outside the boot: tenemos." },
+        { "blank": "La habitación ___ baño.", "full": "La habitación tiene baño.", "fill": "tiene", "answer": "ie", "skill": "tener", "why": "La habitación is \"it\": tiene." }
+      ]
+    },
+    { "type": "listen", "skill": "shopping", "say": "¿Tienes algo más barato?", "options": ["Do you have anything cheaper?", "Do you have a bigger one?", "Can I pay by card?"], "answer": 0, "why": "Más barato = cheaper (more cheap)." },
+    { "type": "mc", "skill": "demonstratives", "q": "¿Cuánto cuesta ___ camiseta?", "sub": "(this T-shirt)", "options": ["esta", "este", "estos"], "answer": 0, "why": "Camiseta is feminine and singular: esta." },
+    { "type": "gap", "skill": "necesitar", "q": "___ una toalla, por favor.", "hint": "necesitar", "hintLabel": "Verb", "hintTone": "blue", "answer": ["necesito"], "why": "Regular -ar verb with yo: necesito." },
+    { "type": "match", "skill": "shopping", "prompt": "Match the hostel words.", "pairs": [["la toalla", "the towel"], ["la taquilla", "the locker"], ["el candado", "the padlock"], ["la llave", "the key"], ["la litera", "the bunk bed"]] },
+    { "type": "fix", "skill": "tener", "prompt": "Tap the word that is wrong.", "sentence": "Nosotros tienemos una reserva.", "wrong": 1, "fixed": "Nosotros tenemos una reserva.", "why": "Nosotros is outside the boot, so the e stays plain: tenemos." },
+    { "type": "translate", "skill": "compare", "q": "This hostel is cheaper than the hotel.", "answer": ["este hostal es más barato que el hotel"], "why": "Más barato que = cheaper than. Hostal is masculine: este." },
+    { "type": "mc", "skill": "compare", "q": "Esta playa es ___ que la otra.", "sub": "(This beach is better than the other one.)", "options": ["mejor", "más buena", "más bien"], "answer": 0, "why": "Better has its own word: mejor." },
+    { "type": "order", "skill": "shopping", "prompt": "I'm just looking, thanks.", "words": ["Solo", "estoy", "mirando,", "gracias"], "answer": "Solo estoy mirando, gracias.", "why": "Estoy mirando = I'm looking, right now." },
+    { "type": "translate", "skill": "shopping", "q": "Can I pay by card?", "answer": ["puedo pagar con tarjeta"], "why": "¿Puedo…? = can I…? Con tarjeta = by card." },
+    { "type": "gap", "skill": "demonstratives", "q": "Me llevo ___ zapatos.", "hint": "these", "hintLabel": "Word", "answer": ["estos"], "why": "Zapatos is masculine and plural: estos." },
+    { "type": "translate", "skill": "tener", "q": "I'm hungry.", "answer": ["tengo hambre", "tengo mucha hambre"], "who": ["", "very hungry"], "why": "Hunger uses tener: tengo hambre." },
+    { "type": "fix", "skill": "demonstratives", "prompt": "Tap the word that is wrong.", "sentence": "Quiero este camiseta.", "wrong": 1, "fixed": "Quiero esta camiseta.", "why": "Camiseta is feminine: esta." },
+    { "type": "translate", "skill": "necesitar", "q": "I need a padlock.", "answer": ["necesito un candado"], "why": "Necesito + the thing, with un or una." }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "At a hostel reception: say you have a booking, ask for two things you need, and ask if you can pay by card.",
+    "starter": "Hola, tengo una reserva…  Necesito…  ¿Tienes…?",
+    "model": "Hola, tengo una reserva para tres noches. Necesito una toalla y un candado. ¿Tienes una taquilla libre? ¿Puedo pagar con tarjeta?",
+    "checklist": ["Tener: tengo for you, tienes or tiene for them", "Necesito + the thing, with un or una", "Questions start with ¿ and end with ?"]
+  },
+  "boss": {
+    "title": "Checking into a hostel in Sevilla",
+    "who": "Álvaro",
+    "skill": "tener",
+    "persona": "You are Álvaro, a relaxed receptionist at a backpackers' hostel in Sevilla. The learner is checking in. Talk about bookings, beds, towels, lockers, the kitchen, wifi and prices. Use tú.",
+    "turns": [
+      { "npc": "¡Hola! Bienvenid{o} a Sevilla. ¿Tienes reserva?", "en": "Hi! Welcome to Seville. Do you have a booking?", "skill": "tener",
+        "choices": [["Sí, tengo una reserva para tres noches.", true, ""], ["Sí, tiene una reserva para tres noches.", false, "Tiene is he, she or usted. About yourself: tengo."], ["Sí, teno una reserva para tres noches.", false, "The yo form of tener is irregular: tengo."]] },
+      { "npc": "Perfecto. Estás en la habitación seis, litera de abajo. ¿Necesitas algo?", "en": "Perfect. You're in room six, bottom bunk. Do you need anything?", "skill": "necesitar",
+        "choices": [["Sí, necesito una toalla, por favor.", true, ""], ["Sí, necesitas una toalla, por favor.", false, "Necesitas is \"you need\". About yourself: necesito."], ["Sí, necesito un toalla, por favor.", false, "Toalla ends in -a: una toalla."]] },
+      { "npc": "Aquí tienes. Son dos euros. Las taquillas son gratis.", "en": "Here you go. That's two euros. The lockers are free.", "skill": "shopping",
+        "choices": [["Genial. ¿Tienes un candado para la taquilla?", true, ""], ["Genial. ¿Tienes una candado para la taquilla?", false, "Candado ends in -o: un candado."], ["Genial. ¿Tienes un candado para el taquilla?", false, "Taquilla ends in -a: la taquilla."]] },
+      { "npc": "Sí, hay dos: este cuesta cinco euros y ese cuesta tres.", "en": "Yes, there are two: this one costs five euros and that one costs three.", "skill": "compare",
+        "choices": [["Me llevo ese, es más barato.", true, ""], ["Me llevo ese, es más caro.", false, "Ese costs three euros, so it's cheaper: más barato."], ["Me llevo esa, es más barata.", false, "Candado is masculine: ese, barato."]] }
+    ],
+    "closing": "Vale, son cinco euros en total. ¡Disfruta de Sevilla!",
+    "closingEn": "OK, that's five euros in total. Enjoy Seville!",
+    "chatOpening": "¿Es tu primera vez en Sevilla? ¿Qué quieres ver?",
+    "chatOpeningEn": "Is it your first time in Seville? What do you want to see?"
+  }
+}
