@@ -70,22 +70,47 @@
       time: {}, reviewed: {}, done: {}, srs: {}, skills: {}, wotd: { byDate: {}, learned: [], done: {}, answers: {} }
     };
   }
-  function load() {
+  // A saved state (from storage or an imported file) on top of the defaults, so older saves gain new fields.
+  function withDefaults(o) {
     const d = defaults();
-    try {
-      const raw = localStorage.getItem(KEY);
-      if (raw) {
-        const o = JSON.parse(raw);
-        return Object.assign(d, o, {
-          streak: Object.assign(d.streak, o.streak || {}),
-          dayXp: Object.assign(d.dayXp, o.dayXp || {}),
-          wotd: Object.assign(d.wotd, o.wotd || {})
-        });
-      }
-    } catch (e) { /* start fresh */ }
-    return d;
+    if (!o || typeof o !== 'object' || Array.isArray(o)) return d;
+    return Object.assign(d, o, {
+      streak: Object.assign(d.streak, o.streak || {}),
+      dayXp: Object.assign(d.dayXp, o.dayXp || {}),
+      wotd: Object.assign(d.wotd, o.wotd || {})
+    });
   }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* private mode etc. */ } }
+  // The only code that touches storage. Today it is this browser's localStorage; sync slots in here later.
+  const store = {
+    read() { try { const raw = localStorage.getItem(KEY); return raw ? JSON.parse(raw, noProto) : null; } catch (e) { return null; } },
+    write(state) { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* private mode etc. */ } }
+  };
+  // JSON reviver: a saved file must not be able to swap an object's prototype.
+  function noProto(k, v) { return k === '__proto__' ? undefined : v; }
+  function load() { return withDefaults(store.read()); }
+  function save() { store.write(S); }
+
+  // ---------- export / import progress (a JSON file) ----------
+  const EXPORT_APP = 'espanol-trainer';
+  function exportProgress() {
+    const file = { app: EXPORT_APP, version: 1, course: COURSE.id, exported: new Date().toISOString(), state: S };
+    const url = URL.createObjectURL(new Blob([JSON.stringify(file, null, 1)], { type: 'application/json' }));
+    const a = h('a', { href: url, download: 'espanol-trainer-' + COURSE.id + '-' + L.dayKey() + '.json' });
+    document.body.append(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  // Reads a file from exportProgress(). Returns an error message, or null once the progress is replaced.
+  async function importProgress(f) {
+    let o;
+    if (f.size > 5e6) return 'That file is too large to be a progress file.';
+    try { o = JSON.parse(await f.text(), noProto); } catch (e) { return 'That file is not a progress file from this app.'; }
+    if (!o || o.app !== EXPORT_APP || !o.state || typeof o.state !== 'object') return 'That file is not a progress file from this app.';
+    if (o.course !== COURSE.id) return 'That file is for a different course (' + String(o.course).slice(0, 20) + ').';
+    const when = String(o.exported || '').slice(0, 10) || 'an unknown date';
+    if (!confirm('Replace the progress on this device with the file from ' + when + '? This cannot be undone.')) return '';
+    S = withDefaults(o.state); pruneTime(); save();
+    return null;
+  }
 
   const T = s => String(s == null ? '' : s).replace(/\{name\}/g, S.name).replace(/\{o\}/g, S.fem ? 'a' : 'o');
 
@@ -284,6 +309,14 @@
     const fem = h('input', { type: 'radio', name: 'g', checked: S.fem, id: 'g-f' });
     const masc = h('input', { type: 'radio', name: 'g', checked: !S.fem, id: 'g-m' });
     const goal = h('select', { class: 'text', 'aria-label': 'Daily goal' }, GOALS.map(g => h('option', { value: String(g), selected: g === S.goalMins }, g + ' minutes')));
+    const msg = h('p', { class: 'meta', role: 'status' });
+    const file = h('input', { type: 'file', accept: '.json,application/json', hidden: true, 'aria-label': 'Progress file',
+      onchange: async () => {
+        const f = file.files[0]; file.value = '';
+        if (!f) return;
+        const err = await importProgress(f);
+        if (err === null) { ov.remove(); home(); } else msg.textContent = err;
+      } });
     const ov = modal(h('div', {},
       h('h2', {}, 'Settings'),
       h('label', { class: 'field' }, h('span', {}, 'Your name'), name),
@@ -293,7 +326,12 @@
       h('div', { class: 'row' },
         h('button', { class: 'btn primary', onclick: () => { S.name = name.value.trim() || 'Kara'; S.fem = fem.checked; S.goalMins = Number(goal.value) || 45; save(); ov.remove(); home(); } }, 'Save'),
         h('button', { class: 'btn quiet danger', onclick: () => { if (confirm('Erase all progress, review cards and streak on this device?')) { S = defaults(); save(); ov.remove(); home(); } } }, 'Reset progress')),
-      h('p', { class: 'meta', style: { 'margin-top': '16px' } }, 'Progress is saved in this browser on this device. Practice time only counts while you are active on the page.')));
+      h('div', { class: 'field', style: { 'margin-top': '16px' } }, h('span', {}, 'Backup'),
+        h('div', { class: 'row', style: { 'margin-top': '0' } },
+          h('button', { class: 'btn ghost', type: 'button', onclick: exportProgress }, 'Export progress'),
+          h('button', { class: 'btn ghost', type: 'button', onclick: () => file.click() }, 'Import progress'))),
+      file, msg,
+      h('p', { class: 'meta', style: { 'margin-top': '16px' } }, 'Progress is saved in this browser on this device. Export it to keep a copy or move it to another browser. Practice time only counts while you are active on the page.')));
   }
 
   function aiHelp() {

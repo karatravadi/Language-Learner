@@ -19,12 +19,15 @@ Read this first, then `HANDOVER.md` for the next phase of work.
 - `npm run check`: content checker only. Run it after every content edit.
 - `npm run e2e`: plays every chapter in headless Chrome with a fake AI and without AI, at desktop and phone width.
   Needs `npm install` once (puppeteer, dev only). It also fails on emoji, `null/undefined/NaN` text or horizontal overflow.
+  On Kara's PC, use the installed Chrome instead of Puppeteer's download (npm 11 blocks that script):
+  `CHROME="C:/Program Files/Google/Chrome/Application/chrome.exe" npm run e2e`.
 - AI tutor: key in `settings.env` (`PROVIDER=gemini` with `GEMINI_API_KEY`, or DeepSeek). The model name
   `gemini-3.5-flash-lite` in settings.env is an unverified guess: confirm the exact name in Google AI Studio.
 
 ## Layout
 ```
 server.js                 zero-dependency Node server: static files + /api/status + /api/ai (localhost only)
+lib/ai.js                 AI tutor core shared with the hosted function: provider, prompts, model call, shape()
 public/index.html         shell
 public/app.js             all screens, exercise engine, review, word of the day, practice timer
 public/logic.js           pure logic, unit-tested: judge(), spaced repetition, word picker, streaks
@@ -74,7 +77,8 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
 - `confirm()` guards destructive actions (reset progress, leaving a lesson).
 
 ## Known gaps
-- Never run on Windows or against live Gemini/DeepSeek, only headless Chrome on Linux with a mock AI.
+- Never run against live Gemini/DeepSeek, only a mock AI. Tests pass on Windows (2 Nov 2026).
 - Listening exercises and speaker buttons need a Spanish voice in the browser (Edge on Windows usually has good ones).
   Headless Chrome has none, so the tests skip listening exercises.
-- Progress lives in one browser's localStorage. Syncing is the next phase (`HANDOVER.md`).
+- Progress lives in one browser's localStorage, behind `store` in app.js, with export/import in Settings.
+  Syncing is the next phase (`HANDOVER.md`).

@@ -234,6 +234,32 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   assert.ok(after > before, 'active time should be counted');
   ok('practice timer counts active time (' + before + 's → ' + after + 's)');
 
+  // ---------- export / import progress ----------
+  const fs = require('fs'); const os = require('os');
+  const dl = fs.mkdtempSync(path.join(os.tmpdir(), 'trainer-dl-'));
+  const cdp = await page.createCDPSession();
+  await cdp.send('Browser.setDownloadBehavior', { behavior: 'allow', downloadPath: dl });
+  const saved = await state();
+  await page.click('button[aria-label="Settings"]'); await sleep(80);
+  await clickText('button', 'Export progress');
+  let exported = null;
+  for (let i = 0; i < 40 && !exported; i++) { await sleep(100); exported = fs.readdirSync(dl).find(f => f.endsWith('.json')); }
+  assert.ok(exported, 'export should download a .json file');
+  const bad = path.join(dl, 'not-progress.json'); fs.writeFileSync(bad, '{"hello":1}');
+  await (await page.$('input[type=file]')).uploadFile(bad); await sleep(150);
+  assert.match(await text(), /not a progress file/);
+  await clickText('button', 'Reset progress'); await sleep(80);
+  assert.equal(Object.keys((await state()).done).length, 0, 'reset should clear chapters');
+  await page.click('button[aria-label="Settings"]'); await sleep(80);
+  await (await page.$('input[type=file]')).uploadFile(path.join(dl, exported)); await sleep(200);
+  const restored = await state();
+  assert.deepStrictEqual(Object.keys(restored.done), Object.keys(saved.done));
+  assert.equal(Object.keys(restored.srs).length, Object.keys(saved.srs).length);
+  assert.equal(restored.goalMins, 30); assert.equal(restored.xp, saved.xp);
+  assert.match(await text(), /of 30 min/);
+  fs.rmSync(dl, { recursive: true, force: true });
+  ok('export / import: a downloaded file restores chapters, review cards and settings after a reset; a wrong file is refused');
+
   if (problems.length) { console.log(problems.join('\n')); process.exit(1); }
   console.log('\n' + steps + ' checks passed, no console errors.');
   await browser.close();
