@@ -9,6 +9,10 @@
   // Cloudflare Access (All traffic) protects the Worker on every address, so workers.dev is safe to switch on.
   "workers_dev": true,
   "preview_urls": false,
+  // Run the Worker code (only /api/*) near a US Google Cloud region. Gemini refuses some locations
+  // ("User location is not supported", a 400) depending on which data centre a request lands in.
+  // Static files are still served from the nearest data centre.
+  "placement": { "region": "gcp:us-east4" },
   // Workers Logs (free plan): keeps errors such as the AI provider's reason for a few days, in the dashboard.
   "observability": { "enabled": true },
   "assets": {
