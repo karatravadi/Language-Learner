@@ -278,7 +278,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   await clickText('.wcard button', 'Add to my words'); await sleep(60);
   let sv = await state();
   assert.ok(sv.vocab[target] && !sv.vocab[target].off && sv.srs['v-' + target], 'saved word joins the review deck');
-  await page.evaluate(() => { const s = document.createElement('div'); s.lang = TL; s.id = 'probe'; s.textContent = 'zzpalabra'; document.querySelector('.step').append(s); });
+  await page.evaluate(tl => { const s = document.createElement('div'); s.lang = tl; s.id = 'probe'; s.textContent = 'zzpalabra'; document.querySelector('.step').append(s); }, TL);
   await sleep(60);
   await page.click('#probe .w'); await sleep(60);
   assert.match(await text(), /Not in the glossary yet/);
