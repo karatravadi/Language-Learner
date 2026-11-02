@@ -4,6 +4,7 @@
   - Who you are comes from Cloudflare Access: every API call checks the signed Cf-Access-Jwt-Assertion token.
   - The AI key is a Worker secret, never sent to the page. Prompts and output shaping are shared with server.js (lib/ai.js).
   - Progress sync: one row per person per course in D1, saved with a version so two devices never overwrite each other.
+  - Profile: one row per person (name and endings), shared by every course, so a new course never asks again.
 */
 import { jwtVerify, createRemoteJWKSet } from 'jose';
 import AI from '../lib/ai.js';
@@ -72,6 +73,24 @@ function courses(env) {
 
 // ---------- AI limits ----------
 const today = () => new Date().toISOString().slice(0, 10); // UTC day
+// The counts reset at midnight UTC; the page shows that in the learner's own time.
+function resetAt() {
+  const d = new Date();
+  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1)).toISOString();
+}
+function limits(env) {
+  return { perUser: Number(env.AI_DAILY_PER_USER) || 60, global: Number(env.AI_DAILY_GLOBAL) || 400 };
+}
+// Calls left today for this person: their own allowance, or what is left for everyone if that is less.
+function usageOf(env, mine, all) {
+  const { perUser, global } = limits(env);
+  return { left: Math.max(0, Math.min(perUser - mine, global - all)), limit: perUser, resetAt: resetAt() };
+}
+async function readUsage(env, user) {
+  const r = await env.DB.prepare('SELECT user_id, calls FROM ai_usage WHERE day = ? AND user_id IN (?, ?)').bind(today(), user, '*').all();
+  const of = u => ((r.results || []).find(x => x.user_id === u) || {}).calls || 0;
+  return usageOf(env, of(user), of('*'));
+}
 async function countCall(env, user) {
   const day = today();
   const bump = u => env.DB.prepare(
@@ -86,13 +105,34 @@ async function handleAi(request, env, user) {
   if (!P.key) return json(503, { ok: false, error: 'The AI tutor is not set up yet.' });
   let body;
   try { body = await readJson(request, 20000); } catch (e) { return json(400, { ok: false, error: 'Bad request.' }); }
-  const perUser = Number(env.AI_DAILY_PER_USER) || 60;
-  const global = Number(env.AI_DAILY_GLOBAL) || 400;
+  const { perUser, global } = limits(env);
   const used = await countCall(env, user);
-  if (used.mine > perUser) return json(429, { ok: false, error: 'You have used today\'s ' + perUser + ' AI requests. Everything else still works, and the AI tutor is back tomorrow.' });
-  if (used.all > global) return json(429, { ok: false, error: 'The AI tutor has reached today\'s limit for everyone. Everything else still works, and it is back tomorrow.' });
+  const usage = usageOf(env, used.mine, used.all);
+  if (used.mine > perUser) return json(429, { ok: false, capped: true, usage, error: 'You have used today\'s ' + perUser + ' tutor calls. Everything else still works.' });
+  if (used.all > global) return json(429, { ok: false, capped: true, usage, error: 'The AI tutor has reached today\'s limit for everyone. Everything else still works.' });
   const out = await AI.answer(P, await courses(env), body);
-  return json(out.code, out.json);
+  return json(out.code, Object.assign({}, out.json, { usage }));
+}
+
+// ---------- profile: the name and endings every course uses ----------
+async function getProfile(env, user) {
+  const row = await env.DB.prepare('SELECT name, fem FROM profiles WHERE user_id = ?').bind(user).first();
+  return row ? { name: row.name, fem: row.fem == null ? null : row.fem === 1 } : null;
+}
+// The name only ever reaches the page as text, but keep it short and printable anyway.
+const cleanName = v => (typeof v === 'string' ? v.replace(/[\u0000-\u001f\u007f<>]/g, '').trim().slice(0, 30) : '');
+async function putProfile(request, env, user) {
+  let body;
+  try { body = await readJson(request, 2000); } catch (e) { return json(400, { ok: false, error: 'Bad request.' }); }
+  const name = cleanName(body && body.name);
+  const fem = body && typeof body.fem === 'boolean' ? (body.fem ? 1 : 0) : null;
+  if (!name) return json(400, { ok: false, error: 'Bad request.' });
+  // fem left out (a course that does not ask) keeps the one already chosen
+  await env.DB.prepare(
+    'INSERT INTO profiles (user_id, name, fem, updated_at) VALUES (?, ?, ?, ?) ' +
+    'ON CONFLICT (user_id) DO UPDATE SET name = excluded.name, fem = COALESCE(excluded.fem, profiles.fem), updated_at = excluded.updated_at'
+  ).bind(user, name, fem, Date.now()).run();
+  return json(200, { ok: true, profile: await getProfile(env, user) });
 }
 
 // ---------- progress sync ----------
@@ -141,7 +181,13 @@ export default {
 
       if (url.pathname === '/api/status' && request.method === 'GET') {
         const P = AI.providerFrom(env);
-        return json(200, { ai: !!P.key, model: P.model, provider: P.label, sync: true, user });
+        const [profile, usage] = await Promise.all([getProfile(env, user), P.key ? readUsage(env, user) : null]);
+        return json(200, { ai: !!P.key, model: P.model, provider: P.label, sync: true, user, profile, usage });
+      }
+      if (url.pathname === '/api/usage' && request.method === 'GET') return json(200, Object.assign({ ok: true }, await readUsage(env, user)));
+      if (url.pathname === '/api/profile') {
+        if (request.method === 'GET') return json(200, { ok: true, profile: await getProfile(env, user) });
+        if (request.method === 'PUT') return await putProfile(request, env, user);
       }
       if (url.pathname === '/api/ai' && request.method === 'POST') return await handleAi(request, env, user);
       if (url.pathname === '/api/progress') {

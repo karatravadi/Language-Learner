@@ -25,6 +25,16 @@
   let TL = 'es';
   const praise = () => UI.praise[Math.floor(Math.random() * UI.praise.length)];
   const judgeT = (input, answers, english) => L.judge(input, answers, { english: !!english, marksOptional: UI.marksOptional });
+  // Typed answers can also be 'close': one small spelling slip, half a mark (rules in L.nearMiss).
+  // The glossary is the list of real words, so a typo that makes another word (pero / perro) is still wrong.
+  function judgeTyped(input, answers, english, strict) {
+    const opts = { english: !!english, marksOptional: UI.marksOptional, close: true, strict: !!strict, known: english ? null : GLOSS_WORDS };
+    const r = L.judge(input, answers, opts);
+    return { r, near: r === 'close' ? L.nearMiss(input, answers, opts) : null };
+  }
+  let GLOSS_WORDS = [];
+  const SPELLING = 'spelling';
+  const EXKEY = new Map(); // exercise → 'chapter:index', so a spelling slip can be drilled later
   let KEY = 'espanol-trainer-v1';
   let S = null;
 
@@ -151,9 +161,25 @@
     list.forEach(c => { if (!S.srs[c.id]) S.srs[c.id] = L.newCard(c, now); });
     save();
   }
+  // Spelling is its own skill: every typed answer counts towards it, and an exercise answered with a slip is
+  // kept in S.slips until it is typed right, so the spelling drill has something to practise.
+  function noteSpelling(ex, right) {
+    const k = EXKEY.get(ex);
+    recordSkill(SPELLING, right);
+    if (!k) return;
+    if (!S.slips) S.slips = {};
+    if (!right) S.slips[k] = { at: Date.now() };
+    else if (S.slips[k] && !S.slips[k].off) S.slips[k] = { at: Date.now(), off: true };
+  }
+  function slipExercises() {
+    const out = [];
+    CHAPTERS.forEach(ch => ch.exercises.forEach((e, i) => { const v = S.slips && S.slips[ch.n + ':' + i]; if (v && !v.off) out.push(e); }));
+    return out;
+  }
   function weakSkills() {
     return Object.keys(S.skills)
       .filter(k => k !== 'mixed' && S.skills[k].w >= 2 && S.skills[k].w / (S.skills[k].r + S.skills[k].w) > 0.3)
+      .filter(k => k !== SPELLING || slipExercises().length > 0)
       .sort((a, b) => S.skills[b].w - S.skills[a].w);
   }
   const skillName = k => SKILLS[k] || k;
@@ -205,22 +231,93 @@
   }
 
   // ---------- AI (optional; the app works without it) ----------
-  const AI = { on: false, model: '', provider: '' };
+  // usage: tutor calls left today ({ left, limit, resetAt }), hosted app only; the local server has no daily cap.
+  const AI = { on: false, model: '', provider: '', usage: null };
   async function aiStatus() {
     try {
       const r = await fetch('/api/status'); const j = await r.json();
       AI.on = !!j.ai; AI.model = j.model || ''; AI.provider = j.provider || '';
       SYNC.on = j.sync === true && typeof j.user === 'string'; SYNC.user = j.user || '';
+      if (SYNC.on) PROFILE = cleanProfile(j.profile);
+      setUsage(j.usage);
     } catch (e) { /* offline server */ }
+  }
+  function setUsage(u) {
+    if (!u || typeof u.left !== 'number') return;
+    AI.usage = { left: Math.max(0, u.left), limit: u.limit, resetAt: u.resetAt };
+    document.querySelectorAll('.ai-left').forEach(el => { el.textContent = usageText(); });
+  }
+  // When the counts reset (midnight UTC), in this device's time: 00:00 in a UK winter, 01:00 in summer.
+  const resetTime = () => { const d = new Date(AI.usage && AI.usage.resetAt); return isNaN(d) ? 'midnight' : d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }); };
+  function usageText() {
+    const u = AI.usage;
+    if (!u) return '';
+    if (u.left <= 0) return 'No tutor calls left today, back at ' + resetTime();
+    return u.left + (u.left === 1 ? ' tutor call' : ' tutor calls') + ' left today';
+  }
+  const usageLine = () => (AI.on && AI.usage ? h('p', { class: 'meta ai-left' }, usageText()) : null);
+  async function refreshUsage() {
+    if (!SYNC.on || !AI.on) return;
+    try { const r = await fetch('/api/usage'); if (r.ok) setUsage(await r.json()); } catch (e) { /* offline */ }
   }
   async function ai(mode, payload) {
     try {
       const r = await fetch('/api/ai', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.assign({ mode, course: COURSE.id }, payload)) });
-      return await r.json();
+      const j = await r.json();
+      setUsage(j.usage);
+      if (j.capped) j.error = j.error + ' Tutor calls come back at ' + resetTime() + '.';
+      return j;
     } catch (e) {
       return { ok: false, error: SYNC.on ? 'Could not reach the AI tutor. Check your connection and try again.' : 'Could not reach the trainer. Is the black start window still open?' };
     }
   }
+
+  // ---------- profile: one name (and choice of endings) for every course ----------
+  // Hosted, it lives with the account (/api/profile), so a new course or a new device never asks again.
+  // On the local server it lives in this browser, next to the courses' own progress.
+  const PROFILE_KEY = 'stilus-profile';
+  let PROFILE = null; // { name, fem } where fem is true, false or null (not chosen yet)
+  function cleanProfile(o) {
+    if (!o || typeof o.name !== 'string' || !o.name.trim()) return null;
+    return { name: o.name.trim().slice(0, 30), fem: typeof o.fem === 'boolean' ? o.fem : null };
+  }
+  function readLocalProfile() { try { return cleanProfile(JSON.parse(localStorage.getItem(PROFILE_KEY) || 'null', noProto)); } catch (e) { return null; } }
+  const gendered = () => COURSE.genderedExamples !== false;
+  // fem: null when this course does not ask, which keeps the choice made in another course.
+  function saveProfile(name, fem) {
+    if (fem == null) fem = PROFILE && PROFILE.fem != null ? PROFILE.fem : null;
+    PROFILE = { name, fem };
+    if (SYNC.on) {
+      fetch('/api/profile', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(fem == null ? { name } : { name, fem }) })
+        .catch(() => { /* offline: the next start sends it again (see applyProfile) */ });
+    } else {
+      try { localStorage.setItem(PROFILE_KEY, JSON.stringify(PROFILE)); } catch (e) { /* private mode */ }
+    }
+  }
+  // The profile's name and endings win over the copy kept in each course's progress.
+  function fromProfile() {
+    if (!PROFILE || !S) return;
+    S.name = PROFILE.name;
+    if (PROFILE.fem != null) S.fem = PROFILE.fem;
+  }
+  // At start. The first time, the name this course already has (or, on this device, another course has) becomes
+  // the profile, so nobody who has already said their name is asked again.
+  function applyProfile() {
+    if (!SYNC.on) PROFILE = readLocalProfile();
+    if (PROFILE) {
+      const before = S.name + '|' + S.fem;
+      fromProfile();
+      if (S.name + '|' + S.fem !== before) save();
+      return;
+    }
+    const name = S.name || nameElsewhere();
+    if (!name) return;
+    const chosen = gendered() && S.name && S.prefsAt; // endings picked in this course
+    S.name = name; save();
+    saveProfile(name, chosen ? S.fem : null);
+  }
+  // Ask on first use, or in a course that uses gendered endings when nobody has chosen them yet.
+  const needsWelcome = () => !S.name || (gendered() && (!PROFILE || PROFILE.fem == null));
 
   // ---------- sync (hosted app only: the local server has no accounts, so SYNC.on stays false) ----------
   // This device keeps working from localStorage; the account copy is loaded at start and when the page comes back
@@ -237,7 +334,7 @@
     });
     return { status: r.status, j: await r.json() };
   }
-  function adopt(state) { S = withDefaults(state); pruneTime(); store.write(S); }
+  function adopt(state) { S = withDefaults(state); fromProfile(); pruneTime(); store.write(S); }
 
   // At start: bring this device and the account together.
   async function syncStart() {
@@ -288,7 +385,7 @@
   // Reset and import replace the account copy instead of merging into it.
   function pushReplace() { if (SYNC.on) { SYNC.replace = true; syncPush(); } }
   window.addEventListener('online', () => { if (SYNC.on) syncPush(); });
-  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') syncPull(); });
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { syncPull(); refreshUsage(); } });
 
   // ---------- small UI pieces ----------
   function backBar(title, onBack) {
@@ -316,6 +413,16 @@
   // The red pen: your words struck through, the right words written in.
   function pen(wrong, right) {
     return h('div', { class: 'pen' }, wrong ? h('span', { class: 'pen-x' }, wrong) : null, wrong ? h('span', { class: 'pen-arrow', 'aria-hidden': 'true' }, '→') : null, h('span', { class: 'pen-ok' }, right));
+  }
+  // The red pen on one letter: what you typed with the slip struck through, then the word with the fix written in.
+  function penSlip(typed, right) {
+    const a = Array.from(typed); const b = Array.from(right);
+    let p = 0; while (p < a.length && p < b.length && a[p] === b[p]) p++;
+    let q = 0; while (q < a.length - p && q < b.length - p && a[a.length - 1 - q] === b[b.length - 1 - q]) q++;
+    const part = (arr, cls) => [arr.slice(0, p).join(''), arr.length - q > p ? h('span', { class: cls }, arr.slice(p, arr.length - q).join('')) : null, arr.slice(arr.length - q).join('')];
+    return h('div', { class: 'pen slip' },
+      h('span', { class: 'slip-w' }, ...part(a, 'pen-x')), h('span', { class: 'pen-arrow', 'aria-hidden': 'true' }, '→'),
+      h('span', { class: 'slip-w' }, ...part(b, 'pen-ok')));
   }
   const todayLong = () => new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
 
@@ -398,7 +505,8 @@
       h('div', { class: 'chap-go' }, 'Later'))));
 
     const aiLine = h('button', { class: 'status' + (AI.on ? ' on' : ''), type: 'button', onclick: aiHelp }, h('i'),
-      AI.on ? 'AI tutor on · ' + AI.provider : 'AI tutor off · Set up');
+      AI.on ? 'AI tutor on · ' + AI.provider : 'AI tutor off · Set up',
+      AI.on && AI.usage ? [' · ', h('span', { class: 'ai-left' }, usageText())] : null);
 
     mount(h('div', { class: 'page home' },
       h('header', { class: 'top' }, brand(),
@@ -533,14 +641,16 @@
 
   // ---------- first use: name and endings ----------
   function welcome() {
-    const name = h('input', { class: 'text', maxlength: '30', 'aria-label': 'Your name', autocomplete: 'given-name', value: nameElsewhere(), style: { 'font-family': 'var(--sans)', 'font-size': '16px' } });
+    const name = h('input', { class: 'text', maxlength: '30', 'aria-label': 'Your name', autocomplete: 'given-name', value: S.name || (PROFILE && PROFILE.name) || nameElsewhere(), style: { 'font-family': 'var(--sans)', 'font-size': '16px' } });
     const fem = h('input', { type: 'radio', name: 'g', checked: S.fem, id: 'w-f' });
     const masc = h('input', { type: 'radio', name: 'g', checked: !S.fem, id: 'w-m' });
     const msg = h('p', { class: 'meta', role: 'status' });
     const go = () => {
       const n = name.value.trim();
       if (!n) { msg.textContent = 'Add the name you would like the lessons to use.'; name.focus(); return; }
-      S.name = n; S.fem = fem.checked; S.prefsAt = Date.now(); save(); home();
+      S.name = n; if (gendered()) S.fem = fem.checked; S.prefsAt = Date.now(); save();
+      saveProfile(n, gendered() ? S.fem : null);
+      home();
     };
     name.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
     mount(h('div', { class: 'page' },
@@ -576,15 +686,15 @@
         h('div', { class: 'radios' }, h('label', {}, fem, 'cansada (-a)'), h('label', {}, masc, 'cansado (-o)'))),
       h('label', { class: 'field' }, h('span', {}, 'Daily goal'), goal),
       h('div', { class: 'row' },
-        h('button', { class: 'btn primary', onclick: () => { S.name = name.value.trim() || S.name; S.fem = fem.checked; S.goalMins = Number(goal.value) || COURSE.goalMins || 45; S.prefsAt = Date.now(); save(); ov.remove(); home(); } }, 'Save'),
-        h('button', { class: 'btn quiet danger', onclick: () => { if (confirm(SYNC.on ? 'Erase all progress, review cards and streak, on every device?' : 'Erase all progress, review cards and streak on this device?')) { S = defaults(); save(); pushReplace(); ov.remove(); welcome(); } } }, 'Reset progress')),
+        h('button', { class: 'btn primary', onclick: () => { S.name = name.value.trim() || S.name; if (gendered()) S.fem = fem.checked; S.goalMins = Number(goal.value) || COURSE.goalMins || 45; S.prefsAt = Date.now(); save(); saveProfile(S.name, gendered() ? S.fem : null); ov.remove(); home(); } }, 'Save'),
+        h('button', { class: 'btn quiet danger', onclick: () => { if (confirm(SYNC.on ? 'Erase all progress, review cards and streak, on every device?' : 'Erase all progress, review cards and streak on this device?')) { S = defaults(); fromProfile(); save(); pushReplace(); ov.remove(); if (needsWelcome()) welcome(); else home(); } } }, 'Reset progress')),
       h('div', { class: 'field', style: { 'margin-top': '16px' } }, h('span', {}, 'Backup'),
         h('div', { class: 'row', style: { 'margin-top': '0' } },
           h('button', { class: 'btn ghost', type: 'button', onclick: exportProgress }, 'Export progress'),
           h('button', { class: 'btn ghost', type: 'button', onclick: () => file.click() }, 'Import progress'))),
       file, msg,
       h('p', { class: 'meta', style: { 'margin-top': '16px' } }, SYNC.on
-        ? 'Signed in as ' + SYNC.user + '. Progress syncs to your account, so every device you sign in on sees the same streak and review cards. Practice time only counts while you are active on the page.'
+        ? 'Signed in as ' + SYNC.user + '. Your name is saved with your account and used in every course. Progress syncs to your account, so every device you sign in on sees the same streak and review cards. Practice time only counts while you are active on the page.'
         : 'Progress is saved in this browser on this device. Export it to keep a copy or move it to another browser. Practice time only counts while you are active on the page.'),
       COURSES.length > 1 ? h('p', { class: 'meta' }, 'Each course keeps its own progress, streak, daily goal and review deck.') : null));
   }
@@ -596,7 +706,8 @@
         ? h('div', {},
           h('p', {}, 'Connected to ' + (AI.provider || 'AI') + ' (' + AI.model + '). It corrects your own sentences, checks your word-of-the-day answer and plays the characters in free chat. Everything else works without it.'),
           AI.provider === 'Gemini' ? h('p', { class: 'meta' }, 'This uses Google\'s free Gemini tier. Google says it may use what you type into the AI parts to improve its products, so keep anything private out of them.') : null,
-          SYNC.on ? h('p', { class: 'meta' }, 'Each person gets a daily number of AI requests. When they run out, everything else keeps working.') : null)
+          SYNC.on ? h('p', { class: 'meta' }, 'Each person gets ' + (AI.usage ? AI.usage.limit : 'a set number of') + ' tutor calls a day, counted from ' + resetTime() + '. When they run out, everything else keeps working.') : null,
+          usageLine())
         : SYNC.on ? h('p', {}, 'The AI tutor is not switched on for this app yet. Everything else works without it.')
         : h('div', {},
           h('p', {}, 'Everything works without AI. The tutor adds sentence correction and free chat. Setup takes about 3 minutes:'),
@@ -899,10 +1010,10 @@
     return {
       check() {
         if (!input.value.trim()) return null;
-        const r = judgeT(input.value, ex.answer, toEn);
+        const { r, near } = judgeTyped(input.value, ex.answer, toEn, ex.strict);
         // Labelled answers show the differences that matter (¿Vives aquí? (tú) / ¿Vive aquí? (usted)), up to four.
         const shown = isGap ? ex.answer[0] : prettyAns(ex.answer.slice(0, ex.who ? 4 : 2), ex.q, ex.who, toEn ? '' : null);
-        const res = { ok: r !== 'no', almost: r === 'accent', yours: input.value.trim(), answer: shown, hear: isGap || toEn ? null : ex.answer[0], why: ex.why };
+        const res = { ok: r === 'ok' || r === 'accent', almost: r === 'accent', near, typed: true, yours: input.value.trim(), answer: shown, hear: isGap || toEn ? null : ex.answer[0], why: ex.why };
         // A review card always asks for the course's language, so a missed translation into English makes none.
         if (!isGap && !toEn && r === 'no') res.card = { id: 'x-' + ex.q.toLowerCase().replace(/[^a-z]/g, '').slice(0, 24), es: prettyAns([ex.answer[0]], ex.q), en: ex.q, alts: ex.answer.slice(1).map(a => prettyAns([a], ex.q)) };
         return res;
@@ -961,21 +1072,24 @@
         checked = true;
         holder.classList.add('locked');
         if (inst.reveal) inst.reveal(res);
+        const near = res.near; // a small spelling slip: half a mark, no second chance needed
         if (!res.counted) {
-          if (!item.retry) { stats.total++; if (res.ok) stats.right++; }
-          if (res.ok) addXp(item.retry ? 5 : 10);
-          recordSkill(ex.skill, res.ok);
+          if (!item.retry) { stats.total++; if (res.ok) stats.right++; else if (near) stats.right += 0.5; }
+          if (res.ok) addXp(item.retry ? 5 : 10); else if (near) addXp(item.retry ? 2 : 5);
+          recordSkill(ex.skill, res.ok || !!near);
+          if (res.typed) noteSpelling(ex, !near);
           save();
         }
         if (!item.retry) { finished++; if (onProgress) onProgress(finished); }
-        if (!res.ok && !item.retry && ex.type !== 'rapid') queue.push({ e: ex, retry: true });
+        if (!res.ok && !near && !item.retry && ex.type !== 'rapid') queue.push({ e: ex, retry: true });
         if (!res.ok && res.card) addCards([res.card]);
 
         const good = res.ok;
-        fb.className = 'feedback ' + (good ? (res.almost ? 'warn' : 'good') : 'bad');
-        const head = res.head || (good ? (res.almost ? 'Right, but watch the accents' : praise()) : (item.retry ? 'Not quite. Moving on' : 'Not quite'));
+        fb.className = 'feedback ' + (good ? (res.almost ? 'warn' : 'good') : near ? 'warn' : 'bad');
+        const head = res.head || (good ? (res.almost ? 'Right, but watch the accents' : praise()) : near ? 'Nearly. Check the spelling of ' + near.right : (item.retry ? 'Not quite. Moving on' : 'Not quite'));
         let mark = null;
-        if (res.penFrom && !good) mark = pen(res.penFrom, res.penTo);
+        if (near) mark = penSlip(near.typed, near.right);
+        else if (res.penFrom && !good) mark = pen(res.penFrom, res.penTo);
         else if (!good && res.yours) mark = pen(res.yours, res.answer);
         else if (!good && res.answer) mark = pen(null, res.answer);
         else if (good && res.almost) mark = pen(res.yours, res.answer);
@@ -984,7 +1098,8 @@
           mark,
           res.show && good && !res.almost ? h('div', { class: 'fb-ans', lang: TL }, res.show) : null,
           !good && res.penFrom ? h('div', { class: 'fb-ans', lang: TL }, res.show) : null,
-          res.why ? h('div', { class: 'fb-why' }, res.why) : null,
+          near ? h('div', { class: 'fb-ans', lang: ex.dir === 'toEn' ? null : TL }, res.answer) : null,
+          res.why && !near ? h('div', { class: 'fb-why' }, res.why) : null,
           res.hear ? speakBtn(res.hear, 'Hear it') : null);
         fb.classList.remove('hidden');
         btn.classList.remove('hidden');
@@ -1062,7 +1177,7 @@
     return h('div', { class: 'step' },
       h('h2', {}, w.title),
       h('p', { class: 'lead' }, T(w.task)),
-      ta, h('div', { class: 'row' }, btn), out, lock,
+      ta, h('div', { class: 'row' }, btn), AI.on ? usageLine() : null, out, lock,
       cont);
   }
 
@@ -1178,7 +1293,7 @@
       h('h2', {}, 'Free chat with ' + b.who),
       h('p', { class: 'muted' }, 'Say anything. Mistakes are fine: ' + b.who + ' points them out gently.' + UI.chatHelp),
       log, hintOut,
-      h('div', { class: 'chat-input' }, input, sendBtn, hintBtn),
+      h('div', { class: 'chat-input' }, input, sendBtn, hintBtn), usageLine(),
       next ? contBtn('Finish chapter', next) : h('div', { class: 'row end sticky' }, h('button', { class: 'btn ghost big', onclick: home }, 'Back to today')));
     input.focus();
   }
@@ -1217,6 +1332,7 @@
     const weak = weakSkills();
     const pool = [];
     CHAPTERS.forEach(ch => ch.exercises.forEach(e => { if (e.type !== 'rapid' && weak.includes(e.skill)) pool.push(e); }));
+    if (weak.includes(SPELLING)) slipExercises().forEach(e => { if (!pool.includes(e)) pool.push(e); });
     const list = L.shuffle(pool).slice(0, 10);
     if (!list.length) return home();
     const stats = { right: 0, total: 0, t0: Date.now() };
@@ -1257,19 +1373,22 @@
         if (checked) { next(); return; }
         if (!input.value.trim()) return;
         checked = true;
-        const r = judgeT(input.value, variants(card));
-        const ok = r !== 'no';
+        const { r, near } = judgeTyped(input.value, variants(card));
+        const ok = r === 'ok' || r === 'accent';
         const relearn = lapsed.has(card.id);
-        if (ok && relearn) S.srs[card.id] = Object.assign({}, S.srs[card.id], { box: 1, due: Date.now() + L.INTERVALS[1] * L.DAY });
-        else S.srs[card.id] = L.srsGrade(S.srs[card.id], ok, Date.now());
+        // A spelling slip neither moves the card up a box nor drops it back.
+        if ((ok || near) && relearn) S.srs[card.id] = Object.assign({}, S.srs[card.id], { box: 1, due: Date.now() + L.INTERVALS[1] * L.DAY });
+        else S.srs[card.id] = L.srsGrade(S.srs[card.id], near ? 'close' : ok, Date.now());
         if (ok) { if (!relearn) right++; addXp(relearn ? 2 : 5); }
+        else if (near) addXp(2);
         else { if (!relearn) queue.push(S.srs[card.id]); lapsed.add(card.id); }
         seen++;
         save();
-        fb.className = 'feedback ' + (ok ? (r === 'accent' ? 'warn' : 'good') : 'bad');
+        fb.className = 'feedback ' + (ok ? (r === 'accent' ? 'warn' : 'good') : near ? 'warn' : 'bad');
         put(fb,
-          h('div', { class: 'fb-head' }, ok ? (r === 'accent' ? 'Right, but watch the accents' : praise()) : 'Not quite'),
-          ok && r !== 'accent' ? h('div', { class: 'fb-ans', lang: TL }, card.es) : pen(input.value.trim(), card.es),
+          h('div', { class: 'fb-head' }, ok ? (r === 'accent' ? 'Right, but watch the accents' : praise()) : near ? 'Nearly. Check the spelling of ' + near.right : 'Not quite'),
+          near ? penSlip(near.typed, near.right) : null,
+          ok && r !== 'accent' || near ? h('div', { class: 'fb-ans', lang: TL }, card.es) : pen(input.value.trim(), card.es),
           card.alts && card.alts.length ? h('div', { class: 'meta' }, 'Also right: ' + card.alts.join(', ')) : null,
           card.ex ? h('div', { class: 'fb-why' }, card.ex) : null,
           speakBtn(card.es, 'Hear it'));
@@ -1363,7 +1482,7 @@
           w.kin ? h('div', { class: 'wotd-kin' }, w.kin) : null),
         h('div', { class: 'example' }, h('div', { class: 'es', lang: TL }, w.ex.es, ' ', speakBtn(w.ex.es)), h('div', { class: 'en' }, w.ex.en)),
         h('div', { class: 'wq' }, h('div', { class: 'label' }, 'Your turn'), h('p', { class: 'lead' }, w.q)),
-        ta, h('div', { class: 'row' }, btn), out,
+        ta, h('div', { class: 'row' }, btn), usageLine(), out,
         done ? h('p', { class: 'meta', style: { 'margin-top': '16px' } }, 'Done for today. A new word arrives tomorrow, and this one is in your review deck.') : null,
         learned.length > 1 ? h('details', { class: 'learned' }, h('summary', {}, 'Your words so far (' + learned.length + ')'),
           h('ul', {}, learned.map(x => h('li', {}, h('b', {}, x.es), ' · ' + x.en)))) : null)));
@@ -1411,7 +1530,9 @@
       WORDS = await getJson(base + COURSE.words);
       GLOSS = COURSE.glossary ? (await getJson(base + COURSE.glossary)).words || {} : {};
       ROADMAP = COURSE.roadmap || [];
-      SKILLS = Object.assign({}, COURSE.skills, ...CHAPTERS.map(c => c.skills || {}));
+      SKILLS = Object.assign({ [SPELLING]: 'Spelling' }, COURSE.skills, ...CHAPTERS.map(c => c.skills || {}));
+      GLOSS_WORDS = Object.keys(GLOSS);
+      CHAPTERS.forEach(ch => ch.exercises.forEach((e, i) => EXKEY.set(e, ch.n + ':' + i)));
       KEY = COURSE.storageKey;
       UI = Object.assign({}, UI_DEFAULTS, COURSE.ui || {});
       PLAN = Object.assign({}, PLAN_DEFAULTS, COURSE.plan || {});
@@ -1432,7 +1553,8 @@
     window.__trainer = { state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE, ui: UI };
     await aiStatus();
     if (SYNC.on) await syncStart();
-    if (S.name) home(); else welcome();
+    applyProfile();
+    if (needsWelcome()) welcome(); else home();
   }
   boot();
 })();

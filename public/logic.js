@@ -28,12 +28,63 @@
     return clean(t).split(' ').filter(w => w !== 'the' && w !== 'a' && w !== 'an').join(' ');
   }
 
-  // 'ok' exact, 'accent' = right apart from accents, 'no' = wrong.
+  // 'ok' exact, 'accent' = right apart from accents, 'close' = one small spelling slip (see nearMiss), 'no' = wrong.
   // opts.english: compare as English (see above). opts.marksOptional: accents and macrons never count (Latin).
+  // opts.close: allow 'close' (typed answers only); opts.strict: never (spelling is the point); opts.known: real words.
   function judge(input, answers, opts) {
     opts = opts || {};
     const r = judgeRaw(input, answers, opts);
-    return r === 'accent' && opts.marksOptional ? 'ok' : r;
+    if (r === 'accent' && opts.marksOptional) return 'ok';
+    if (r === 'no' && opts.close && !opts.strict && nearMiss(input, answers, opts)) return 'close';
+    return r;
+  }
+
+  // One letter wrong, missing, extra, or two letters swapped (Damerau distance 1).
+  function oneEdit(a, b) {
+    if (a === b) return false;
+    const la = a.length; const lb = b.length;
+    if (Math.abs(la - lb) > 1) return false;
+    let i = 0;
+    while (i < la && i < lb && a[i] === b[i]) i++;
+    if (la === lb) {
+      if (a.slice(i + 1) === b.slice(i + 1)) return true; // one letter wrong
+      return i + 1 < la && a[i] === b[i + 1] && a[i + 1] === b[i] && a.slice(i + 2) === b.slice(i + 2); // swapped
+    }
+    return la > lb ? a.slice(i + 1) === b.slice(i) : a.slice(i) === b.slice(i + 1); // extra / missing
+  }
+  // A small spelling slip that still earns half a mark. All of these must hold:
+  // - the answer matches an accepted one word for word, except for one word with one slip;
+  // - that word has 5 or more letters, and its first letter and last two letters are right
+  //   (endings are the grammar: hablas vs habla, amat vs amant);
+  // - what was typed is not itself a real word (pero / perro): not a word of any accepted answer, nor in opts.known.
+  // Returns { answer, typed, right } for the accepted answer it nearly matched, or null.
+  function nearMiss(input, answers, opts) {
+    opts = opts || {};
+    if (opts.strict) return null;
+    const raw = (Array.isArray(answers) ? answers : [answers]);
+    const prep = opts.english ? english : (opts.marksOptional ? s => stripAcc(norm(s)) : norm);
+    const words = s => prep(s).split(' ').filter(Boolean);
+    const flat = w => stripAcc(w);
+    const got = words(input);
+    if (!got.length) return null;
+    const real = new Set();
+    raw.forEach(a => words(a).forEach(w => real.add(flat(w))));
+    if (opts.known) for (const w of opts.known) real.add(flat(String(w).toLowerCase()));
+    for (const a of raw) {
+      const want = words(a);
+      if (want.length !== got.length) continue;
+      const diff = [];
+      for (let k = 0; k < want.length; k++) if (want[k] !== got[k]) diff.push(k);
+      if (diff.length !== 1) continue;
+      const right = want[diff[0]]; const typed = got[diff[0]];
+      const R = Array.from(right); const Y = Array.from(typed);
+      if (R.length < 5 || Y.length < 4) continue;
+      if (R[0] !== Y[0] || R.slice(-2).join('') !== Y.slice(-2).join('')) continue;
+      if (!oneEdit(Y.slice(1, -2).join(''), R.slice(1, -2).join(''))) continue;
+      if (real.has(flat(typed))) continue;
+      return { answer: a, typed, right };
+    }
+    return null;
   }
   function judgeRaw(input, answers, opts) {
     const raw = (Array.isArray(answers) ? answers : [answers]);
@@ -90,9 +141,13 @@
   function newCard(c, now) {
     return Object.assign({ alts: [], box: 1, due: now + INTERVALS[1] * DAY }, c);
   }
+  // ok: true moves the card up a box, false drops it to box 1, 'close' (a small spelling slip) keeps its box.
   function srsGrade(card, ok, now) {
     const c = Object.assign({}, card, { seen: now }); // seen: when last reviewed, so sync keeps the latest grading
-    if (ok) {
+    if (ok === 'close') {
+      c.box = c.box || 1;
+      c.due = now + INTERVALS[c.box] * DAY;
+    } else if (ok) {
       c.box = Math.min((c.box || 1) + 1, 5);
       c.due = now + INTERVALS[c.box] * DAY;
     } else {
@@ -160,6 +215,8 @@
     Object.keys(time).sort().slice(-TIME_DAYS).forEach(k => { out.time[k] = time[k]; });
     out.reviewed = unionBy(a.reviewed, b.reviewed, (x, y) => x || y);
     out.skills = unionBy(a.skills, b.skills, (x, y) => ({ r: Math.max(x.r || 0, y.r || 0), w: Math.max(x.w || 0, y.w || 0) }));
+    // exercises answered with a spelling slip (for the spelling drill): the latest change wins
+    if (a.slips || b.slips) out.slips = unionBy(a.slips, b.slips, (x, y) => ((obj(y).at || 0) > (obj(x).at || 0) ? y : x));
     // saved words: the latest change (added or removed) wins
     if (a.vocab || b.vocab) out.vocab = unionBy(a.vocab, b.vocab, (x, y) => ((y.at || 0) > (x.at || 0) ? y : x));
     out.xp = Math.max(a.xp || 0, b.xp || 0);
@@ -180,5 +237,5 @@
     return out;
   }
 
-  return { judge, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
+  return { judge, nearMiss, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
 });

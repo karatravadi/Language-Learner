@@ -50,6 +50,45 @@ t('macrons optional: typed without macrons is ok', () => assert.equal(L.judge('R
 t('macrons count when not optional (Spanish accents)', () => assert.equal(L.judge('estais', ['estáis']), 'accent'));
 t('macrons optional: a wrong ending is still wrong', () => assert.equal(L.judge('puella', ['puellam'], { marksOptional: true }), 'no'));
 
+// ---------- spelling slips: half a mark (backlog item 2) ----------
+const C = (input, answers, o) => L.judge(input, answers, Object.assign({ close: true }, o || {}));
+t('close: one letter wrong in the middle', () => assert.equal(C('estudiamos', ['estudiemos']), 'close'));
+t('close: one letter missing', () => assert.equal(C('Puelam videt', ['puellam videt'], { marksOptional: true }), 'close'));
+t('close: one letter extra', () => assert.equal(C('cocinnamos', ['cocinamos']), 'close'));
+t('close: two letters swapped', () => assert.equal(C('estuidamos', ['estudiamos']), 'close'));
+t('close: only when asked for (multiple choice, tiles never ask)', () => assert.equal(L.judge('estuidamos', ['estudiamos']), 'no'));
+t('close: a slip in the last two letters is a fail (endings are grammar)', () => {
+  assert.equal(C('hablas', ['habla']), 'no');
+  assert.equal(C('hablamso', ['hablamos']), 'no');
+  assert.equal(C('amant', ['amat'], { marksOptional: true }), 'no');
+  assert.equal(C('agricolam', ['agricolae'], { marksOptional: true }), 'no');
+});
+t('close: a slip in the first letter is a fail', () => assert.equal(C('bomida', ['comida']), 'no'));
+t('close: words under 5 letters never count', () => { assert.equal(C('csaa', ['casa']), 'no'); assert.equal(C('caza', ['casa']), 'no'); });
+t('close: only one slip in the whole answer', () => {
+  assert.equal(C('estuidamos mucho', ['estudiamos mucho']), 'close');
+  assert.equal(C('estuidamos muhco todos', ['estudiamos mucho todos']), 'no');
+  assert.equal(C('estuddiamos', ['estudiamos']), 'close');
+  assert.equal(C('estuddiiamos', ['estudiamos']), 'no');
+});
+t('close: a wrong word elsewhere is still a fail', () => assert.equal(C('tengo un estuidamos', ['tengo una estudiamos']), 'no'));
+t('close: an accent slip plus a letter slip is a fail', () => assert.equal(C('estúidamos', ['estudiamos']), 'no'));
+t('close: never when the typo is a real word (another accepted answer)', () => { assert.equal(C('mucho calor', ['mucho color']), 'close'); assert.equal(C('mucho calor', ['mucho color', 'hace calor']), 'no'); });
+t('close: never when the typo is a real word (pero / perro)', () => assert.equal(C('pero', ['perro'], { known: ['pero', 'perro'] }), 'no'));
+t('close: never when the typo is a real word, accents aside', () => assert.equal(C('esperas', ['espera'], { known: ['esperás'] }), 'no'));
+t('close: ñ is a letter of its own (año is not ano)', () => assert.equal(C('ano', ['año']), 'no'));
+t('close: strict exercises never give half marks', () => assert.equal(C('estuidamos', ['estudiamos'], { strict: true }), 'no'));
+t('close: Latin with macrons left off', () => assert.equal(C('agircola puellam videt', ['agricola puellam videt'], { marksOptional: true }), 'close'));
+t('close: Latin with macrons typed', () => assert.equal(C('Rōma magnna est', ['Rōma magna est'], { marksOptional: true }), 'close'));
+t('close: Latin wrong case ending still fails', () => assert.equal(C('puellae videt', ['puellam videt'], { marksOptional: true }), 'no'));
+t('close: English answers (Latin into English)', () => assert.equal(C('the girl sees the farrmer', ['the girl sees the farmer'], { english: true }), 'close'));
+t('nearMiss names the word to check', () => assert.deepEqual(L.nearMiss('Estuidamos mucho.', ['estudiamos mucho']), { answer: 'estudiamos mucho', typed: 'estuidamos', right: 'estudiamos' }));
+t('srs close keeps the box and reschedules', () => { const c = L.srsGrade({ id: 'a', box: 3, due: 0 }, 'close', now); assert.equal(c.box, 3); assert.equal(c.due, now + 7 * L.DAY); });
+t('srs close on a new card keeps box 1', () => { const c = L.srsGrade(L.newCard({ id: 'a' }, now), 'close', now); assert.equal(c.box, 1); assert.equal(c.due, now + L.DAY); });
+t('merge slips: latest change wins', () => assert.deepEqual(
+  L.mergeState({ slips: { '5:3': { at: 10 }, '5:4': { at: 50, off: true } } }, { slips: { '5:4': { at: 40 }, '6:1': { at: 20 } } }).slips,
+  { '5:3': { at: 10 }, '5:4': { at: 50, off: true }, '6:1': { at: 20 } }));
+
 // ---------- sync merge (this device a, server b) ----------
 const M = L.mergeState;
 t('srsGrade stamps seen', () => assert.equal(L.srsGrade({ id: 'a', box: 1 }, true, now).seen, now));

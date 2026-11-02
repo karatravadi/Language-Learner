@@ -3,6 +3,7 @@
 let puppeteer; try { puppeteer = require('puppeteer'); } catch (e) { puppeteer = require('puppeteer-core'); }
 const assert = require('assert');
 const path = require('path');
+const L = require('../public/logic.js');
 const SP = path.join(__dirname, '.shots');
 const BASE = process.env.BASE || 'http://localhost:3130';
 const AI_ON = process.env.AI_ON !== '0';
@@ -96,6 +97,20 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
 
   // ---------- play every chapter ----------
   const chapters = await page.evaluate(() => window.__trainer.chapters.map(c => c.n));
+  // A spelling slip the app should mark as "Nearly": two letters swapped inside a long word of the answer.
+  const GLOSS_KEYS = await page.evaluate(async c => { const r = await fetch('courses/' + c.id + '/' + (c.glossary || 'glossary.json')); return r.ok ? Object.keys((await r.json()).words || {}) : []; }, COURSE);
+  const slipOf = (ex) => {
+    if (!['gap', 'translate'].includes(ex.type) || ex.strict) return null;
+    const a = UI.marksOptional ? plain(ex.answer[0]) : ex.answer[0];
+    const opts = { close: true, english: ex.dir === 'toEn', marksOptional: !!UI.marksOptional, known: ex.dir === 'toEn' ? null : GLOSS_KEYS };
+    for (const w of a.split(' ')) {
+      if (w.length < 6 || w[1] === w[2]) continue;
+      const typo = a.replace(w, w[0] + w[2] + w[1] + w.slice(3));
+      if (L.judge(typo, ex.answer, opts) === 'close') return typo;
+    }
+    return null;
+  };
+  let slipShown = false;
   for (const n of chapters) {
     const ch = await page.evaluate(n => window.__trainer.chapters.find(c => c.n === n), n);
     const deliberateMiss = n === 2;
@@ -121,11 +136,12 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
       if (!ex) break;
       const counter = await page.evaluate(() => document.querySelector('.counter').innerText);
       const miss = deliberateMiss && !missedOne && ['gap', 'translate', 'fix', 'mc'].includes(ex.type) && !counter.includes('Second');
+      const slip = !slipShown && n === 3 && !counter.includes('Second') ? slipOf(ex) : null;
       switch (ex.type) {
         case 'mc': case 'listen':
           await page.evaluate(i => document.querySelectorAll('.ex .opt')[i].click(), miss ? (ex.answer + 1) % ex.options.length : ex.answer); break;
         case 'gap': case 'translate':
-          await page.type('.ex input.text', miss ? 'xyz' : UI.marksOptional ? plain(ex.answer[0]) : ex.answer[0]); break;
+          await page.type('.ex input.text', miss ? 'xyz' : slip || (UI.marksOptional ? plain(ex.answer[0]) : ex.answer[0])); break;
         case 'order':
           for (const word of ex.words) await page.evaluate(wd => [...document.querySelectorAll('.tiles.bank .tile')].find(b => b.innerText === wd).click(), word);
           break;
@@ -154,6 +170,14 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
         if (label === 'Check') { await checkBtn.click(); await sleep(60); }
       }
       if (UI.marksOptional && ['gap', 'translate'].includes(ex.type) && !miss) assert.doesNotMatch(await text(), /watch the accents/, 'missing macrons are not a mistake');
+      if (slip) {
+        slipShown = true;
+        t = await text();
+        assert.match(t, /Nearly\. Check the spelling of/, 'a one-letter slip gets half a mark: ' + slip);
+        assert.ok(await page.$('.feedback .pen.slip .pen-x'), 'the red pen marks the slipped letters');
+        await shot('06-slip');
+        ok('chapter 3: a spelling slip ("' + slip + '") is marked "Nearly" with the red pen on the letters, no second chance');
+      }
       if (miss) {
         missedOne = true;
         t = await text();
@@ -196,7 +220,10 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
     assert.ok(t.includes(UI.chapterDone.replace('{n}', n)));
     s = await state();
     assert.ok(s.done[n], 'chapter ' + n + ' recorded');
-    const expectAcc = deliberateMiss ? s.done[n].acc < 100 : s.done[n].acc === (n === 1 ? s.done[n].acc : 100);
+    // A spelling slip in chapter 3 is half a mark, so that chapter lands just under 100%, and above a full miss.
+    const slipAcc = n === 3 && slipShown;
+    const expectAcc = deliberateMiss ? s.done[n].acc < 100 : slipAcc ? s.done[n].acc < 100 && s.done[n].acc >= 90 : s.done[n].acc === (n === 1 ? s.done[n].acc : 100);
+    if (slipAcc) assert.equal(s.lesson, undefined);
     assert.ok(expectAcc, 'chapter ' + n + ' accuracy ' + s.done[n].acc);
     assert.ok(ch.phrases.every(p => s.srs[p.id]), 'phrases join the deck');
     if (n === 4) await shot('09-result');
@@ -309,8 +336,8 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   assert.match(await text(), /not a progress file/);
   await clickText('button', 'Reset progress'); await sleep(80);
   assert.equal(Object.keys((await state()).done).length, 0, 'reset should clear chapters');
-  assert.match(await text(), /Before you start/, 'after a reset, the name is asked again');
-  await page.type('input.text', 'Kara'); await clickText('button', 'Start'); await sleep(100);
+  assert.doesNotMatch(await text(), /Before you start/, 'after a reset, the name is kept (it lives in the profile)');
+  assert.equal((await state()).name, 'Kara', 'reset keeps the name');
   await page.click('button[aria-label="Settings"]'); await sleep(80);
   await (await page.$('input[type=file]')).uploadFile(path.join(dl, exported)); await sleep(200);
   const restored = await state();
@@ -327,16 +354,21 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
     const mine = await page.evaluate(() => document.querySelector('.switch-b.on').innerText);
     const doneHere = Object.keys((await state()).done).length;
     await Promise.all([page.waitForNavigation({ waitUntil: 'networkidle0' }), clickText('.switch-b', others[0])]); await sleep(200);
-    t = await text(); assert.match(t, /Before you start/, 'a new course starts fresh');
-    assert.equal(await page.evaluate(() => document.querySelector('input.text').value), 'Kara', 'the name from the other course is offered');
-    await clickText('button', 'Start'); await sleep(150);
     const other = await page.evaluate(() => window.__trainer.course);
+    t = await text();
+    // The name is never asked again. A course with gendered endings asks for those once, with the name filled in.
+    if (other.genderedExamples !== false && COURSE.genderedExamples === false) {
+      assert.match(t, /Before you start/, 'endings not chosen yet, so they are asked');
+      assert.equal(await page.evaluate(() => document.querySelector('input.text').value), 'Kara', 'the name from the profile is filled in');
+      await clickText('button', 'Start'); await sleep(150);
+    } else assert.doesNotMatch(t, /Before you start/, 'the name comes from the profile, not asked again');
+    assert.equal((await state()).name, 'Kara', 'the other course uses the profile name');
     t = await text(); assert.ok(t.includes(other.title)); assert.ok(t.includes('of ' + (other.goalMins || 45) + ' min'));
     assert.equal(Object.keys((await state()).done).length, 0, 'the other course has its own progress');
     await Promise.all([page.waitForNavigation({ waitUntil: 'networkidle0' }), clickText('.switch-b', mine)]); await sleep(200);
     assert.equal(Object.keys((await state()).done).length, doneHere, 'switching back keeps this course\'s progress');
     assert.ok((await text()).includes(COURSE.title));
-    ok('course switch: ' + mine + ' → ' + others[0] + ' starts fresh with the name offered, and back again keeps the progress');
+    ok('course switch: ' + mine + ' → ' + others[0] + ' starts fresh without asking the name again, and back again keeps the progress');
   }
 
   if (problems.length) { console.log(problems.join('\n')); process.exit(1); }

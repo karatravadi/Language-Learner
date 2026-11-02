@@ -372,3 +372,7 @@ select.text { font-family: var(--sans); font-size: 16px; }
 .wcard-en { font-size: 16px; margin-top: 4px; }
 .wcard-n { font-size: 14px; color: var(--ink-2); margin-top: 4px; }
 .wcard .row { margin-top: 12px; }
+
+/* The red pen on a single letter (a spelling slip): the word stays whole, only the slip is marked. */
+.pen.slip .pen-x { margin-right: 0; }
+.pen.slip .slip-w { margin-right: 8px; }

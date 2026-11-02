@@ -151,6 +151,8 @@ function check(dir = COURSES) {
       (ch.exercises || []).forEach((e, i) => {
         where.push('exercise ' + (i + 1) + ' (' + e.type + ')');
         if (!isStr(e.skill)) err('missing skill'); else usedSkills.push([where.slice(), e.skill]);
+        // strict: true turns off half marks for spelling slips, for exercises where the spelling is the point
+        if ('strict' in e && (typeof e.strict !== 'boolean' || !['gap', 'translate'].includes(e.type))) err('strict must be true or false, on gap or translate only');
         switch (e.type) {
           case 'mc':
             if (typeof e.q !== 'string') err('q must be a string (can be empty with a prompt)');
