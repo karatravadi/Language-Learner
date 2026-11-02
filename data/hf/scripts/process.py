@@ -41,7 +41,7 @@ def pick(cols, *cands):
 # ---------- Spanish and French ----------
 LATAM = {  # Latin American words with a different usual word in Spain
     "carro": "coche", "carros": "coches", "computadora": "ordenador", "computadoras": "ordenadores",
-    "celular": "móvil", "celulares": "móviles", "manejar": "conducir", "maneja": "conduce",
+    "celular": "móvil", "celulares": "móviles",
     "jugo": "zumo", "jugos": "zumos", "departamento": "piso (flat)", "plata": "dinero (money)",
     "platicar": "charlar", "lindo": "bonito", "linda": "bonita", "enojado": "enfadado",
     "enojada": "enfadada", "durazno": "melocotón", "frijoles": "judías", "frijol": "judía",
@@ -49,7 +49,7 @@ LATAM = {  # Latin American words with a different usual word in Spain
     "chévere": "guay", "ahorita": "ahora", "recámara": "dormitorio", "cobija": "manta",
     "banqueta": "acera", "alberca": "piscina", "papas": "patatas", "cuadra": "manzana (block)",
     "vos": "tú", "ustedes": "vosotros (fine in Spain as formal plural; check context)",
-    "pararse": "ponerse de pie", "lentes": "gafas", "anteojos": "gafas", "manejo": "conducción",
+    "pararse": "ponerse de pie", "lentes": "gafas", "anteojos": "gafas",
     "carpa": "tienda de campaña", "guagua": "autobús (Canaries/Caribbean)", "auto": "coche",
 }
 BAD = [
@@ -66,6 +66,8 @@ def reject_reason(t):
             return why
     if not END_OK.search(t):
         return "fragment (no final punctuation)"
+    if re.match(r"\d+\s*[.)]", t):
+        return "fragment (numbered step)"
     first = t.lstrip("¿¡«\"'(—–- ")[:1]
     if first and first.islower():
         return "fragment (starts lowercase)"
@@ -134,6 +136,7 @@ def cefr_lang(name, tag, latam):
         wc = Counter(w for k in flagged for w in k["latam_flags"])
         say(f"\nLatin American vocabulary flagged in {len(flagged)} of {len(keep)} saved rows "
             f"(field `latam_flags`): " + (", ".join(f"{w} {c}" for w, c in wc.most_common()) or "none") + ".")
+        say("Manejar is left off the list: in Spain it means to handle or manage, and only means to drive in Latin America.")
         say("Word-list check only: it cannot spot grammar such as ustedes for vosotros, or regional meanings.")
 
 # ---------- Latin ----------
@@ -188,7 +191,19 @@ say("# Hugging Face reading data\n")
 say("Made by `scripts/process.py`. Rerun it to regenerate this file and `out/`.")
 cefr_lang("UniversalCEFR/hablacultura_es", "Spanish", latam=True)
 cefr_lang("UniversalCEFR/kwiqiz_fr", "French", latam=False)
-latin("grosenthal/latin_english_parallel")
+try:
+    latin("grosenthal/latin_english_parallel")
+except Exception as e:
+    say("\n## Latin: `grosenthal/latin_english_parallel`\n")
+    say(f"Not downloaded: {type(e).__name__}. The network policy blocks the hosts that serve its files "
+        "(cas-server.xethub.hf.co, us.aws.cdn.hf.co). Allow them and rerun.")
+odd += [
+    "Spanish: every saved row has title `na`, so there is no link back to the source article.",
+    "Spanish: some saved rows are about Latin America as a topic (Mexico in 6 rows, Colombia 2, Argentina, Chile, Peru 1 each). "
+    "The vocabulary checked looks like Spain's, but the content is not all about Spain.",
+    "French: kwiziq rows are whole articles (median 195 to 280 words at A2 and B1), so only 2 fit 20 to 80 words. "
+    "Their text also starts with the article heading followed by a blank line.",
+]
 say("\n## Odd things\n")
 for o in odd or ["Nothing the script checks for (empty rows, duplicates, odd level labels, empty pairs)."]:
     say(f"- {o}")
