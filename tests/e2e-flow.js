@@ -47,6 +47,15 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   await page.reload({ waitUntil: 'networkidle0' });
   await sleep(200);
 
+  // ---------- first use ----------
+  let t0 = await text();
+  assert.match(t0, /Before you start/); assert.doesNotMatch(t0, /Kara/);
+  await clickText('button', 'Start'); assert.match(await text(), /Add the name/);
+  await page.type('input.text', 'Kara'); await clickText('button', 'Start'); await sleep(100);
+  const s0 = await page.evaluate(() => window.__trainer.state());
+  assert.equal(s0.name, 'Kara'); assert.ok(s0.prefsAt > 0);
+  ok('first use: asks for a name (none preset), refuses a blank one, then opens today');
+
   // ---------- home ----------
   let t = await text();
   assert.doesNotMatch(t, /¡Hola/); assert.match(t, /Today/); assert.match(t, /of 45 min/); assert.match(t, /Palabra del día/);
@@ -250,6 +259,8 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   assert.match(await text(), /not a progress file/);
   await clickText('button', 'Reset progress'); await sleep(80);
   assert.equal(Object.keys((await state()).done).length, 0, 'reset should clear chapters');
+  assert.match(await text(), /Before you start/, 'after a reset, the name is asked again');
+  await page.type('input.text', 'Kara'); await clickText('button', 'Start'); await sleep(100);
   await page.click('button[aria-label="Settings"]'); await sleep(80);
   await (await page.$('input[type=file]')).uploadFile(path.join(dl, exported)); await sleep(200);
   const restored = await state();

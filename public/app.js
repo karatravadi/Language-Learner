@@ -66,7 +66,7 @@
   // ---------- state ----------
   function defaults() {
     return {
-      name: 'Kara', fem: true, goalMins: 45, xp: 0, streak: { last: null, count: 0 }, dayXp: { date: '', xp: 0 },
+      name: '', fem: true, goalMins: 45, xp: 0, streak: { last: null, count: 0 }, dayXp: { date: '', xp: 0 },
       time: {}, reviewed: {}, done: {}, srs: {}, skills: {}, wotd: { byDate: {}, learned: [], done: {}, answers: {} }
     };
   }
@@ -74,11 +74,14 @@
   function withDefaults(o) {
     const d = defaults();
     if (!o || typeof o !== 'object' || Array.isArray(o)) return d;
-    return Object.assign(d, o, {
+    const s = Object.assign(d, o, {
       streak: Object.assign(d.streak, o.streak || {}),
       dayXp: Object.assign(d.dayXp, o.dayXp || {}),
       wotd: Object.assign(d.wotd, o.wotd || {})
     });
+    // Before Nov 2026 everyone started as "Kara". A name nobody ever saved in Settings is that old default: ask instead.
+    if (s.name === 'Kara' && !s.prefsAt) s.name = '';
+    return s;
   }
   // The only code that touches storage. Today it is this browser's localStorage; sync slots in here later.
   const store = {
@@ -112,7 +115,7 @@
     return null;
   }
 
-  const T = s => String(s == null ? '' : s).replace(/\{name\}/g, S.name).replace(/\{o\}/g, S.fem ? 'a' : 'o');
+  const T = s => String(s == null ? '' : s).replace(/\{name\}/g, S.name || 'Alex').replace(/\{o\}/g, S.fem ? 'a' : 'o');
 
   function addXp(n) {
     const t = L.dayKey();
@@ -375,6 +378,31 @@
           h('div', { class: 'foot' }, aiLine)))));
   }
 
+  // ---------- first use: name and endings ----------
+  function welcome() {
+    const name = h('input', { class: 'text', maxlength: '30', 'aria-label': 'Your name', autocomplete: 'given-name', style: { 'font-family': 'var(--sans)', 'font-size': '16px' } });
+    const fem = h('input', { type: 'radio', name: 'g', checked: S.fem, id: 'w-f' });
+    const masc = h('input', { type: 'radio', name: 'g', checked: !S.fem, id: 'w-m' });
+    const msg = h('p', { class: 'meta', role: 'status' });
+    const go = () => {
+      const n = name.value.trim();
+      if (!n) { msg.textContent = 'Add the name you would like the lessons to use.'; name.focus(); return; }
+      S.name = n; S.fem = fem.checked; S.prefsAt = Date.now(); save(); home();
+    };
+    name.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+    mount(h('div', { class: 'page' },
+      h('header', { class: 'top' },
+        h('div', { class: 'brand' }, h('div', { class: 'mark', 'aria-hidden': 'true' }, 'ñ'), h('div', { class: 'wordmark' }, 'Español Trainer'))),
+      h('h1', { class: 'page-title' }, 'Before you start'),
+      h('p', { class: 'muted' }, 'The examples use your name, and Spanish endings change with gender, so pick the ones that fit you. You can change both later in Settings.'),
+      h('label', { class: 'field', style: { 'margin-top': '24px' } }, h('span', {}, 'Your name'), name),
+      h('div', { class: 'field' }, h('span', {}, 'Endings in examples'),
+        h('div', { class: 'radios' }, h('label', {}, fem, 'cansada (-a)'), h('label', {}, masc, 'cansado (-o)'))),
+      msg,
+      h('div', { class: 'row' }, h('button', { class: 'btn primary big', type: 'button', onclick: go }, 'Start'))));
+    name.focus();
+  }
+
   // ---------- settings & AI help ----------
   function settings() {
     const name = h('input', { class: 'text', value: S.name, maxlength: '30', 'aria-label': 'Your name', style: { 'font-family': 'var(--sans)', 'font-size': '16px' } });
@@ -396,8 +424,8 @@
         h('div', { class: 'radios' }, h('label', {}, fem, 'cansada (-a)'), h('label', {}, masc, 'cansado (-o)'))),
       h('label', { class: 'field' }, h('span', {}, 'Daily goal'), goal),
       h('div', { class: 'row' },
-        h('button', { class: 'btn primary', onclick: () => { S.name = name.value.trim() || 'Kara'; S.fem = fem.checked; S.goalMins = Number(goal.value) || 45; S.prefsAt = Date.now(); save(); ov.remove(); home(); } }, 'Save'),
-        h('button', { class: 'btn quiet danger', onclick: () => { if (confirm(SYNC.on ? 'Erase all progress, review cards and streak, on every device?' : 'Erase all progress, review cards and streak on this device?')) { S = defaults(); save(); pushReplace(); ov.remove(); home(); } } }, 'Reset progress')),
+        h('button', { class: 'btn primary', onclick: () => { S.name = name.value.trim() || S.name; S.fem = fem.checked; S.goalMins = Number(goal.value) || 45; S.prefsAt = Date.now(); save(); ov.remove(); home(); } }, 'Save'),
+        h('button', { class: 'btn quiet danger', onclick: () => { if (confirm(SYNC.on ? 'Erase all progress, review cards and streak, on every device?' : 'Erase all progress, review cards and streak on this device?')) { S = defaults(); save(); pushReplace(); ov.remove(); welcome(); } } }, 'Reset progress')),
       h('div', { class: 'field', style: { 'margin-top': '16px' } }, h('span', {}, 'Backup'),
         h('div', { class: 'row', style: { 'margin-top': '0' } },
           h('button', { class: 'btn ghost', type: 'button', onclick: exportProgress }, 'Export progress'),
@@ -1167,7 +1195,7 @@
     window.__trainer = { state: () => S, home, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE };
     await aiStatus();
     if (SYNC.on) await syncStart();
-    home();
+    if (S.name) home(); else welcome();
   }
   boot();
 })();
