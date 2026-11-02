@@ -9,8 +9,12 @@
   const PRON = new Set(['yo', 'tú', 'él', 'ella', 'usted', 'nosotros', 'nosotras', 'vosotros', 'vosotras', 'ellos', 'ellas', 'ustedes']);
 
   // Keep ñ distinct from n when removing accents (año is not ano).
-  const stripAcc = s => String(s).replace(/ñ/g, '\u0001').normalize('NFD').replace(/[̀-ͯ]/g, '');
-  const clean = s => String(s).toLowerCase().replace(/[¿?¡!.,;:"“”‘’()…]/g, ' ').replace(/\s+/g, ' ').trim();
+  // French œ and æ count as oe and ae, so "soeur" is right apart from the ligature (an accent slip, like é for e).
+  const stripAcc = s => String(s).replace(/ñ/g, '\u0001').replace(/œ/g, 'oe').replace(/æ/g, 'ae').normalize('NFD').replace(/[̀-ͯ]/g, '');
+  // An apostrophe inside a word is kept, and a curly one (what an iPhone types) is the same as a straight one,
+  // so j’ai and j'ai match. Apostrophes at the edge of a word are quote marks and are dropped.
+  const clean = s => String(s).toLowerCase().replace(/[‘’]/g, "'").replace(/[¿?¡!.,;:"“”«»()…]/g, ' ')
+    .replace(/(^|\s)'+/g, ' ').replace(/'+(?=\s|$)/g, ' ').replace(/\s+/g, ' ').trim();
   function dropPron(s) {
     const w = s.split(' ');
     if (w.length > 1 && PRON.has(w[0])) w.shift();

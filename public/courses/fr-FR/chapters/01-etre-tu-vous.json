@@ -1,0 +1,130 @@
+{
+  "n": 1,
+  "title": "Who you are",
+  "sub": "Je suis, tu es, vous êtes",
+  "can": "Greet people, say who you are and where you are from, and choose between tu and vous.",
+  "mins": 15,
+  "doneText": "You can now greet someone, introduce yourself, say where you are from and pick tu or vous.",
+  "skills": {
+    "greetings": "Greetings",
+    "tu-vous": "Tu or vous",
+    "etre": "Être, to be",
+    "origin": "Where you are from",
+    "jobs": "Jobs and nationalities"
+  },
+  "discover": {
+    "intro": "All of these sentences ask a question. Spot why some use tu and others use vous. The English tells you who is being asked.",
+    "groups": [
+      { "label": "Blue", "tone": "blue", "lines": [["Tu es français ?", "Are you French? (asking a friend)"], ["Tu es étudiant ?", "Are you a student? (asking a classmate)"], ["Tu es d'où ?", "Where are you from? (asking a child)"]] },
+      { "label": "Orange", "tone": "orange", "lines": [["Vous êtes français ?", "Are you French? (asking a stranger)"], ["Vous êtes professeur ?", "Are you a teacher? (asking an adult you have just met)"], ["Vous êtes d'où ?", "Where are you from? (asking a friend's parents)"]] }
+    ],
+    "question": "Why tu in blue and vous in orange?",
+    "options": [
+      "Tu is for people you know well and children. Vous is for strangers and anyone you want to be polite to.",
+      "Tu is for men and vous is for women.",
+      "Tu is for questions and vous is for statements."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Read who is being asked in the English, in each colour.",
+    "reveal": "Tu is for friends, family, children and people your age in a relaxed setting. Vous is for strangers, shop staff, older people and anyone you want to be polite to. Vous is also what you say to more than one person. The verb changes with them too. Here is être, to be:",
+    "hooks": [
+      { "title": "Être, to be", "tone": "blue", "rows": [
+        ["je suis", "I am", "Je suis britannique.", "I'm British."],
+        ["tu es", "you are (a friend)", "Tu es en retard.", "You're late."],
+        ["il / elle est", "he / she is", "Elle est à Paris.", "She's in Paris."],
+        ["vous êtes", "you are (polite, or several people)", "Vous êtes ici.", "You're here."],
+        ["ils / elles sont", "they are", "Ils sont français.", "They're French."]
+      ] },
+      { "title": "Where you are from", "tone": "orange", "rows": [
+        ["d'où", "from where", "Tu es d'où ?", "Where are you from?"],
+        ["de", "from (a place)", "Je suis de Londres.", "I'm from London."],
+        ["d'", "from, before a vowel", "Je suis d'Écosse.", "I'm from Scotland."]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "Être and polite words",
+    "sub": "Tap any form to hear it",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "Être, to be", "speak": "form", "rows": [["je", "suis"], ["tu", "es"], ["il / elle / on", "est"], ["nous", "sommes"], ["vous", "êtes"], ["ils / elles", "sont"]] }
+      ] },
+      { "type": "note", "kind": "tip", "text": "On is the everyday word for we: on est à Paris means we are in Paris. It uses the same verb form as il and elle." },
+      { "type": "note", "kind": "tip", "text": "When a short word meets a vowel, it drops its last letter and takes an apostrophe: je m'appelle, d'où, c'est. Say it as one flowing word." },
+      { "type": "list", "title": "Greetings", "rows": [["bonjour", "hello, good day"], ["bonsoir", "good evening"], ["salut", "hi, bye (friends only)"], ["ça va ?", "how are you?"], ["enchanté", "nice to meet you"], ["au revoir", "goodbye"], ["à bientôt", "see you soon"], ["s'il vous plaît", "please"], ["merci", "thank you"]] },
+      { "type": "list", "title": "Jobs and nationalities", "rows": [["français / française", "French (man / woman)"], ["anglais / anglaise", "English (man / woman)"], ["britannique", "British (same for both)"], ["espagnol / espagnole", "Spanish (man / woman)"], ["étudiant / étudiante", "student (man / woman)"], ["professeur", "teacher (same for both)"], ["médecin", "doctor (same for both)"]] },
+      { "type": "twist", "title": "Tu or vous", "a": ["Tu es étudiante ?", "Are you a student? (to a friend)"], "b": ["Vous êtes étudiante ?", "Are you a student? (to a stranger, or to several people)"], "note": "If you are not sure, use vous. When it is fine to use tu, people will say on peut se tutoyer, we can use tu. Young people often use tu straight away." },
+      { "type": "note", "kind": "warn", "text": "After je suis, a job has no a or an: je suis professeur, not je suis un professeur. Nationalities have a small letter: elle est anglaise. For a woman, many words add an e: étudiant, étudiante." },
+      { "type": "note", "kind": "culture", "text": "In France, say bonjour when you walk into a shop, café or lift, and au revoir when you leave. Walking in without a greeting is rude. Friends greet with la bise, a kiss on each cheek, and how many varies by region. With new people, shake hands." }
+    ]
+  },
+  "phrases": [
+    { "id": "c1-name", "es": "Comment tu t'appelles ?", "en": "What's your name?", "alts": ["Comment vous appelez-vous ?"] },
+    { "id": "c1-nice", "es": "Enchanté.", "en": "Nice to meet you.", "alts": ["Enchantée."] },
+    { "id": "c1-brit", "es": "Je suis britannique.", "en": "I'm British.", "alts": [] },
+    { "id": "c1-where", "es": "Tu es d'où ?", "en": "Where are you from?", "alts": ["Vous êtes d'où ?"] },
+    { "id": "c1-howare", "es": "Ça va ?", "en": "How are you? How's it going?", "alts": [] },
+    { "id": "c1-fine", "es": "Ça va bien, merci.", "en": "I'm fine, thanks.", "alts": [] },
+    { "id": "c1-please", "es": "S'il vous plaît.", "en": "Please.", "alts": ["S'il te plaît."] },
+    { "id": "c1-bye", "es": "Au revoir.", "en": "Goodbye.", "alts": [] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "tu-vous", "prompt": "You ask an older woman you have just met if she is French. Which is right?", "q": "", "options": ["Tu es française ?", "Vous êtes française ?"], "answer": 1, "why": "A stranger or an older person gets vous: vous êtes française ?" },
+    { "type": "mc", "skill": "etre", "q": "Elle ___ anglaise.", "sub": "(She is English.)", "options": ["est", "es", "sont"], "answer": 0, "why": "Il, elle and on all go with est." },
+    { "type": "listen", "skill": "greetings", "say": "Bonsoir, ça va ?", "options": ["Good evening, how are you?", "Good morning, how are you?", "Goodbye, see you soon"], "answer": 0, "why": "Bonsoir means good evening. Bonjour is for the day." },
+    {
+      "type": "rapid", "skill": "etre", "prompt": "Rapid fire: est or sont?",
+      "choices": [{ "key": "est", "label": "est", "tone": "blue" }, { "key": "sont", "label": "sont", "tone": "orange" }],
+      "items": [
+        { "blank": "Elle ___ à Lyon.", "full": "Elle est à Lyon.", "fill": "est", "answer": "est", "skill": "etre", "why": "One person: est." },
+        { "blank": "Ils ___ à Lyon.", "full": "Ils sont à Lyon.", "fill": "sont", "answer": "sont", "skill": "etre", "why": "Several people: sont." },
+        { "blank": "Elles ___ anglaises.", "full": "Elles sont anglaises.", "fill": "sont", "answer": "sont", "skill": "etre", "why": "Elles is several women: sont." },
+        { "blank": "Il ___ étudiant.", "full": "Il est étudiant.", "fill": "est", "answer": "est", "skill": "etre", "why": "One person: est." },
+        { "blank": "On ___ en retard.", "full": "On est en retard.", "fill": "est", "answer": "est", "skill": "etre", "why": "On takes the same form as il: est." },
+        { "blank": "Ils ___ français.", "full": "Ils sont français.", "fill": "sont", "answer": "sont", "skill": "etre", "why": "Ils means they: sont." },
+        { "blank": "Elle ___ professeur.", "full": "Elle est professeur.", "fill": "est", "answer": "est", "skill": "etre", "why": "One person: est." },
+        { "blank": "Elles ___ à Paris.", "full": "Elles sont à Paris.", "fill": "sont", "answer": "sont", "skill": "etre", "why": "Elles is several women: sont." }
+      ]
+    },
+    { "type": "gap", "skill": "etre", "q": "Je ___ britannique.", "hint": "I am", "hintLabel": "Verb", "answer": ["suis"], "why": "Je goes with suis." },
+    { "type": "gap", "skill": "etre", "q": "Vous ___ d'où ?", "hint": "you are", "hintLabel": "Verb", "answer": ["êtes"], "why": "Vous goes with êtes." },
+    { "type": "match", "skill": "jobs", "prompt": "Match the jobs.", "pairs": [["étudiant", "student"], ["professeur", "teacher"], ["médecin", "doctor"], ["serveur", "waiter"], ["ingénieur", "engineer"]] },
+    { "type": "fix", "skill": "etre", "prompt": "Tap the word that is wrong.", "sentence": "Tu êtes anglais.", "wrong": 1, "fixed": "Tu es anglais.", "why": "Tu goes with es. Êtes goes with vous." },
+    { "type": "fix", "skill": "etre", "prompt": "Tap the word that is wrong.", "sentence": "Je es étudiante.", "wrong": 1, "fixed": "Je suis étudiante.", "why": "Je goes with suis." },
+    { "type": "translate", "skill": "etre", "q": "I am French.", "answer": ["je suis français", "je suis française"], "who": ["said by a man", "said by a woman"], "why": "Je suis français for a man, je suis française for a woman." },
+    { "type": "translate", "skill": "tu-vous", "q": "To a stranger: are you English?", "answer": ["vous êtes anglais", "vous êtes anglaise"], "who": ["to a man", "to a woman"], "why": "A stranger gets vous: vous êtes anglais, or anglaise for a woman." },
+    { "type": "translate", "skill": "origin", "q": "To a friend: where are you from?", "answer": ["tu es d'où", "d'où es-tu"], "who": ["", "a little more formal"], "why": "Tu es d'où ? is the everyday way to ask." },
+    { "type": "order", "skill": "greetings", "prompt": "Nice to meet you, I'm British.", "words": ["Enchanté", "je", "suis", "britannique"], "answer": "Enchanté, je suis britannique.", "why": "Greet first, then je suis plus the nationality, with no a or an." },
+    { "type": "mc", "skill": "greetings", "prompt": "You walk into a small bakery in France. What do you do first?", "q": "", "options": ["Say bonjour", "Order straight away", "Say nothing and point"], "answer": 0, "why": "Say bonjour first. Skipping it is rude in France." },
+    { "type": "mc", "skill": "origin", "q": "Je suis ___ Londres.", "sub": "(I'm from London.)", "options": ["de", "à", "en"], "answer": 0, "why": "Where you are from uses de: je suis de Londres. Before a vowel it becomes d': je suis d'Écosse." },
+    { "type": "gap", "skill": "greetings", "q": "Bonjour, je m'___ Léa.", "hint": "am called", "hintLabel": "Verb", "answer": ["appelle"], "why": "Je m'appelle means my name is. Literally, I call myself." },
+    { "type": "translate", "skill": "greetings", "q": "Goodbye.", "answer": ["au revoir"], "why": "Au revoir, literally until we see again." }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Introduce yourself to someone new in France: say your name, that you are British, and ask where they are from.",
+    "starter": "Bonjour, je m'appelle…  Je suis…  Vous êtes d'où ?",
+    "model": "Bonjour, je m'appelle {name}. Je suis britannique. Et vous, vous êtes d'où ?",
+    "checklist": ["Je m'appelle for your name", "Je suis plus your nationality, with no a or an", "Vous for a stranger, tu for a friend"]
+  },
+  "boss": {
+    "title": "Meeting Madame Roux in Lyon",
+    "who": "Madame Roux",
+    "skill": "tu-vous",
+    "persona": "You are Madame Roux, a friendly landlady in Lyon. The learner has just arrived as your new tenant. Greet them, ask their name, where they are from and whether they are a student. Address the learner as vous. Keep every message to one short sentence.",
+    "turns": [
+      { "npc": "Bonjour. Vous êtes {name}, c'est ça ?", "en": "Hello. You're {name}, right?", "skill": "greetings",
+        "choices": [["Oui, bonjour madame. Enchanté.", true, ""], ["Oui, salut ! Ça va ?", false, "Salut is for friends. With a landlady you have just met, say bonjour and madame."], ["Oui, bonjour. Tu es madame Roux ?", false, "Use vous with someone you do not know: vous êtes madame Roux ?"]] },
+      { "npc": "Vous êtes d'où ?", "en": "Where are you from?", "skill": "origin",
+        "choices": [["Je suis britannique.", true, ""], ["Je es britannique.", false, "Je goes with suis: je suis britannique."], ["Je suis un britannique.", false, "No a or an before a nationality: je suis britannique."]] },
+      { "npc": "Très bien. Vous êtes étudiant ?", "en": "Very good. Are you a student?", "skill": "jobs",
+        "choices": [["Non, je suis professeur.", true, ""], ["Non, je suis un professeur.", false, "No a or an after je suis with a job: je suis professeur."], ["Non, tu es professeur.", false, "Tu es means you are. For I am, say je suis."]] },
+      { "npc": "Parfait. Voici la clé, {name}. À demain.", "en": "Perfect. Here is the key, {name}. See you tomorrow.", "skill": "greetings",
+        "choices": [["Merci, madame. À demain.", true, ""], ["Merci, madame. Bonjour.", false, "Bonjour is for hello. When you leave, say au revoir or à demain."], ["Merci. Salut, madame.", false, "Salut is for friends. Say au revoir or à demain to a landlady."]] }
+    ],
+    "closing": "Bonne journée.",
+    "closingEn": "Have a good day.",
+    "chatOpening": "Vous aimez Lyon ?",
+    "chatOpeningEn": "Do you like Lyon?"
+  }
+}
