@@ -1,0 +1,860 @@
+{
+  "version": 1,
+  "about": "Meanings shown when a learner taps a French word. Key: the word in lower case, as written (accents kept). Value: [meaning, note]. The note is optional: the dictionary form and person for verbs, gender for nouns, or how France uses it. Short words before a vowel (j', l', d', n', c') are keyed without the apostrophe. Written by an AI: worth a native speaker's check.",
+  "words": {
+    "a": [
+      "has",
+      "avoir · il, elle, on"
+    ],
+    "accord": [
+      "agreement",
+      "d'accord: OK, agreed"
+    ],
+    "addition": [
+      "the bill",
+      "feminine · l'addition"
+    ],
+    "ai": [
+      "have",
+      "avoir · je · j'ai: I have"
+    ],
+    "aime": [
+      "like, love",
+      "aimer · je, il, elle, on"
+    ],
+    "aimer": [
+      "to like, to love"
+    ],
+    "aimes": [
+      "like, love",
+      "aimer · tu"
+    ],
+    "aimez": [
+      "like, love",
+      "aimer · vous"
+    ],
+    "alors": [
+      "so, then, well"
+    ],
+    "anglais": [
+      "English",
+      "masculine · also the English language"
+    ],
+    "anglaise": [
+      "English",
+      "feminine"
+    ],
+    "anglaises": [
+      "English",
+      "feminine plural"
+    ],
+    "appelle": [
+      "am called, is called",
+      "appeler · je m'appelle: my name is, literally I call myself"
+    ],
+    "appelles": [
+      "are called",
+      "appeler · tu t'appelles: your name is"
+    ],
+    "appétit": [
+      "appetite",
+      "bon appétit: enjoy your meal"
+    ],
+    "après": [
+      "after",
+      "l'après-midi: the afternoon"
+    ],
+    "arrive": [
+      "arrives",
+      "arriver · il, elle, on"
+    ],
+    "as": [
+      "have",
+      "avoir · tu"
+    ],
+    "au": [
+      "to the, at the",
+      "au revoir: goodbye"
+    ],
+    "aussi": [
+      "also, too"
+    ],
+    "autre": [
+      "other, another",
+      "autre chose: anything else"
+    ],
+    "avez": [
+      "have",
+      "avoir · vous"
+    ],
+    "avons": [
+      "have",
+      "avoir · nous"
+    ],
+    "baguette": [
+      "baguette, a long loaf",
+      "feminine"
+    ],
+    "bien": [
+      "well, good"
+    ],
+    "bientôt": [
+      "soon",
+      "à bientôt: see you soon"
+    ],
+    "billet": [
+      "ticket",
+      "masculine"
+    ],
+    "bière": [
+      "beer",
+      "feminine"
+    ],
+    "bof": [
+      "meh, not great",
+      "informal, often said with a shrug"
+    ],
+    "bon": [
+      "good",
+      "masculine · bon appétit · bon voyage"
+    ],
+    "bonjour": [
+      "hello, good day"
+    ],
+    "bonne": [
+      "good",
+      "feminine · bonne journée: have a nice day"
+    ],
+    "bonsoir": [
+      "good evening",
+      "used from the late afternoon, to say hello and goodbye"
+    ],
+    "bouteille": [
+      "bottle",
+      "feminine"
+    ],
+    "britannique": [
+      "British",
+      "same for men and women"
+    ],
+    "c": [
+      "it, that (before a vowel)",
+      "c'est: it is"
+    ],
+    "café": [
+      "coffee, a small espresso, a café",
+      "masculine"
+    ],
+    "carafe": [
+      "jug",
+      "une carafe d'eau: a free jug of tap water"
+    ],
+    "carte": [
+      "menu, card",
+      "feminine · la carte: the menu"
+    ],
+    "cent": [
+      "one hundred"
+    ],
+    "chose": [
+      "thing",
+      "autre chose: anything else"
+    ],
+    "chouette": [
+      "nice, great",
+      "informal"
+    ],
+    "cinq": [
+      "five"
+    ],
+    "cinquante": [
+      "fifty"
+    ],
+    "clé": [
+      "key",
+      "feminine · la clé"
+    ],
+    "combien": [
+      "how much, how many",
+      "c'est combien ? how much is it"
+    ],
+    "comment": [
+      "how, what",
+      "comment tu t'appelles ? what is your name"
+    ],
+    "comprends": [
+      "understand",
+      "comprendre · je, tu"
+    ],
+    "cool": [
+      "cool, fine",
+      "informal, borrowed from English"
+    ],
+    "coûte": [
+      "costs",
+      "coûter · il, elle, ça"
+    ],
+    "croissant": [
+      "croissant",
+      "masculine"
+    ],
+    "croissants": [
+      "croissants",
+      "masculine plural"
+    ],
+    "crème": [
+      "cream",
+      "un café crème: a coffee with milk"
+    ],
+    "cuisine": [
+      "cooking, food, kitchen",
+      "feminine · la cuisine française"
+    ],
+    "d": [
+      "of, from (before a vowel)",
+      "d'où: from where · d'accord: OK"
+    ],
+    "de": [
+      "of, from",
+      "un verre de vin: a glass of wine"
+    ],
+    "demain": [
+      "tomorrow",
+      "à demain: see you tomorrow"
+    ],
+    "demi": [
+      "half",
+      "masculine · midi et demi: half past twelve"
+    ],
+    "demie": [
+      "half",
+      "feminine · une heure et demie: half past one"
+    ],
+    "des": [
+      "some",
+      "plural of un and une"
+    ],
+    "deux": [
+      "two"
+    ],
+    "dimanche": [
+      "Sunday"
+    ],
+    "dix": [
+      "ten"
+    ],
+    "douze": [
+      "twelve"
+    ],
+    "du": [
+      "some, of the",
+      "masculine · du pain: some bread · du matin: in the morning"
+    ],
+    "délicieux": [
+      "delicious",
+      "masculine"
+    ],
+    "désirez": [
+      "want, would like",
+      "désirer · vous · vous désirez ? what would you like"
+    ],
+    "eau": [
+      "water",
+      "feminine · de l'eau: some water"
+    ],
+    "elle": [
+      "she"
+    ],
+    "elles": [
+      "they",
+      "women only"
+    ],
+    "en": [
+      "in, by",
+      "en retard: late"
+    ],
+    "enchanté": [
+      "nice to meet you",
+      "a woman can write enchantée"
+    ],
+    "end": [
+      "end",
+      "le week-end: the weekend, from English"
+    ],
+    "es": [
+      "are",
+      "être · tu"
+    ],
+    "espagnol": [
+      "Spanish",
+      "masculine"
+    ],
+    "espagnole": [
+      "Spanish",
+      "feminine"
+    ],
+    "est": [
+      "is",
+      "être · il, elle, on"
+    ],
+    "et": [
+      "and"
+    ],
+    "euros": [
+      "euros"
+    ],
+    "faim": [
+      "hunger",
+      "avoir faim: to be hungry · j'ai faim: I'm hungry"
+    ],
+    "fait": [
+      "makes, does, comes to",
+      "ça fait combien ? how much is that altogether"
+    ],
+    "film": [
+      "film",
+      "masculine"
+    ],
+    "français": [
+      "French",
+      "masculine"
+    ],
+    "française": [
+      "French",
+      "feminine"
+    ],
+    "frites": [
+      "chips, fries",
+      "feminine plural"
+    ],
+    "frère": [
+      "brother",
+      "masculine"
+    ],
+    "habite": [
+      "live",
+      "habiter · je, il, elle, on"
+    ],
+    "habiter": [
+      "to live (in a place)"
+    ],
+    "habites": [
+      "live",
+      "habiter · tu"
+    ],
+    "habitez": [
+      "live",
+      "habiter · vous"
+    ],
+    "habitons": [
+      "live",
+      "habiter · nous"
+    ],
+    "heure": [
+      "hour, o'clock",
+      "feminine · une heure: one o'clock"
+    ],
+    "heures": [
+      "hours, o'clock",
+      "plural · deux heures: two o'clock"
+    ],
+    "huit": [
+      "eight"
+    ],
+    "ici": [
+      "here"
+    ],
+    "il": [
+      "he, it"
+    ],
+    "ils": [
+      "they",
+      "men, or men and women"
+    ],
+    "ingénieur": [
+      "engineer",
+      "same for men and women"
+    ],
+    "j": [
+      "I (before a vowel)",
+      "j'ai: I have · j'habite: I live"
+    ],
+    "je": [
+      "I"
+    ],
+    "jeudi": [
+      "Thursday"
+    ],
+    "jour": [
+      "day",
+      "masculine · quel jour: which day"
+    ],
+    "journée": [
+      "day (the whole day)",
+      "bonne journée: have a nice day"
+    ],
+    "jus": [
+      "juice",
+      "un jus d'orange: an orange juice"
+    ],
+    "l": [
+      "the (before a vowel)",
+      "l'addition: the bill · l'eau: the water"
+    ],
+    "la": [
+      "the",
+      "feminine"
+    ],
+    "le": [
+      "the",
+      "masculine"
+    ],
+    "les": [
+      "the",
+      "plural"
+    ],
+    "londres": [
+      "London"
+    ],
+    "lundi": [
+      "Monday"
+    ],
+    "lyon": [
+      "Lyon",
+      "a city in France"
+    ],
+    "léa": [
+      "Léa",
+      "a girl's name"
+    ],
+    "m": [
+      "me (before a vowel)",
+      "je m'appelle: my name is"
+    ],
+    "madame": [
+      "madam, Mrs",
+      "a polite way to address a woman"
+    ],
+    "mange": [
+      "eat",
+      "manger · je, il, elle, on"
+    ],
+    "mangent": [
+      "eat",
+      "manger · ils, elles"
+    ],
+    "manger": [
+      "to eat"
+    ],
+    "mangez": [
+      "eat",
+      "manger · vous"
+    ],
+    "mardi": [
+      "Tuesday"
+    ],
+    "matin": [
+      "morning",
+      "du matin: in the morning"
+    ],
+    "menu": [
+      "set menu",
+      "in France, le menu is the fixed-price meal and la carte is the full menu"
+    ],
+    "merci": [
+      "thank you"
+    ],
+    "mercredi": [
+      "Wednesday"
+    ],
+    "midi": [
+      "noon, midday"
+    ],
+    "minuit": [
+      "midnight"
+    ],
+    "moi": [
+      "me",
+      "moi aussi: me too"
+    ],
+    "moins": [
+      "less, minus, to (the hour)",
+      "six heures moins vingt: twenty to six"
+    ],
+    "mon": [
+      "my",
+      "masculine · mon portable"
+    ],
+    "monnaie": [
+      "change, small coins",
+      "feminine"
+    ],
+    "médecin": [
+      "doctor",
+      "same for men and women"
+    ],
+    "n": [
+      "not (before a vowel)",
+      "ne drops to n': je n'ai pas"
+    ],
+    "ne": [
+      "not",
+      "goes before the verb, with pas after it"
+    ],
+    "neuf": [
+      "nine"
+    ],
+    "non": [
+      "no"
+    ],
+    "nous": [
+      "we",
+      "on is the everyday word for we"
+    ],
+    "on": [
+      "we, one",
+      "everyday word for we · takes the il form"
+    ],
+    "ont": [
+      "have",
+      "avoir · ils, elles"
+    ],
+    "onze": [
+      "eleven"
+    ],
+    "orange": [
+      "orange"
+    ],
+    "oui": [
+      "yes"
+    ],
+    "où": [
+      "where, from where",
+      "d'où: from where"
+    ],
+    "pain": [
+      "bread",
+      "masculine · du pain: some bread"
+    ],
+    "pardon": [
+      "sorry, excuse me"
+    ],
+    "parfait": [
+      "perfect"
+    ],
+    "paris": [
+      "Paris"
+    ],
+    "parle": [
+      "speak",
+      "parler · je, il, elle, on"
+    ],
+    "parlent": [
+      "speak",
+      "parler · ils, elles"
+    ],
+    "parler": [
+      "to speak"
+    ],
+    "parles": [
+      "speak",
+      "parler · tu"
+    ],
+    "parlez": [
+      "speak",
+      "parler · vous"
+    ],
+    "parlons": [
+      "speak",
+      "parler · nous"
+    ],
+    "pas": [
+      "not",
+      "comes after the verb: ne … pas"
+    ],
+    "peu": [
+      "little",
+      "un peu: a little"
+    ],
+    "plaît": [
+      "pleases",
+      "s'il vous plaît: please, literally if it pleases you"
+    ],
+    "portable": [
+      "mobile phone",
+      "masculine · un portable"
+    ],
+    "pour": [
+      "for"
+    ],
+    "prenez": [
+      "take, have",
+      "prendre · vous · vous prenez un croissant ? are you having a croissant"
+    ],
+    "professeur": [
+      "teacher",
+      "same for men and women"
+    ],
+    "quarante": [
+      "forty"
+    ],
+    "quart": [
+      "quarter",
+      "et quart: quarter past"
+    ],
+    "quatorze": [
+      "fourteen"
+    ],
+    "quatre": [
+      "four"
+    ],
+    "quel": [
+      "which",
+      "masculine · quel jour: which day"
+    ],
+    "quelle": [
+      "which, what",
+      "feminine · quelle heure: what time"
+    ],
+    "quinze": [
+      "fifteen"
+    ],
+    "regarde": [
+      "watch, look at",
+      "regarder · je, il, elle, on"
+    ],
+    "regarder": [
+      "to watch, to look at"
+    ],
+    "rendez": [
+      "make, give (in rendez-vous)",
+      "rendez-vous: a meeting, an appointment"
+    ],
+    "retard": [
+      "delay",
+      "en retard: late"
+    ],
+    "retour": [
+      "return",
+      "billet retour: return ticket"
+    ],
+    "revoir": [
+      "to see again",
+      "au revoir: goodbye"
+    ],
+    "rien": [
+      "nothing",
+      "de rien: you're welcome"
+    ],
+    "roux": [
+      "Roux",
+      "a French surname"
+    ],
+    "s": [
+      "if, himself, herself (before a vowel)",
+      "s'il vous plaît: please"
+    ],
+    "salade": [
+      "salad",
+      "feminine"
+    ],
+    "salut": [
+      "hi, bye",
+      "only with friends"
+    ],
+    "samedi": [
+      "Saturday"
+    ],
+    "sandwich": [
+      "sandwich",
+      "masculine"
+    ],
+    "seize": [
+      "sixteen"
+    ],
+    "sept": [
+      "seven"
+    ],
+    "serveur": [
+      "waiter",
+      "masculine · une serveuse is a waitress"
+    ],
+    "six": [
+      "six"
+    ],
+    "soir": [
+      "evening",
+      "du soir: in the evening"
+    ],
+    "soixante": [
+      "sixty"
+    ],
+    "sommes": [
+      "are",
+      "être · nous"
+    ],
+    "sont": [
+      "are",
+      "être · ils, elles"
+    ],
+    "suis": [
+      "am",
+      "être · je"
+    ],
+    "sûr": [
+      "sure",
+      "bien sûr: of course"
+    ],
+    "t": [
+      "you (before a vowel)",
+      "tu t'appelles: your name is"
+    ],
+    "te": [
+      "you",
+      "s'il te plaît: please, to a friend"
+    ],
+    "thé": [
+      "tea",
+      "masculine"
+    ],
+    "toilettes": [
+      "toilet",
+      "feminine plural · les toilettes"
+    ],
+    "train": [
+      "train",
+      "masculine"
+    ],
+    "travaille": [
+      "work",
+      "travailler · je, il, elle, on"
+    ],
+    "travaillent": [
+      "work",
+      "travailler · ils, elles"
+    ],
+    "travailler": [
+      "to work"
+    ],
+    "treize": [
+      "thirteen"
+    ],
+    "trente": [
+      "thirty"
+    ],
+    "trois": [
+      "three"
+    ],
+    "très": [
+      "very"
+    ],
+    "tu": [
+      "you",
+      "for friends, family and children"
+    ],
+    "un": [
+      "a, an, one",
+      "masculine"
+    ],
+    "une": [
+      "a, an, one",
+      "feminine"
+    ],
+    "va": [
+      "goes",
+      "aller · il, elle, ça · ça va: how are you, I'm fine"
+    ],
+    "vendredi": [
+      "Friday"
+    ],
+    "verre": [
+      "glass",
+      "masculine"
+    ],
+    "viens": [
+      "come",
+      "venir · je, tu · tu viens ? are you coming"
+    ],
+    "vin": [
+      "wine",
+      "masculine"
+    ],
+    "vingt": [
+      "twenty"
+    ],
+    "vingts": [
+      "twenties",
+      "quatre-vingts: eighty, literally four twenties"
+    ],
+    "voici": [
+      "here is",
+      "points at something close"
+    ],
+    "voilà": [
+      "there you are, here it is",
+      "said when you hand something over"
+    ],
+    "votre": [
+      "your",
+      "polite · votre café"
+    ],
+    "voudrais": [
+      "would like",
+      "vouloir · je · je voudrais: I would like"
+    ],
+    "voulez": [
+      "want",
+      "vouloir · vous"
+    ],
+    "vous": [
+      "you",
+      "polite, or more than one person"
+    ],
+    "voyage": [
+      "trip, journey",
+      "bon voyage: have a good trip"
+    ],
+    "végétarienne": [
+      "vegetarian",
+      "feminine · végétarien for a man"
+    ],
+    "week": [
+      "week",
+      "le week-end: the weekend"
+    ],
+    "y": [
+      "there",
+      "il y a: there is"
+    ],
+    "zéro": [
+      "zero"
+    ],
+    "à": [
+      "to, at, in",
+      "à huit heures: at eight · à Paris: in Paris"
+    ],
+    "ça": [
+      "it, that",
+      "ça va: how are you, I am fine"
+    ],
+    "écosse": [
+      "Scotland",
+      "feminine · d'Écosse: from Scotland"
+    ],
+    "étudiant": [
+      "student",
+      "masculine"
+    ],
+    "étudiante": [
+      "student",
+      "feminine"
+    ],
+    "étudier": [
+      "to study"
+    ],
+    "êtes": [
+      "are",
+      "être · vous"
+    ]
+  }
+}

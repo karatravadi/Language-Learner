@@ -1,0 +1,50 @@
+{
+  "id": "fr-FR",
+  "title": "French (European)",
+  "level": "A1 to A2",
+  "lang": "fr-FR",
+  "languageName": "French",
+  "voice": ["^fr[-_]FR", "^fr"],
+  "storageKey": "francais-trainer-v1",
+  "brand": { "name": "Stilus", "mark": "ç" },
+  "goalMins": 25,
+  "plan": { "word": 2, "review": 7, "practise": 8 },
+  "genderedExamples": false,
+  "speaker": "a person from France",
+  "glossNote": "vivre · tu",
+  "tutor": "French as spoken in France (use vous with strangers and tu with friends, and France vocabulary like \"bonjour\", \"un portable\" and \"un café\"). Never count a missing accent as a big mistake, but mention it.",
+  "roleplayRules": "Stay in character and speak only French from France. Use only grammar and words from the chapter and earlier ones. Keep every reply to one or two short sentences.",
+  "ui": {
+    "praise": ["Bravo", "Très bien", "Voilà", "Parfait", "Exactement", "C'est ça"],
+    "wordOfDay": "Mot du jour · Word of the day",
+    "chapterDone": "Chapitre {n} terminé",
+    "wordUsed": "Parfait. You used it well",
+    "translateTo": "Say it in French",
+    "placeholderTo": "In French",
+    "chatPlaceholder": "Écris en français",
+    "chatEnd": "À bientôt. That was a long conversation, well done.",
+    "welcome": "The examples use your name. You can change it later in Settings.",
+    "invertedQuestion": false
+  },
+  "skills": {
+    "phrases": "Everyday phrases"
+  },
+  "chapters": [
+    "chapters/01-etre-tu-vous.json",
+    "chapters/02-avoir-er-verbs.json",
+    "chapters/03-numbers-time.json",
+    "chapters/04-food-ordering.json"
+  ],
+  "words": "words.json",
+  "glossary": "glossary.json",
+  "roadmap": [
+    { "n": 5, "title": "Getting around", "can": "Ask the way and take the métro: aller, prendre, à la, au, à l'" },
+    { "n": 6, "title": "Hotels and shopping", "can": "Ask for what you need and read prices: vouloir, pouvoir, ce, cette" },
+    { "n": 7, "title": "Likes and plans", "can": "Say what you like and what you are going to do: aimer, aller plus infinitive" },
+    { "n": 8, "title": "Daily routine", "can": "Describe your day with verbs like se lever and se coucher" },
+    { "n": 9, "title": "Irregular favourites", "can": "Master faire, venir, devoir, savoir and voir" },
+    { "n": 10, "title": "What happened", "can": "Tell a short story with the passé composé: j'ai mangé, je suis allé" },
+    { "n": 11, "title": "Describing people and places", "can": "Describe, compare and give opinions, with adjectives that agree" },
+    { "n": 12, "title": "A2 checkpoint", "can": "Hold a full conversation with a stranger, then check your level" }
+  ]
+}

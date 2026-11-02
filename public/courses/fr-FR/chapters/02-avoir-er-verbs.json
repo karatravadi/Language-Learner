@@ -1,0 +1,130 @@
+{
+  "n": 2,
+  "title": "Everyday verbs and saying no",
+  "sub": "J'ai, je parle, je ne parle pas",
+  "can": "Say what you have, talk about where you live and what you do, and say no with ne … pas.",
+  "mins": 15,
+  "doneText": "You can now use avoir and the most common -er verbs, and say what you do not have or do not do.",
+  "skills": {
+    "negation": "Saying no: ne … pas",
+    "er-verbs": "Verbs ending in -er",
+    "avoir": "Avoir, to have",
+    "elision": "j' and n' before a vowel"
+  },
+  "discover": {
+    "intro": "Blue sentences say yes. Orange sentences say no. Look at what happens to the verb.",
+    "groups": [
+      { "label": "Blue", "tone": "blue", "lines": [["Je parle anglais.", "I speak English."], ["Tu habites à Paris.", "You live in Paris."], ["Il a un portable.", "He has a mobile."]] },
+      { "label": "Orange", "tone": "orange", "lines": [["Je ne parle pas anglais.", "I don't speak English."], ["Tu n'habites pas à Paris.", "You don't live in Paris."], ["Il n'a pas de portable.", "He hasn't got a mobile."]] }
+    ],
+    "question": "What do you notice in the orange sentences?",
+    "options": [
+      "Ne and pas wrap around the verb. Ne becomes n' before a vowel.",
+      "The verb moves to the end of the sentence.",
+      "The orange sentences use a different verb."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Find the verb in each orange sentence, then look at the words on either side of it.",
+    "reveal": "To say no, put the verb inside ne … pas. Before a vowel, ne drops to n'. The verbs change their endings too. Most verbs ending in -er follow one pattern:",
+    "hooks": [
+      { "title": "Saying no", "tone": "orange", "rows": [
+        ["ne … pas", "not", "Je ne parle pas anglais.", "I don't speak English."],
+        ["n' … pas", "not, before a vowel", "Je n'habite pas à Lyon.", "I don't live in Lyon."],
+        ["pas de", "no, not any", "Je n'ai pas de monnaie.", "I have no change."]
+      ] },
+      { "title": "Endings of -er verbs", "tone": "blue", "rows": [
+        ["-e", "je", "Je parle français.", "I speak French."],
+        ["-es", "tu", "Tu habites ici.", "You live here."],
+        ["-e", "il / elle / on", "Elle travaille à Paris.", "She works in Paris."],
+        ["-ons", "nous", "Nous habitons à Lyon.", "We live in Lyon."],
+        ["-ez", "vous", "Vous parlez anglais.", "You speak English."],
+        ["-ent", "ils / elles", "Ils travaillent ici.", "They work here."]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "-er verbs and avoir",
+    "sub": "Tap any form to hear it",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "Parler, to speak", "speak": "form", "rows": [["je", "parle"], ["tu", "parles"], ["il / elle / on", "parle"], ["nous", "parlons"], ["vous", "parlez"], ["ils / elles", "parlent"]] },
+        { "title": "Avoir, to have", "speak": "form", "rows": [["je", "j'ai"], ["tu", "as"], ["il / elle / on", "a"], ["nous", "avons"], ["vous", "avez"], ["ils / elles", "ont"]] }
+      ] },
+      { "type": "note", "kind": "tip", "text": "Parle, parles and parlent sound exactly the same. The endings -e, -es and -ent are silent. Only nous parlons and vous parlez sound different. So listen for the pronoun." },
+      { "type": "list", "title": "Useful -er verbs", "rows": [["parler", "to speak"], ["habiter", "to live (in a place)"], ["travailler", "to work"], ["aimer", "to like, to love"], ["manger", "to eat"], ["regarder", "to watch, to look at"], ["étudier", "to study"]] },
+      { "type": "twist", "title": "Un or de", "a": ["J'ai un frère.", "I have a brother."], "b": ["Je n'ai pas de frère.", "I don't have a brother."], "note": "After ne … pas, un, une and des become de (or d' before a vowel): je n'ai pas d'ordinateur. The one exception is être, which keeps the article: ce n'est pas un problème." },
+      { "type": "note", "kind": "warn", "text": "Je becomes j' before a vowel or a silent h: j'ai, j'habite, j'aime. Never je ai. The same happens with ne: je n'ai pas, je n'habite pas." },
+      { "type": "note", "kind": "warn", "text": "Hunger and cold use avoir, not être: j'ai faim means I'm hungry, and j'ai froid means I'm cold. Literally, I have hunger and I have cold." },
+      { "type": "note", "kind": "culture", "text": "Je ne comprends pas is the most useful sentence you will learn. In everyday speech, many French people drop the ne and say je comprends pas. You will hear it, but write it with ne." }
+    ]
+  },
+  "phrases": [
+    { "id": "c2-little", "es": "Je parle un peu français.", "en": "I speak a little French.", "alts": [] },
+    { "id": "c2-understand", "es": "Je ne comprends pas.", "en": "I don't understand.", "alts": [] },
+    { "id": "c2-english", "es": "Vous parlez anglais ?", "en": "Do you speak English?", "alts": ["Tu parles anglais ?"] },
+    { "id": "c2-pardon", "es": "Pardon ?", "en": "Sorry? Pardon?", "alts": [] },
+    { "id": "c2-live", "es": "J'habite à Paris.", "en": "I live in Paris.", "alts": [] },
+    { "id": "c2-hungry", "es": "J'ai faim.", "en": "I'm hungry.", "alts": [] },
+    { "id": "c2-mobile", "es": "Tu as un portable ?", "en": "Have you got a mobile?", "alts": ["Vous avez un portable ?"] },
+    { "id": "c2-change", "es": "Je n'ai pas de monnaie.", "en": "I haven't got any change.", "alts": [] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "er-verbs", "q": "Nous ___ français.", "sub": "(We speak French.)", "options": ["parlons", "parlez", "parle"], "answer": 0, "why": "Nous takes -ons: nous parlons." },
+    { "type": "mc", "skill": "negation", "prompt": "Which sentence means I don't speak English?", "q": "", "options": ["Je ne parle pas anglais.", "Je parle ne pas anglais.", "Je pas parle anglais."], "answer": 0, "why": "Ne goes before the verb and pas goes after it." },
+    { "type": "listen", "skill": "avoir", "say": "J'ai faim.", "options": ["I'm hungry", "I'm tired", "I'm late"], "answer": 0, "why": "J'ai faim: I have hunger, so I'm hungry." },
+    {
+      "type": "rapid", "skill": "er-verbs", "prompt": "Rapid fire: -e or -ez?",
+      "choices": [{ "key": "e", "label": "-e", "tone": "blue" }, { "key": "ez", "label": "-ez", "tone": "orange" }],
+      "items": [
+        { "blank": "Je parl___ français.", "full": "Je parle français.", "fill": "e", "answer": "e", "skill": "er-verbs", "why": "Je takes -e." },
+        { "blank": "Vous parl___ anglais.", "full": "Vous parlez anglais.", "fill": "ez", "answer": "ez", "skill": "er-verbs", "why": "Vous takes -ez." },
+        { "blank": "Elle travaill___ à Lyon.", "full": "Elle travaille à Lyon.", "fill": "e", "answer": "e", "skill": "er-verbs", "why": "Elle takes -e." },
+        { "blank": "Vous habit___ ici ?", "full": "Vous habitez ici ?", "fill": "ez", "answer": "ez", "skill": "er-verbs", "why": "Vous takes -ez." },
+        { "blank": "Je regard___ un film.", "full": "Je regarde un film.", "fill": "e", "answer": "e", "skill": "er-verbs", "why": "Je takes -e." },
+        { "blank": "Vous mang___ ici ?", "full": "Vous mangez ici ?", "fill": "ez", "answer": "ez", "skill": "er-verbs", "why": "Vous takes -ez." },
+        { "blank": "On mang___ à huit heures.", "full": "On mange à huit heures.", "fill": "e", "answer": "e", "skill": "er-verbs", "why": "On takes the same ending as il: -e." },
+        { "blank": "Vous aim___ le café ?", "full": "Vous aimez le café ?", "fill": "ez", "answer": "ez", "skill": "er-verbs", "why": "Vous takes -ez." }
+      ]
+    },
+    { "type": "gap", "skill": "avoir", "q": "Tu ___ un portable ?", "hint": "have", "hintLabel": "Verb", "answer": ["as"], "why": "Tu goes with as." },
+    { "type": "gap", "skill": "elision", "q": "J'___ à Paris.", "hint": "live", "hintLabel": "Verb", "answer": ["habite"], "why": "J'habite: je becomes j' before a vowel sound." },
+    { "type": "match", "skill": "er-verbs", "prompt": "Match the verbs.", "pairs": [["parler", "to speak"], ["habiter", "to live"], ["travailler", "to work"], ["manger", "to eat"], ["regarder", "to watch"]] },
+    { "type": "fix", "skill": "er-verbs", "prompt": "Tap the word that is wrong.", "sentence": "Tu habite à Lyon.", "wrong": 1, "fixed": "Tu habites à Lyon.", "why": "Tu takes -es: tu habites." },
+    { "type": "mc", "skill": "elision", "q": "___ habite à Lyon.", "sub": "(I live in Lyon.)", "options": ["J'", "Je"], "answer": 0, "why": "Je drops to j' before a vowel sound: j'habite." },
+    { "type": "fix", "skill": "negation", "prompt": "Tap the word that is wrong.", "sentence": "Je ne parles pas anglais.", "wrong": 2, "fixed": "Je ne parle pas anglais.", "why": "Je goes with parle, with no s. The s is for tu." },
+    { "type": "translate", "skill": "negation", "q": "I don't understand.", "answer": ["je ne comprends pas"], "why": "Ne before the verb, pas after it." },
+    { "type": "translate", "skill": "avoir", "q": "I'm hungry.", "answer": ["j'ai faim"], "why": "Hunger uses avoir: j'ai faim." },
+    { "type": "translate", "skill": "er-verbs", "q": "To a stranger: do you speak English?", "answer": ["vous parlez anglais"], "why": "A stranger gets vous, and vous takes -ez." },
+    { "type": "order", "skill": "negation", "prompt": "I haven't got any change.", "words": ["Je", "n'ai", "pas", "de", "monnaie"], "answer": "Je n'ai pas de monnaie.", "why": "N'ai pas wraps the verb, and un or des becomes de after it." },
+    { "type": "mc", "skill": "negation", "q": "Je n'ai pas ___ frère.", "sub": "(I don't have a brother.)", "options": ["de", "un", "du"], "answer": 0, "why": "After ne … pas, un becomes de: je n'ai pas de frère." },
+    { "type": "gap", "skill": "negation", "q": "Je ne ___ pas.", "hint": "understand", "hintLabel": "Verb", "answer": ["comprends"], "why": "Je ne comprends pas." },
+    { "type": "translate", "skill": "elision", "q": "I live in Paris.", "answer": ["j'habite à paris"], "why": "J'habite: je drops to j' before the vowel." }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Tell a new friend where you live, that you speak a little French, and one thing you do not have.",
+    "starter": "J'habite à…  Je parle un peu…  Je n'ai pas de…",
+    "model": "J'habite à Londres. Je parle un peu français. Je n'ai pas de monnaie.",
+    "checklist": ["J'habite with j' before the vowel", "Je ne … pas wraps the verb", "After pas, un or une becomes de"]
+  },
+  "boss": {
+    "title": "A new friend in a café in Lyon",
+    "who": "Léo",
+    "skill": "negation",
+    "persona": "You are Léo, a friendly student who sits next to the learner in a café in Lyon. Talk about languages, where you live, and food. Address the learner as tu. Keep every message to one short sentence.",
+    "turns": [
+      { "npc": "Salut. Tu parles français ?", "en": "Hi. Do you speak French?", "skill": "er-verbs",
+        "choices": [["Je parle un peu français.", true, ""], ["Je parles un peu français.", false, "Je goes with parle, with no s. The s is for tu."], ["Je ne parle un peu français.", false, "That mixes a yes and a no. You want to say yes: je parle un peu français."]] },
+      { "npc": "Cool. Tu habites à Lyon ?", "en": "Cool. Do you live in Lyon?", "skill": "negation",
+        "choices": [["Non, je n'habite pas à Lyon.", true, ""], ["Non, je ne habite pas à Lyon.", false, "Ne drops to n' before a vowel: je n'habite pas."], ["Non, je n'habite à Lyon.", false, "A negative needs both parts: ne … pas."]] },
+      { "npc": "Tu as faim ? Moi, j'ai très faim.", "en": "Are you hungry? I'm very hungry.", "skill": "avoir",
+        "choices": [["Oui, j'ai faim aussi.", true, ""], ["Oui, je suis faim aussi.", false, "Hunger uses avoir: j'ai faim."], ["Oui, tu as faim aussi.", false, "Tu as means you have. You are talking about yourself: j'ai."]] },
+      { "npc": "Alors, on mange ici ?", "en": "So, shall we eat here?", "skill": "er-verbs",
+        "choices": [["D'accord, on mange ici.", true, ""], ["D'accord, on mangent ici.", false, "On takes the same form as il: on mange."], ["D'accord, on ne mange pas ici.", false, "That means we are not eating here. You said you agree, so keep it positive."]] }
+    ],
+    "closing": "À bientôt.",
+    "closingEn": "See you soon.",
+    "chatOpening": "Tu aimes la cuisine française ?",
+    "chatOpeningEn": "Do you like French food?"
+  }
+}

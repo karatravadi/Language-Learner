@@ -18,7 +18,7 @@ Read this first, then `HANDOVER.md` for the next phase of work.
 - `npm test`: unit tests (answer checking, spaced repetition, every chapter's answers) plus the content checker.
 - `npm run check`: content checker only. Run it after every content edit.
 - `npm run e2e`: plays every chapter in headless Chrome with a fake AI and without AI, at desktop and phone width:
-  Spanish three times, Latin twice, then switches course and back.
+  Spanish three times, Latin twice, French twice, then switches course and back.
   Needs `npm install` once (puppeteer, dev only). It also fails on emoji, `null/undefined/NaN` text or horizontal overflow.
   On Kara's PC, use the installed Chrome instead of Puppeteer's download (npm 11 blocks that script):
   `CHROME="C:/Program Files/Google/Chrome/Application/chrome.exe" npm run e2e`.
@@ -57,6 +57,7 @@ public/fonts/             Instrument Sans + Newsreader (OFL), bundled so it work
 public/courses/index.json list of courses, each with a label for the course switch in the header
 public/courses/es-ES/     course.json (meta, skills, roadmap), chapters/*.json, words.json, glossary.json
 public/courses/la/        the Latin course, same shape
+public/courses/fr-FR/     the French (European) course, same shape
 tools/check-content.js    validates every course file; tests/unit.js runs it too
 tools/spanish-text.js     the course-language text a learner can tap; lists words still missing from the glossary
 tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.js, mock-ai.js
@@ -124,3 +125,21 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
 - Every Latin word shown needs an entry in `la/glossary.json` (same checker rule as Spanish). Gaps can be endings
   (`Puell___`): the checker reads the sentence with the answer written in, and the app leaves the stem untappable.
 - Macrons in all Latin text. Check new Latin against Whitaker's Words or Wheelock (both free online).
+
+## French course (public/courses/fr-FR)
+- Kara's third course (added 2 Nov 2026): French (European), meaning French as spoken in France, A1 then A2, 25 min a day (`goalMins` 25, plan 2/7/8).
+  Chapters 1 to 4 are written (être and tu or vous, avoir and -er verbs and ne … pas, numbers and time, food and
+  ordering). The roadmap in course.json plans 5 to 12 and ends in an A2 checkpoint, like Spanish.
+- Settings that differ from Spanish: `lang` fr-FR, `languageName` French, `genderedExamples` false (no `{o}` in French
+  content: write both forms as answers, e.g. "je suis français" and "je suis française", with `who` labels),
+  `invertedQuestion` false, `brand.mark` ç, `speaker` a person from France, and `ui` praise and labels in French.
+- The content fields are still called `es` (words.json, phrases) in every course. Do not rename them.
+- Apostrophes: a word is letters only, so j'ai taps as j and ai. The glossary has entries for the single letters
+  (j, l, d, n, m, t, s, c, y) saying what they stand for. `L.judge` treats a curly apostrophe (what an iPhone types) as a
+  straight one, keeps apostrophes inside words (j ai is wrong, j'ai is right), and ignores « ». Œ and æ count as oe and ae.
+- France only. Septante and nonante are explained as Belgian and Swiss and not taught.
+- Accent slips count as right with a note, as in Spanish. That is too kind for pairs that differ only by an accent
+  (a and à, ou and où, la and là). Test those with `mc` or `gap`, where the accent is the choice, not with typed answers.
+- Same safeguard as the others: the French is AI-written, checked by tests for consistency and not for correctness.
+  A French speaker should read each batch.
+

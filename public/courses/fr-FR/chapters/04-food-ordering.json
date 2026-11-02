@@ -1,0 +1,129 @@
+{
+  "n": 4,
+  "title": "Food, drink and ordering",
+  "sub": "Un café, s'il vous plaît",
+  "can": "Order food and drink politely, ask for the bill, and use un, une, le, la and du correctly.",
+  "mins": 15,
+  "doneText": "You can now order at a café, ask for water and the bill, and choose un or une.",
+  "skills": {
+    "articles": "Un, une, des",
+    "the": "Le, la, l', les",
+    "partitive": "Du, de la, de l'",
+    "ordering": "Ordering politely",
+    "drinks": "Food and drink words"
+  },
+  "discover": {
+    "intro": "Every sentence orders something. Spot what decides whether it is un or une.",
+    "groups": [
+      { "label": "Blue", "tone": "blue", "lines": [["Un café, s'il vous plaît.", "A coffee, please."], ["Un croissant, s'il vous plaît.", "A croissant, please."], ["Un sandwich, s'il vous plaît.", "A sandwich, please."]] },
+      { "label": "Orange", "tone": "orange", "lines": [["Une baguette, s'il vous plaît.", "A baguette, please."], ["Une salade, s'il vous plaît.", "A salad, please."], ["Une bière, s'il vous plaît.", "A beer, please."]] }
+    ],
+    "question": "What decides un or une?",
+    "options": [
+      "The noun. Every French noun is masculine (un) or feminine (une), and you learn it with the word.",
+      "How big the thing is.",
+      "Whether you are asking for food or for a drink."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Café and bière are both drinks, but one is blue and one is orange.",
+    "reveal": "Every French noun is masculine or feminine, even a baguette or a beer. There is no reliable trick, so learn each noun with its un or une. The word for the changes in the same way:",
+    "hooks": [
+      { "title": "A, an and some", "tone": "blue", "rows": [
+        ["un", "a (masculine)", "Un café, s'il vous plaît.", "A coffee, please."],
+        ["une", "a (feminine)", "Une bière, s'il vous plaît.", "A beer, please."],
+        ["des", "some (several)", "Des frites, s'il vous plaît.", "Some chips, please."]
+      ] },
+      { "title": "The", "tone": "orange", "rows": [
+        ["le", "the (masculine)", "Le menu, s'il vous plaît.", "The set menu, please."],
+        ["la", "the (feminine)", "La carte, s'il vous plaît.", "The menu, please."],
+        ["l'", "the, before a vowel", "L'addition, s'il vous plaît.", "The bill, please."],
+        ["les", "the (several)", "Où sont les toilettes ?", "Where is the toilet?"]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "Articles, du and ordering",
+    "sub": "Tap any word to hear it",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "A, an and the", "speak": "form", "rows": [["a (masculine)", "un"], ["a (feminine)", "une"], ["some (several)", "des"], ["the (masculine)", "le"], ["the (feminine)", "la"], ["the (before a vowel)", "l'"], ["the (several)", "les"]] },
+        { "title": "Some of something", "speak": "form", "rows": [["some (masculine)", "du"], ["some (feminine)", "de la"], ["some (before a vowel)", "de l'"]] }
+      ] },
+      { "type": "list", "title": "At the café", "rows": [["un café", "a small black coffee (an espresso)"], ["un café crème", "a coffee with milk"], ["un thé", "a tea"], ["un jus d'orange", "an orange juice"], ["de l'eau", "water"], ["une carafe d'eau", "a jug of tap water, free"], ["une bière", "a beer"], ["un verre de vin", "a glass of wine"], ["un croissant", "a croissant"], ["une baguette", "a baguette"], ["une salade", "a salad"], ["des frites", "chips"], ["un sandwich", "a sandwich"]] },
+      { "type": "note", "kind": "tip", "text": "Je voudrais means I would like, and it is the polite way to order. Start with bonjour, add je voudrais, and finish with s'il vous plaît." },
+      { "type": "twist", "title": "Le or du", "a": ["J'aime le café.", "I like coffee (in general)."], "b": ["Je voudrais du café.", "I'd like some coffee."], "note": "French says the for things you like in general: j'aime le café, j'aime les frites. For an amount of something, use du, de la or de l': du pain, de la salade, de l'eau." },
+      { "type": "note", "kind": "warn", "text": "After a container or a quantity, use de with no article: un verre de vin, une bouteille d'eau, une carafe d'eau. Not un verre du vin." },
+      { "type": "note", "kind": "culture", "text": "In France, un café is a small, strong espresso. For milk, ask for un café crème. In a restaurant, une carafe d'eau is free tap water, and une bouteille d'eau is bottled water that you pay for." },
+      { "type": "note", "kind": "culture", "text": "The waiter will not bring the bill until you ask: l'addition, s'il vous plaît. Service is included in the price, so a tip is optional. People often round up or leave a euro or two. Many restaurants stop serving lunch around two and open again around seven." }
+    ]
+  },
+  "phrases": [
+    { "id": "c4-coffee", "es": "Un café, s'il vous plaît.", "en": "A coffee, please.", "alts": ["Un café, s'il te plaît."] },
+    { "id": "c4-croissant", "es": "Je voudrais un croissant.", "en": "I'd like a croissant.", "alts": [] },
+    { "id": "c4-menu", "es": "La carte, s'il vous plaît.", "en": "The menu, please.", "alts": [] },
+    { "id": "c4-water", "es": "Une carafe d'eau, s'il vous plaît.", "en": "A jug of tap water, please.", "alts": [] },
+    { "id": "c4-bill", "es": "L'addition, s'il vous plaît.", "en": "The bill, please.", "alts": [] },
+    { "id": "c4-nice", "es": "C'est délicieux.", "en": "It's delicious.", "alts": [] },
+    { "id": "c4-enjoy", "es": "Bon appétit.", "en": "Enjoy your meal.", "alts": [] },
+    { "id": "c4-veg", "es": "Je suis végétarienne.", "en": "I'm vegetarian.", "alts": ["Je suis végétarien."] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "articles", "q": "___ baguette, s'il vous plaît.", "sub": "(A baguette, please.)", "options": ["Une", "Un"], "answer": 0, "why": "Baguette is feminine: une baguette." },
+    { "type": "mc", "skill": "the", "q": "___ addition, s'il vous plaît.", "sub": "(The bill, please.)", "options": ["L'", "La", "Le"], "answer": 0, "why": "La drops its a before a vowel: l'addition." },
+    { "type": "listen", "skill": "drinks", "say": "Je voudrais une salade, s'il vous plaît.", "options": ["A salad", "A sandwich", "A beer"], "answer": 0, "why": "Une salade is a salad." },
+    {
+      "type": "rapid", "skill": "articles", "prompt": "Rapid fire: un, une or des?",
+      "choices": [{ "key": "un", "label": "un", "tone": "blue" }, { "key": "une", "label": "une", "tone": "orange" }, { "key": "des", "label": "des", "tone": "green" }],
+      "items": [
+        { "blank": "___ croissant", "full": "un croissant", "fill": "un", "answer": "un", "skill": "articles", "why": "Croissant is masculine." },
+        { "blank": "___ bière", "full": "une bière", "fill": "une", "answer": "une", "skill": "articles", "why": "Bière is feminine." },
+        { "blank": "___ frites", "full": "des frites", "fill": "des", "answer": "des", "skill": "articles", "why": "Frites is plural, so des." },
+        { "blank": "___ sandwich", "full": "un sandwich", "fill": "un", "answer": "un", "skill": "articles", "why": "Sandwich is masculine." },
+        { "blank": "___ carafe d'eau", "full": "une carafe d'eau", "fill": "une", "answer": "une", "skill": "articles", "why": "Carafe is feminine." },
+        { "blank": "___ baguette", "full": "une baguette", "fill": "une", "answer": "une", "skill": "articles", "why": "Baguette is feminine." },
+        { "blank": "___ thé", "full": "un thé", "fill": "un", "answer": "un", "skill": "articles", "why": "Thé is masculine." },
+        { "blank": "___ croissants", "full": "des croissants", "fill": "des", "answer": "des", "skill": "articles", "why": "Croissants is plural, so des." }
+      ]
+    },
+    { "type": "gap", "skill": "articles", "q": "Je voudrais ___ croissant.", "hint": "a", "hintLabel": "Article", "answer": ["un"], "why": "Croissant is masculine: un croissant." },
+    { "type": "gap", "skill": "partitive", "q": "Je voudrais ___ pain.", "hint": "some", "hintLabel": "Word", "answer": ["du"], "why": "Pain is masculine, and some of it is du pain." },
+    { "type": "gap", "skill": "ordering", "q": "Un verre ___ vin.", "hint": "of", "hintLabel": "Word", "answer": ["de"], "why": "After a glass, bottle or jug, use de: un verre de vin." },
+    { "type": "match", "skill": "drinks", "prompt": "Match the words.", "pairs": [["un verre", "a glass"], ["une bouteille", "a bottle"], ["du pain", "some bread"], ["une carte", "a menu"], ["l'addition", "the bill"]] },
+    { "type": "fix", "skill": "articles", "prompt": "Tap the word that is wrong.", "sentence": "Je voudrais un baguette.", "wrong": 2, "fixed": "Je voudrais une baguette.", "why": "Baguette is feminine: une baguette." },
+    { "type": "fix", "skill": "ordering", "prompt": "Tap the word that is wrong.", "sentence": "Un verre du vin, s'il vous plaît.", "wrong": 2, "fixed": "Un verre de vin, s'il vous plaît.", "why": "After a glass, use de with no article: un verre de vin." },
+    { "type": "translate", "skill": "ordering", "q": "A coffee, please.", "answer": ["un café s'il vous plaît", "un café s'il te plaît"], "who": ["", "to a friend"], "why": "Un café, s'il vous plaît. With a friend, s'il te plaît." },
+    { "type": "translate", "skill": "ordering", "q": "The bill, please.", "answer": ["l'addition s'il vous plaît", "l'addition s'il te plaît"], "who": ["", "to a friend"], "why": "L'addition, with l' before the vowel." },
+    { "type": "translate", "skill": "partitive", "q": "I would like some water.", "answer": ["je voudrais de l'eau"], "why": "Some water is de l'eau, because eau starts with a vowel sound." },
+    { "type": "translate", "skill": "the", "q": "I like coffee.", "answer": ["j'aime le café"], "why": "Things you like in general take le: j'aime le café." },
+    { "type": "mc", "skill": "drinks", "prompt": "You would like free tap water at a restaurant. What do you ask for?", "q": "", "options": ["Une carafe d'eau", "Une bouteille d'eau", "Un café"], "answer": 0, "why": "Une carafe d'eau is free tap water. Une bouteille d'eau is bottled water, and you pay for it." },
+    { "type": "order", "skill": "ordering", "prompt": "I would like a coffee and a croissant, please.", "words": ["Je", "voudrais", "un", "café", "et", "un", "croissant", "s'il", "vous", "plaît"], "answer": "Je voudrais un café et un croissant, s'il vous plaît.", "why": "Je voudrais, then each item with its article, then s'il vous plaît." },
+    { "type": "mc", "skill": "ordering", "prompt": "The meal is over. How do you get the bill?", "q": "", "options": ["Ask: l'addition, s'il vous plaît", "Wait for it to arrive", "Walk out and pay at the door"], "answer": 0, "why": "The bill does not come until you ask for it." }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Order a drink and something to eat at a café, and then ask for the bill.",
+    "starter": "Bonjour, je voudrais…  L'addition…",
+    "model": "Bonjour, je voudrais un café et un croissant, s'il vous plaît. L'addition, s'il vous plaît.",
+    "checklist": ["Je voudrais is the polite way to ask", "Un for masculine and une for feminine", "End with s'il vous plaît"]
+  },
+  "boss": {
+    "title": "Breakfast at a café in Paris",
+    "who": "Julien",
+    "skill": "ordering",
+    "persona": "You are Julien, a waiter in a café in Paris. The learner is a customer ordering breakfast. Use vous. Use simple French from the chapter: drinks, croissants, water and the bill. Keep every message to one short sentence.",
+    "turns": [
+      { "npc": "Bonjour. Vous désirez ?", "en": "Hello. What would you like?", "skill": "ordering",
+        "choices": [["Bonjour. Je voudrais un café, s'il vous plaît.", true, ""], ["Bonjour. Je voudrais une café, s'il vous plaît.", false, "Café is masculine: un café."], ["Un café.", false, "Not wrong, but it sounds abrupt. Greet first, then ask politely with s'il vous plaît."]] },
+      { "npc": "Vous prenez aussi un croissant ?", "en": "Are you having a croissant too?", "skill": "articles",
+        "choices": [["Oui, un croissant, s'il vous plaît.", true, ""], ["Oui, une croissant, s'il vous plaît.", false, "Croissant is masculine: un croissant."], ["Oui, du croissant, s'il vous plaît.", false, "Du is for an amount of something, like du pain. One croissant is un croissant."]] },
+      { "npc": "Très bien. Vous voulez de l'eau ?", "en": "Very good. Do you want some water?", "skill": "partitive",
+        "choices": [["Oui, une carafe d'eau, s'il vous plaît.", true, ""], ["Oui, un carafe d'eau, s'il vous plaît.", false, "Carafe is feminine: une carafe d'eau."], ["Oui, une carafe de l'eau, s'il vous plaît.", false, "After a container, use de with no article: une carafe d'eau."]] },
+      { "npc": "Autre chose ?", "en": "Anything else?", "skill": "the",
+        "choices": [["Non, merci. L'addition, s'il vous plaît.", true, ""], ["Non, merci. Le addition, s'il vous plaît.", false, "Addition starts with a vowel, so le becomes l': l'addition."], ["Non, merci. L'addition, s'il te plaît.", false, "S'il te plaît is for friends. With a waiter, say s'il vous plaît."]] }
+    ],
+    "closing": "Voilà. Bonne journée.",
+    "closingEn": "There you go. Have a nice day.",
+    "chatOpening": "Vous prenez autre chose ?",
+    "chatOpeningEn": "Are you having anything else?"
+  }
+}

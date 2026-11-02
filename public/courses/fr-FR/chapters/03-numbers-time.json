@@ -1,0 +1,133 @@
+{
+  "n": 3,
+  "title": "Numbers, time and days",
+  "sub": "Il est trois heures",
+  "can": "Count to 100, tell the time, arrange when to meet and understand prices.",
+  "mins": 15,
+  "doneText": "You can now count, tell the time, arrange to meet on a day and at a time, and follow prices.",
+  "skills": {
+    "time": "Telling the time",
+    "numbers": "Numbers",
+    "days": "Days and when",
+    "heure": "Heure or heures",
+    "prices": "Prices"
+  },
+  "discover": {
+    "intro": "All of these sentences tell the time. Spot why the blue ones say heure and the orange ones say heures.",
+    "groups": [
+      { "label": "Blue", "tone": "blue", "lines": [["Il est une heure.", "It's one o'clock."], ["Il est une heure et demie.", "It's half past one."], ["Il est une heure dix.", "It's ten past one."]] },
+      { "label": "Orange", "tone": "orange", "lines": [["Il est deux heures.", "It's two o'clock."], ["Il est cinq heures et quart.", "It's quarter past five."], ["Il est dix heures moins le quart.", "It's quarter to ten."]] }
+    ],
+    "question": "Why heure in blue and heures in orange?",
+    "options": [
+      "One o'clock is one hour, so it is singular: une heure. From two on it is plural: deux heures.",
+      "Blue sentences are in the morning and orange ones are in the afternoon.",
+      "Heure is formal and heures is informal."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Look at the number just before heure or heures in each colour.",
+    "reveal": "Une heure is one hour, so it is singular. Two o'clock and later are plural: deux heures. Add the minutes straight after, or use et quart, et demie and moins:",
+    "hooks": [
+      { "title": "The clock: et and moins", "tone": "blue", "rows": [
+        ["+ minutes", "past", "Il est trois heures dix.", "It's ten past three."],
+        ["et quart", "quarter past", "Il est quatre heures et quart.", "It's quarter past four."],
+        ["et demie", "half past", "Il est une heure et demie.", "It's half past one."],
+        ["moins", "to", "Il est six heures moins vingt.", "It's twenty to six."],
+        ["moins le quart", "quarter to", "Il est neuf heures moins le quart.", "It's quarter to nine."]
+      ] },
+      { "title": "When: à, du matin, lundi", "tone": "orange", "rows": [
+        ["quelle heure", "what time is it", "Quelle heure est-il ?", "What time is it?"],
+        ["à", "at (a time)", "Rendez-vous à huit heures.", "Let's meet at eight."],
+        ["du matin", "in the morning", "huit heures du matin", "eight in the morning"],
+        ["lundi", "on Monday (this one)", "Rendez-vous lundi.", "Let's meet on Monday."],
+        ["le lundi", "on Mondays (every week)", "Le lundi, je travaille.", "On Mondays, I work."]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "The numbers",
+    "sub": "Tap any number to hear it",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "0 to 20", "speak": "form", "rows": [["0", "zéro"], ["1", "un"], ["2", "deux"], ["3", "trois"], ["4", "quatre"], ["5", "cinq"], ["6", "six"], ["7", "sept"], ["8", "huit"], ["9", "neuf"], ["10", "dix"], ["11", "onze"], ["12", "douze"], ["13", "treize"], ["14", "quatorze"], ["15", "quinze"], ["16", "seize"], ["17", "dix-sept"], ["18", "dix-huit"], ["19", "dix-neuf"], ["20", "vingt"]] },
+        { "title": "21 to 100", "speak": "form", "rows": [["21", "vingt et un"], ["22", "vingt-deux"], ["30", "trente"], ["31", "trente et un"], ["40", "quarante"], ["50", "cinquante"], ["60", "soixante"], ["70", "soixante-dix"], ["71", "soixante et onze"], ["80", "quatre-vingts"], ["81", "quatre-vingt-un"], ["90", "quatre-vingt-dix"], ["100", "cent"]] }
+      ] },
+      { "type": "note", "kind": "tip", "text": "From 21 to 69, add the units after the tens: vingt-deux, trente-cinq. With one, use et and no hyphen: vingt et un, trente et un. From 70, French counts on from twenty: soixante-dix is sixty-ten, and quatre-vingts is four twenties." },
+      { "type": "note", "kind": "warn", "text": "Belgium and Switzerland say septante and nonante, which are easier. In France, people will not use them, so learn soixante-dix and quatre-vingt-dix." },
+      { "type": "list", "title": "Days of the week", "rows": [["lundi", "Monday"], ["mardi", "Tuesday"], ["mercredi", "Wednesday"], ["jeudi", "Thursday"], ["vendredi", "Friday"], ["samedi", "Saturday"], ["dimanche", "Sunday"]] },
+      { "type": "list", "title": "Times of day", "rows": [["midi", "noon"], ["minuit", "midnight"], ["du matin", "in the morning"], ["de l'après-midi", "in the afternoon"], ["du soir", "in the evening"]] },
+      { "type": "twist", "title": "Lundi or le lundi", "a": ["Lundi, je travaille.", "On Monday (this coming one), I'm working."], "b": ["Le lundi, je travaille.", "On Mondays (every week), I work."], "note": "French has no word for on with days. With no word, you mean this coming day. With le, you mean every week. Days start with a small letter." },
+      { "type": "note", "kind": "warn", "text": "This is the opposite of Spanish. In Spanish, el lunes is this Monday and los lunes is every Monday. In French, lundi is this Monday and le lundi is every Monday." },
+      { "type": "note", "kind": "culture", "text": "In writing and on timetables, France uses the 24-hour clock: 20 h 30. In speech, people say huit heures et demie du soir. Many shops close on Sundays, and small shops may close for lunch." }
+    ]
+  },
+  "phrases": [
+    { "id": "c3-time", "es": "Quelle heure est-il ?", "en": "What time is it?", "alts": ["Il est quelle heure ?"] },
+    { "id": "c3-half", "es": "Il est deux heures et demie.", "en": "It's half past two.", "alts": [] },
+    { "id": "c3-meet", "es": "Rendez-vous à huit heures.", "en": "Let's meet at eight.", "alts": [] },
+    { "id": "c3-howmuch", "es": "C'est combien ?", "en": "How much is it?", "alts": ["Ça coûte combien ?"] },
+    { "id": "c3-total", "es": "Ça fait combien ?", "en": "How much is that altogether?", "alts": [] },
+    { "id": "c3-ten", "es": "Ça coûte dix euros.", "en": "It costs ten euros.", "alts": [] },
+    { "id": "c3-tomorrow", "es": "À demain.", "en": "See you tomorrow.", "alts": [] },
+    { "id": "c3-weekend", "es": "Je travaille le week-end.", "en": "I work at the weekend.", "alts": [] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "heure", "q": "Il est une ___.", "sub": "(It's one o'clock.)", "options": ["heure", "heures"], "answer": 0, "why": "One o'clock is one hour: une heure." },
+    { "type": "mc", "skill": "time", "prompt": "What time is it?", "q": "Il est quatre heures et quart.", "options": ["4:15", "4:45", "3:45"], "answer": 0, "why": "Et quart means quarter past." },
+    { "type": "listen", "skill": "time", "say": "Il est dix heures moins le quart.", "options": ["9:45", "10:15", "10:45"], "answer": 0, "why": "Moins le quart means quarter to: ten minus a quarter is 9:45." },
+    {
+      "type": "rapid", "skill": "heure", "prompt": "Rapid fire: heure or heures?",
+      "choices": [{ "key": "heure", "label": "heure", "tone": "blue" }, { "key": "heures", "label": "heures", "tone": "orange" }],
+      "items": [
+        { "blank": "Il est une ___ et demie.", "full": "Il est une heure et demie.", "fill": "heure", "answer": "heure", "skill": "heure", "why": "Une heure is singular." },
+        { "blank": "Il est trois ___.", "full": "Il est trois heures.", "fill": "heures", "answer": "heures", "skill": "heure", "why": "Three o'clock is plural: heures." },
+        { "blank": "Il est douze ___ moins cinq.", "full": "Il est douze heures moins cinq.", "fill": "heures", "answer": "heures", "skill": "heure", "why": "Douze is plural: heures." },
+        { "blank": "Rendez-vous à une ___.", "full": "Rendez-vous à une heure.", "fill": "heure", "answer": "heure", "skill": "heure", "why": "Une heure is singular." },
+        { "blank": "Il est huit ___ du soir.", "full": "Il est huit heures du soir.", "fill": "heures", "answer": "heures", "skill": "heure", "why": "Huit is plural: heures." },
+        { "blank": "Il est une ___ dix.", "full": "Il est une heure dix.", "fill": "heure", "answer": "heure", "skill": "heure", "why": "Une heure is singular." },
+        { "blank": "Rendez-vous à dix ___.", "full": "Rendez-vous à dix heures.", "fill": "heures", "answer": "heures", "skill": "heure", "why": "Dix is plural: heures." },
+        { "blank": "Il est onze ___ et quart.", "full": "Il est onze heures et quart.", "fill": "heures", "answer": "heures", "skill": "heure", "why": "Onze is plural: heures." }
+      ]
+    },
+    { "type": "gap", "skill": "numbers", "q": "J'ai ___ euros.", "hint": "30", "hintLabel": "Number", "answer": ["trente"], "why": "Trente is 30." },
+    { "type": "match", "skill": "numbers", "prompt": "Match the numbers.", "pairs": [["quinze", "15"], ["cinquante", "50"], ["seize", "16"], ["soixante", "60"], ["soixante-dix", "70"]] },
+    { "type": "fix", "skill": "time", "prompt": "Tap the word that is wrong.", "sentence": "Rendez-vous en huit heures.", "wrong": 1, "fixed": "Rendez-vous à huit heures.", "why": "At a time is à: à huit heures." },
+    { "type": "fix", "skill": "heure", "prompt": "Tap the word that is wrong.", "sentence": "Il est trois heure et quart.", "wrong": 3, "fixed": "Il est trois heures et quart.", "why": "From two on, heures has an s: trois heures." },
+    { "type": "translate", "skill": "time", "q": "It's half past two.", "answer": ["il est deux heures et demie"], "why": "Two is plural, so deux heures. Half past is et demie." },
+    { "type": "mc", "skill": "days", "q": "___ lundi, je travaille.", "sub": "(I work on Mondays, every week.)", "options": ["Le", "Les", "En"], "answer": 0, "why": "Le lundi means every Monday. Without le, lundi means this coming Monday." },
+    { "type": "gap", "skill": "time", "q": "Il est six heures ___ vingt.", "hint": "5:40", "hintLabel": "Time", "answer": ["moins"], "why": "5:40 is twenty to six: six heures moins vingt." },
+    { "type": "order", "skill": "days", "prompt": "Let's meet on Saturday at nine.", "words": ["Rendez-vous", "samedi", "à", "neuf", "heures"], "answer": "Rendez-vous samedi à neuf heures.", "why": "Samedi for one day, with no word for on, then à for the time." },
+    { "type": "translate", "skill": "prices", "q": "How much is it?", "answer": ["c'est combien", "ça fait combien", "combien ça coûte"], "who": ["", "for a total", "also common"], "why": "C'est combien ? is the everyday way. Ça fait combien ? is for the total." },
+    { "type": "gap", "skill": "numbers", "q": "Ça coûte ___ euros.", "hint": "45", "hintLabel": "Number", "answer": ["quarante-cinq"], "why": "From 21 up: tens, then units. Quarante-cinq." },
+    { "type": "mc", "skill": "time", "prompt": "A friend says rendez-vous à vingt heures. When is that?", "q": "", "options": ["8pm", "8am", "2pm"], "answer": 0, "why": "Vingt heures is 20:00 on the 24-hour clock, so 8pm." },
+    { "type": "translate", "skill": "days", "q": "See you tomorrow.", "answer": ["à demain"], "why": "À demain, literally until tomorrow." },
+    { "type": "translate", "skill": "days", "q": "I work on Mondays.", "answer": ["je travaille le lundi", "le lundi je travaille"], "why": "Every Monday takes le: le lundi." }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Make a plan with a friend: suggest a day and a time to meet, and say how much something costs.",
+    "starter": "Rendez-vous…  à…  Ça coûte…",
+    "model": "Rendez-vous samedi à huit heures et demie. Ça coûte quinze euros.",
+    "checklist": ["The day has no word for on", "The time uses à and heures", "Numbers from 21 up join with a hyphen: vingt-cinq"]
+  },
+  "boss": {
+    "title": "Train tickets at Gare de Lyon",
+    "who": "Madame Girard",
+    "skill": "time",
+    "persona": "You are Madame Girard, a ticket clerk at Gare de Lyon in Paris. The learner is buying a train ticket. Talk about days, departure times and prices, using numbers and times often. Address the learner as vous. Keep every message to one short sentence.",
+    "turns": [
+      { "npc": "Bonjour. Vous voulez un billet pour quel jour ?", "en": "Hello. Which day do you want a ticket for?", "skill": "days",
+        "choices": [["Pour samedi, s'il vous plaît.", true, ""], ["Pour le samedi, s'il vous plaît.", false, "Le samedi means every Saturday. For one trip, say samedi."], ["Pour en samedi, s'il vous plaît.", false, "There is no word for on with days: pour samedi."]] },
+      { "npc": "Il y a un train à dix heures et quart et un autre à midi et demi.", "en": "There is a train at quarter past ten and another at half past twelve.", "skill": "time",
+        "choices": [["À dix heures et quart, s'il vous plaît.", true, ""], ["En dix heures et quart, s'il vous plaît.", false, "At a time is à: à dix heures et quart."], ["À dix heure et quart, s'il vous plaît.", false, "From two on, heures has an s: dix heures."]] },
+      { "npc": "Très bien. Ça fait douze euros cinquante.", "en": "Very good. That's twelve euros fifty.", "skill": "numbers",
+        "choices": [["Douze euros cinquante ? Voilà.", true, ""], ["Vingt euros cinquante ? Voilà.", false, "Vingt is 20. Douze is 12."], ["Deux euros cinquante ? Voilà.", false, "Deux is 2. Douze is 12."]] },
+      { "npc": "Merci. Le train arrive à onze heures moins dix.", "en": "Thank you. The train arrives at ten to eleven.", "skill": "time",
+        "choices": [["À dix heures cinquante ? Parfait, merci.", true, ""], ["À onze heures dix ? Parfait, merci.", false, "Moins dix means ten to eleven, so 10:50, not 11:10."], ["À neuf heures dix ? Parfait, merci.", false, "Onze is eleven. Onze heures moins dix is 10:50."]] }
+    ],
+    "closing": "De rien. Bon voyage.",
+    "closingEn": "You're welcome. Have a good trip.",
+    "chatOpening": "Vous voulez aussi un billet retour ?",
+    "chatOpeningEn": "Do you also want a return ticket?"
+  }
+}
