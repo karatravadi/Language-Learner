@@ -22,7 +22,7 @@ Read this first, then `HANDOVER.md` for the next phase of work.
   On Kara's PC, use the installed Chrome instead of Puppeteer's download (npm 11 blocks that script):
   `CHROME="C:/Program Files/Google/Chrome/Application/chrome.exe" npm run e2e`.
 - AI tutor: key in `settings.env` (`PROVIDER=gemini` with `GEMINI_API_KEY`, or DeepSeek). The model name
-  `gemini-3.5-flash-lite` in settings.env is unverified; the hosted Worker uses `gemini-3.8-flash`, confirmed in AI Studio.
+  `gemini-3.5-flash-lite` in settings.env is unverified; the hosted Worker uses `gemini-3.5-flash-lite` (500 free requests a day), confirmed in AI Studio.
 
 ## Layout
 ```
