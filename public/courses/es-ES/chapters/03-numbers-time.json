@@ -94,7 +94,7 @@
     { "type": "mc", "skill": "days", "q": "Trabajo ___ lunes.", "sub": "(I work on Mondays, every week.)", "options": ["los", "el", "en"], "answer": 0, "why": "Every Monday is los lunes. No en with days." },
     { "type": "gap", "skill": "time", "q": "Son las seis ___ veinte.", "hint": "5:40", "hintLabel": "Time", "answer": ["menos"], "why": "5:40 is twenty to six: las seis menos veinte." },
     { "type": "order", "skill": "days", "prompt": "Let's meet on Saturday at nine.", "words": ["Quedamos", "el", "sábado", "a", "las", "nueve"], "answer": "Quedamos el sábado a las nueve.", "why": "El sábado for one day, then a las for the time." },
-    { "type": "translate", "skill": "prices", "q": "How much does it cost?", "answer": ["cuánto cuesta", "cuánto vale"], "why": "¿Cuánto cuesta? or ¿Cuánto vale? For the total bill: ¿Cuánto es?" },
+    { "type": "translate", "skill": "prices", "q": "How much does it cost?", "answer": ["cuánto cuesta", "cuánto vale"], "who": ["", "also common in Spain"], "why": "¿Cuánto cuesta? or ¿Cuánto vale? For the total bill: ¿Cuánto es?" },
     { "type": "gap", "skill": "numbers", "q": "Son ___ euros.", "hint": "45", "hintLabel": "Number", "answer": ["cuarenta y cinco"], "why": "From 31 up: tens, then y, then units. Cuarenta y cinco." },
     { "type": "mc", "skill": "time", "prompt": "A friend suggests meeting a las nueve de la noche. When is that?", "q": "", "options": ["9pm", "9am", "7pm"], "answer": 0, "why": "De la noche means at night. De la mañana means in the morning." },
     { "type": "translate", "skill": "days", "q": "See you tomorrow.", "answer": ["hasta mañana"], "why": "Hasta mañana, literally \"until tomorrow\"." },

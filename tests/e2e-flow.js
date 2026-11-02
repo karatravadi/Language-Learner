@@ -243,6 +243,21 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   assert.ok(after > before, 'active time should be counted');
   ok('practice timer counts active time (' + before + 's → ' + after + 's)');
 
+  // ---------- chapters: carry on, no skipping the writing check, back ----------
+  await page.evaluate(() => { const S = window.__trainer.state(); S.lesson = { n: 1, step: 4, ex: 0, stats: { right: 5, total: 6 } }; window.__trainer.home(); });
+  await sleep(80);
+  assert.match(await text(), /Carry on/);
+  await clickText('.chap', 'Who you are'); await sleep(120);
+  assert.match(await text(), /Say it in your own words/);
+  const locked = await page.evaluate(() => [...document.querySelectorAll('button')].find(b => b.innerText.includes('Continue to the scenario')).disabled);
+  assert.equal(locked, true, 'the writing step cannot be skipped before checking');
+  await clickText('button', 'Back'); await sleep(120);
+  assert.match(await text(), /1 of \d+/); assert.equal((await state()).lesson.step, 3);
+  await page.click('button[aria-label="Close lesson"]'); await sleep(80);
+  assert.match(await text(), /Carry on/);
+  await page.evaluate(() => { delete window.__trainer.state().lesson; window.__trainer.home(); }); await sleep(80);
+  ok('chapters: carry on from a saved step, the writing check cannot be skipped, back returns to practice');
+
   // ---------- export / import progress ----------
   const fs = require('fs'); const os = require('os');
   const dl = fs.mkdtempSync(path.join(os.tmpdir(), 'trainer-dl-'));

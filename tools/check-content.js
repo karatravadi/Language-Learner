@@ -161,6 +161,8 @@ function check(dir = COURSES) {
           case 'translate':
             need(e, 'q'); answers(e.answer); need(e, 'why');
             (e.answer || []).forEach(a => { if (/[¿?¡!.,]/.test(a)) warn('answer "' + a + '" has punctuation (ignored when checking, but keep answers plain)'); });
+            // who: one label per answer (tú, usted, said by a woman…), shown in the feedback; "" for none
+            if (e.who !== undefined && (!Array.isArray(e.who) || e.who.length !== (e.answer || []).length || e.who.some(x => typeof x !== 'string'))) err('"who" needs one label (or "") per answer');
             break;
           case 'order': {
             need(e, 'prompt'); need(e, 'answer');

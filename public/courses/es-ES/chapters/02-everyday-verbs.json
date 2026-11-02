@@ -262,13 +262,18 @@
         "title": "One Spanish present, three English ones",
         "a": [
           "Trabajo en Londres.",
-          "I work in London."
+          "I work in London. / I'm working in London."
         ],
         "b": [
           "¿Trabajas hoy?",
-          "Are you working today? / Do you work today?"
+          "Do you work today? / Are you working today?"
         ],
-        "note": "Spanish has no helper \"do\", and the simple present also covers \"I'm working\". To ask a question, keep the same words and let your voice rise at the end."
+        "note": "English has three ways to say it: I work, I'm working, do you work? Spanish uses one: trabajo, trabajas. There is no \"do\" for questions either: ¿Trabajas hoy? is the same words as a statement, with your voice rising at the end."
+      },
+      {
+        "type": "note",
+        "kind": "tip",
+        "text": "Remember the four \"you\"s from chapter 1. One person: tú vives (informal), usted vive (polite, same form as él and ella). Several people: vosotros vivís (informal, Spain), ustedes viven (polite, same form as ellos)."
       },
       {
         "type": "note",
@@ -620,6 +625,7 @@
         "vive usted aquí",
         "vivís aquí"
       ],
+      "who": ["tú", "usted", "usted", "vosotros"],
       "why": "No \"do\": just ¿Vives aquí?, with your voice rising at the end."
     },
     {
@@ -630,6 +636,7 @@
         "aprendo español",
         "estoy aprendiendo español"
       ],
+      "who": ["", "stresses right now"],
       "why": "The simple present covers \"I'm learning\": aprendo español. Estoy aprendiendo español also works."
     },
     {

@@ -157,6 +157,25 @@
     "sub": "Tap any row to hear it",
     "blocks": [
       {
+        "type": "list",
+        "title": "Who's who: the people in a Spanish verb",
+        "rows": [
+          ["yo", "I"],
+          ["tú", "you: one person you know (friends, family, people your age)"],
+          ["usted", "you: one person, polite (a stranger, someone older, a customer)"],
+          ["él / ella", "he / she"],
+          ["nosotros / nosotras", "we (nosotras when everyone is female)"],
+          ["vosotros / vosotras", "you all, informal: everyday in Spain"],
+          ["ustedes", "you all, polite"],
+          ["ellos / ellas", "they (ellas when everyone is female)"]
+        ]
+      },
+      {
+        "type": "note",
+        "kind": "tip",
+        "text": "Spanish has four ways to say \"you\": tú and usted for one person, vosotros and ustedes for several. Usted takes the same verb form as él and ella (usted es, ella es), and ustedes the same as ellos (ustedes son). Each person has its own verb ending, so the pronoun is usually left out: soy already means \"I am\"."
+      },
+      {
         "type": "tables",
         "tables": [
           {
@@ -494,6 +513,7 @@
         "estoy cansado",
         "estoy cansada"
       ],
+      "who": ["said by a man", "said by a woman"],
       "why": "Condition: estar. (Cansado if you are male, cansada if female.)"
     },
     {
@@ -560,6 +580,7 @@
         "estoy aburrido",
         "estoy aburrida"
       ],
+      "who": ["said by a man", "said by a woman"],
       "why": "Bored is how you feel right now: estar. \"Soy aburrido\" would mean you are a boring person!"
     }
   ],

@@ -288,7 +288,11 @@
     document.body.append(overlay);
     return overlay;
   }
-  const prettyAns = list => list.map(a => a.charAt(0).toUpperCase() + a.slice(1) + '.').join(' / ');
+  // Answers as sentences: a capital, ¿…? when the English was a question, and the label from `who` if given.
+  const prettyAns = (list, q, who) => list.map((a, i) => {
+    const s = a.charAt(0).toUpperCase() + a.slice(1);
+    return (/\?\s*$/.test(q || '') ? '¿' + s + '?' : s + '.') + (who && who[i] ? ' (' + who[i] + ')' : '');
+  }).join(' / ');
   // The red pen: your words struck through, the right words written in.
   function pen(wrong, right) {
     return h('div', { class: 'pen' }, wrong ? h('span', { class: 'pen-x' }, wrong) : null, wrong ? h('span', { class: 'pen-arrow', 'aria-hidden': 'true' }, '→') : null, h('span', { class: 'pen-ok' }, right));
@@ -303,6 +307,8 @@
     return WORDS.find(w => w.id === id);
   }
   function nextChapter() {
+    const going = S.lesson && CHAPTERS.find(c => c.n === S.lesson.n);
+    if (going) return going;
     return CHAPTERS.find(c => !S.done[c.n]) || CHAPTERS.slice().sort((a, b) => S.done[a.n].best - S.done[b.n].best)[0];
   }
 
@@ -334,7 +340,7 @@
     const plan = h('div', { class: 'plan' },
       planRow(wdone, 'Word of the day', word.es, '3 min', wotdScreen),
       planRow(reviewedToday && due === 0, 'Review', due ? due + ' cards due' : (reviewedToday ? 'All caught up' : 'Nothing due yet'), '10 min', due ? reviewFlow : null),
-      planRow(chapterToday, chapterToday ? 'Chapter done today' : 'Chapter ' + nextCh.n, nextCh.title, nextCh.mins + ' min', () => chapterFlow(nextCh)),
+      planRow(chapterToday && !inProgress(nextCh), chapterToday && !inProgress(nextCh) ? 'Chapter done today' : (inProgress(nextCh) ? 'Carry on: chapter ' : 'Chapter ') + nextCh.n, nextCh.title, nextCh.mins + ' min', () => chapterFlow(nextCh)),
       practise);
 
     const todayCard = h('section', { class: 'card', 'aria-label': 'Today' },
@@ -354,10 +360,11 @@
     const path = CHAPTERS.map(ch => {
       const d = S.done[ch.n];
       const isNext = ch === nextCh && !d;
-      return h('button', { class: 'chap' + (d ? ' done' : '') + (isNext ? ' next' : ''), type: 'button', onclick: () => chapterFlow(ch) },
+      const going = inProgress(ch);
+      return h('button', { class: 'chap' + (d ? ' done' : '') + (isNext || going ? ' next' : ''), type: 'button', onclick: () => chapterFlow(ch) },
         h('div', { class: 'chap-n' }, d ? icon('check') : String(ch.n)),
         h('div', {}, h('div', { class: 'chap-t' }, ch.title), h('div', { class: 'chap-s' }, ch.can)),
-        h('div', { class: 'chap-go' }, d ? 'Best ' + d.best + '%' : (isNext ? 'Start' : ch.mins + ' min'), icon('next')));
+        h('div', { class: 'chap-go' }, going ? 'Carry on' : d ? 'Best ' + d.best + '%' : (isNext ? 'Start' : ch.mins + ' min'), icon('next')));
     }).concat(ROADMAP.map(r => h('div', { class: 'chap locked', 'aria-disabled': 'true' },
       h('div', { class: 'chap-n' }, String(r.n)),
       h('div', {}, h('div', { class: 'chap-t' }, r.title), h('div', { class: 'chap-s' }, r.can)),
@@ -455,29 +462,49 @@
   }
 
   // ---------- lesson shell ----------
-  function shell(title, step, labels, onClose, content) {
+  function shell(title, step, labels, onClose, content, onBack) {
     const segs = labels.map((l, i) => h('i', { class: i < step ? 'done' : i === step ? 'on' : '' }));
     return h('div', { class: 'page lesson' },
       h('div', { class: 'lesson-top' },
         h('button', { class: 'icon-btn', 'aria-label': 'Close lesson', onclick: onClose }, icon('close', 'lg')),
-        h('div', { class: 'lesson-title' }, title)),
+        h('div', { class: 'lesson-title' }, title),
+        onBack ? h('button', { class: 'btn quiet', type: 'button', onclick: onBack }, icon('back'), 'Back') : h('span')),
       h('div', { class: 'segs', role: 'img', 'aria-label': 'Step ' + (step + 1) + ' of ' + labels.length + ': ' + labels[step] }, segs),
       content);
   }
 
   // ---------- chapter flow ----------
+  // Your place in a chapter is saved at every step (and every practice question) in S.lesson,
+  // so closing a chapter keeps it and the home screen offers to carry on.
+  const PRACTISE = 3;
+  const inProgress = ch => (S.lesson && S.lesson.n === ch.n ? S.lesson : null);
   function chapterFlow(ch) {
-    const stats = { right: 0, total: 0, t0: Date.now() };
     const labels = ['Discover', 'Learn', 'Phrases', 'Practise', 'Write', 'Scenario', 'Done'];
-    const builders = [discoverStep, learnStep, phrasesStep, (c, next, st) => exerciseRunner(c.exercises, st, next), writeStep, bossStep, resultStep];
-    let i = 0;
-    function render() {
-      const content = builders[i](ch, () => { i++; render(); }, stats);
-      mount(shell('Chapter ' + ch.n + ' · ' + T(ch.title), i, labels, () => {
-        if (i === labels.length - 1 || confirm('Leave this chapter? Progress in this lesson will not be kept.')) home();
-      }, content));
+    const last = labels.length - 1;
+    const saved = inProgress(ch);
+    const stats = { right: 0, total: 0, t0: Date.now() };
+    if (saved && saved.stats) { stats.right = saved.stats.right || 0; stats.total = saved.stats.total || 0; }
+    let i = saved ? Math.min(saved.step || 0, last - 1) : 0;
+    let exAt = saved && i === PRACTISE ? saved.ex || 0 : 0;
+    function keep() {
+      if (i >= last) delete S.lesson;
+      else S.lesson = { n: ch.n, step: i, ex: exAt, stats: { right: stats.right, total: stats.total } };
+      save();
     }
-    render();
+    const builders = [discoverStep, learnStep, phrasesStep,
+      (c, next, st) => exerciseRunner(c.exercises, st, next, exAt, k => { exAt = k; keep(); }),
+      writeStep, bossStep, resultStep];
+    function go(to) {
+      // Coming back to practice starts it from the first question, so its score is not counted twice.
+      if (to === PRACTISE) { stats.right = 0; stats.total = 0; exAt = 0; }
+      i = to; keep(); render();
+    }
+    function render() {
+      const content = builders[i](ch, () => go(i + 1), stats);
+      mount(shell('Chapter ' + ch.n + ' · ' + T(ch.title), i, labels, home, content,
+        i > 0 && i < last ? () => go(i - 1) : null));
+    }
+    if (i === PRACTISE && exAt) { keep(); render(); } else go(i);
   }
 
   function contBtn(label, onclick) { return h('div', { class: 'row end sticky' }, h('button', { class: 'btn primary big', onclick }, label)); }
@@ -713,19 +740,21 @@
       check() {
         if (!input.value.trim()) return null;
         const r = L.judge(input.value, ex.answer);
-        const shown = isGap ? ex.answer[0] : prettyAns(ex.answer.slice(0, 2));
+        // Labelled answers show the differences that matter (¿Vives aquí? (tú) / ¿Vive aquí? (usted)), up to four.
+        const shown = isGap ? ex.answer[0] : prettyAns(ex.answer.slice(0, ex.who ? 4 : 2), ex.q, ex.who);
         const res = { ok: r !== 'no', almost: r === 'accent', yours: input.value.trim(), answer: shown, hear: isGap ? null : ex.answer[0], why: ex.why };
-        if (!isGap && r === 'no') res.card = { id: 'x-' + ex.q.toLowerCase().replace(/[^a-z]/g, '').slice(0, 24), es: prettyAns([ex.answer[0]]), en: ex.q, alts: ex.answer.slice(1).map(a => prettyAns([a])) };
+        if (!isGap && r === 'no') res.card = { id: 'x-' + ex.q.toLowerCase().replace(/[^a-z]/g, '').slice(0, 24), es: prettyAns([ex.answer[0]], ex.q), en: ex.q, alts: ex.answer.slice(1).map(a => prettyAns([a], ex.q)) };
         return res;
       }
     };
   }
 
-  function exerciseRunner(list, stats, onDone) {
+  function exerciseRunner(list, stats, onDone, startAt, onProgress) {
     const usable = list.filter(e => e.type !== 'listen' || hasVoice());
-    const queue = usable.map(e => ({ e, retry: false }));
+    const from = Math.min(startAt || 0, usable.length);
+    const queue = usable.slice(from).map(e => ({ e, retry: false }));
     const total = usable.length;
-    let finished = 0;
+    let finished = from;
     const root = h('div', { class: 'runner' });
     const counter = h('div', { class: 'counter' });
     const fill = h('i');
@@ -777,7 +806,7 @@
           recordSkill(ex.skill, res.ok);
           save();
         }
-        if (!item.retry) finished++;
+        if (!item.retry) { finished++; if (onProgress) onProgress(finished); }
         if (!res.ok && !item.retry && ex.type !== 'rapid') queue.push({ e: ex, retry: true });
         if (!res.ok && res.card) addCards([res.card]);
 
@@ -836,9 +865,19 @@
     const out = h('div', { class: 'ai-out' });
     let busy = false; let rewarded = false;
     const btn = h('button', { class: 'btn ghost big', type: 'button' }, AI.on ? 'Check with the AI tutor' : 'Show a model answer');
+    const cont = contBtn('Continue to the scenario', next);
+    const contB = cont.querySelector('button'); contB.disabled = true;
+    const lock = h('p', { class: 'meta' }, 'Write your sentences and check them to continue.');
+    const unlock = () => { contB.disabled = false; lock.remove(); };
+    const modelAnswer = () => [
+      h('div', { class: 'corrected' }, h('div', { class: 'label' }, 'Model answer'), h('div', { class: 'big' }, T(w.model)), speakBtn(T(w.model), 'Hear it')),
+      h('p', { class: 'muted' }, 'Compare yours with it and tick off:'),
+      h('ul', { class: 'check-list' }, w.checklist.map(c => h('li', {}, h('label', {}, h('input', { type: 'checkbox' }), c))))];
     btn.addEventListener('click', async () => {
       if (busy) return;
+      if (!ta.value.trim()) { ta.focus(); lock.textContent = 'Write your sentences first, then check them.'; return; }
       if (!AI.on) {
+        unlock();
         put(out,
           h('div', { class: 'corrected' }, h('div', { class: 'label' }, 'Model answer'), h('div', { class: 'big' }, T(w.model)), speakBtn(T(w.model), 'Hear it')),
           h('p', { class: 'muted' }, 'Compare yours with it and tick off:'),
@@ -846,7 +885,6 @@
           h('p', { class: 'meta' }, 'With the AI tutor on, it corrects your exact sentences and explains why.'));
         return;
       }
-      if (!ta.value.trim()) { ta.focus(); return; }
       busy = true; btn.disabled = true; btn.textContent = 'Reading it';
       put(out, h('div', { class: 'spinner', role: 'status' }, 'Your tutor is reading it…'));
       const r = await ai('correct', { task: w.task, sentence: ta.value });
@@ -854,15 +892,17 @@
       if (r.ok) {
         renderCorrection(r.data, out);
         if (!rewarded) { rewarded = true; addXp(15); }
+        unlock();
       } else {
-        put(out, h('p', { class: 'error' }, r.error || 'Something went wrong.'), h('p', { class: 'meta' }, 'You can carry on: the rest of the chapter does not need AI.'));
+        put(out, h('p', { class: 'error' }, r.error || 'Something went wrong.'), h('p', { class: 'meta' }, 'The AI check is not available, so compare yours with the model answer instead.'), modelAnswer());
+        unlock();
       }
     });
     return h('div', { class: 'step' },
       h('h2', {}, w.title),
       h('p', { class: 'lead' }, T(w.task)),
-      ta, h('div', { class: 'row' }, btn), out,
-      contBtn('Continue to the scenario', next));
+      ta, h('div', { class: 'row' }, btn), out, lock,
+      cont);
   }
 
   // ---------- boss level ----------
@@ -921,7 +961,7 @@
       why.classList.add('hidden');
       log.append(bubble(b.who, T(b.closing), T(b.closingEn), true));
       put(footer,
-        h('p', { class: 'lead' }, slips === 0 ? 'No slips.' : slips + (slips === 1 ? ' slip' : ' slips') + ', each one a thing you now know.'),
+        h('p', { class: 'lead' }, slips === 0 ? 'No mistakes.' : slips + (slips === 1 ? ' fix' : ' fixes') + ', added to your weak spots.'),
         AI.on
           ? h('button', { class: 'btn ghost big', type: 'button', onclick: () => aiChat(ch, wrap, next) }, 'Keep chatting with ' + b.who)
           : h('p', { class: 'meta' }, 'With the AI tutor on, you can keep chatting freely with ' + b.who + ' here.'),
