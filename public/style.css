@@ -155,6 +155,10 @@ button.chap:hover { border-color: var(--line-2); }
 
 /* ---------- lesson shell ---------- */
 .lesson-top { display: grid; grid-template-columns: 36px 1fr auto; align-items: center; gap: 12px; height: 64px; }
+.lesson-tools { display: flex; gap: 4px; }
+@media (max-width: 480px) { .lesson-tools .btn { padding: 0 8px; } }
+.modal:has(.patterns) { max-width: 760px; }
+.patterns h2 { margin-bottom: 16px; }
 .lesson-title { font-size: 15px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .segs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px; margin-bottom: 32px; }
 .segs i { height: 4px; border-radius: 2px; background: var(--raised); }

@@ -24,6 +24,7 @@
     lock: '<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
     next: '<path d="m9 18 6-6-6-6"/>',
     hint: '<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>',
+    book: '<path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>',
     send: '<path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/>'
   };
   function icon(name, cls) {
@@ -462,13 +463,15 @@
   }
 
   // ---------- lesson shell ----------
-  function shell(title, step, labels, onClose, content, onBack) {
+  function shell(title, step, labels, onClose, content, onBack, onPatterns) {
     const segs = labels.map((l, i) => h('i', { class: i < step ? 'done' : i === step ? 'on' : '' }));
     return h('div', { class: 'page lesson' },
       h('div', { class: 'lesson-top' },
         h('button', { class: 'icon-btn', 'aria-label': 'Close lesson', onclick: onClose }, icon('close', 'lg')),
         h('div', { class: 'lesson-title' }, title),
-        onBack ? h('button', { class: 'btn quiet', type: 'button', onclick: onBack }, icon('back'), 'Back') : h('span')),
+        h('div', { class: 'lesson-tools' },
+          onPatterns ? h('button', { class: 'btn quiet', type: 'button', onclick: onPatterns }, icon('book'), 'Patterns') : null,
+          onBack ? h('button', { class: 'btn quiet', type: 'button', onclick: onBack }, icon('back'), 'Back') : null)),
       h('div', { class: 'segs', role: 'img', 'aria-label': 'Step ' + (step + 1) + ' of ' + labels.length + ': ' + labels[step] }, segs),
       content);
   }
@@ -502,7 +505,8 @@
     function render() {
       const content = builders[i](ch, () => go(i + 1), stats);
       mount(shell('Chapter ' + ch.n + ' · ' + T(ch.title), i, labels, home, content,
-        i > 0 && i < last ? () => go(i - 1) : null));
+        i > 0 && i < last ? () => go(i - 1) : null,
+        i >= 2 && i < last ? () => modal(h('div', { class: 'patterns' }, h('h2', {}, 'Patterns · ' + T(ch.sub || ch.title)), ch.learn.blocks.map(learnBlock))) : null));
     }
     if (i === PRACTISE && exAt) { keep(); render(); } else go(i);
   }
