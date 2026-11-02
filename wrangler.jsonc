@@ -6,8 +6,8 @@
   "name": "stilus",
   "main": "worker/index.js",
   "compatibility_date": "2026-10-01",
-  // Off until Cloudflare Access is switched on for this Worker in the dashboard; then true.
-  "workers_dev": false,
+  // Cloudflare Access (All traffic) protects the Worker on every address, so workers.dev is safe to switch on.
+  "workers_dev": true,
   "preview_urls": false,
   // Workers Logs (free plan): keeps errors such as the AI provider's reason for a few days, in the dashboard.
   "observability": { "enabled": true },
@@ -31,7 +31,7 @@
     // Cloudflare Access: your Zero Trust team name (the part before .cloudflareaccess.com) and the
     // Application Audience (AUD) tag from the Worker's Access application. Both are filled in after Access is set up.
     "ACCESS_TEAM": "divine-mouse-214c",
-    "ACCESS_AUD": "40638f8abe60f25ac4c343568d45d2b874dd79e89a29f5f2b60b8ec5e8e72e3e",
+    "ACCESS_AUD": "de7ffe98c442cae4319a0aca46ed0c717c165fca9be163fd9f7704f4a2624f99",
     // AI calls per person per day, and for everyone together (keep this under the provider's free daily quota).
     "AI_DAILY_PER_USER": "60",
     "AI_DAILY_GLOBAL": "450"

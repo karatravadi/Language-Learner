@@ -26,12 +26,14 @@ Read this first, then `HANDOVER.md` for the next phase of work.
   `gemini-3.5-flash-lite` in settings.env is unverified; the hosted Worker uses `gemini-3.5-flash-lite` (500 free requests a day), confirmed in AI Studio.
 
 ## Hosted version (live since 2 Nov 2026)
-- https://espanol-trainer.karatravadi.workers.dev: one Cloudflare Worker (`worker/index.js`, `wrangler.jsonc`) serves
+- https://stilus.karatravadi.workers.dev: one Cloudflare Worker named `stilus` (`worker/index.js`, `wrangler.jsonc`) serves
   `public/` and answers `/api/*`. Free plan. Cloudflare Access (team `divine-mouse-214c`, All traffic) asks for sign-in
   on every address; the Worker also verifies the `Cf-Access-Jwt-Assertion` token (issuer + AUD in `wrangler.jsonc`)
   and fails closed if they are blank.
 - Who can sign in: Zero Trust → Access → Policies (currently Kara's Cloudflare account; add an Emails policy for friends).
-- D1 database `espanol-trainer` (WEUR): `progress` (sync, versioned saves) and `ai_usage` (daily AI caps).
+- Until 2 Nov 2026 the Worker was `espanol-trainer` (espanol-trainer.karatravadi.workers.dev), with its own Access
+  application and Gemini secret. `stilus` has its own of both; the AUD in `wrangler.jsonc` is stilus's.
+- D1 database `espanol-trainer` (WEUR, shared by both Workers, so progress carried over): `progress` (sync, versioned saves) and `ai_usage` (daily AI caps).
   Schema changes go in `migrations/`; `npm run deploy` applies them, then deploys.
 - AI: Gemini 3.5 Flash-Lite, free tier 15 a minute and 500 a day for the whole project. Caps: 60 per person, 450 total.
   Key is a Worker secret (`npx wrangler secret put GEMINI_API_KEY`, Kara types it herself).
