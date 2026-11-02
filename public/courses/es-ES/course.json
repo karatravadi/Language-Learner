@@ -1,6 +1,6 @@
 {
   "id": "es-ES",
-  "title": "European Spanish",
+  "title": "Spanish (European)",
   "level": "A1 to A2",
   "lang": "es-ES",
   "voice": ["^es[-_]ES", "^es"],
