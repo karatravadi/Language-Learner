@@ -7,10 +7,16 @@
     "start": "node server.js",
     "test": "node tests/unit.js && node tools/check-content.js",
     "check": "node tools/check-content.js",
-    "e2e": "node tests/e2e.js"
+    "e2e": "node tests/e2e.js",
+    "dev:hosted": "wrangler d1 migrations apply espanol-trainer --local && wrangler dev --port 3132",
+    "deploy": "wrangler d1 migrations apply espanol-trainer --remote && wrangler deploy"
   },
   "devDependencies": {
-    "puppeteer": "23.11.1"
+    "jose": "6.2.12",
+    "puppeteer": "23.11.1",
+    "wrangler": "4.151.1"
   },
-  "engines": { "node": ">=18" }
+  "engines": {
+    "node": ">=18"
+  }
 }

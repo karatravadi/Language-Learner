@@ -88,7 +88,7 @@
   // JSON reviver: a saved file must not be able to swap an object's prototype.
   function noProto(k, v) { return k === '__proto__' ? undefined : v; }
   function load() { return withDefaults(store.read()); }
-  function save() { store.write(S); }
+  function save() { store.write(S); if (SYNC.on) schedulePush(); }
 
   // ---------- export / import progress (a JSON file) ----------
   const EXPORT_APP = 'espanol-trainer';
@@ -108,7 +108,7 @@
     if (o.course !== COURSE.id) return 'That file is for a different course (' + String(o.course).slice(0, 20) + ').';
     const when = String(o.exported || '').slice(0, 10) || 'an unknown date';
     if (!confirm('Replace the progress on this device with the file from ' + when + '? This cannot be undone.')) return '';
-    S = withDefaults(o.state); pruneTime(); save();
+    S = withDefaults(o.state); pruneTime(); save(); pushReplace();
     return null;
   }
 
@@ -188,16 +188,88 @@
   // ---------- AI (optional; the app works without it) ----------
   const AI = { on: false, model: '', provider: '' };
   async function aiStatus() {
-    try { const r = await fetch('/api/status'); const j = await r.json(); AI.on = !!j.ai; AI.model = j.model || ''; AI.provider = j.provider || ''; } catch (e) { /* offline server */ }
+    try {
+      const r = await fetch('/api/status'); const j = await r.json();
+      AI.on = !!j.ai; AI.model = j.model || ''; AI.provider = j.provider || '';
+      SYNC.on = j.sync === true && typeof j.user === 'string'; SYNC.user = j.user || '';
+    } catch (e) { /* offline server */ }
   }
   async function ai(mode, payload) {
     try {
       const r = await fetch('/api/ai', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.assign({ mode, course: COURSE.id }, payload)) });
       return await r.json();
     } catch (e) {
-      return { ok: false, error: 'Could not reach the trainer. Is the black start window still open?' };
+      return { ok: false, error: SYNC.on ? 'Could not reach the AI tutor. Check your connection and try again.' : 'Could not reach the trainer. Is the black start window still open?' };
     }
   }
+
+  // ---------- sync (hosted app only: the local server has no accounts, so SYNC.on stays false) ----------
+  // This device keeps working from localStorage; the account copy is loaded at start and when the page comes back
+  // into view, and every save is sent a moment later. If another device saved first, the two copies are merged
+  // (L.mergeState) and sent again, so nothing studied on either device is lost.
+  const SYNC = { on: false, user: '', version: 0, busy: false, again: false, replace: false, timer: 0 };
+  const metaKey = () => KEY + ':sync';
+  function readMeta() { try { return JSON.parse(localStorage.getItem(metaKey())) || {}; } catch (e) { return {}; } }
+  function writeMeta() { try { localStorage.setItem(metaKey(), JSON.stringify({ user: SYNC.user, version: SYNC.version })); } catch (e) { /* private mode */ } }
+  const hasProgress = s => s.xp > 0 || Object.keys(s.done).length > 0 || Object.keys(s.srs).length > 0;
+  async function progressApi(method, body) {
+    const r = await fetch('/api/progress' + (method === 'GET' ? '?course=' + encodeURIComponent(COURSE.id) : ''), {
+      method, headers: body ? { 'Content-Type': 'application/json' } : undefined, body: body ? JSON.stringify(body) : undefined, keepalive: method === 'PUT'
+    });
+    return { status: r.status, j: await r.json() };
+  }
+  function adopt(state) { S = withDefaults(state); pruneTime(); store.write(S); }
+
+  // At start: bring this device and the account together.
+  async function syncStart() {
+    let got;
+    try { got = await progressApi('GET'); } catch (e) { return; } // offline: carry on locally, sync later
+    if (got.status !== 200) return;
+    const meta = readMeta();
+    const mine = meta.user === SYNC.user; // this device last synced with this same account
+    const local = hasProgress(S);
+    SYNC.version = got.j.version || 0;
+    if (got.j.state) {
+      if (mine) adopt(L.mergeState(S, got.j.state));
+      else if (!meta.user && local && confirm('This device has progress that is not in your account yet. Add it to your account?')) adopt(L.mergeState(S, got.j.state));
+      else adopt(got.j.state);
+    } else if (!(local && (mine || (!meta.user && confirm('Use this device\'s progress for your account? Choose Cancel to start your account from zero.'))))) {
+      adopt({});
+    }
+    writeMeta();
+    syncPush();
+  }
+  // When the page comes back into view: pick up what other devices saved meanwhile.
+  async function syncPull() {
+    if (!SYNC.on || SYNC.busy) return;
+    try {
+      const got = await progressApi('GET');
+      if (got.status !== 200 || !got.j.state || got.j.version === SYNC.version) return;
+      adopt(L.mergeState(S, got.j.state)); SYNC.version = got.j.version; writeMeta(); syncPush();
+      if (document.querySelector('.page.home')) home();
+    } catch (e) { /* offline */ }
+  }
+  function schedulePush() { clearTimeout(SYNC.timer); SYNC.timer = setTimeout(syncPush, 1500); }
+  async function syncPush() {
+    if (!SYNC.on) return;
+    if (SYNC.busy) { SYNC.again = true; return; }
+    SYNC.busy = true; clearTimeout(SYNC.timer);
+    try {
+      for (let tries = 0; tries < 4; tries++) {
+        const replace = SYNC.replace;
+        const r = await progressApi('PUT', { course: COURSE.id, state: S, version: SYNC.version, replace });
+        if (r.status === 200) { SYNC.version = r.j.version; if (replace) SYNC.replace = false; writeMeta(); break; }
+        if (r.status !== 409) break; // signed out or server trouble: keep the local copy, try again on the next save
+        adopt(L.mergeState(S, r.j.state || {})); SYNC.version = r.j.version || 0;
+      }
+    } catch (e) { /* offline: the next save or coming back online retries */ }
+    SYNC.busy = false;
+    if (SYNC.again) { SYNC.again = false; syncPush(); }
+  }
+  // Reset and import replace the account copy instead of merging into it.
+  function pushReplace() { if (SYNC.on) { SYNC.replace = true; syncPush(); } }
+  window.addEventListener('online', () => { if (SYNC.on) syncPush(); });
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') syncPull(); });
 
   // ---------- small UI pieces ----------
   function backBar(title, onBack) {
@@ -325,20 +397,26 @@
       h('label', { class: 'field' }, h('span', {}, 'Daily goal'), goal),
       h('div', { class: 'row' },
         h('button', { class: 'btn primary', onclick: () => { S.name = name.value.trim() || 'Kara'; S.fem = fem.checked; S.goalMins = Number(goal.value) || 45; S.prefsAt = Date.now(); save(); ov.remove(); home(); } }, 'Save'),
-        h('button', { class: 'btn quiet danger', onclick: () => { if (confirm('Erase all progress, review cards and streak on this device?')) { S = defaults(); save(); ov.remove(); home(); } } }, 'Reset progress')),
+        h('button', { class: 'btn quiet danger', onclick: () => { if (confirm(SYNC.on ? 'Erase all progress, review cards and streak, on every device?' : 'Erase all progress, review cards and streak on this device?')) { S = defaults(); save(); pushReplace(); ov.remove(); home(); } } }, 'Reset progress')),
       h('div', { class: 'field', style: { 'margin-top': '16px' } }, h('span', {}, 'Backup'),
         h('div', { class: 'row', style: { 'margin-top': '0' } },
           h('button', { class: 'btn ghost', type: 'button', onclick: exportProgress }, 'Export progress'),
           h('button', { class: 'btn ghost', type: 'button', onclick: () => file.click() }, 'Import progress'))),
       file, msg,
-      h('p', { class: 'meta', style: { 'margin-top': '16px' } }, 'Progress is saved in this browser on this device. Export it to keep a copy or move it to another browser. Practice time only counts while you are active on the page.')));
+      h('p', { class: 'meta', style: { 'margin-top': '16px' } }, SYNC.on
+        ? 'Signed in as ' + SYNC.user + '. Progress syncs to your account, so every device you sign in on sees the same streak and review cards. Practice time only counts while you are active on the page.'
+        : 'Progress is saved in this browser on this device. Export it to keep a copy or move it to another browser. Practice time only counts while you are active on the page.')));
   }
 
   function aiHelp() {
     modal(h('div', {},
       h('h2', {}, AI.on ? 'AI tutor is on' : 'Switch on the AI tutor'),
       AI.on
-        ? h('p', {}, 'Connected to ' + (AI.provider || 'AI') + ' (' + AI.model + '). It corrects your own sentences, checks your word-of-the-day answer and plays the characters in free chat. Everything else works without it.')
+        ? h('div', {},
+          h('p', {}, 'Connected to ' + (AI.provider || 'AI') + ' (' + AI.model + '). It corrects your own sentences, checks your word-of-the-day answer and plays the characters in free chat. Everything else works without it.'),
+          AI.provider === 'Gemini' ? h('p', { class: 'meta' }, 'This uses Google\'s free Gemini tier. Google says it may use what you type into the AI parts to improve its products, so keep anything private out of them.') : null,
+          SYNC.on ? h('p', { class: 'meta' }, 'Each person gets a daily number of AI requests. When they run out, everything else keeps working.') : null)
+        : SYNC.on ? h('p', {}, 'The AI tutor is not switched on for this app yet. Everything else works without it.')
         : h('div', {},
           h('p', {}, 'Everything works without AI. The tutor adds sentence correction and free chat. Setup takes about 3 minutes:'),
           h('ol', { class: 'steps-list' },
@@ -1088,6 +1166,7 @@
     }
     window.__trainer = { state: () => S, home, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE };
     await aiStatus();
+    if (SYNC.on) await syncStart();
     home();
   }
   boot();
