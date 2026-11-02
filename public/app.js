@@ -345,11 +345,11 @@
       plan);
 
     const wotd = h('button', { class: 'card wotd', type: 'button', onclick: wotdScreen },
-      h('div', { class: 'wotd-k' }, 'Palabra del día'),
+      h('div', { class: 'wotd-k' }, 'Palabra del día · Word of the day'),
       h('div', { class: 'wotd-w' }, word.es),
       h('div', { class: 'wotd-m' }, word.en),
       h('div', { class: 'wotd-ex' }, word.ex.es),
-      h('div', { class: 'wotd-go' }, wdone ? 'Done today, see it again' : 'Use it in a sentence', icon('next')));
+      h('div', { class: 'wotd-go' }, wdone ? [icon('check'), 'Done'] : ['Use it in a sentence', icon('next')]));
 
     const path = CHAPTERS.map(ch => {
       const d = S.done[ch.n];
@@ -373,7 +373,7 @@
       h('div', { class: 'home-grid' },
         h('div', { class: 'home-side' }, todayCard, wotd),
         h('div', {},
-          h('h1', { class: 'page-title' }, COURSE.title), h('p', { class: 'muted' }, COURSE.level + ' · ' + CHAPTERS.length + ' chapters ready, ' + ROADMAP.length + ' to come'),
+          h('h1', { class: 'page-title' }, COURSE.title), h('p', { class: 'muted' }, COURSE.level + ' · ' + CHAPTERS.length + ' chapters'),
           h('div', { class: 'path' }, path),
           h('div', { class: 'foot' }, aiLine)))));
   }
@@ -460,9 +460,8 @@
     return h('div', { class: 'page lesson' },
       h('div', { class: 'lesson-top' },
         h('button', { class: 'icon-btn', 'aria-label': 'Close lesson', onclick: onClose }, icon('close', 'lg')),
-        h('div', { class: 'lesson-title' }, title),
-        h('div', { class: 'lesson-step' }, labels[step])),
-      h('div', { class: 'segs' }, segs),
+        h('div', { class: 'lesson-title' }, title)),
+      h('div', { class: 'segs', role: 'img', 'aria-label': 'Step ' + (step + 1) + ' of ' + labels.length + ': ' + labels[step] }, segs),
       content);
   }
 
@@ -1152,7 +1151,7 @@
     });
 
     const learned = S.wotd.learned.map(id => WORDS.find(x => x.id === id)).filter(Boolean);
-    mount(h('div', { class: 'page lesson' }, backBar('Palabra del día', home),
+    mount(h('div', { class: 'page lesson' }, backBar('Palabra del día · Word of the day', home),
       h('div', { class: 'step' },
         h('div', { class: 'wotd-hero' },
           h('div', { class: 'meta' }, w.pos),

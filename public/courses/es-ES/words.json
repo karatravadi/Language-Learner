@@ -3,7 +3,7 @@
     "id": "vale",
     "es": "vale",
     "en": "OK, alright",
-    "pos": "interjection · very Spain",
+    "pos": "interjection · used constantly in Spain",
     "ex": {
       "es": "—¿Quedamos a las ocho? —Vale.",
       "en": "Shall we meet at eight? OK."
@@ -462,7 +462,7 @@
     "id": "tener-sueno",
     "es": "tener sueño",
     "en": "to be sleepy",
-    "pos": "phrase · uses tener, not estar!",
+    "pos": "phrase · uses tener, not estar",
     "ex": {
       "es": "Tengo sueño; me voy a dormir.",
       "en": "I'm sleepy; I'm going to sleep."

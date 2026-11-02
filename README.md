@@ -1,6 +1,6 @@
 # Español Trainer
 
-A local web app for learning Spanish from Spain (CEFR A1 → A2), built for one problem: audio-only courses
+A local web app for learning European Spanish (as spoken in Spain) (CEFR A1 → A2), built for one problem: audio-only courses
 and flashcard apps can feel boring. Setup steps are in **START-HERE.txt**. Notes for developers (and for
 Claude Code) are in **CLAUDE.md**, and the plan for putting it online is in **HANDOVER.md**.
 

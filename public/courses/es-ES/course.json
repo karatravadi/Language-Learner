@@ -1,11 +1,11 @@
 {
   "id": "es-ES",
-  "title": "Spanish from Spain",
+  "title": "European Spanish",
   "level": "A1 to A2",
   "lang": "es-ES",
   "voice": ["^es[-_]ES", "^es"],
   "storageKey": "espanol-trainer-v1",
-  "tutor": "Spanish from Spain (use vosotros where relevant, and Spain vocabulary like \"vale\")",
+  "tutor": "European Spanish as spoken in Spain (use vosotros where relevant, and Spain vocabulary like \"vale\")",
   "skills": { "phrases": "Everyday phrases" },
   "chapters": [
     "chapters/01-ser-estar.json",
