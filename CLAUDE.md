@@ -8,7 +8,7 @@ Read this first, then `HANDOVER.md` for the next phase of work.
   audio-only format she finds easy to switch off from, so variety and active practice matter more than volume.
 - She studies about **45 minutes a day** in the app. The home screen plans that day: word of the day (3 min), review (10),
   one chapter (15), then weak spots or AI chat (15). Practice time only counts while she is active on the page.
-- Later: 2 to 3 friends with their own synced progress (see `HANDOVER.md`). A **Latin** course (reading classical
+- 2 to 3 friends with their own synced progress (Access policy added 2 Nov 2026; see `HANDOVER.md`). A **Latin** course (reading classical
   texts, Roman history, roots of the Romance languages) has 4 chapters, about 25 minutes a day next to the Spanish.
   Spanish stays the priority and the default course. See "Latin course" below.
 - Kara is on Windows. Always lead with free options and state the price of anything paid upfront.
@@ -30,7 +30,7 @@ Read this first, then `HANDOVER.md` for the next phase of work.
   `public/` and answers `/api/*`. Free plan. Cloudflare Access (team `divine-mouse-214c`, All traffic) asks for sign-in
   on every address; the Worker also verifies the `Cf-Access-Jwt-Assertion` token (issuer + AUD in `wrangler.jsonc`)
   and fails closed if they are blank.
-- Who can sign in: Zero Trust → Access → Policies (currently Kara's Cloudflare account; add an Emails policy for friends).
+- Who can sign in: Zero Trust → Access → Policies (Kara's Cloudflare account plus an Emails policy for friends, added 2 Nov 2026).
 - Until 2 Nov 2026 the Worker was `espanol-trainer` (espanol-trainer.karatravadi.workers.dev), with its own Access
   application and Gemini secret. `stilus` has its own of both; the AUD in `wrangler.jsonc` is stilus's.
 - D1 database `espanol-trainer` (WEUR, shared by both Workers, so progress carried over): `progress` (sync, versioned saves) and `ai_usage` (daily AI caps).

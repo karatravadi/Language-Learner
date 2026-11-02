@@ -1,7 +1,7 @@
 # Handover: putting Stilus online for Kara and friends
 
 > Status, 2 Nov 2026: Steps 0 to 4 are done and live (see the Hosted version section of `CLAUDE.md`). We chose a
-> Worker with static assets rather than Pages. Left: friends' Emails policy, Step 5 (phone polish, offline),
+> Worker with static assets rather than Pages. Friends' Emails policy added the same day. Left: Step 5 (phone polish, offline),
 > and automated tests for the Worker and the merge-on-conflict path in the browser.
 
 Written 2 November 2026 at the end of a build session in Claude's cloud workspace. That workspace could not reach
@@ -85,7 +85,7 @@ carry over.
 
 ## Acceptance checklist
 - [ ] Kara signs in on PC and phone and sees the same streak, chapters and review cards (PC done 2 Nov; phone to check)
-- [ ] A friend signs in with their own email and starts from zero. A stranger can't get in
+- [ ] A friend signs in with their own email and starts from zero. A stranger can't get in (Emails policy added 2 Nov; first friend sign-in to confirm)
 - [ ] Offline on the phone: lessons still work, and progress syncs when back online without losing anything
 - [x] The AI key is not visible in page source, network responses or the repo
 - [ ] Per-person AI limit works, and the global cap works
@@ -104,5 +104,5 @@ carry over.
 
 ## Open questions for Kara
 - Hosting choice after the Step 0 comparison
-- Friends' emails for the invite list, and whether they also learn Spain Spanish
+- Whether friends also learn Spain Spanish (their emails are on the invite list)
 - Is a custom domain worth about £8 to £10 a year?
