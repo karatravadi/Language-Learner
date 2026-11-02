@@ -5,7 +5,8 @@
   "name": "espanol-trainer",
   "main": "worker/index.js",
   "compatibility_date": "2026-10-01",
-  "workers_dev": true,
+  // false until Cloudflare Access protects the Worker, so the app is never reachable without sign-in
+  "workers_dev": false,
   "preview_urls": false,
   "assets": {
     "directory": "./public",
@@ -22,7 +23,8 @@
   ],
   "vars": {
     "PROVIDER": "gemini",
-    "GEMINI_MODEL": "gemini-3.5-flash-lite",
+    // Confirmed in Google AI Studio on 2 Nov 2026. Free tier: 5 requests a minute for the whole project.
+    "GEMINI_MODEL": "gemini-3.8-flash",
     // Cloudflare Access: your Zero Trust team name (the part before .cloudflareaccess.com) and the
     // Application Audience (AUD) tag from the Worker's Access application. Both are filled in after Access is set up.
     "ACCESS_TEAM": "",
