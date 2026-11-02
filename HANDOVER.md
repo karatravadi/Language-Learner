@@ -88,7 +88,7 @@ carry over.
 - [ ] A friend signs in with their own email and starts from zero. A stranger can't get in (Emails policy added 2 Nov; first friend sign-in to confirm)
 - [ ] Offline on the phone: lessons still work, and progress syncs when back online without losing anything
 - [x] The AI key is not visible in page source, network responses or the repo
-- [ ] Per-person AI limit works, and the global cap works
+- [ ] Per-person AI limit works, and the global cap works (calls left now shown in the app)
 - [ ] `npm test` and `npm run e2e` pass. Add tests for the merge rules
 - [x] Monthly cost confirmed with Kara (target £0): Cloudflare free plans, Gemini free tier
 

@@ -33,7 +33,7 @@ Read this first, then `HANDOVER.md` for the next phase of work.
 - Who can sign in: Zero Trust → Access → Policies (Kara's Cloudflare account plus an Emails policy for friends, added 2 Nov 2026).
 - Until 2 Nov 2026 the Worker was `espanol-trainer` (espanol-trainer.karatravadi.workers.dev), with its own Access
   application and Gemini secret. `stilus` has its own of both; the AUD in `wrangler.jsonc` is stilus's.
-- D1 database `espanol-trainer` (WEUR, shared by both Workers, so progress carried over): `progress` (sync, versioned saves) and `ai_usage` (daily AI caps).
+- D1 database `espanol-trainer` (WEUR, shared by both Workers, so progress carried over): `progress` (sync, versioned saves), `ai_usage` (daily AI caps) and `profiles` (one name and choice of endings per person, shared by every course; `/api/profile`). `/api/usage` and a `usage` field on every AI reply give the tutor calls left today.
   Schema changes go in `migrations/`; `npm run deploy` applies them, then deploys.
 - AI: Gemini 3.5 Flash-Lite, free tier 15 a minute and 500 a day for the whole project. Caps: 60 per person, 450 total.
   Key is a Worker secret (`npx wrangler secret put GEMINI_API_KEY`, Kara types it herself).
@@ -51,7 +51,7 @@ wrangler.jsonc            Worker config: assets, D1 binding, model, Access team 
 migrations/               D1 schema
 public/index.html         shell
 public/app.js             all screens, exercise engine, review, word of the day, practice timer
-public/logic.js           pure logic, unit-tested: judge(), spaced repetition, word picker, streaks
+public/logic.js           pure logic, unit-tested: judge() and nearMiss() (spelling slips), spaced repetition, word picker, streaks
 public/style.css          design tokens and components (direction in the header comment)
 public/fonts/             Instrument Sans + Newsreader (OFL), bundled so it works offline
 public/courses/index.json list of courses, each with a label for the course switch in the header
@@ -75,6 +75,9 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
 - Every exercise has a `skill`; skills need a readable name in the chapter's `skills` (or the course's).
   Weak-spot drills group by skill.
 - Translate answers: lowercase, no punctuation, list every natural variant (tú/usted/vosotros where sensible).
+- Spelling slips: a typed answer (gap, translate, review) one letter off in a word of 5+ letters, outside its first
+  and last two letters, and not a real word (glossary), gets half a mark ("Nearly"). Add `"strict": true` to a gap or
+  translate exercise where the spelling is the point.
 - Fix exercises: the fixed sentence must have the same number of words, so the red-pen mark can line up.
 - Accuracy: the Spanish is written by an AI and checked by tests for consistency, not for correctness.
   Flag anything unusual for Kara. A native speaker reviewing each batch is the best safeguard.

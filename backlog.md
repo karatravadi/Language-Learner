@@ -3,6 +3,7 @@
 Last updated 2 Nov 2026. Newest at the bottom. Sizes: S under an hour of work, M a session, L several sessions.
 
 ## 1. Save my name against my email (S)
+Done and deployed 2 Nov 2026.
 Problem: adding a new language asks for my name again.
 
 Plan:
@@ -12,9 +13,10 @@ Plan:
 - Name can be changed in Settings. It feeds the `{name}` token in chapter text.
 - Migration: if a name already exists in current progress, copy it into the profile on first load.
 
-Open question: where is the name stored today? Check app.js and the D1 progress rows before building.
+Answer: it was stored per course, inside each course's progress (S.name), so a new course started blank.
 
 ## 2. Partial marks for small spelling slips (M)
+Done and deployed 2 Nov 2026.
 Problem: one wrong letter in a word gives a full fail.
 
 Plan:
@@ -46,6 +48,7 @@ Plan:
 - This is the first step on the open "clearer explanations for absolute beginners" item in HANDOVER.md.
 
 ## 4. Show AI calls left today (S)
+Done and deployed 2 Nov 2026.
 Problem: the tutor stops working when the daily cap is hit (60 per person, 450 in total), with no warning.
 
 Plan:
