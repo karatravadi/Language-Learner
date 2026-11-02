@@ -57,7 +57,7 @@ public/fonts/             Instrument Sans + Newsreader (OFL), bundled so it work
 public/courses/index.json list of courses, each with a label for the course switch in the header
 public/courses/es-ES/     course.json (meta, skills, roadmap), chapters/*.json, words.json, glossary.json
 public/courses/la/        the Latin course, same shape
-public/courses/fr-FR/     the French course (France), same shape
+public/courses/fr-FR/     the French (European) course, same shape
 tools/check-content.js    validates every course file; tests/unit.js runs it too
 tools/spanish-text.js     the course-language text a learner can tap; lists words still missing from the glossary
 tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.js, mock-ai.js
@@ -127,7 +127,7 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
 - Macrons in all Latin text. Check new Latin against Whitaker's Words or Wheelock (both free online).
 
 ## French course (public/courses/fr-FR)
-- Kara's third course (added 2 Nov 2026): French from France, A1 then A2, 25 min a day (`goalMins` 25, plan 2/7/8).
+- Kara's third course (added 2 Nov 2026): French (European), meaning French as spoken in France, A1 then A2, 25 min a day (`goalMins` 25, plan 2/7/8).
   Chapters 1 to 4 are written (être and tu or vous, avoir and -er verbs and ne … pas, numbers and time, food and
   ordering). The roadmap in course.json plans 5 to 12 and ends in an A2 checkpoint, like Spanish.
 - Settings that differ from Spanish: `lang` fr-FR, `languageName` French, `genderedExamples` false (no `{o}` in French
