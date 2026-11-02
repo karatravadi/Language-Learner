@@ -8,6 +8,8 @@
   // Cloudflare Access (All traffic) protects the Worker on every address, so workers.dev is safe to switch on.
   "workers_dev": true,
   "preview_urls": false,
+  // Workers Logs (free plan): keeps errors such as the AI provider's reason for a few days, in the dashboard.
+  "observability": { "enabled": true },
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
