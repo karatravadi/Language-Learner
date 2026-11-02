@@ -1,0 +1,761 @@
+{
+  "n": 2,
+  "title": "Everyday verbs",
+  "sub": "Present tense: -ar, -er, -ir",
+  "can": "Say where you live, what you do and what you're learning, and ask other people the same.",
+  "mins": 14,
+  "doneText": "You can now build the present tense of any regular verb and talk about your everyday life.",
+  "skills": {
+    "ar-verbs": "Present tense: -ar verbs",
+    "er-ir-verbs": "Present tense: -er and -ir verbs",
+    "who": "Who is doing it: verb endings",
+    "no-do": "Questions without \"do\"",
+    "vosotros": "Vosotros forms"
+  },
+  "discover": {
+    "intro": "None of these sentences has a word for \"I\" or \"we\". See if you can work out how Spanish shows who is doing it.",
+    "groups": [
+      {
+        "label": "Blue",
+        "tone": "blue",
+        "lines": [
+          [
+            "Hablo inglés.",
+            "I speak English."
+          ],
+          [
+            "Vivo en Londres.",
+            "I live in London."
+          ],
+          [
+            "Como mucha fruta.",
+            "I eat lots of fruit."
+          ]
+        ]
+      },
+      {
+        "label": "Orange",
+        "tone": "orange",
+        "lines": [
+          [
+            "Hablamos inglés.",
+            "We speak English."
+          ],
+          [
+            "Vivimos en Londres.",
+            "We live in London."
+          ],
+          [
+            "Comemos mucha fruta.",
+            "We eat lots of fruit."
+          ]
+        ]
+      }
+    ],
+    "question": "So how do you know who is doing it?",
+    "options": [
+      "The end of the verb: -o means I, -mos means we.",
+      "The word order: the person always comes last.",
+      "You can't. Spanish speakers guess from context."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Compare the verbs only: hablo and hablamos, vivo and vivimos. What changes?",
+    "reveal": "The ending tells you who. That is why Spanish usually drops yo, tú and nosotros. To build a regular verb, take off -ar, -er or -ir and add the ending for the person:",
+    "hooks": [
+      {
+        "title": "-AR verbs: hablar",
+        "tone": "blue",
+        "rows": [
+          [
+            "-o",
+            "yo",
+            "hablo",
+            "I speak"
+          ],
+          [
+            "-as",
+            "tú",
+            "hablas",
+            "you speak"
+          ],
+          [
+            "-a",
+            "él / ella / usted",
+            "habla",
+            "he / she speaks"
+          ],
+          [
+            "-amos",
+            "nosotros",
+            "hablamos",
+            "we speak"
+          ],
+          [
+            "-áis",
+            "vosotros",
+            "habláis",
+            "you all speak"
+          ],
+          [
+            "-an",
+            "ellos / ellas",
+            "hablan",
+            "they speak"
+          ]
+        ]
+      },
+      {
+        "title": "-ER and -IR verbs: comer, vivir",
+        "tone": "orange",
+        "rows": [
+          [
+            "-o",
+            "yo",
+            "como · vivo",
+            "I eat · I live"
+          ],
+          [
+            "-es",
+            "tú",
+            "comes · vives",
+            "you eat · you live"
+          ],
+          [
+            "-e",
+            "él / ella / usted",
+            "come · vive",
+            "he / she eats · lives"
+          ],
+          [
+            "-emos / -imos",
+            "nosotros",
+            "comemos · vivimos",
+            "we eat · we live"
+          ],
+          [
+            "-éis / -ís",
+            "vosotros",
+            "coméis · vivís",
+            "you all eat · live"
+          ],
+          [
+            "-en",
+            "ellos / ellas",
+            "comen · viven",
+            "they eat · they live"
+          ]
+        ]
+      }
+    ]
+  },
+  "learn": {
+    "title": "The three patterns",
+    "sub": "Tap any row to hear it",
+    "blocks": [
+      {
+        "type": "tables",
+        "tables": [
+          {
+            "title": "hablar",
+            "tone": "blue",
+            "rows": [
+              [
+                "yo",
+                "hablo"
+              ],
+              [
+                "tú",
+                "hablas"
+              ],
+              [
+                "él / ella / usted",
+                "habla"
+              ],
+              [
+                "nosotros/as",
+                "hablamos"
+              ],
+              [
+                "vosotros/as",
+                "habláis"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "hablan"
+              ]
+            ]
+          },
+          {
+            "title": "comer",
+            "tone": "orange",
+            "rows": [
+              [
+                "yo",
+                "como"
+              ],
+              [
+                "tú",
+                "comes"
+              ],
+              [
+                "él / ella / usted",
+                "come"
+              ],
+              [
+                "nosotros/as",
+                "comemos"
+              ],
+              [
+                "vosotros/as",
+                "coméis"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "comen"
+              ]
+            ]
+          },
+          {
+            "title": "vivir",
+            "tone": "green",
+            "rows": [
+              [
+                "yo",
+                "vivo"
+              ],
+              [
+                "tú",
+                "vives"
+              ],
+              [
+                "él / ella / usted",
+                "vive"
+              ],
+              [
+                "nosotros/as",
+                "vivimos"
+              ],
+              [
+                "vosotros/as",
+                "vivís"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "viven"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "note",
+        "kind": "tip",
+        "text": "-ER and -IR verbs share every ending except nosotros and vosotros: comemos and coméis, but vivimos and vivís."
+      },
+      {
+        "type": "note",
+        "kind": "spain",
+        "text": "In Spain you will hear vosotros forms all the time: ¿Habláis inglés? ¿Dónde vivís? Mind the accents on habláis and coméis."
+      },
+      {
+        "type": "twist",
+        "title": "One Spanish present, three English ones",
+        "a": [
+          "Trabajo en Londres.",
+          "I work in London."
+        ],
+        "b": [
+          "¿Trabajas hoy?",
+          "Are you working today? / Do you work today?"
+        ],
+        "note": "Spanish has no helper \"do\", and the simple present also covers \"I'm working\". To ask a question, keep the same words and let your voice rise at the end."
+      },
+      {
+        "type": "note",
+        "kind": "warn",
+        "text": "Drop the pronoun. Say \"Hablo un poco de español\", not \"Yo hablo…\". Add yo or tú only for contrast: \"Yo trabajo, tú estudias.\""
+      },
+      {
+        "type": "list",
+        "title": "Regular verbs worth knowing",
+        "rows": [
+          [
+            "trabajar",
+            "to work"
+          ],
+          [
+            "estudiar",
+            "to study"
+          ],
+          [
+            "viajar",
+            "to travel"
+          ],
+          [
+            "aprender",
+            "to learn"
+          ],
+          [
+            "beber",
+            "to drink"
+          ],
+          [
+            "leer",
+            "to read"
+          ],
+          [
+            "escribir",
+            "to write"
+          ],
+          [
+            "abrir",
+            "to open"
+          ]
+        ]
+      }
+    ]
+  },
+  "phrases": [
+    {
+      "id": "c2-english",
+      "es": "¿Hablas inglés?",
+      "en": "Do you speak English?",
+      "alts": [
+        "¿Habla inglés?",
+        "¿Habla usted inglés?"
+      ]
+    },
+    {
+      "id": "c2-little",
+      "es": "Hablo un poco de español.",
+      "en": "I speak a little Spanish.",
+      "alts": []
+    },
+    {
+      "id": "c2-where",
+      "es": "¿Dónde vives?",
+      "en": "Where do you live?",
+      "alts": [
+        "¿Dónde vive?",
+        "¿Dónde vivís?"
+      ]
+    },
+    {
+      "id": "c2-london",
+      "es": "Vivo en Londres.",
+      "en": "I live in London.",
+      "alts": []
+    },
+    {
+      "id": "c2-job",
+      "es": "¿A qué te dedicas?",
+      "en": "What do you do for a living?",
+      "alts": [
+        "¿En qué trabajas?"
+      ]
+    },
+    {
+      "id": "c2-understand",
+      "es": "No entiendo.",
+      "en": "I don't understand.",
+      "alts": []
+    },
+    {
+      "id": "c2-slowly",
+      "es": "¿Puedes hablar más despacio?",
+      "en": "Can you speak more slowly?",
+      "alts": [
+        "¿Puede hablar más despacio?",
+        "¿Puedes hablar más lento?"
+      ]
+    },
+    {
+      "id": "c2-mean",
+      "es": "¿Qué significa?",
+      "en": "What does it mean?",
+      "alts": [
+        "¿Qué quiere decir?"
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "type": "mc",
+      "skill": "ar-verbs",
+      "q": "___ inglés y un poco de español.",
+      "sub": "(I speak English and a little Spanish.)",
+      "options": [
+        "Hablo",
+        "Hablas",
+        "Hablar"
+      ],
+      "answer": 0,
+      "why": "Yo takes -o: hablo. Hablar is the dictionary form, \"to speak\"."
+    },
+    {
+      "type": "gap",
+      "skill": "er-ir-verbs",
+      "q": "Mis padres ___ en Leeds.",
+      "hint": "vivir",
+      "hintLabel": "Verb",
+      "hintTone": "green",
+      "answer": [
+        "viven"
+      ],
+      "why": "Mis padres is \"they\", so -en: viven."
+    },
+    {
+      "type": "listen",
+      "skill": "phrases",
+      "say": "¿Dónde vives?",
+      "options": [
+        "Where do you live?",
+        "Where are you?",
+        "Where are you from?"
+      ],
+      "answer": 0,
+      "why": "Vives comes from vivir, to live. \"Where are you?\" would be ¿Dónde estás?"
+    },
+    {
+      "type": "rapid",
+      "skill": "who",
+      "prompt": "Rapid fire: who is doing it?",
+      "choices": [
+        {
+          "key": "yo",
+          "label": "yo"
+        },
+        {
+          "key": "tu",
+          "label": "tú"
+        },
+        {
+          "key": "nosotros",
+          "label": "nosotros"
+        },
+        {
+          "key": "ellos",
+          "label": "ellos"
+        }
+      ],
+      "items": [
+        {
+          "text": "Trabajo en Londres.",
+          "full": "Trabajo en Londres.",
+          "answer": "yo",
+          "skill": "who",
+          "why": "-o is yo."
+        },
+        {
+          "text": "Comemos a las dos.",
+          "full": "Comemos a las dos.",
+          "answer": "nosotros",
+          "skill": "who",
+          "why": "-emos is nosotros."
+        },
+        {
+          "text": "¿Vives aquí?",
+          "full": "¿Vives aquí?",
+          "answer": "tu",
+          "skill": "who",
+          "why": "-es is tú."
+        },
+        {
+          "text": "Viajan mucho.",
+          "full": "Viajan mucho.",
+          "answer": "ellos",
+          "skill": "who",
+          "why": "-an is ellos or ellas."
+        },
+        {
+          "text": "Aprendo español.",
+          "full": "Aprendo español.",
+          "answer": "yo",
+          "skill": "who",
+          "why": "-o is yo."
+        },
+        {
+          "text": "¿Hablas francés?",
+          "full": "¿Hablas francés?",
+          "answer": "tu",
+          "skill": "who",
+          "why": "-as is tú."
+        },
+        {
+          "text": "Vivimos en Madrid.",
+          "full": "Vivimos en Madrid.",
+          "answer": "nosotros",
+          "skill": "who",
+          "why": "-imos is nosotros."
+        },
+        {
+          "text": "Beben vino.",
+          "full": "Beben vino.",
+          "answer": "ellos",
+          "skill": "who",
+          "why": "-en is ellos or ellas."
+        }
+      ]
+    },
+    {
+      "type": "gap",
+      "skill": "ar-verbs",
+      "q": "Nosotros ___ en una oficina.",
+      "hint": "trabajar",
+      "hintLabel": "Verb",
+      "hintTone": "blue",
+      "answer": [
+        "trabajamos"
+      ],
+      "why": "-ar verb with nosotros: -amos, so trabajamos."
+    },
+    {
+      "type": "fix",
+      "skill": "er-ir-verbs",
+      "prompt": "Tap the word that is wrong.",
+      "sentence": "Nosotros vivemos en Madrid.",
+      "wrong": 1,
+      "fixed": "Nosotros vivimos en Madrid.",
+      "why": "Vivir is an -ir verb, so nosotros vivimos. -emos is for -er verbs, like comemos."
+    },
+    {
+      "type": "order",
+      "skill": "no-do",
+      "prompt": "Do you work here or study?",
+      "words": [
+        "¿Trabajas",
+        "aquí",
+        "o",
+        "estudias?"
+      ],
+      "answer": "¿Trabajas aquí o estudias?",
+      "why": "No \"do\" in Spanish. The -as endings already say \"you\"."
+    },
+    {
+      "type": "match",
+      "skill": "phrases",
+      "prompt": "Match the verbs.",
+      "pairs": [
+        [
+          "hablar",
+          "to speak"
+        ],
+        [
+          "vivir",
+          "to live"
+        ],
+        [
+          "aprender",
+          "to learn"
+        ],
+        [
+          "trabajar",
+          "to work"
+        ],
+        [
+          "beber",
+          "to drink"
+        ]
+      ]
+    },
+    {
+      "type": "translate",
+      "skill": "er-ir-verbs",
+      "q": "I live in London.",
+      "answer": [
+        "vivo en londres"
+      ],
+      "why": "Vivir with yo: vivo. No need for yo."
+    },
+    {
+      "type": "mc",
+      "skill": "no-do",
+      "prompt": "Which is natural Spanish for \"Do you speak English?\"",
+      "q": "",
+      "options": [
+        "¿Hablas inglés?",
+        "¿Haces hablar inglés?",
+        "¿Estás hablar inglés?"
+      ],
+      "answer": 0,
+      "why": "Spanish has no helper \"do\". The verb itself makes the question."
+    },
+    {
+      "type": "gap",
+      "skill": "vosotros",
+      "q": "¿Vosotros ___ carne?",
+      "hint": "comer",
+      "hintLabel": "Verb",
+      "hintTone": "orange",
+      "answer": [
+        "coméis"
+      ],
+      "why": "Vosotros with an -er verb: -éis, with an accent. Coméis."
+    },
+    {
+      "type": "translate",
+      "skill": "ar-verbs",
+      "q": "We travel a lot.",
+      "answer": [
+        "viajamos mucho"
+      ],
+      "why": "Viajar with nosotros: viajamos."
+    },
+    {
+      "type": "fix",
+      "skill": "ar-verbs",
+      "prompt": "Tap the word that is wrong.",
+      "sentence": "Ella hablo muy bien.",
+      "wrong": 1,
+      "fixed": "Ella habla muy bien.",
+      "why": "Ella takes -a: habla. Hablo means \"I speak\"."
+    },
+    {
+      "type": "translate",
+      "skill": "no-do",
+      "q": "Do you live here?",
+      "answer": [
+        "vives aquí",
+        "vive aquí",
+        "vive usted aquí",
+        "vivís aquí"
+      ],
+      "why": "No \"do\": just ¿Vives aquí?, with your voice rising at the end."
+    },
+    {
+      "type": "translate",
+      "skill": "er-ir-verbs",
+      "q": "I'm learning Spanish.",
+      "answer": [
+        "aprendo español",
+        "estoy aprendiendo español"
+      ],
+      "why": "The simple present covers \"I'm learning\": aprendo español. Estoy aprendiendo español also works."
+    },
+    {
+      "type": "order",
+      "skill": "phrases",
+      "prompt": "I speak a little Spanish.",
+      "words": [
+        "Hablo",
+        "un",
+        "poco",
+        "de",
+        "español"
+      ],
+      "answer": "Hablo un poco de español.",
+      "why": "Un poco de = a little (of)."
+    }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Write 3 short sentences about your life: where you live, what you do for work or study, and one thing you do every day.",
+    "starter": "Vivo en…  Trabajo…  Todos los días…",
+    "model": "Vivo en Londres. Trabajo en una empresa de tecnología. Todos los días estudio español y leo un poco.",
+    "checklist": [
+      "Each verb ends in -o, because you are talking about yourself",
+      "No yo at the start of every sentence",
+      "Where you live uses vivir: vivo en…"
+    ]
+  },
+  "boss": {
+    "title": "Language exchange in Madrid",
+    "who": "Javi",
+    "skill": "who",
+    "persona": "You are Javi, a friendly man from Madrid at an intercambio (a language exchange) in a bar in Lavapiés. You chat about everyday life: where people live, what they do for work, what they study and what they do at the weekend.",
+    "turns": [
+      {
+        "npc": "¡Hola! Soy Javi. ¿Hablas español?",
+        "en": "Hi! I'm Javi. Do you speak Spanish?",
+        "skill": "ar-verbs",
+        "choices": [
+          [
+            "Sí, hablo un poco.",
+            true,
+            ""
+          ],
+          [
+            "Sí, habla un poco.",
+            false,
+            "Habla is he or she. About yourself: hablo."
+          ],
+          [
+            "Sí, hablar un poco.",
+            false,
+            "Hablar is \"to speak\". You need the yo form: hablo."
+          ]
+        ]
+      },
+      {
+        "npc": "¡Muy bien! ¿Y dónde vives?",
+        "en": "Very good! And where do you live?",
+        "skill": "er-ir-verbs",
+        "choices": [
+          [
+            "Vivo en Londres.",
+            true,
+            ""
+          ],
+          [
+            "Vives en Londres.",
+            false,
+            "Vives is \"you live\". About yourself: vivo."
+          ],
+          [
+            "Estoy vivo en Londres.",
+            false,
+            "Estoy vivo means \"I'm alive\". To live somewhere: vivo en…"
+          ]
+        ]
+      },
+      {
+        "npc": "¿Y a qué te dedicas?",
+        "en": "And what do you do for a living?",
+        "skill": "ar-verbs",
+        "choices": [
+          [
+            "Trabajo en una empresa de tecnología.",
+            true,
+            ""
+          ],
+          [
+            "Trabajas en una empresa de tecnología.",
+            false,
+            "Trabajas is \"you work\". About yourself: trabajo."
+          ],
+          [
+            "Soy trabajo en una empresa de tecnología.",
+            false,
+            "Trabajo already means \"I work\". No soy needed."
+          ]
+        ]
+      },
+      {
+        "npc": "¡Qué interesante! ¿Y por qué aprendes español?",
+        "en": "How interesting! And why are you learning Spanish?",
+        "skill": "who",
+        "choices": [
+          [
+            "Porque viajo mucho.",
+            true,
+            ""
+          ],
+          [
+            "Porque viajas mucho.",
+            false,
+            "Viajas is \"you travel\". About yourself: viajo."
+          ],
+          [
+            "Porque viajar mucho.",
+            false,
+            "Viajar is \"to travel\". You need the yo form: viajo."
+          ]
+        ]
+      }
+    ],
+    "closing": "¡Genial! Hablas muy bien. ¿Quedamos la semana que viene?",
+    "closingEn": "Great! You speak really well. Shall we meet up next week?",
+    "chatOpening": "¿Y qué haces normalmente los fines de semana?",
+    "chatOpeningEn": "And what do you usually do at the weekend?"
+  }
+}

@@ -1,0 +1,702 @@
+{
+  "n": 4,
+  "title": "Food and ordering",
+  "sub": "el / la, un / una, ¿me pones…?",
+  "can": "Order in a bar, get through the menú del día, mention allergies and ask for the bill.",
+  "mins": 15,
+  "doneText": "You can now order like a local, from a caña at the bar to three courses of the menú del día.",
+  "skills": {
+    "gender": "el / la, un / una",
+    "ordering": "Ordering in a bar",
+    "plurals": "Plurals",
+    "food-ser": "Ser and estar with food",
+    "menu": "The menú del día"
+  },
+  "discover": {
+    "intro": "Here are six ways to order. Look closely at the little word before each thing.",
+    "groups": [
+      {
+        "label": "Blue",
+        "tone": "blue",
+        "lines": [
+          [
+            "¿Me pones un café?",
+            "Can I have a coffee?"
+          ],
+          [
+            "Un bocadillo, por favor.",
+            "A sandwich, please."
+          ],
+          [
+            "Para mí, un vino.",
+            "A wine for me."
+          ]
+        ]
+      },
+      {
+        "label": "Orange",
+        "tone": "orange",
+        "lines": [
+          [
+            "¿Me pones una caña?",
+            "Can I have a small beer?"
+          ],
+          [
+            "Una tortilla, por favor.",
+            "A Spanish omelette, please."
+          ],
+          [
+            "Para mí, una cerveza.",
+            "A beer for me."
+          ]
+        ]
+      }
+    ],
+    "question": "Why un in blue and una in orange?",
+    "options": [
+      "It depends on the word: most words ending in -o take un, most ending in -a take una.",
+      "Una is more polite than un.",
+      "Un is for drinks and una is for food."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. There are drinks and food in both colours. Look at how each word ends.",
+    "reveal": "Every noun in Spanish is masculine or feminine. Most -o words are masculine (un, el) and most -a words are feminine (una, la). For anything else, like café, learn the word together with its article.",
+    "hooks": [
+      {
+        "title": "Gender clues",
+        "tone": "blue",
+        "rows": [
+          [
+            "-o",
+            "usually masculine",
+            "el vino",
+            "the wine"
+          ],
+          [
+            "-a",
+            "usually feminine",
+            "la cerveza",
+            "the beer"
+          ],
+          [
+            "-ción",
+            "always feminine",
+            "la ración",
+            "the sharing plate"
+          ],
+          [
+            "!",
+            "learn with el / la",
+            "el café, la leche",
+            "the coffee, the milk"
+          ],
+          [
+            "!",
+            "exceptions",
+            "el día, el mapa",
+            "the day, the map"
+          ]
+        ]
+      },
+      {
+        "title": "Ordering in Spain",
+        "tone": "orange",
+        "rows": [
+          [
+            "1",
+            "can I have…? (bar)",
+            "¿Me pones un café?",
+            "Can I have a coffee?"
+          ],
+          [
+            "2",
+            "for me",
+            "Para mí, la paella.",
+            "The paella for me."
+          ],
+          [
+            "3",
+            "first course",
+            "De primero, gazpacho.",
+            "Gazpacho to start."
+          ],
+          [
+            "4",
+            "main course",
+            "De segundo, pollo.",
+            "Chicken for the main."
+          ],
+          [
+            "5",
+            "dessert",
+            "De postre, flan.",
+            "Flan for dessert."
+          ],
+          [
+            "6",
+            "the bill",
+            "¿Me traes la cuenta?",
+            "Can you bring the bill?"
+          ]
+        ]
+      }
+    ]
+  },
+  "learn": {
+    "title": "The little words",
+    "sub": "Tap any row to hear it",
+    "blocks": [
+      {
+        "type": "tables",
+        "tables": [
+          {
+            "title": "The",
+            "speak": "form",
+            "rows": [
+              [
+                "masculine",
+                "el · los"
+              ],
+              [
+                "feminine",
+                "la · las"
+              ]
+            ]
+          },
+          {
+            "title": "A / some",
+            "speak": "form",
+            "rows": [
+              [
+                "masculine",
+                "un · unos"
+              ],
+              [
+                "feminine",
+                "una · unas"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "note",
+        "kind": "tip",
+        "text": "Plurals: add -s after a vowel (cañas, cafés) and -es after a consonant (raciones, panes)."
+      },
+      {
+        "type": "note",
+        "kind": "spain",
+        "text": "In Spanish bars, ¿Me pones…? (literally \"will you put me…?\") is the everyday way to order, and waiters often say tú to customers. The menú del día is a set lunch: a first course, a main, a dessert, bread and a drink for one price."
+      },
+      {
+        "type": "twist",
+        "title": "La comida: lunch, or food",
+        "a": [
+          "La comida es a las dos.",
+          "Lunch is at two."
+        ],
+        "b": [
+          "La comida está buenísima.",
+          "The food is delicious."
+        ],
+        "note": "Es says when lunch is. Está says how the food tastes right now. In Spain, la comida is also the big midday meal."
+      },
+      {
+        "type": "note",
+        "kind": "warn",
+        "text": "Allergies use ser, because they are a characteristic: soy alérgic{o} a los frutos secos. With the noun it is tener: tengo alergia a los frutos secos."
+      },
+      {
+        "type": "list",
+        "title": "On the menu",
+        "rows": [
+          [
+            "el gazpacho",
+            "cold tomato soup"
+          ],
+          [
+            "la tortilla",
+            "Spanish omelette"
+          ],
+          [
+            "las croquetas",
+            "croquettes"
+          ],
+          [
+            "la merluza",
+            "hake"
+          ],
+          [
+            "el pollo asado",
+            "roast chicken"
+          ],
+          [
+            "el flan",
+            "caramel custard"
+          ],
+          [
+            "el agua",
+            "water (feminine, but takes el)"
+          ],
+          [
+            "la cuenta",
+            "the bill"
+          ]
+        ]
+      }
+    ]
+  },
+  "phrases": [
+    {
+      "id": "c4-coffee",
+      "es": "¿Me pones un café con leche?",
+      "en": "Can I have a white coffee?",
+      "alts": [
+        "¿Me pone un café con leche?",
+        "Un café con leche, por favor."
+      ]
+    },
+    {
+      "id": "c4-bill",
+      "es": "La cuenta, por favor.",
+      "en": "The bill, please.",
+      "alts": [
+        "¿Me traes la cuenta?",
+        "¿Nos traes la cuenta?"
+      ]
+    },
+    {
+      "id": "c4-table",
+      "es": "Una mesa para dos, por favor.",
+      "en": "A table for two, please.",
+      "alts": []
+    },
+    {
+      "id": "c4-what",
+      "es": "¿Qué lleva?",
+      "en": "What's in it?",
+      "alts": []
+    },
+    {
+      "id": "c4-allergy",
+      "es": "Soy alérgica a los frutos secos.",
+      "en": "I'm allergic to nuts.",
+      "alts": [
+        "Soy alérgico a los frutos secos.",
+        "Tengo alergia a los frutos secos."
+      ]
+    },
+    {
+      "id": "c4-menu",
+      "es": "Para mí, el menú del día.",
+      "en": "The set lunch for me.",
+      "alts": [
+        "El menú del día, por favor."
+      ]
+    },
+    {
+      "id": "c4-veg",
+      "es": "¿Tenéis algo vegetariano?",
+      "en": "Do you have anything vegetarian?",
+      "alts": [
+        "¿Tienen algo vegetariano?",
+        "¿Tienes algo vegetariano?"
+      ]
+    },
+    {
+      "id": "c4-good",
+      "es": "Está buenísimo.",
+      "en": "It's delicious.",
+      "alts": [
+        "Está buenísima.",
+        "Está muy rico.",
+        "Está muy rica."
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "type": "mc",
+      "skill": "gender",
+      "q": "¿Me pones ___ caña?",
+      "options": [
+        "una",
+        "un",
+        "unos"
+      ],
+      "answer": 0,
+      "why": "Caña ends in -a, so it is feminine: una caña."
+    },
+    {
+      "type": "rapid",
+      "skill": "gender",
+      "prompt": "Rapid fire: un or una?",
+      "choices": [
+        {
+          "key": "un",
+          "label": "un",
+          "tone": "blue"
+        },
+        {
+          "key": "una",
+          "label": "una",
+          "tone": "orange"
+        }
+      ],
+      "items": [
+        {
+          "blank": "___ café",
+          "full": "un café",
+          "fill": "un",
+          "answer": "un",
+          "skill": "gender",
+          "why": "Café is masculine. Learn it as un café."
+        },
+        {
+          "blank": "___ tortilla",
+          "full": "una tortilla",
+          "fill": "una",
+          "answer": "una",
+          "skill": "gender",
+          "why": "-a ending: feminine."
+        },
+        {
+          "blank": "___ bocadillo",
+          "full": "un bocadillo",
+          "fill": "un",
+          "answer": "un",
+          "skill": "gender",
+          "why": "-o ending: masculine."
+        },
+        {
+          "blank": "___ ración",
+          "full": "una ración",
+          "fill": "una",
+          "answer": "una",
+          "skill": "gender",
+          "why": "-ción words are always feminine."
+        },
+        {
+          "blank": "___ vino",
+          "full": "un vino",
+          "fill": "un",
+          "answer": "un",
+          "skill": "gender",
+          "why": "-o ending: masculine."
+        },
+        {
+          "blank": "___ tapa",
+          "full": "una tapa",
+          "fill": "una",
+          "answer": "una",
+          "skill": "gender",
+          "why": "-a ending: feminine."
+        },
+        {
+          "blank": "___ día",
+          "full": "un día",
+          "fill": "un",
+          "answer": "un",
+          "skill": "gender",
+          "why": "Día ends in -a but is masculine: un día. A classic exception."
+        },
+        {
+          "blank": "___ cerveza",
+          "full": "una cerveza",
+          "fill": "una",
+          "answer": "una",
+          "skill": "gender",
+          "why": "-a ending: feminine."
+        }
+      ]
+    },
+    {
+      "type": "listen",
+      "skill": "ordering",
+      "say": "¿Me pones una caña, por favor?",
+      "options": [
+        "Can I have a small beer, please?",
+        "Can you bring the bill, please?",
+        "A table for two, please."
+      ],
+      "answer": 0,
+      "why": "¿Me pones…? is how you order at a Spanish bar."
+    },
+    {
+      "type": "gap",
+      "skill": "gender",
+      "q": "¿Me traes ___ cuenta?",
+      "hint": "the",
+      "hintLabel": "Word",
+      "answer": [
+        "la"
+      ],
+      "why": "Cuenta is feminine: la cuenta."
+    },
+    {
+      "type": "order",
+      "skill": "ordering",
+      "prompt": "Can you bring the bill, please?",
+      "words": [
+        "¿Me",
+        "traes",
+        "la",
+        "cuenta,",
+        "por",
+        "favor?"
+      ],
+      "answer": "¿Me traes la cuenta, por favor?",
+      "why": "¿Me traes…? asks someone to bring you something."
+    },
+    {
+      "type": "fix",
+      "skill": "gender",
+      "prompt": "Tap the word that is wrong.",
+      "sentence": "Una café con leche, por favor.",
+      "wrong": 0,
+      "fixed": "Un café con leche, por favor.",
+      "why": "Café is masculine: un café. Learn nouns together with el or la."
+    },
+    {
+      "type": "match",
+      "skill": "menu",
+      "prompt": "Match the Spanish with the English.",
+      "pairs": [
+        [
+          "la cuenta",
+          "the bill"
+        ],
+        [
+          "una caña",
+          "a small draught beer"
+        ],
+        [
+          "de postre",
+          "for dessert"
+        ],
+        [
+          "el menú del día",
+          "the set lunch"
+        ],
+        [
+          "una ración",
+          "a sharing plate"
+        ]
+      ]
+    },
+    {
+      "type": "gap",
+      "skill": "plurals",
+      "q": "Dos ___, por favor.",
+      "hint": "small beers",
+      "hintLabel": "Word",
+      "answer": [
+        "cañas",
+        "cervezas"
+      ],
+      "why": "After a vowel, add -s: una caña, dos cañas."
+    },
+    {
+      "type": "translate",
+      "skill": "ordering",
+      "q": "The bill, please.",
+      "answer": [
+        "la cuenta por favor",
+        "me traes la cuenta por favor",
+        "nos traes la cuenta por favor"
+      ],
+      "why": "La cuenta, por favor. Or ¿Me traes la cuenta?"
+    },
+    {
+      "type": "fix",
+      "skill": "food-ser",
+      "prompt": "Tap the word that is wrong.",
+      "sentence": "Estoy alérgic{o} a los frutos secos.",
+      "wrong": 0,
+      "fixed": "Soy alérgic{o} a los frutos secos.",
+      "why": "An allergy is a characteristic, so ser: soy alérgico or alérgica. Or say tengo alergia a…"
+    },
+    {
+      "type": "mc",
+      "skill": "food-ser",
+      "q": "La paella ___ buenísima.",
+      "sub": "(This paella tastes amazing.)",
+      "options": [
+        "está",
+        "es"
+      ],
+      "answer": 0,
+      "why": "How food tastes right now: estar. \"La paella es un plato de Valencia\" says what it is: ser."
+    },
+    {
+      "type": "translate",
+      "skill": "menu",
+      "q": "A table for two, please.",
+      "answer": [
+        "una mesa para dos por favor"
+      ],
+      "why": "Para means for: una mesa para dos."
+    },
+    {
+      "type": "gap",
+      "skill": "menu",
+      "q": "De ___, flan.",
+      "hint": "dessert",
+      "hintLabel": "Word",
+      "answer": [
+        "postre"
+      ],
+      "why": "De primero, de segundo, de postre: the three courses of the menú del día."
+    },
+    {
+      "type": "translate",
+      "skill": "food-ser",
+      "q": "I'm vegetarian.",
+      "answer": [
+        "soy vegetariana",
+        "soy vegetariano"
+      ],
+      "why": "What you are, a characteristic: ser."
+    },
+    {
+      "type": "mc",
+      "skill": "menu",
+      "prompt": "In Spain, la comida usually means…",
+      "q": "",
+      "options": [
+        "lunch, around 2pm",
+        "breakfast",
+        "dinner, around 7pm"
+      ],
+      "answer": 0,
+      "why": "La comida is the big midday meal, usually 2 to 3pm. Dinner, la cena, is often after 9pm."
+    },
+    {
+      "type": "translate",
+      "skill": "ordering",
+      "q": "Can I have a coffee?",
+      "answer": [
+        "me pones un café",
+        "me pone un café",
+        "me pones un café por favor",
+        "me pone un café por favor",
+        "un café por favor",
+        "quiero un café",
+        "quiero un café por favor"
+      ],
+      "why": "At a bar: ¿Me pones un café? Quiero un café, por favor also works."
+    }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Order the menú del día: choose a first course, a main and a dessert, then ask for the bill.",
+    "starter": "Para mí, el menú del día. De primero…",
+    "model": "Para mí, el menú del día. De primero, gazpacho. De segundo, la merluza. De postre, flan. ¿Me traes la cuenta, por favor?",
+    "checklist": [
+      "Each course starts with de primero, de segundo or de postre",
+      "Dishes keep their el or la",
+      "Por favor or ¿Me traes…? for the bill"
+    ]
+  },
+  "boss": {
+    "title": "Menú del día in a Madrid bar",
+    "who": "Pepe",
+    "skill": "ordering",
+    "persona": "You are Pepe, a chatty waiter in a busy bar in Madrid serving the menú del día at lunchtime. Use tú. Talk about dishes, drinks, desserts, allergies and the bill.",
+    "turns": [
+      {
+        "npc": "¡Buenas! ¿Qué te pongo?",
+        "en": "Hi! What can I get you?",
+        "skill": "gender",
+        "choices": [
+          [
+            "El menú del día, por favor.",
+            true,
+            ""
+          ],
+          [
+            "La menú del día, por favor.",
+            false,
+            "Menú is masculine: el menú."
+          ],
+          [
+            "Estoy el menú del día.",
+            false,
+            "Estoy means \"I am\". To order, name the thing and add por favor."
+          ]
+        ]
+      },
+      {
+        "npc": "De primero hay gazpacho o ensalada mixta. ¿Qué te apetece?",
+        "en": "For starters there's gazpacho or mixed salad. What do you fancy?",
+        "skill": "menu",
+        "choices": [
+          [
+            "De primero, gazpacho.",
+            true,
+            ""
+          ],
+          [
+            "De postre, gazpacho.",
+            false,
+            "Postre is dessert. For the first course: de primero."
+          ],
+          [
+            "Primero de gazpacho.",
+            false,
+            "The order is de primero, then the dish."
+          ]
+        ]
+      },
+      {
+        "npc": "¿Y de segundo? Hay pollo asado o merluza a la plancha.",
+        "en": "And for the main? There's roast chicken or grilled hake.",
+        "skill": "gender",
+        "choices": [
+          [
+            "De segundo, la merluza.",
+            true,
+            ""
+          ],
+          [
+            "De segundo, el merluza.",
+            false,
+            "Merluza ends in -a: la merluza."
+          ],
+          [
+            "De segundo, los merluza.",
+            false,
+            "Los is plural and masculine. One hake: la merluza."
+          ]
+        ]
+      },
+      {
+        "npc": "Muy bien. ¿Tienes alguna alergia?",
+        "en": "Very good. Do you have any allergies?",
+        "skill": "food-ser",
+        "choices": [
+          [
+            "Sí, soy alérgic{o} a los frutos secos.",
+            true,
+            ""
+          ],
+          [
+            "Sí, estoy alérgic{o} a los frutos secos.",
+            false,
+            "An allergy is a characteristic: soy alérgico or alérgica."
+          ],
+          [
+            "Sí, tengo alérgic{o} a los frutos secos.",
+            false,
+            "Tener needs the noun: tengo alergia a… With alérgico or alérgica, use soy."
+          ]
+        ]
+      }
+    ],
+    "closing": "Perfecto, sin frutos secos. Ahora te traigo el pan.",
+    "closingEn": "Perfect, no nuts. I'll bring you the bread now.",
+    "chatOpening": "¿Y para beber? ¿Agua, vino, una caña…?",
+    "chatOpeningEn": "And to drink? Water, wine, a small beer…?"
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "n": 3,
+  "title": "Numbers, time and dates",
+  "sub": "Es la una, son las dos",
+  "can": "Say the time, arrange when to meet, understand prices and talk about days of the week.",
+  "mins": 15,
+  "doneText": "You can now tell the time, arrange to meet on a day and at a time, and follow prices.",
+  "skills": {
+    "time": "Telling the time",
+    "numbers": "Numbers",
+    "days": "Days and when",
+    "es-son": "Es la una or son las…",
+    "prices": "Prices"
+  },
+  "discover": {
+    "intro": "All of these sentences tell the time. Spot why some start with es and others with son.",
+    "groups": [
+      { "label": "Blue", "tone": "blue", "lines": [["Es la una.", "It's one o'clock."], ["Es la una y media.", "It's half past one."], ["Es la una y diez.", "It's ten past one."]] },
+      { "label": "Orange", "tone": "orange", "lines": [["Son las dos.", "It's two o'clock."], ["Son las cinco y cuarto.", "It's quarter past five."], ["Son las diez menos cuarto.", "It's quarter to ten."]] }
+    ],
+    "question": "Why es in blue and son in orange?",
+    "options": [
+      "One o'clock is singular (one hour), so es la una. Every other hour is plural, so son las…",
+      "Blue sentences are in the morning, orange ones in the afternoon.",
+      "Es is formal, son is informal."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Look at the number straight after la or las in each colour.",
+    "reveal": "La una is one hour, so it is singular: es. Two o'clock and later are plural: son las dos. Then add minutes with y (past) or menos (to):",
+    "hooks": [
+      { "title": "The clock: y and menos", "tone": "blue", "rows": [
+        ["y", "past", "Son las tres y diez.", "It's ten past three."],
+        ["y cuarto", "quarter past", "Son las cuatro y cuarto.", "It's quarter past four."],
+        ["y media", "half past", "Es la una y media.", "It's half past one."],
+        ["menos", "to", "Son las seis menos veinte.", "It's twenty to six."],
+        ["menos cuarto", "quarter to", "Son las nueve menos cuarto.", "It's quarter to nine."]
+      ] },
+      { "title": "When: a, de, el, los", "tone": "orange", "rows": [
+        ["?", "what time is it", "¿Qué hora es?", "What time is it?"],
+        ["a las", "at (a time)", "Quedamos a las ocho.", "Let's meet at eight."],
+        ["de", "in the (part of day)", "a las diez de la noche", "at ten at night"],
+        ["el", "on (one day)", "el lunes", "on Monday"],
+        ["los", "on (every week)", "los sábados", "on Saturdays"]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "The numbers",
+    "sub": "Tap any number to hear it",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "0 to 15", "speak": "form", "rows": [["0", "cero"], ["1", "uno"], ["2", "dos"], ["3", "tres"], ["4", "cuatro"], ["5", "cinco"], ["6", "seis"], ["7", "siete"], ["8", "ocho"], ["9", "nueve"], ["10", "diez"], ["11", "once"], ["12", "doce"], ["13", "trece"], ["14", "catorce"], ["15", "quince"]] },
+        { "title": "16 to 100", "speak": "form", "rows": [["16", "dieciséis"], ["17", "diecisiete"], ["18", "dieciocho"], ["19", "diecinueve"], ["20", "veinte"], ["21", "veintiuno"], ["22", "veintidós"], ["30", "treinta"], ["31", "treinta y uno"], ["40", "cuarenta"], ["50", "cincuenta"], ["60", "sesenta"], ["70", "setenta"], ["80", "ochenta"], ["90", "noventa"], ["100", "cien"]] }
+      ] },
+      { "type": "note", "kind": "tip", "text": "16 to 29 are one word: dieciséis, veintidós. From 31 up, use y: treinta y uno, cuarenta y cinco." },
+      { "type": "list", "title": "Days of the week", "rows": [["lunes", "Monday"], ["martes", "Tuesday"], ["miércoles", "Wednesday"], ["jueves", "Thursday"], ["viernes", "Friday"], ["sábado", "Saturday"], ["domingo", "Sunday"]] },
+      { "type": "twist", "title": "el lunes or los lunes", "a": ["Trabajo el lunes.", "I'm working on Monday (this Monday)."], "b": ["Trabajo los lunes.", "I work on Mondays (every Monday)."], "note": "There is no word for \"on\" with days. El means one day, los means every week. Days and months are lowercase: el lunes, en enero." },
+      { "type": "note", "kind": "spain", "text": "Spain eats late: lunch around 2 to 3pm, dinner around 9 to 10pm. Timetables use the 24-hour clock (21:00), but in conversation people say a las nueve de la noche." },
+      { "type": "note", "kind": "warn", "text": "Uno becomes un before a noun: un café, veintiún años. And age uses tener: tengo treinta años." }
+    ]
+  },
+  "phrases": [
+    { "id": "c3-time", "es": "¿Qué hora es?", "en": "What time is it?", "alts": [] },
+    { "id": "c3-half", "es": "Son las dos y media.", "en": "It's half past two.", "alts": [] },
+    { "id": "c3-when", "es": "¿A qué hora quedamos?", "en": "What time shall we meet?", "alts": [] },
+    { "id": "c3-eight", "es": "Quedamos a las ocho.", "en": "Let's meet at eight.", "alts": [] },
+    { "id": "c3-cost", "es": "¿Cuánto cuesta?", "en": "How much does it cost?", "alts": ["¿Cuánto vale?"] },
+    { "id": "c3-total", "es": "¿Cuánto es?", "en": "How much is it altogether?", "alts": [] },
+    { "id": "c3-weekend", "es": "el fin de semana", "en": "the weekend", "alts": ["el finde"] },
+    { "id": "c3-tomorrow", "es": "Hasta mañana.", "en": "See you tomorrow.", "alts": [] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "es-son", "q": "___ la una.", "sub": "(It's one o'clock.)", "options": ["Es", "Son"], "answer": 0, "why": "One o'clock is singular: es la una." },
+    { "type": "mc", "skill": "time", "prompt": "What time is it?", "q": "Son las cuatro y cuarto.", "options": ["4:15", "4:45", "3:45"], "answer": 0, "why": "Y cuarto means quarter past." },
+    { "type": "listen", "skill": "time", "say": "Son las diez menos cuarto.", "options": ["9:45", "10:15", "10:45"], "answer": 0, "why": "Menos cuarto means quarter to: ten minus a quarter is 9:45." },
+    {
+      "type": "rapid", "skill": "es-son", "prompt": "Rapid fire: es or son?",
+      "choices": [{ "key": "es", "label": "es", "tone": "blue" }, { "key": "son", "label": "son", "tone": "orange" }],
+      "items": [
+        { "blank": "___ la una y media.", "full": "Es la una y media.", "fill": "Es", "answer": "es", "skill": "es-son", "why": "La una is singular: es." },
+        { "blank": "___ las tres.", "full": "Son las tres.", "fill": "Son", "answer": "son", "skill": "es-son", "why": "Three o'clock is plural: son." },
+        { "blank": "___ las doce menos cinco.", "full": "Son las doce menos cinco.", "fill": "Son", "answer": "son", "skill": "es-son", "why": "Las doce is plural: son." },
+        { "blank": "Hoy ___ martes.", "full": "Hoy es martes.", "fill": "es", "answer": "es", "skill": "days", "why": "Days use ser: hoy es martes." },
+        { "blank": "___ la una menos cuarto.", "full": "Es la una menos cuarto.", "fill": "Es", "answer": "es", "skill": "es-son", "why": "12:45 still counts from la una, so es." },
+        { "blank": "___ las ocho de la tarde.", "full": "Son las ocho de la tarde.", "fill": "Son", "answer": "son", "skill": "es-son", "why": "Las ocho is plural: son." },
+        { "blank": "¿Qué hora ___?", "full": "¿Qué hora es?", "fill": "es", "answer": "es", "skill": "time", "why": "The question is always ¿Qué hora es?" },
+        { "blank": "___ las once y diez.", "full": "Son las once y diez.", "fill": "Son", "answer": "son", "skill": "es-son", "why": "Las once is plural: son." }
+      ]
+    },
+    { "type": "gap", "skill": "numbers", "q": "Tengo ___ años.", "hint": "30", "hintLabel": "Number", "answer": ["treinta"], "why": "Treinta is 30. Age uses tener." },
+    { "type": "match", "skill": "numbers", "prompt": "Match the numbers.", "pairs": [["quince", "15"], ["cincuenta", "50"], ["dieciséis", "16"], ["sesenta", "60"], ["setenta", "70"]] },
+    { "type": "fix", "skill": "time", "prompt": "Tap the word that is wrong.", "sentence": "Quedamos en las ocho.", "wrong": 1, "fixed": "Quedamos a las ocho.", "why": "At a time is a: a las ocho. En is for places and months." },
+    { "type": "translate", "skill": "time", "q": "It's half past two.", "answer": ["son las dos y media"], "why": "Two is plural, so son las. Half past is y media." },
+    { "type": "mc", "skill": "days", "q": "Trabajo ___ lunes.", "sub": "(I work on Mondays, every week.)", "options": ["los", "el", "en"], "answer": 0, "why": "Every Monday is los lunes. No en with days." },
+    { "type": "gap", "skill": "time", "q": "Son las seis ___ veinte.", "hint": "5:40", "hintLabel": "Time", "answer": ["menos"], "why": "5:40 is twenty to six: las seis menos veinte." },
+    { "type": "order", "skill": "days", "prompt": "Let's meet on Saturday at nine.", "words": ["Quedamos", "el", "sábado", "a", "las", "nueve"], "answer": "Quedamos el sábado a las nueve.", "why": "El sábado for one day, then a las for the time." },
+    { "type": "translate", "skill": "prices", "q": "How much does it cost?", "answer": ["cuánto cuesta", "cuánto vale"], "why": "¿Cuánto cuesta? or ¿Cuánto vale? For the total bill: ¿Cuánto es?" },
+    { "type": "gap", "skill": "numbers", "q": "Son ___ euros.", "hint": "45", "hintLabel": "Number", "answer": ["cuarenta y cinco"], "why": "From 31 up: tens, then y, then units. Cuarenta y cinco." },
+    { "type": "mc", "skill": "time", "prompt": "A friend suggests meeting a las nueve de la noche. When is that?", "q": "", "options": ["9pm", "9am", "7pm"], "answer": 0, "why": "De la noche means at night. De la mañana means in the morning." },
+    { "type": "translate", "skill": "days", "q": "See you tomorrow.", "answer": ["hasta mañana"], "why": "Hasta mañana, literally \"until tomorrow\"." },
+    { "type": "fix", "skill": "es-son", "prompt": "Tap the word that is wrong.", "sentence": "Es las tres y cuarto.", "wrong": 0, "fixed": "Son las tres y cuarto.", "why": "Three is plural: son las tres. Only la una takes es." }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Make a plan with a friend: suggest a day and a time to meet, and say how much the tickets cost.",
+    "starter": "Quedamos el…  a las…  Las entradas cuestan…",
+    "model": "Quedamos el sábado a las ocho y media. Las entradas cuestan quince euros.",
+    "checklist": ["The day takes el, with no word for \"on\"", "The time uses a las (or a la una)", "Numbers above 30 use y: treinta y cinco"]
+  },
+  "boss": {
+    "title": "Train tickets at Atocha",
+    "who": "Carmen",
+    "skill": "time",
+    "persona": "You are Carmen, a ticket clerk at Madrid Atocha station. The learner is buying a train ticket. Talk about destinations, days, departure times and prices, using numbers and times often. Address the learner as usted.",
+    "turns": [
+      { "npc": "¡Buenos días! ¿Para qué día quiere el billete a Toledo?", "en": "Good morning! Which day do you want the ticket to Toledo for?", "skill": "days",
+        "choices": [["Para el sábado, por favor.", true, ""], ["Para los sábados, por favor.", false, "Los sábados means every Saturday. For one trip: el sábado."], ["Para sábado, por favor.", false, "Days need el: para el sábado."]] },
+      { "npc": "Hay trenes a las diez y cuarto y a las doce y media. ¿Cuál prefiere?", "en": "There are trains at quarter past ten and half past twelve. Which do you prefer?", "skill": "time",
+        "choices": [["A las diez y cuarto, por favor.", true, ""], ["En las diez y cuarto, por favor.", false, "At a time is a: a las diez y cuarto."], ["A la diez y cuarto, por favor.", false, "Ten is plural: a las diez."]] },
+      { "npc": "Muy bien. Son doce euros con cincuenta.", "en": "Very good. That's twelve euros fifty.", "skill": "numbers",
+        "choices": [["¿Doce con cincuenta? Vale, aquí tiene.", true, ""], ["¿Veinte con cincuenta? Vale, aquí tiene.", false, "Veinte is 20. Doce is 12."], ["¿Dos con cincuenta? Vale, aquí tiene.", false, "Dos is 2. Doce is 12."]] },
+      { "npc": "Gracias. El tren llega a Toledo a las once menos diez.", "en": "Thank you. The train arrives in Toledo at ten to eleven.", "skill": "time",
+        "choices": [["¿A las diez cincuenta? Perfecto, gracias.", true, ""], ["¿A las once y diez? Perfecto, gracias.", false, "Menos diez means ten TO eleven, so 10:50, not 11:10."], ["¿A las nueve y diez? Perfecto, gracias.", false, "Once is eleven. Once menos diez is 10:50."]] }
+    ],
+    "closing": "De nada. ¡Buen viaje!",
+    "closingEn": "You're welcome. Have a good trip!",
+    "chatOpening": "¿Necesita también un billete de vuelta?",
+    "chatOpeningEn": "Do you also need a return ticket?"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "courses": [
+    { "id": "es-ES", "file": "es-ES/course.json" }
+  ]
+}
