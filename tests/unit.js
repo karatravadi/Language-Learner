@@ -40,6 +40,49 @@ t('pickWord: skips used', () => assert.equal(L.pickWord({ byDate: { '2026-11-01'
 t('pickWord: cycles to oldest when exhausted', () => assert.equal(L.pickWord({ byDate: { '2026-10-30': 'b', '2026-10-31': 'a', '2026-11-01': 'c' }, learned: [] }, ids, '2026-11-02'), 'b'));
 t('shuffle keeps elements', () => assert.deepEqual(L.shuffle([1, 2, 3, 4]).sort(), [1, 2, 3, 4]));
 
+// ---------- sync merge (this device a, server b) ----------
+const M = L.mergeState;
+t('srsGrade stamps seen', () => assert.equal(L.srsGrade({ id: 'a', box: 1 }, true, now).seen, now));
+t('merge done: best ever, latest date and score', () => assert.deepEqual(
+  M({ done: { 1: { acc: 90, best: 90, date: '2026-11-01' } } }, { done: { 1: { acc: 60, best: 70, date: '2026-11-03' }, 2: { acc: 80, best: 80, date: '2026-11-02' } } }).done,
+  { 1: { acc: 60, best: 90, date: '2026-11-03' }, 2: { acc: 80, best: 80, date: '2026-11-02' } }));
+t('merge srs: most recently graded card wins, never-graded loses', () => {
+  const r = M({ srs: { x: { box: 4, seen: 200 }, y: { box: 1 } } }, { srs: { x: { box: 1, seen: 300 }, y: { box: 3, seen: 100 }, z: { box: 1 } } }).srs;
+  assert.deepEqual(r, { x: { box: 1, seen: 300 }, y: { box: 3, seen: 100 }, z: { box: 1 } });
+});
+t('merge time: larger per day, not summed', () => assert.deepEqual(M({ time: { '2026-11-01': 300, '2026-11-02': 50 } }, { time: { '2026-11-02': 400 } }).time, { '2026-11-01': 300, '2026-11-02': 400 }));
+t('merge time: prunes to the latest 120 days', () => {
+  const many = {}; for (let i = 0; i < 130; i++) many['2026-' + String(i).padStart(5, '0')] = 5;
+  const r = M({ time: many }, { time: {} }).time; assert.equal(Object.keys(r).length, 120); assert.ok(!('2026-00000' in r));
+});
+t('merge reviewed and wotd: unions', () => {
+  const r = M({ reviewed: { d1: true }, wotd: { done: { d1: true }, learned: ['a', 'b'], byDate: { d1: 'a', d3: 'x' }, answers: { d1: 'mine' } } },
+    { reviewed: { d2: true }, wotd: { done: { d2: true }, learned: ['b', 'c'], byDate: { d2: 'b', d3: 'y' }, answers: { d2: 'theirs' } } });
+  assert.deepEqual(r.reviewed, { d1: true, d2: true });
+  assert.deepEqual(r.wotd, { done: { d1: true, d2: true }, learned: ['a', 'b', 'c'], byDate: { d1: 'a', d3: 'x', d2: 'b' }, answers: { d1: 'mine', d2: 'theirs' } });
+});
+t('merge skills: larger right and wrong counts', () => assert.deepEqual(M({ skills: { s: { r: 5, w: 1 } } }, { skills: { s: { r: 3, w: 4 }, t: { r: 1, w: 0 } } }).skills, { s: { r: 5, w: 4 }, t: { r: 1, w: 0 } }));
+t('merge xp: max', () => assert.equal(M({ xp: 120 }, { xp: 300 }).xp, 300));
+t('merge streak: later day wins, same day keeps the larger count', () => {
+  assert.deepEqual(M({ streak: { last: '2026-11-01', count: 9 } }, { streak: { last: '2026-11-02', count: 1 } }).streak, { last: '2026-11-02', count: 1 });
+  assert.deepEqual(M({ streak: { last: '2026-11-02', count: 4 } }, { streak: { last: '2026-11-02', count: 6 } }).streak, { last: '2026-11-02', count: 6 });
+});
+t('merge dayXp: later day wins, same day keeps the larger', () => assert.deepEqual(M({ dayXp: { date: 'd2', xp: 30 } }, { dayXp: { date: 'd2', xp: 50 } }).dayXp, { date: 'd2', xp: 50 }));
+t('merge prefs: last saved Settings wins', () => {
+  const r = M({ name: 'Kara', goalMins: 45, prefsAt: 100 }, { name: 'K', goalMins: 30, prefsAt: 200 });
+  assert.equal(r.name, 'K'); assert.equal(r.goalMins, 30);
+  assert.equal(M({ name: 'Kara', prefsAt: 300 }, { name: 'K', prefsAt: 200 }).name, 'Kara');
+});
+t('merge: same state twice changes nothing, and nothing studied is lost', () => {
+  const a = { xp: 50, done: { 1: { acc: 80, best: 80, date: 'd1' } }, srs: { x: { box: 2, seen: 1 } }, time: { d1: 60 }, reviewed: { d1: true }, skills: { s: { r: 1, w: 1 } },
+    streak: { last: 'd1', count: 1 }, dayXp: { date: 'd1', xp: 50 }, wotd: { byDate: { d1: 'a' }, learned: ['a'], done: { d1: true }, answers: { d1: 's' } }, name: 'Kara', prefsAt: 1 };
+  assert.deepEqual(M(a, a), a);
+  const b = { xp: 10, done: { 2: { acc: 70, best: 70, date: 'd2' } }, srs: { y: { box: 1 } } };
+  const r = M(a, b); assert.deepEqual(Object.keys(r.done).sort(), ['1', '2']); assert.deepEqual(Object.keys(r.srs).sort(), ['x', 'y']);
+  assert.deepEqual(M(r, b), r);
+});
+t('merge: tolerates missing or broken fields', () => assert.doesNotThrow(() => M({ done: null, srs: [], wotd: 5 }, undefined)));
+
 
 // ---------- content (every course, chapter and word file) ----------
 const fs = require('fs');

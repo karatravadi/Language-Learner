@@ -70,7 +70,7 @@
     return Object.assign({ alts: [], box: 1, due: now + INTERVALS[1] * DAY }, c);
   }
   function srsGrade(card, ok, now) {
-    const c = Object.assign({}, card);
+    const c = Object.assign({}, card, { seen: now }); // seen: when last reviewed, so sync keeps the latest grading
     if (ok) {
       c.box = Math.min((c.box || 1) + 1, 5);
       c.due = now + INTERVALS[c.box] * DAY;
@@ -108,5 +108,54 @@
     return a;
   }
 
-  return { judge, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, DAY };
+  // ----- sync: merge two copies of one person's progress (this device's and the server's) -----
+  // Nothing studied on either device is lost. Rules are per field; see HANDOVER.md, Step 3.
+  const TIME_DAYS = 120;
+  const obj = v => (v && typeof v === 'object' && !Array.isArray(v) ? v : {});
+  // Union of two maps, with pick(x, y) deciding when both have a key.
+  function unionBy(a, b, pick) {
+    const out = Object.assign({}, obj(a));
+    for (const [k, v] of Object.entries(obj(b))) out[k] = k in out ? pick(out[k], v) : v;
+    return out;
+  }
+  const later = (x, y, key) => (String(obj(y)[key] || '') > String(obj(x)[key] || '') ? y : x);
+  // The record with the later day; on the same day, the larger count.
+  function recent(x, y, day, count) {
+    x = obj(x); y = obj(y);
+    if (x[day] !== y[day]) return Object.assign({}, later(x, y, day));
+    return Object.assign({}, x, { [count]: Math.max(x[count] || 0, y[count] || 0) });
+  }
+  function mergeState(a, b) {
+    a = obj(a); b = obj(b);
+    const out = Object.assign({}, b, a);
+
+    // chapters: best score ever; date and last score from the latest attempt
+    out.done = unionBy(a.done, b.done, (x, y) => Object.assign({}, later(x, y, 'date'), { best: Math.max(x.best || 0, y.best || 0) }));
+    // review cards: the one graded most recently (cards never graded have no seen)
+    out.srs = unionBy(a.srs, b.srs, (x, y) => ((y.seen || 0) > (x.seen || 0) ? y : x));
+    // practice seconds per day: the larger number, since two devices on one day would otherwise double-count
+    const time = unionBy(a.time, b.time, (x, y) => Math.max(x || 0, y || 0));
+    out.time = {};
+    Object.keys(time).sort().slice(-TIME_DAYS).forEach(k => { out.time[k] = time[k]; });
+    out.reviewed = unionBy(a.reviewed, b.reviewed, (x, y) => x || y);
+    out.skills = unionBy(a.skills, b.skills, (x, y) => ({ r: Math.max(x.r || 0, y.r || 0), w: Math.max(x.w || 0, y.w || 0) }));
+    out.xp = Math.max(a.xp || 0, b.xp || 0);
+    // streak and today's XP: the more recent record, the larger count when both are from the same day
+    out.streak = recent(a.streak, b.streak, 'last', 'count');
+    out.dayXp = recent(a.dayXp, b.dayXp, 'date', 'xp');
+    // word of the day: unions; this device's choice wins if the two picked different words for one day
+    const wa = obj(a.wotd); const wb = obj(b.wotd);
+    out.wotd = Object.assign({}, wb, wa, {
+      byDate: unionBy(wa.byDate, wb.byDate, x => x),
+      done: unionBy(wa.done, wb.done, (x, y) => x || y),
+      answers: unionBy(wa.answers, wb.answers, x => x),
+      learned: Array.from(new Set([].concat(wa.learned || [], wb.learned || [])))
+    });
+    // name, endings and daily goal: whichever device saved Settings last
+    const prefs = (b.prefsAt || 0) > (a.prefsAt || 0) ? b : a;
+    for (const k of ['name', 'fem', 'goalMins', 'prefsAt']) if (k in prefs) out[k] = prefs[k];
+    return out;
+  }
+
+  return { judge, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
 });

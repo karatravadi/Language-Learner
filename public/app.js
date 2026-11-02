@@ -324,7 +324,7 @@
         h('div', { class: 'radios' }, h('label', {}, fem, 'cansada (-a)'), h('label', {}, masc, 'cansado (-o)'))),
       h('label', { class: 'field' }, h('span', {}, 'Daily goal'), goal),
       h('div', { class: 'row' },
-        h('button', { class: 'btn primary', onclick: () => { S.name = name.value.trim() || 'Kara'; S.fem = fem.checked; S.goalMins = Number(goal.value) || 45; save(); ov.remove(); home(); } }, 'Save'),
+        h('button', { class: 'btn primary', onclick: () => { S.name = name.value.trim() || 'Kara'; S.fem = fem.checked; S.goalMins = Number(goal.value) || 45; S.prefsAt = Date.now(); save(); ov.remove(); home(); } }, 'Save'),
         h('button', { class: 'btn quiet danger', onclick: () => { if (confirm('Erase all progress, review cards and streak on this device?')) { S = defaults(); save(); ov.remove(); home(); } } }, 'Reset progress')),
       h('div', { class: 'field', style: { 'margin-top': '16px' } }, h('span', {}, 'Backup'),
         h('div', { class: 'row', style: { 'margin-top': '0' } },
