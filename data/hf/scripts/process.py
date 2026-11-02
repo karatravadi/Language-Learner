@@ -141,7 +141,7 @@ def cefr_lang(name, tag, latam):
 
 # ---------- Latin ----------
 AUTHORS = ["Caesar", "Cicero", "Catullus", "Ovid"]
-READ_FIRST = ["Caesar", "Cicero"]   # plain classical prose; the usual first real authors
+READ_FIRST = ["Cornelius Nepos", "Phaedrus", "Caesar", "Cicero"]   # usual reading order, simplest first
 TWO_WORD = {"Quintus_Curtius", "Cornelius_Nepos", "Pliny_Younger", "Silius_Italicus", "Minucius_Felix",
             "Velleius_Paterculus", "Ammianus_Marcellinus", "Calpernius_Siculus", "Rutilius_Namatianus",
             "Valerius_Flaccus"}
@@ -209,6 +209,9 @@ def latin(name):
     nc = sum(str(k["la"]).strip()[-1:] in ";:," for k in keep)
     odd.append(f"Latin: in the saved pairs, {nb} have editors' brackets such as <et> (words an editor added), "
                f"and {nc} end in ; : or , because the dataset splits long sentences into clauses. Left as they are.")
+    nl = sum(1 for k in keep if k["author"] == "Phaedrus" and k["la"][:1].islower())
+    odd.append(f"Latin: Phaedrus is verse, split into pieces of a fable; {nl} of his saved lines start lowercase "
+               "because they continue a sentence. Nepos is short biographies of Greek and Roman generals (plus Atticus and Cato).")
     odd.append("Latin: the Caesar English is an old, literal 19th-century style; the Cicero English is modern and freer.")
     keep.sort(key=lambda x: (READ_FIRST.index(x["author"]), x["la_words"]))
     path = OUT / "latin_read_first_6-25.jsonl"
@@ -217,13 +220,13 @@ def latin(name):
             f.write(json.dumps(k, ensure_ascii=False) + "\n")
     per = Counter(k["author"] for k in keep)
     say(f"\nSaved {len(keep)} pairs ({', '.join(f'{a} {per[a]}' for a in READ_FIRST)}; Latin 6 to 25 words) "
-        f"to `out/{path.name}`, Caesar first, then shortest first. Caesar means Gallic War Books 1 to 7 only: "
+        f"to `out/{path.name}`, in that author order, then shortest first. Caesar means Gallic War Books 1 to 7 only: "
         "the African, Alexandrian and Spanish Wars and Book 8 are by other writers and are left out. "
         "Cicero here is only speeches (Philippics, Post Reditum). "
         "Text as given: no macrons added, English left as the dataset's paraphrase.")
     say("")
     if not keep:
-        odd.append("Latin: no Caesar or Cicero pairs matched; check the file names in the table.")
+        odd.append("Latin: no read-first pairs matched; check the file names in the table.")
     odd.append(f"Latin: the Vulgate Bible is {files.most_common(1)[0][1]} of {len(rows)} pairs, a third of the set. "
                "`file` paths use Windows backslashes. There is no Caesar Civil War and no Cicero letters or essays.")
     blank = sum(1 for r in rows if not str(r[la] or "").strip() or not str(r[en] or "").strip())

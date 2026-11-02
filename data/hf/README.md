@@ -376,15 +376,16 @@ Columns: `id`, `la`, `en`, `file`. Splits: train (99343), test (1014), valid (10
 | Modestinus_Cupid_Asleep | 11 |
 | Cornelius_Nepos_On_Kings | 7 |
 
-Saved 3808 pairs (Caesar 1211, Cicero 2597; Latin 6 to 25 words) to `out/latin_read_first_6-25.jsonl`, Caesar first, then shortest first. Caesar means Gallic War Books 1 to 7 only: the African, Alexandrian and Spanish Wars and Book 8 are by other writers and are left out. Cicero here is only speeches (Philippics, Post Reditum). Text as given: no macrons added, English left as the dataset's paraphrase.
+Saved 4661 pairs (Cornelius Nepos 254, Phaedrus 599, Caesar 1211, Cicero 2597; Latin 6 to 25 words) to `out/latin_read_first_6-25.jsonl`, in that author order, then shortest first. Caesar means Gallic War Books 1 to 7 only: the African, Alexandrian and Spanish Wars and Book 8 are by other writers and are left out. Cicero here is only speeches (Philippics, Post Reditum). Text as given: no macrons added, English left as the dataset's paraphrase.
 
 
 ## Odd things
 
 - Spanish: 45 duplicate texts (kept only one of each in the output).
 - Spanish: unexpected level labels ['B'].
-- Latin: dropped 4 likely misaligned pairs (English holds two versions or is over 4 times the Latin).
-- Latin: in the saved pairs, 152 have editors' brackets such as <et> (words an editor added), and 515 end in ; : or , because the dataset splits long sentences into clauses. Left as they are.
+- Latin: dropped 6 likely misaligned pairs (English holds two versions or is over 4 times the Latin).
+- Latin: in the saved pairs, 163 have editors' brackets such as <et> (words an editor added), and 531 end in ; : or , because the dataset splits long sentences into clauses. Left as they are.
+- Latin: Phaedrus is verse, split into pieces of a fable; 354 of his saved lines start lowercase because they continue a sentence. Nepos is short biographies of Greek and Roman generals (plus Atticus and Cato).
 - Latin: the Caesar English is an old, literal 19th-century style; the Cicero English is modern and freer.
 - Latin: the Vulgate Bible is 33036 of 101371 pairs, a third of the set. `file` paths use Windows backslashes. There is no Caesar Civil War and no Cicero letters or essays.
 - Spanish: every saved row has title `na`, so there is no link back to the source article.
