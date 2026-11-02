@@ -81,7 +81,7 @@
     return c;
   }
   function dueCards(srs, now) {
-    return Object.keys(srs).map(k => srs[k]).filter(c => c.due <= now).sort((a, b) => a.due - b.due);
+    return Object.keys(srs).map(k => srs[k]).filter(c => !c.off && c.due <= now).sort((a, b) => a.due - b.due);
   }
 
   // ----- word of the day -----
@@ -139,6 +139,8 @@
     Object.keys(time).sort().slice(-TIME_DAYS).forEach(k => { out.time[k] = time[k]; });
     out.reviewed = unionBy(a.reviewed, b.reviewed, (x, y) => x || y);
     out.skills = unionBy(a.skills, b.skills, (x, y) => ({ r: Math.max(x.r || 0, y.r || 0), w: Math.max(x.w || 0, y.w || 0) }));
+    // saved words: the latest change (added or removed) wins
+    if (a.vocab || b.vocab) out.vocab = unionBy(a.vocab, b.vocab, (x, y) => ((y.at || 0) > (x.at || 0) ? y : x));
     out.xp = Math.max(a.xp || 0, b.xp || 0);
     // streak and today's XP: the more recent record, the larger count when both are from the same day
     out.streak = recent(a.streak, b.streak, 'last', 'count');

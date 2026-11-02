@@ -9,7 +9,7 @@
   const NOTE_LABEL = { tip: 'Tip', spain: 'In Spain', warn: 'Careful', culture: 'Culture' };
   const GOALS = [20, 30, 45, 60];
 
-  let COURSE = null; let CHAPTERS = []; let ROADMAP = []; let WORDS = []; let SKILLS = {};
+  let COURSE = null; let CHAPTERS = []; let ROADMAP = []; let WORDS = []; let SKILLS = {}; let GLOSS = {};
   let KEY = 'espanol-trainer-v1';
   let S = null;
 
@@ -68,7 +68,7 @@
   function defaults() {
     return {
       name: '', fem: true, goalMins: 45, xp: 0, streak: { last: null, count: 0 }, dayXp: { date: '', xp: 0 },
-      time: {}, reviewed: {}, done: {}, srs: {}, skills: {}, wotd: { byDate: {}, learned: [], done: {}, answers: {} }
+      time: {}, reviewed: {}, done: {}, srs: {}, skills: {}, vocab: {}, wotd: { byDate: {}, learned: [], done: {}, answers: {} }
     };
   }
   // A saved state (from storage or an imported file) on top of the defaults, so older saves gain new fields.
@@ -358,6 +358,12 @@
       h('div', { class: 'wotd-ex' }, word.ex.es),
       h('div', { class: 'wotd-go' }, wdone ? [icon('check'), 'Done'] : ['Use it in a sentence', icon('next')]));
 
+    const nWords = myWords().length;
+    const wordsCard = h('button', { class: 'card wotd', type: 'button', onclick: wordsScreen },
+      h('div', { class: 'wotd-k' }, 'My words'),
+      h('div', { class: 'wotd-m' }, nWords ? nWords + (nWords === 1 ? ' word saved' : ' words saved') + ', in your review deck' : 'Tap any Spanish word in a lesson to see what it means and save it here'),
+      h('div', { class: 'wotd-go' }, nWords ? 'See them' : 'How it works', icon('next')));
+
     const path = CHAPTERS.map(ch => {
       const d = S.done[ch.n];
       const isNext = ch === nextCh && !d;
@@ -379,11 +385,128 @@
         h('div', { class: 'brand' }, h('div', { class: 'mark', 'aria-hidden': 'true' }, 'ñ'), h('div', { class: 'wordmark' }, 'Español Trainer')),
         h('div', { class: 'top-r' }, h('button', { class: 'icon-btn', 'aria-label': 'Settings', onclick: settings }, icon('settings', 'lg')))),
       h('div', { class: 'home-grid' },
-        h('div', { class: 'home-side' }, todayCard, wotd),
+        h('div', { class: 'home-side' }, todayCard, wotd, wordsCard),
         h('div', {},
           h('h1', { class: 'page-title' }, COURSE.title), h('p', { class: 'muted' }, COURSE.level + ' · ' + CHAPTERS.length + ' chapters'),
           h('div', { class: 'path' }, path),
           h('div', { class: 'foot' }, aiLine)))));
+  }
+
+  // ---------- tap a word: its meaning, and My words ----------
+  // Any text marked lang="es" has its words made tappable (buttons, inputs and the red pen are left alone).
+  // Meanings come from the course glossary; a word it lacks can be asked of the AI tutor.
+  const WORD_RE = /(?<![\/A-Za-zÁÉÍÓÚÜÑáéíóúüñ])[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+/g;
+  function wordify(root) {
+    if (!root || root.nodeType !== 1) return;
+    const zones = root.matches('[lang="es"]') ? [root] : [];
+    zones.push(...root.querySelectorAll('[lang="es"]'));
+    if (!zones.length && root.closest && root.closest('[lang="es"]')) zones.push(root);
+    for (const zone of zones) {
+      const walker = document.createTreeWalker(zone, NodeFilter.SHOW_TEXT);
+      const texts = [];
+      while (walker.nextNode()) {
+        const t = walker.currentNode;
+        if (!t.parentElement.closest('.w, .wcard, textarea, input, select, .pen, .mini')) texts.push(t);
+      }
+      for (const t of texts) {
+        const str = t.nodeValue; WORD_RE.lastIndex = 0;
+        if (!WORD_RE.test(str)) continue;
+        const frag = document.createDocumentFragment(); let at = 0; let made = 0; WORD_RE.lastIndex = 0; let m;
+        while ((m = WORD_RE.exec(str))) {
+          if (S && S.name && m[0].toLowerCase() === S.name.toLowerCase()) continue;
+          frag.append(str.slice(at, m.index), h('span', { class: 'w' }, m[0])); at = m.index + m[0].length; made++;
+        }
+        // Only replace text that gained a tappable word: replacing it unchanged would wake the observer forever.
+        if (!made) continue;
+        frag.append(str.slice(at));
+        t.replaceWith(frag);
+      }
+    }
+  }
+  new MutationObserver(list => list.forEach(r => r.addedNodes.forEach(n => { if (n.nodeType === 1) wordify(n); else if (n.nodeType === 3 && n.parentElement && n.parentElement.closest('[lang="es"]')) wordify(n.parentElement); })))
+    .observe(document.body, { childList: true, subtree: true });
+
+  const myWords = () => Object.keys(S.vocab || {}).filter(k => !S.vocab[k].off).sort((a, b) => a.localeCompare(b, 'es'));
+  function saveWord(key, en, note) {
+    const now = Date.now();
+    S.vocab[key] = { es: key, en, note: note || '', at: now };
+    const id = 'v-' + key;
+    if (S.srs[id]) S.srs[id] = Object.assign({}, S.srs[id], { off: false, seen: now, en: en + (note ? ' (' + note + ')' : '') });
+    else S.srs[id] = L.newCard({ id, es: key, en: en + (note ? ' (' + note + ')' : ''), alts: [] }, now);
+    save();
+  }
+  function dropWord(key) {
+    const now = Date.now();
+    if (S.vocab[key]) S.vocab[key] = Object.assign({}, S.vocab[key], { off: true, at: now });
+    const id = 'v-' + key;
+    if (S.srs[id]) S.srs[id] = Object.assign({}, S.srs[id], { off: true, seen: now });
+    save();
+  }
+
+  const aiGloss = {}; // meanings fetched from the AI this session
+  let openCard = null;
+  function closeWord() { if (openCard) { openCard.remove(); openCard = null; } }
+  function openWord(el) {
+    closeWord();
+    const word = el.textContent; const key = word.toLowerCase();
+    const zone = el.closest('[lang="es"]');
+    const sentence = zone ? zone.textContent.trim().slice(0, 300) : word;
+    const body = h('div', { class: 'wcard-b' });
+    const card = h('div', { class: 'wcard', role: 'dialog', 'aria-label': 'Meaning of ' + word },
+      h('div', { class: 'wcard-h' }, h('span', { class: 'wcard-w', lang: 'es' }, key), speakBtn(key),
+        h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Close', onclick: closeWord }, icon('close'))),
+      body);
+    function show(en, note) {
+      const saved = S.vocab[key] && !S.vocab[key].off;
+      const add = h('button', { class: 'btn ' + (saved ? 'quiet' : 'ghost'), type: 'button' }, saved ? [icon('check'), 'In my words'] : 'Add to my words');
+      add.addEventListener('click', () => {
+        if (S.vocab[key] && !S.vocab[key].off) { dropWord(key); add.className = 'btn ghost'; put(add, 'Add to my words'); }
+        else { saveWord(key, en, note); add.className = 'btn quiet'; put(add, icon('check'), 'In my words'); }
+      });
+      put(body, h('div', { class: 'wcard-en' }, en), note ? h('div', { class: 'wcard-n' }, note) : null, h('div', { class: 'row' }, add));
+    }
+    const g = GLOSS[key] || aiGloss[key] || (S.vocab[key] && [S.vocab[key].en, S.vocab[key].note]);
+    if (g) show(g[0], g[1]);
+    else {
+      const ask = h('button', { class: 'btn ghost', type: 'button' }, 'Ask the AI tutor');
+      ask.addEventListener('click', async () => {
+        put(body, h('div', { class: 'spinner small', role: 'status' }, 'Looking it up…'));
+        const r = await ai('gloss', { word: key, sentence });
+        if (r.ok && r.data.en) { aiGloss[key] = [r.data.en, r.data.note || '']; show(r.data.en, r.data.note); }
+        else put(body, h('p', { class: 'error' }, r.error || 'No meaning found for this word.'));
+      });
+      put(body, h('p', { class: 'muted' }, 'Not in the glossary yet.'), AI.on ? h('div', { class: 'row' }, ask) : null);
+    }
+    document.body.append(card);
+    const r = el.getBoundingClientRect(); const cw = Math.min(320, window.innerWidth - 32);
+    card.style.width = cw + 'px';
+    card.style.left = Math.max(16, Math.min(r.left + window.scrollX, window.scrollX + window.innerWidth - cw - 16)) + 'px';
+    const below = r.bottom + 8 + card.offsetHeight < window.innerHeight;
+    card.style.top = (below ? r.bottom + window.scrollY + 8 : r.top + window.scrollY - card.offsetHeight - 8) + 'px';
+    openCard = card;
+  }
+  document.addEventListener('click', e => {
+    const w = e.target.closest && e.target.closest('.w');
+    if (w) { e.preventDefault(); e.stopPropagation(); openWord(w); return; }
+    if (openCard && !openCard.contains(e.target)) closeWord();
+  }, true);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeWord(); });
+
+  function wordsScreen() {
+    const list = h('div', { class: 'phrases' });
+    function draw() {
+      const keys = myWords();
+      put(list, keys.length ? keys.map(k => {
+        const v = S.vocab[k];
+        return h('div', { class: 'phrase' },
+          h('div', {}, h('div', { class: 'es' }, v.es), h('div', { class: 'en' }, v.en + (v.note ? ' · ' + v.note : ''))),
+          h('div', { class: 'row', style: { 'margin-top': '0' } }, speakBtn(v.es),
+            h('button', { class: 'btn quiet', type: 'button', onclick: () => { dropWord(k); draw(); } }, 'Remove')));
+      }) : h('p', { class: 'muted' }, 'No words yet. In any lesson, tap a Spanish word to see what it means, then choose Add to my words. Saved words join your review deck.'));
+    }
+    draw();
+    mount(h('div', { class: 'page lesson' }, backBar('My words', home),
+      h('div', { class: 'step' }, h('h2', {}, 'My words'), h('p', { class: 'muted' }, 'Words you saved from lessons. They come back in Review until you know them.'), list)));
   }
 
   // ---------- first use: name and endings ----------
@@ -470,8 +593,8 @@
         h('button', { class: 'icon-btn', 'aria-label': 'Close lesson', onclick: onClose }, icon('close', 'lg')),
         h('div', { class: 'lesson-title' }, title),
         h('div', { class: 'lesson-tools' },
-          onPatterns ? h('button', { class: 'btn quiet', type: 'button', onclick: onPatterns }, icon('book'), 'Patterns') : null,
-          onBack ? h('button', { class: 'btn quiet', type: 'button', onclick: onBack }, icon('back'), 'Back') : null)),
+          onPatterns ? h('button', { class: 'btn quiet', type: 'button', 'aria-label': 'Patterns', onclick: onPatterns }, icon('book'), h('span', { class: 'tool-l' }, 'Patterns')) : null,
+          onBack ? h('button', { class: 'btn quiet', type: 'button', 'aria-label': 'Back', onclick: onBack }, icon('back'), h('span', { class: 'tool-l' }, 'Back')) : null)),
       h('div', { class: 'segs', role: 'img', 'aria-label': 'Step ' + (step + 1) + ' of ' + labels.length + ': ' + labels[step] }, segs),
       content);
   }
@@ -515,7 +638,7 @@
 
   function discoverStep(ch, next) {
     const d = ch.discover;
-    const line = ([es, en]) => h('button', { class: 'ex-line', type: 'button', onclick: () => say(T(es)) }, h('span', { class: 'es' }, T(es)), h('span', { class: 'en' }, T(en)));
+    const line = ([es, en]) => h('button', { class: 'ex-line', type: 'button', onclick: () => say(T(es)) }, h('span', { class: 'es', lang: 'es' }, T(es)), h('span', { class: 'en' }, T(en)));
     const reveal = h('div', { class: 'reveal hidden' });
     const msg = h('p', { class: 'nudge hidden' });
     const opts = d.options.map((o, i) => h('button', {
@@ -535,7 +658,7 @@
       }
     }, T(o)));
     const hookRow = r => h('div', { class: 'hook-row' }, h('div', { class: 'hook-b' }, r[0]),
-      h('div', {}, h('div', { class: 'hook-l' }, r[1]), h('div', { class: 'hook-e' }, T(r[2])), h('div', { class: 'hook-t' }, T(r[3]))));
+      h('div', {}, h('div', { class: 'hook-l' }, r[1]), h('div', { class: 'hook-e', lang: 'es' }, T(r[2])), h('div', { class: 'hook-t' }, T(r[3]))));
     const hooks = d.hooks || [];
     push(reveal,
       h('p', { class: 'lead' }, T(d.reveal)),
@@ -554,19 +677,19 @@
     if (b.type === 'tables') {
       return h('div', { class: 'cols', style: { '--n': String(b.tables.length) } }, b.tables.map(t => h('div', { class: 'conj ' + tone(t.tone) }, h('h3', {}, t.title),
         t.rows.map(([p, f]) => h('button', { class: 'conj-row', type: 'button', onclick: () => say(t.speak === 'form' ? f.replace(/·/g, ',') : p.split(' ')[0].replace(/\/.*/, '') + ' ' + f) },
-          h('span', { class: 'pron' }, p), h('span', { class: 'form' }, f))))));
+          h('span', { class: 'pron' }, p), h('span', { class: 'form', lang: 'es' }, f))))));
     }
     if (b.type === 'note') return h('div', { class: 'note ' + b.kind }, h('span', { class: 'note-k' }, NOTE_LABEL[b.kind]), h('span', {}, T(b.text)));
     if (b.type === 'twist') {
       return h('div', { class: 'twist' }, h('h3', {}, b.title),
         h('div', { class: 'cols' },
-          h('div', { class: 'pair tone-blue' }, h('div', { class: 'es' }, T(b.a[0])), h('div', { class: 'en' }, T(b.a[1]))),
-          h('div', { class: 'pair tone-orange' }, h('div', { class: 'es' }, T(b.b[0])), h('div', { class: 'en' }, T(b.b[1])))),
+          h('div', { class: 'pair tone-blue' }, h('div', { class: 'es', lang: 'es' }, T(b.a[0])), h('div', { class: 'en' }, T(b.a[1]))),
+          h('div', { class: 'pair tone-orange' }, h('div', { class: 'es', lang: 'es' }, T(b.b[0])), h('div', { class: 'en' }, T(b.b[1])))),
         h('p', {}, T(b.note)));
     }
     if (b.type === 'list') {
       return h('div', { class: 'list-block' }, h('h3', {}, b.title),
-        h('div', { class: 'phrases' }, b.rows.map(([es, en]) => h('div', { class: 'phrase' }, h('div', {}, h('div', { class: 'es' }, T(es)), h('div', { class: 'en' }, T(en))), speakBtn(T(es))))));
+        h('div', { class: 'phrases' }, b.rows.map(([es, en]) => h('div', { class: 'phrase' }, h('div', {}, h('div', { class: 'es', lang: 'es' }, T(es)), h('div', { class: 'en' }, T(en))), speakBtn(T(es))))));
     }
     return null;
   }
@@ -586,7 +709,7 @@
       h('h2', {}, 'Phrases to keep'),
       h('p', { class: 'muted' }, 'These are now in your review deck, so they come back just before you would forget them.'),
       h('div', { class: 'phrases' }, ch.phrases.map(p => h('div', { class: 'phrase' },
-        h('div', {}, h('div', { class: 'es' }, T(p.es)), h('div', { class: 'en' }, T(p.en))),
+        h('div', {}, h('div', { class: 'es', lang: 'es' }, T(p.es)), h('div', { class: 'en' }, T(p.en))),
         speakBtn(T(p.es))))),
       contBtn('Start practising', next));
   }
@@ -595,7 +718,7 @@
   function sentenceEl(q) {
     const parts = T(q).split('___');
     const slot = h('span', { class: 'slot' }, ' ');
-    const el = h('div', { class: 'sentence' });
+    const el = h('div', { class: 'sentence', lang: 'es' });
     parts.forEach((p, i) => { if (i) push(el, slot); push(el, p); });
     return { el, slot, hasSlot: parts.length > 1 };
   }
@@ -715,7 +838,7 @@
           api.record(it.skill || ex.skill, ok);
           if (ok) right++;
           fb.className = 'rapid-fb ' + (ok ? 'good' : 'bad');
-          put(fb, h('b', {}, (ok ? '' : 'No: ') + T(it.full)), h('span', { class: 'muted' }, ' ' + it.why));
+          put(fb, h('b', {}, ok ? '' : 'No: ', h('span', { lang: 'es' }, T(it.full))), h('span', { class: 'muted' }, ' ' + it.why));
           if (s.slot) s.slot.textContent = it.fill;
           const nextBtn = h('button', { class: 'btn primary', type: 'button', onclick: () => { i++; show(); } }, i + 1 === ex.items.length ? 'Finish' : 'Next');
           fb.append(h('div', { class: 'row end' }, nextBtn));
@@ -825,8 +948,8 @@
         put(fb,
           h('div', { class: 'fb-head' }, head),
           mark,
-          res.show && good && !res.almost ? h('div', { class: 'fb-ans' }, res.show) : null,
-          !good && res.penFrom ? h('div', { class: 'fb-ans' }, res.show) : null,
+          res.show && good && !res.almost ? h('div', { class: 'fb-ans', lang: 'es' }, res.show) : null,
+          !good && res.penFrom ? h('div', { class: 'fb-ans', lang: 'es' }, res.show) : null,
           res.why ? h('div', { class: 'fb-why' }, res.why) : null,
           res.hear ? speakBtn(res.hear, 'Hear it') : null);
         fb.classList.remove('hidden');
@@ -858,7 +981,7 @@
       d.mistakes.length
         ? h('div', { class: 'mistakes' }, d.mistakes.map(m => h('div', { class: 'mistake' }, pen(m.wrong, m.right), h('div', { class: 'why' }, m.why))))
         : h('p', { class: 'praise' }, 'No mistakes found.'),
-      d.corrected ? h('div', { class: 'corrected' }, h('div', { class: 'label' }, 'Polished version'), h('div', { class: 'big' }, d.corrected), speakBtn(d.corrected, 'Hear it')) : null,
+      d.corrected ? h('div', { class: 'corrected' }, h('div', { class: 'label' }, 'Polished version'), h('div', { class: 'big', lang: 'es' }, d.corrected), speakBtn(d.corrected, 'Hear it')) : null,
       d.praise ? h('p', { class: 'praise' }, h('b', {}, 'What worked: '), d.praise) : null,
       d.tip ? h('p', { class: 'tip' }, h('b', {}, 'Tip: '), d.tip) : null);
   }
@@ -874,7 +997,7 @@
     const lock = h('p', { class: 'meta' }, 'Write your sentences and check them to continue.');
     const unlock = () => { contB.disabled = false; lock.remove(); };
     const modelAnswer = () => [
-      h('div', { class: 'corrected' }, h('div', { class: 'label' }, 'Model answer'), h('div', { class: 'big' }, T(w.model)), speakBtn(T(w.model), 'Hear it')),
+      h('div', { class: 'corrected' }, h('div', { class: 'label' }, 'Model answer'), h('div', { class: 'big', lang: 'es' }, T(w.model)), speakBtn(T(w.model), 'Hear it')),
       h('p', { class: 'muted' }, 'Compare yours with it and tick off:'),
       h('ul', { class: 'check-list' }, w.checklist.map(c => h('li', {}, h('label', {}, h('input', { type: 'checkbox' }), c))))];
     btn.addEventListener('click', async () => {
@@ -883,7 +1006,7 @@
       if (!AI.on) {
         unlock();
         put(out,
-          h('div', { class: 'corrected' }, h('div', { class: 'label' }, 'Model answer'), h('div', { class: 'big' }, T(w.model)), speakBtn(T(w.model), 'Hear it')),
+          h('div', { class: 'corrected' }, h('div', { class: 'label' }, 'Model answer'), h('div', { class: 'big', lang: 'es' }, T(w.model)), speakBtn(T(w.model), 'Hear it')),
           h('p', { class: 'muted' }, 'Compare yours with it and tick off:'),
           h('ul', { class: 'check-list' }, w.checklist.map(c => h('li', {}, h('label', {}, h('input', { type: 'checkbox' }), c)))),
           h('p', { class: 'meta' }, 'With the AI tutor on, it corrects your exact sentences and explains why.'));
@@ -914,7 +1037,7 @@
     const enEl = h('div', { class: 'en hidden' }, en || '');
     return h('div', { class: 'bubble ' + (who ? 'npc' : 'me') },
       who ? h('span', { class: 'who' }, who) : null,
-      h('div', { class: 'es' }, text),
+      h('div', { class: 'es', lang: 'es' }, text),
       who ? h('div', { class: 'bub-tools' },
         hearable ? speakBtn(text) : null,
         en ? h('button', { class: 'mini lbl', type: 'button', 'aria-label': 'Show English', onclick: () => enEl.classList.toggle('hidden') }, 'EN') : null) : null,
@@ -1110,7 +1233,7 @@
         fb.className = 'feedback ' + (ok ? (r === 'accent' ? 'warn' : 'good') : 'bad');
         put(fb,
           h('div', { class: 'fb-head' }, ok ? (r === 'accent' ? 'Right, but watch the accents' : PRAISE[Math.floor(Math.random() * PRAISE.length)]) : 'Not quite'),
-          ok && r !== 'accent' ? h('div', { class: 'fb-ans' }, card.es) : pen(input.value.trim(), card.es),
+          ok && r !== 'accent' ? h('div', { class: 'fb-ans', lang: 'es' }, card.es) : pen(input.value.trim(), card.es),
           card.alts && card.alts.length ? h('div', { class: 'meta' }, 'Also right: ' + card.alts.join(', ')) : null,
           card.ex ? h('div', { class: 'fb-why' }, card.ex) : null,
           speakBtn(card.es, 'Hear it'));
@@ -1201,7 +1324,7 @@
           h('div', { class: 'meta' }, w.pos),
           h('div', { class: 'wotd-big' }, w.es, speakBtn(w.es)),
           h('div', { class: 'wotd-en' }, w.en)),
-        h('div', { class: 'example' }, h('div', { class: 'es' }, w.ex.es, ' ', speakBtn(w.ex.es)), h('div', { class: 'en' }, w.ex.en)),
+        h('div', { class: 'example' }, h('div', { class: 'es', lang: 'es' }, w.ex.es, ' ', speakBtn(w.ex.es)), h('div', { class: 'en' }, w.ex.en)),
         h('div', { class: 'wq' }, h('div', { class: 'label' }, 'Your turn'), h('p', { class: 'lead' }, w.q)),
         ta, h('div', { class: 'row' }, btn), out,
         done ? h('p', { class: 'meta', style: { 'margin-top': '16px' } }, 'Done for today. A new word arrives tomorrow, and this one is in your review deck.') : null,
@@ -1223,6 +1346,7 @@
       COURSE = await getJson('courses/' + entry.file);
       CHAPTERS = (await Promise.all(COURSE.chapters.map(f => getJson(base + f)))).sort((a, b) => a.n - b.n);
       WORDS = await getJson(base + COURSE.words);
+      GLOSS = COURSE.glossary ? (await getJson(base + COURSE.glossary)).words || {} : {};
       ROADMAP = COURSE.roadmap || [];
       SKILLS = Object.assign({}, COURSE.skills, ...CHAPTERS.map(c => c.skills || {}));
       KEY = COURSE.storageKey;
@@ -1235,7 +1359,7 @@
         h('p', { class: 'meta' }, String(e.message || e))));
       return;
     }
-    window.__trainer = { state: () => S, home, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE };
+    window.__trainer = { state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE };
     await aiStatus();
     if (SYNC.on) await syncStart();
     if (S.name) home(); else welcome();

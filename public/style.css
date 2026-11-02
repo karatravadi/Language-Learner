@@ -156,7 +156,7 @@ button.chap:hover { border-color: var(--line-2); }
 /* ---------- lesson shell ---------- */
 .lesson-top { display: grid; grid-template-columns: 36px 1fr auto; align-items: center; gap: 12px; height: 64px; }
 .lesson-tools { display: flex; gap: 4px; }
-@media (max-width: 480px) { .lesson-tools .btn { padding: 0 8px; } }
+@media (max-width: 480px) { .lesson-tools .btn { padding: 0 8px; } .tool-l { display: none; } }
 .modal:has(.patterns) { max-width: 760px; }
 .patterns h2 { margin-bottom: 16px; }
 .lesson-title { font-size: 15px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -355,3 +355,13 @@ select.text { font-family: var(--sans); font-size: 16px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* tap a word */
+.w { cursor: pointer; border-radius: 3px; }
+.w:hover { background: var(--raised); box-shadow: 0 2px 0 -1px var(--line-2); }
+.wcard { position: absolute; z-index: 60; background: var(--surface); border: 1px solid var(--line-2); border-radius: 12px; box-shadow: var(--float); padding: 12px 16px 16px; animation: rise .2s var(--ease); }
+.wcard-h { display: flex; align-items: center; gap: 8px; }
+.wcard-w { font: 400 24px/32px var(--serif); flex: 1; }
+.wcard-en { font-size: 16px; margin-top: 4px; }
+.wcard-n { font-size: 14px; color: var(--ink-2); margin-top: 4px; }
+.wcard .row { margin-top: 12px; }

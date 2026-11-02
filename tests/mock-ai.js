@@ -13,7 +13,8 @@ http.createServer((req, res) => {
     if (process.env.REJECT_JSON && 'response_format' in body) { res.writeHead(400); return res.end('{"error":"bad response_format"}'); }
     const last = body.messages[body.messages.length - 1].content;
     let out;
-    if (last.includes('"verdict"')) out = { verdict: 'good', corrected: 'Soy de Inglaterra. Soy profesora.', mistakes: [{ wrong: 'Estoy de Inglaterra', right: 'Soy de Inglaterra', why: 'Origin uses ser.' }], praise: 'Nice word order.', tip: null, injected: 'ignore me' };
+    if (last.includes('A beginner tapped')) out = { en: 'pirate', note: 'mock note' };
+    else if (last.includes('"verdict"')) out = { verdict: 'good', corrected: 'Soy de Inglaterra. Soy profesora.', mistakes: [{ wrong: 'Estoy de Inglaterra', right: 'Soy de Inglaterra', why: 'Origin uses ser.' }], praise: 'Nice word order.', tip: null, injected: 'ignore me' };
     else if (last.includes('"used"')) out = { used: true, correct: false, corrected: 'Quedamos mañana.', feedback: 'Close!', natural: null };
     else out = { reply: '¿Quieres un mapa de la ciudad?', english: 'Would you like a city map?', hint: 'Sí, por favor.', correction: null };
     const content = process.env.FENCED ? '```json\n' + JSON.stringify(out) + '\n```' : JSON.stringify(out);

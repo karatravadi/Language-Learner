@@ -251,15 +251,38 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   assert.match(await text(), /Say it in your own words/);
   const locked = await page.evaluate(() => [...document.querySelectorAll('button')].find(b => b.innerText.includes('Continue to the scenario')).disabled);
   assert.equal(locked, true, 'the writing step cannot be skipped before checking');
-  await clickText('button', 'Patterns'); await sleep(120);
+  await page.click('button[aria-label="Patterns"]'); await sleep(120);
   assert.match(await text(), /Patterns · Ser vs estar/); assert.match(await text(), /Who's who/);
   await clickText('.modal button', 'Close'); await sleep(80);
-  await clickText('button', 'Back'); await sleep(120);
+  await page.click('button[aria-label="Back"]'); await sleep(120);
   assert.match(await text(), /1 of \d+/); assert.equal((await state()).lesson.step, 3);
   await page.click('button[aria-label="Close lesson"]'); await sleep(80);
   assert.match(await text(), /Carry on/);
   await page.evaluate(() => { delete window.__trainer.state().lesson; window.__trainer.home(); }); await sleep(80);
   ok('chapters: carry on from a saved step, the writing check cannot be skipped, patterns open mid-lesson, back returns to practice');
+
+  // ---------- tap a word, My words ----------
+  await page.evaluate(() => window.__trainer.wotdScreen()); await sleep(120);
+  const target = await page.evaluate(() => { const w = [...document.querySelectorAll('.example .w')].find(x => x.textContent.length > 2); w.click(); return w.textContent.toLowerCase(); });
+  await sleep(80);
+  assert.ok(await page.$('.wcard'), 'tapping a word opens its meaning');
+  await clickText('.wcard button', 'Add to my words'); await sleep(60);
+  let sv = await state();
+  assert.ok(sv.vocab[target] && !sv.vocab[target].off && sv.srs['v-' + target], 'saved word joins the review deck');
+  await page.evaluate(() => { const s = document.createElement('div'); s.lang = 'es'; s.id = 'probe'; s.textContent = 'zzpalabra'; document.querySelector('.step').append(s); });
+  await sleep(60);
+  await page.click('#probe .w'); await sleep(60);
+  assert.match(await text(), /Not in the glossary yet/);
+  if (AI_ON) { await clickText('.wcard button', 'Ask the AI tutor'); await sleep(300); assert.match(await text(), /pirate/); }
+  await page.keyboard.press('Escape');
+  await page.evaluate(() => window.__trainer.wordsScreen()); await sleep(80);
+  assert.match(await text(), new RegExp(target));
+  await clickText('button', 'Remove'); await sleep(60);
+  sv = await state();
+  assert.ok(sv.vocab[target].off && sv.srs['v-' + target].off, 'removed word leaves the review deck');
+  assert.match(await text(), /No words yet/);
+  await page.evaluate(() => window.__trainer.home()); await sleep(60);
+  ok('words: tap for a meaning, save to My words and review, AI for unknown words, remove');
 
   // ---------- export / import progress ----------
   const fs = require('fs'); const os = require('os');

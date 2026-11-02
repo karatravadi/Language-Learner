@@ -81,6 +81,11 @@ t('merge: same state twice changes nothing, and nothing studied is lost', () => 
   const r = M(a, b); assert.deepEqual(Object.keys(r.done).sort(), ['1', '2']); assert.deepEqual(Object.keys(r.srs).sort(), ['x', 'y']);
   assert.deepEqual(M(r, b), r);
 });
+t('merge vocab: the latest add or remove wins', () => {
+  const r = M({ vocab: { madre: { en: 'mother', at: 5 }, es: { en: 'is', at: 9, off: true } } }, { vocab: { madre: { en: 'mother', at: 7, off: true }, es: { en: 'is', at: 3 }, pan: { en: 'bread', at: 1 } } }).vocab;
+  assert.equal(r.madre.off, true); assert.equal(r.es.off, true); assert.equal(r.pan.en, 'bread');
+});
+t('removed review cards are never due', () => assert.deepEqual(L.dueCards({ a: { due: 1, off: true }, b: { due: 1 } }, 10).length, 1));
 t('merge: tolerates missing or broken fields', () => assert.doesNotThrow(() => M({ done: null, srs: [], wotd: 5 }, undefined)));
 
 
