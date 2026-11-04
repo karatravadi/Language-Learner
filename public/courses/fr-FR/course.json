@@ -13,8 +13,8 @@
   "genderedExamples": false,
   "speaker": "a person from France",
   "glossNote": "vivre · tu",
-  "tutor": "French as spoken in France (use vous with strangers and tu with friends, and France vocabulary like \"bonjour\", \"un portable\" and \"un café\"). Never count a missing accent as a big mistake, but mention it.",
-  "roleplayRules": "Stay in character and speak only French from France. Use only grammar and words from the chapter and earlier ones. Keep every reply to one or two short sentences.",
+  "tutor": "Standard French, as spoken in France (use vous with strangers and tu with friends, and France vocabulary like \"bonjour\", \"un portable\" and \"un café\"). Never count a missing accent as a big mistake, but mention it.",
+  "roleplayRules": "Stay in character and speak only standard French. Use only grammar and words from the chapter and earlier ones. Keep every reply to one or two short sentences.",
   "ui": {
     "praise": ["Bravo", "Très bien", "Voilà", "Parfait", "Exactement", "C'est ça"],
     "wordOfDay": "Mot du jour · Word of the day",

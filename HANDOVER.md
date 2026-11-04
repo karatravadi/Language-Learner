@@ -107,5 +107,5 @@ carry over.
 
 ## Open questions for the owner
 - Hosting choice after the Step 0 comparison
-- Whether the invited learners also learn Spain Spanish
+- Whether the invited learners also learn European Spanish
 - Is a custom domain worth about £8 to £10 a year?

@@ -2,7 +2,7 @@
   "name": "espanol-trainer",
   "version": "2.0.0",
   "private": true,
-  "description": "A local Spanish (Spain) trainer with chapters, quizzes, spaced repetition and an optional AI tutor.",
+  "description": "A European Spanish, standard French and Latin trainer with chapters, quizzes, spaced repetition and an optional AI tutor.",
   "scripts": {
     "start": "node server.js",
     "test": "node tests/unit.js && node tools/check-content.js",

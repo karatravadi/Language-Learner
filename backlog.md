@@ -132,7 +132,7 @@ Problem: tapping a verb saves one form (for example "vivo"), so learning a verb 
 
 Plan:
 - When the tapped word is a verb, offer "Save verb" next to the normal save. It saves the infinitive (vivir) with the
-  full present-tense table: yo, tú, él/ella/usted, nosotros, vosotros, ellos/ellas/ustedes. Spain Spanish, so vosotros
+  full present-tense table: yo, tú, él/ella/usted, nosotros, vosotros, ellos/ellas/ustedes. European Spanish, so vosotros
   is always included.
 - One card per verb in My words, showing the table. Not six separate cards.
 - Review: the card asks for one form at a time, picked at random ("vosotros, vivir"), which suits active practice over

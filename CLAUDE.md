@@ -3,7 +3,7 @@
 Read this first, then `HANDOVER.md` for the next phase of work.
 
 ## What this is and who it's for
-- A web app for learning **Spanish from Spain**, from scratch to a
+- A web app for learning **European Spanish**, from scratch to a
   conversational level (CEFR A1 to A2, then towards B1). It supplements Language Transfer and Duolingo, whose
   audio-only format is easy to switch off from, so variety and active practice matter more than volume.
 - It is built for about **45 minutes a day**. The home screen plans that day: word of the day (3 min), review (10),
@@ -72,7 +72,7 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
   `tables`, `note` with kind tip/spain/warn/culture, `twist`, `list`) → Phrases (8, they join the review deck) →
   ~15 exercises (`mc`, `listen`, `gap`, `translate`, `order`, `fix`, `match`, `rapid`) → Write (AI-corrected or model
   answer) → Scenario (a character, 4 turns, one right reply each with reasons for the wrong ones) → Results.
-- Spain Spanish: vosotros in every table, Spain vocabulary (vale, caña, móvil, ordenador, coger), Spain customs.
+- European Spanish: vosotros in every table, Spain vocabulary (vale, caña, móvil, ordenador, coger), Spain customs.
 - Tokens: `{name}` is the learner's name, `{o}` is a/o for gendered endings. Nothing else.
 - Every exercise has a `skill`; skills need a readable name in the chapter's `skills` (or the course's).
   Weak-spot drills group by skill.
@@ -144,7 +144,7 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
 - Macrons in all Latin text. Check new Latin against Whitaker's Words or Wheelock (both free online).
 
 ## French course (public/courses/fr-FR)
-- The third course (added 2 Nov 2026): French (European), meaning French as spoken in France, A1 then A2, 25 min a day (`goalMins` 25, plan 2/7/8).
+- The third course (added 2 Nov 2026): French (European), meaning standard French, A1 then A2, 25 min a day (`goalMins` 25, plan 2/7/8).
   Chapters 1 to 8 are written (être and tu or vous, avoir and -er verbs and ne … pas, numbers and time, food and
   ordering, aller and directions, hotels with vouloir and pouvoir, likes and plans, daily routine with reflexive verbs).
   The roadmap in course.json plans 9 to 12 and ends in an A2 checkpoint, like Spanish.
@@ -155,7 +155,7 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
 - Apostrophes: a word is letters only, so j'ai taps as j and ai. The glossary has entries for the single letters
   (j, l, d, n, m, t, s, c, y) saying what they stand for. `L.judge` treats a curly apostrophe (what an iPhone types) as a
   straight one, keeps apostrophes inside words (j ai is wrong, j'ai is right), and ignores « ». Œ and æ count as oe and ae.
-- France only. Septante and nonante are explained as Belgian and Swiss and not taught.
+- Standard French only. Septante and nonante are explained as Belgian and Swiss and not taught.
 - Accent slips count as right with a note, as in Spanish. That is too kind for pairs that differ only by an accent
   (a and à, ou and où, la and là). Test those with `mc` or `gap`, where the accent is the choice, not with typed answers.
 - Same safeguard as the others: the French is AI-written, checked by tests for consistency and not for correctness.
