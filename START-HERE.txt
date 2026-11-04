@@ -11,9 +11,11 @@ STEP 1  Install Node.js (once)
          node --version
      You should see v18 or higher (e.g. v22.x.x).
 
-STEP 2  Unzip the trainer
-   - Right-click espanol-trainer.zip, choose "Extract All", and put the folder
-     somewhere permanent (e.g. Documents). Do NOT run it from inside the zip.
+STEP 2  Get the app
+   - On https://github.com/karatravadi/Language-Learner click Code > Download ZIP,
+     right-click the zip, choose "Extract All", and put the folder somewhere
+     permanent (e.g. Documents). Do NOT run it from inside the zip.
+     (Or, with Git: git clone https://github.com/karatravadi/Language-Learner.git)
 
 STEP 3  Start it
    - Open the folder and double-click  start.bat
@@ -23,14 +25,15 @@ STEP 3  Start it
    - If Windows SmartScreen warns about start.bat: click "More info", then
      "Run anyway". (It only runs "node server.js".)
 
-That's it. All 8 chapters, the word of the day, quizzes and spaced-repetition
-review work right now, with NO account, key or internet needed.
+That's it. Every chapter of the Spanish, French and Latin courses, the word of
+the day, quizzes and spaced-repetition review work right now, with NO account,
+key or internet needed. Switch course at the top of the home screen.
 
 Your day: the home screen plans about 45 minutes (word of the day, review, a
 chapter, then weak spots or AI chat). Change the goal in Settings (gear icon).
 
 ---------------------------------------------------------------------
-OPTIONAL: switch on the AI tutor (corrects your own sentences, chat with Lucía)
+OPTIONAL: switch on the AI tutor (corrects your own sentences, chats in character)
 ---------------------------------------------------------------------
 
 STEP 4  Get a free API key
@@ -47,6 +50,7 @@ STEP 4  Get a free API key
        pay-as-you-go. Check their pricing page for the current price.
 
 STEP 5  Put the key in settings.env
+   - Copy settings.example.env and name the copy settings.env (once).
    - Right-click settings.env, "Open with" > Notepad.
    - For Gemini: paste your key after  GEMINI_API_KEY=   and keep PROVIDER=gemini
      For DeepSeek: paste after  DEEPSEEK_API_KEY=   and set PROVIDER=deepseek

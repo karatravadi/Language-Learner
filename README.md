@@ -1,48 +1,119 @@
 # Stilus
 
-A local web app for learning Spanish (European), as spoken in Spain, (CEFR A1 → A2), built for one problem: audio-only courses
-and flashcard apps can feel boring. It also has a short classical Latin course, read rather than spoken. Setup steps are in **START-HERE.txt**. Notes for developers (and for
-Claude Code) are in **CLAUDE.md**, and the plan for putting it online is in **HANDOVER.md**.
+A web app for language learning designed to be more intensive than popular alternatives (looking at you, Duo). Fun but
+not easy. Built around active practice and focused on Romance languages. Invite-only.
 
-## What's in it
-- **8 chapters.** Ser and estar, everyday verbs, numbers and time, food and ordering, getting around, hostels and
-  shopping, likes and plans, daily routine. Each runs
-  Discover → Learn → Phrases → ~15 mixed exercises → Write → a scenario with a character → Results.
-- **A 45-minute day.** The home screen plans it (word 3 min, review 10, chapter 15, weak spots or chat 15) and counts
-  minutes only while you're actively practising. You can change the goal in Settings.
-- **Palabra del día.** A new Spain-Spanish word each day, with a question you answer using it.
-- **Review.** Spaced repetition (1, 3, 7, 14 and 30 days). A card you miss stays at the start, even if you get it
-  right on the re-ask.
-- **Weak spots.** Mistakes are tracked by skill, with a drill for the weakest one.
-- **Optional AI tutor** (Gemini or DeepSeek). Corrects what you write, checks your word-of-the-day sentence, and plays
-  each chapter's character (Lucía, Javi, Carmen, Pepe, Marta, Álvaro, Nuria, Jordi) in free chat.
-- **Latin, on the side.** Switch with Español | Latīna in the header. Four reading-first chapters (est and sunt, the
-  object, verb endings beside the Spanish ones, places and Caesar's first line), a 25-minute day, Verbum diēī with
-  each word's Spanish, Italian and French descendants, and Magistra Līvia in free chat. Each course keeps its own
-  progress. Macrons are optional when you type.
+![A Stilus lesson: a wrong answer struck through in red pen, with the right form and a plain-words reason](docs/screenshot.png)
 
-## Look and feel
-Redesigned with [unslop](https://github.com/heydamir/unslop) by Damir Sokolovsky (@heydamir), CC BY 4.0.
-Direction: a language exercise book on a café table. The Spanish sentence is set large in a serif, grammar colours
-appear only where they carry meaning, and mistakes get a teacher's red-pen correction. It has a dark mode and works
-at phone width.
+## What this is
+I have spent years telling myself I'll learn a Romance language and have never found free or paid apps to be helpful.
+Stilus is designed to help me (and a few friends) learn one, right now limited to:
 
-## Adding content
-Chapters and words are JSON files in `public/courses/es-ES/` (and `public/courses/la/` for Latin). Copy a chapter, change it, add it to `course.json`,
-then run `npm test`. The checker catches answers that aren't in the options, word tiles that don't build the
-sentence, duplicate review cards, unknown skills and more. Details are in CLAUDE.md.
+- Spanish (European)
+- French (Standard)
+- Latin
+
+Users can select courses, work through chapters and learn from past mistakes.
+
+## Key features
+- **Tap a word** to see its meaning and save it to My words.
+- **Spaced-repetition review.** Saved words come back when you are about to forget them.
+- **Weak-spot drills**, so practice goes where it is needed most.
+- **A daily plan** with an active-time tracker.
+- **AI correction and role-play chat.** The tutor explains the mistake and plays a character in short scenes.
+- **Fair marking.** Small spelling slips earn half marks rather than zero, and a wrong verb form gets a plain reason:
+  "hablas goes with tú. For yo, use hablo."
+- **Works offline** once opened, and can be added to a phone's home screen.
+- **Familiar chapter shape every time:** work out the rule, learn it, key phrases, about 15 mixed exercises, a short
+  piece of writing, then a scenario with a character.
+
+## Product decisions
+- **Active practice over volume.** Variety and doing beat long passive sessions, so every chapter mixes formats.
+- **Free plans only.** Cloudflare Workers, D1 and Access, plus the Gemini free tier. The cost of running Stilus is
+  zero, and that shaped everything below.
+- **A capped tutor.** The AI tutor allows 60 calls per person and 450 in total per day. The caps keep the app inside
+  the free tier, and the remaining calls are shown to the learner so the limit is never a surprise.
+- **European Spanish content prioritised.**
+- **Beginner-safe explanations.** No grammar term is used before a chapter has taught it.
+- **Calm interface.** The look is an exercise book on a café table. Red-pen marks appear only for corrections.
+
+## How this was built
+Designs were made in Claude Design, given an initial clean-up with [unslop](https://github.com/heydamir/unslop) by
+Damir Sokolovsky (CC BY 4.0), then tweaked further in Figma. Full credits and licences are in [NOTICES.md](NOTICES.md).
+
+The code is written with an AI pair-programmer (Claude Code). [CLAUDE.md](CLAUDE.md) is the technical reference it
+works from, and [HANDOVER.md](HANDOVER.md) lists the open steps.
+
+The lesson content (Spanish, French and Latin) is also AI-written, so treat it as a study aid rather than an
+authority. It can contain mistakes. Latin is checked against Whitaker's Words and Wheelock's Latin where possible.
+
+## Tech stack
+- [Cloudflare Workers](https://workers.cloudflare.com/) for the app and API
+- [Cloudflare D1](https://developers.cloudflare.com/d1/) (SQLite) for synced progress
+- [Cloudflare Access](https://developers.cloudflare.com/cloudflare-one/policies/access/) for sign-in, with an email allow-list
+- Google Gemini 3.5 Flash-Lite (free tier) for the tutor
+- Plain HTML, CSS and JavaScript on the front end, with a service worker for offline use
+- A zero-dependency Node server for running it locally
+
+## Project structure
+```
+public/              the front end: app.js (screens and exercises), logic.js (marking, review, sync rules), sw.js (offline)
+public/courses/      course content, one folder per course (chapters, words of the day, glossary)
+server.js            local server: serves public/ and the AI tutor, no install needed
+lib/ai.js            the AI tutor (prompts, model call, output checks), shared by the local server and the Worker
+worker/index.js      the hosted Worker: sign-in check, AI caps, progress sync, profiles
+wrangler.jsonc       Worker configuration
+migrations/          D1 database schema
+tools/               content checker
+tests/               unit tests and the browser test
+CLAUDE.md            full technical reference
+HANDOVER.md          open steps
+START-HERE.txt       step-by-step setup on Windows
+```
+
+## Getting started
+You need [Node.js](https://nodejs.org) (the LTS version). Nothing else, and no account.
+
+```
+git clone https://github.com/karatravadi/Language-Learner.git
+cd Language-Learner
+npm start
+```
+
+Then open http://localhost:3000. On Windows you can double-click `start.bat` instead, and
+[START-HERE.txt](START-HERE.txt) walks through it step by step. Locally, progress is saved in your browser.
+
+Every chapter, review and the word of the day work without a key. To switch on the AI tutor (sentence checking and
+chat), copy `settings.example.env` to `settings.env` and add your own free Gemini key from
+[Google AI Studio](https://aistudio.google.com/), then restart.
+
+### The hosted version (sign-in and sync)
+This needs a free Cloudflare account. `npm install` once, then `npm run dev:hosted` runs it on your machine with a
+local database (add a `.dev.vars` file with `DEV_USER=you@example.com` as a test login). To deploy your own copy,
+create a D1 database and an Access application, put their IDs in `wrangler.jsonc` (`ACCESS_AUD` is the ID of my
+Access application, so replace it), add the key with `npx wrangler secret put GEMINI_API_KEY`, then `npm run deploy`.
 
 ## Tests
 ```
-npm test        unit tests + content checker (no install needed)
-npm install     once, for the browser test
-npm run e2e     plays every chapter of both courses in headless Chrome, with and without AI, at desktop and phone width
+npm test        unit tests (marking, spaced repetition, sync rules, every chapter's answers) and the content checker
+npm run e2e     plays every chapter of every course in headless Chrome, with and without the AI tutor,
+                at desktop and at 360, 390 and 430px phone widths, including offline (needs npm install once)
 ```
 
-## Known limits
-- Tested in headless Chrome on Linux against a mock AI. Not yet on Windows, a real phone, or live Gemini/DeepSeek.
-- The Gemini model name in settings.env is a best guess. Copy the exact name from Google AI Studio if it errors.
-- Listening exercises need a Spanish voice in the browser (Edge on Windows usually has one).
-- Progress is saved in one browser on one device until the online version (HANDOVER.md) is built.
+The content checker rejects things like answers missing from their options, word tiles that don't build the
+sentence, words with no glossary entry, and labels that rely on colour alone. The tests use a mock AI, so they don't
+cover the hosted Worker or the live model.
 
-Credits and licences: see NOTICES.md.
+## What's not done yet
+- Automated tests for the hosted Worker.
+- Clearer explanations for absolute beginners. Started: a wrong verb form now gets a plain reason, and Spanish
+  chapter 1 lists the four ways to say "you", including ustedes as the polite plural.
+
+Next on the course roadmap:
+- **Spanish:** irregular favourites, what happened (past tense), describing people and places, then an A2 checkpoint test.
+- **French:** chapters 9 to 12, then an A2 checkpoint test.
+- **Latin:** describing words, was and will be, the third declension, then real texts.
+
+## Licence
+MIT for the code, see [LICENSE](LICENSE). Lesson content is AI-written and shared as is. Fonts, icons and the design
+tool are credited in [NOTICES.md](NOTICES.md).
