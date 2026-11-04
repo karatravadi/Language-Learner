@@ -134,6 +134,10 @@ t('merge srs: most recently graded card wins, never-graded loses', () => {
   assert.deepEqual(r, { x: { box: 1, seen: 300 }, y: { box: 3, seen: 100 }, z: { box: 1 } });
 });
 t('merge time: larger per day, not summed', () => assert.deepEqual(M({ time: { '2026-11-01': 300, '2026-11-02': 50 } }, { time: { '2026-11-02': 400 } }).time, { '2026-11-01': 300, '2026-11-02': 400 }));
+t('merge time: two devices on one day add up', () => { const r = M({ time: { d: { pc: 1200 } } }, { time: { d: { phone: 900 } } }).time.d; assert.equal(L.daySecs(r), 2100); });
+t('merge time: the same device synced twice is not double-counted', () => assert.equal(L.daySecs(M({ time: { d: { pc: 1200 } } }, { time: { d: { pc: 1000, phone: 300 } } }).time.d), 1500));
+t('merge time: a count from before Nov 2026 joins as its own device', () => assert.equal(L.daySecs(M({ time: { d: { _: 600, pc: 60 } } }, { time: { d: 600 } }).time.d), 660));
+t('daySecs reads both shapes', () => { assert.equal(L.daySecs(300), 300); assert.equal(L.daySecs({ a: 10, b: 5.5 }), 15.5); assert.equal(L.daySecs(undefined), 0); });
 t('merge time: prunes to the latest 120 days', () => {
   const many = {}; for (let i = 0; i < 130; i++) many['2026-' + String(i).padStart(5, '0')] = 5;
   const r = M({ time: many }, { time: {} }).time; assert.equal(Object.keys(r).length, 120); assert.ok(!('2026-00000' in r));

@@ -118,6 +118,8 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
 - Listening exercises and speaker buttons need a Spanish voice in the browser (Edge on Windows usually has good ones).
   Headless Chrome has none, so the tests skip listening exercises.
 - Locally, progress lives in one browser's localStorage, behind `store` in app.js, with export/import in Settings.
+- Practice time: counted while the page is on screen with activity in the last 3 minutes (tap, key, scroll, mouse,
+  or the voice speaking), as real elapsed time, per device (`S.time[day] = { deviceId: secs }`, summed by `L.daySecs`).
 - Offline: `sw.js` caches the app and all courses on first visit and refreshes the copy after each online load.
   Offline, the home screen says "Offline · lessons still work"; progress stays on the device and syncs on reconnect.
   The AI tutor and AI word lookups need a connection. iPhone home-screen apps keep their own sign-in, so Access asks

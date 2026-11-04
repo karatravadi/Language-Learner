@@ -201,21 +201,41 @@
   const skillName = k => SKILLS[k] || k;
 
   // ---------- practice time (counts only while you are active on the page) ----------
-  let lastActive = Date.now(); let ticks = 0;
-  ['pointerdown', 'keydown', 'input', 'wheel', 'touchstart'].forEach(ev => window.addEventListener(ev, () => { lastActive = Date.now(); }, { passive: true, capture: true }));
-  const TICK = 5;
-  setInterval(() => {
-    if (!S || document.visibilityState !== 'visible' || Date.now() - lastActive > 90000) return;
+  // Counted while the page is on screen and you have done something in the last 3 minutes (a tap, a key, a scroll,
+  // moving the mouse, or a Spanish voice speaking), so reading a page or listening counts too. Each tick adds the
+  // real time since the last one (a browser may run timers late, on a phone in Low Power Mode for example), capped
+  // so a phone waking up from sleep doesn't count the time it was asleep.
+  // Seconds are kept per device (S.time[day] = { deviceId: secs }) so two devices on one day add up after a sync.
+  const IDLE = 180000; const TICK = 5000; const MAX_GAP = 30000;
+  let lastActive = Date.now(); let lastTick = Date.now(); let ticks = 0; let ACTIVE = 0;
+  ['pointerdown', 'pointermove', 'keydown', 'input', 'wheel', 'scroll', 'touchstart'].forEach(ev => window.addEventListener(ev, () => { lastActive = Date.now(); }, { passive: true, capture: true }));
+  const DEVICE = (() => {
+    try { let id = localStorage.getItem('stilus-device'); if (!id) { id = Math.random().toString(36).slice(2, 10); localStorage.setItem('stilus-device', id); } return id; } catch (e) { return 'this'; }
+  })();
+  function addTime(secs) {
     const t = L.dayKey();
-    S.time[t] = (S.time[t] || 0) + TICK;
-    if (++ticks % 6 === 0) save();
+    let v = S.time[t];
+    if (!v || typeof v !== 'object') v = S.time[t] = v ? { _: v } : {};
+    v[DEVICE] = Math.round(((v[DEVICE] || 0) + secs) * 10) / 10;
+  }
+  setInterval(() => {
+    const now = Date.now(); const gap = Math.min(now - lastTick, MAX_GAP); lastTick = now;
+    if (!S || document.visibilityState !== 'visible') return;
+    if (TTS.ok && speechSynthesis.speaking) lastActive = now;
+    if (now - lastActive > IDLE) return;
+    addTime(gap / 1000); ACTIVE += gap / 1000;
+    if (++ticks % 6 === 0) save(); else store.write(S);
     const el = document.getElementById('mins-today');
     if (el) el.textContent = String(minsToday());
     const bar = document.getElementById('mins-bar');
     if (bar) bar.style.transform = 'scaleX(' + Math.min(1, minsToday() / S.goalMins) + ')';
-  }, TICK * 1000);
-  document.addEventListener('visibilitychange', () => { if (S && document.visibilityState === 'hidden') save(); });
-  const minsToday = () => Math.floor((S.time[L.dayKey()] || 0) / 60);
+  }, TICK);
+  document.addEventListener('visibilitychange', () => {
+    if (!S) return;
+    if (document.visibilityState === 'hidden') save();
+    else { lastTick = Date.now(); lastActive = Date.now(); }
+  });
+  const minsToday = () => Math.floor(L.daySecs(S.time[L.dayKey()]) / 60);
   function pruneTime() {
     const keys = Object.keys(S.time).sort();
     while (keys.length > 120) delete S.time[keys.shift()];
@@ -800,7 +820,7 @@
     const labels = CHAPTER_STEPS;
     const last = labels.length - 1;
     const saved = inProgress(ch);
-    const stats = { right: 0, total: 0, t0: Date.now() };
+    const stats = { right: 0, total: 0, t0: Date.now(), a0: ACTIVE };
     if (saved && saved.stats) { stats.right = saved.stats.right || 0; stats.total = saved.stats.total || 0; }
     let i = saved ? Math.min(saved.step || 0, last - 1) : 0;
     let exAt = saved && i === PRACTISE ? saved.ex || 0 : 0;
@@ -1384,7 +1404,8 @@
     S.done[ch.n] = { acc, best: Math.max(acc, prev.best || 0), first: first ? acc : (prev.first != null ? prev.first : prev.acc), date: L.dayKey() };
     addXp(first ? 30 : 10);
     const due = L.dueCards(S.srs, Date.now()).length;
-    const mins = Math.max(1, Math.round((Date.now() - stats.t0) / 60000));
+    // Active time in this sitting, counted the same way as the minutes on the home screen.
+    const mins = Math.max(1, Math.round((ACTIVE - (stats.a0 || 0)) / 60));
     return h('div', { class: 'step result' },
       h('div', { class: 'result-k' }, UI.chapterDone.replace('{n}', ch.n)),
       h('div', { class: 'result-fig' }, acc + '%'),
@@ -1624,7 +1645,7 @@
         h('p', { class: 'meta' }, String(e.message || e))));
       return;
     }
-    window.__trainer = { state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE, ui: UI };
+    window.__trainer = { idleFor: ms => { lastActive = Date.now() - ms; }, state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE, ui: UI };
     await aiStatus();
     if (SYNC.on) await syncStart();
     applyProfile();

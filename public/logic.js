@@ -253,6 +253,9 @@
     if (x[day] !== y[day]) return Object.assign({}, later(x, y, day));
     return Object.assign({}, x, { [count]: Math.max(x[count] || 0, y[count] || 0) });
   }
+  const perDevice = v => (typeof v === 'number' ? { _: v } : obj(v));
+  // Seconds practised on a day, from either shape.
+  const daySecs = v => (typeof v === 'number' ? v : Object.values(obj(v)).reduce((n, x) => n + (Number(x) || 0), 0));
   function mergeState(a, b) {
     a = obj(a); b = obj(b);
     const out = Object.assign({}, b, a);
@@ -269,8 +272,12 @@
     delete out.lesson;
     // review cards: the one graded most recently (cards never graded have no seen)
     out.srs = unionBy(a.srs, b.srs, (x, y) => ((y.seen || 0) > (x.seen || 0) ? y : x));
-    // practice seconds per day: the larger number, since two devices on one day would otherwise double-count
-    const time = unionBy(a.time, b.time, (x, y) => Math.max(x || 0, y || 0));
+    // practice seconds per day, per device ({ deviceId: secs }): each device's larger count, so a copy synced twice
+    // never double-counts, and a day spent on two devices adds up. A plain number is from before Nov 2026 (device "_").
+    const time = unionBy(a.time, b.time, (x, y) => {
+      if (typeof x === 'number' && typeof y === 'number') return Math.max(x, y);
+      return unionBy(perDevice(x), perDevice(y), (p, q) => Math.max(p || 0, q || 0));
+    });
     out.time = {};
     Object.keys(time).sort().slice(-TIME_DAYS).forEach(k => { out.time[k] = time[k]; });
     out.reviewed = unionBy(a.reviewed, b.reviewed, (x, y) => x || y);
@@ -297,5 +304,5 @@
     return out;
   }
 
-  return { judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
+  return { daySecs, judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
 });

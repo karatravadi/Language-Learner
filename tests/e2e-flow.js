@@ -296,11 +296,16 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   ok('settings: daily goal changes to 30 minutes');
 
   // ---------- practice timer ----------
-  const before = (await state()).time[today] || 0;
+  const before = L.daySecs((await state()).time[today]);
   for (let i = 0; i < 3; i++) { await page.mouse.move(100 + i * 10, 100); await page.mouse.down(); await page.mouse.up(); await sleep(2200); }
-  const after = (await state()).time[today] || 0;
+  const st0 = await state(); const after = L.daySecs(st0.time[today]);
   assert.ok(after > before, 'active time should be counted');
-  ok('practice timer counts active time (' + before + 's → ' + after + 's)');
+  assert.equal(typeof st0.time[today], 'object', 'time is kept per device');
+  // Reading without touching anything still counts (the old 90-second cutoff stopped it): 100s idle is fine now.
+  await page.evaluate(() => window.__trainer.idleFor(100000)); await sleep(5600);
+  const reading = L.daySecs((await state()).time[today]);
+  assert.ok(reading > after, 'reading for 100 seconds without a tap still counts');
+  ok('practice timer counts active time per device (' + Math.round(before) + 's → ' + Math.round(reading) + 's), including a long read');
 
   // ---------- chapters: resume, no skipping the writing check, back ----------
   // Every chapter is finished by now. Its tick and best score stay on show while it is practised again (bug 7).
