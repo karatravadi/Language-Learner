@@ -1,13 +1,13 @@
 # Stilus
 
-A web app for language learning designed to be more intensive than popular alternatives (looking at you, Duo). Fun but
-not easy. Built around active practice and focused on Romance languages. Invite-only.
+A web app for language learning designed to be more intensive than popular alternatives (looking at you Duo). Fun but not easy. Built around active practice and focused on romance languages. Invite-only.
 
-![A Stilus lesson: a wrong answer struck through in red pen, with the right form and a plain-words reason](docs/screenshot.png)
+![Screenshot of a Stilus lesson](docs/screenshot.png)
 
 ## What this is
-I have spent years telling myself I'll learn a Romance language and have never found free or paid apps to be helpful.
-Stilus is designed to help me (and a few friends) learn one, right now limited to:
+I have spent years telling myself I'll learn a romance language and have never found free or paid apps to be helpful.
+
+Stilus is designed to help me (+ a few friends) learn a romance language, right now limited to:
 
 - Spanish (European)
 - French (Standard)
@@ -16,44 +16,35 @@ Stilus is designed to help me (and a few friends) learn one, right now limited t
 Users can select courses, work through chapters and learn from past mistakes.
 
 ## Key features
-- **Tap a word** to see its meaning and save it to My words.
-- **Spaced-repetition review.** Saved words come back when you are about to forget them.
-- **Weak-spot drills**, so practice goes where it is needed most.
-- **A daily plan** with an active-time tracker.
-- **AI correction and role-play chat.** The tutor explains the mistake and plays a character in short scenes.
-- **Fair marking.** Small spelling slips earn half marks rather than zero, and a wrong verb form gets a plain reason:
-  "hablas goes with tú. For yo, use hablo."
-- **Works offline** once opened, and can be added to a phone's home screen.
-- **Familiar chapter shape every time:** work out the rule, learn it, key phrases, about 15 mixed exercises, a short
-  piece of writing, then a scenario with a character.
+- Tap a word to see its meaning and save it to My words.
+- Spaced-repetition review. Saved words come back when you are about to forget them.
+- Weak-spot drills, so practice goes where it is needed most.
+- A daily plan with an active-time tracker.
+- AI correction and role-play chat. The tutor explains the mistake and plays a character in short scenes.
+- Fair marking. Small spelling slips earn half marks rather than zero.
+- Familiar chapter and content shape every time.
 
 ## Product decisions
-- **Active practice over volume.** Variety and doing beat long passive sessions, so every chapter mixes formats.
-- **Free plans only.** Cloudflare Workers, D1 and Access, plus the Gemini free tier. The cost of running Stilus is
-  zero, and that shaped everything below.
-- **A capped tutor.** The AI tutor allows 60 calls per person and 450 in total per day. The caps keep the app inside
-  the free tier, and the remaining calls are shown to the learner so the limit is never a surprise.
-- **European Spanish content prioritised.**
-- **Beginner-safe explanations.** No grammar term is used before a chapter has taught it.
-- **Calm interface.** The look is an exercise book on a café table. Red-pen marks appear only for corrections.
+- Active practice over volume. Variety and doing beat long passive sessions, so every chapter mixes formats.
+- Free plans only. Cloudflare Workers, D1 and Access, plus the Gemini free tier. The cost of running Stilus is zero, and that shaped everything below.
+- A capped tutor. The AI tutor allows 60 calls per person and 450 in total per day. The caps keep the app inside the free tier, and the remaining calls are shown to the learner so the limit is never a surprise.
+- European Spanish content prioritised.
+- Beginner-safe explanations. No grammar term is used before a chapter has taught it.
+- Calm interface. The look is an exercise book on a café table. Red-pen marks appear only for corrections.
 
 ## How this was built
-Designs were made in Claude Design, given an initial clean-up with [unslop](https://github.com/heydamir/unslop) by
-Damir Sokolovsky (CC BY 4.0), then tweaked further in Figma. Full credits and licences are in [NOTICES.md](NOTICES.md).
+Designs were made in Claude Design, given an initial clean-up with [unslop](https://github.com/heydamir/unslop) by Damir Sokolovsky (CC BY 4.0), then tweaked further in Figma.
 
-The code is written with an AI pair-programmer (Claude Code). [CLAUDE.md](CLAUDE.md) is the technical reference it
-works from, and [HANDOVER.md](HANDOVER.md) lists the open steps.
+The code is written with an AI pair-programmer (Claude Code). `CLAUDE.md` is the technical reference it works from, and `HANDOVER.md` lists the open steps.
 
-The lesson content (Spanish, French and Latin) is also AI-written, so treat it as a study aid rather than an
-authority. It can contain mistakes. Latin is checked against Whitaker's Words and Wheelock's Latin where possible.
+The lesson content (Spanish, French and Latin) is also AI-written, so treat it as a study aid rather than an authority. It can contain mistakes. Latin is checked against Whitaker's Words and Wheelock's Latin where possible.
 
 ## Tech stack
 - [Cloudflare Workers](https://workers.cloudflare.com/) for the app and API
 - [Cloudflare D1](https://developers.cloudflare.com/d1/) (SQLite) for synced progress
 - [Cloudflare Access](https://developers.cloudflare.com/cloudflare-one/policies/access/) for sign-in, with an email allow-list
 - Google Gemini 3.5 Flash-Lite (free tier) for the tutor
-- Plain HTML, CSS and JavaScript on the front end, with a service worker for offline use
-- A zero-dependency Node server for running it locally
+- Plain HTML, CSS and JavaScript on the front end
 
 ## Project structure
 ```
@@ -106,14 +97,12 @@ cover the hosted Worker or the live model.
 
 ## What's not done yet
 - Automated tests for the hosted Worker.
-- Clearer explanations for absolute beginners. Started: a wrong verb form now gets a plain reason, and Spanish
-  chapter 1 lists the four ways to say "you", including ustedes as the polite plural.
+- Clearer explanations for absolute beginners, for example ustedes as the formal plural.
 
 Next on the course roadmap:
-- **Spanish:** irregular favourites, what happened (past tense), describing people and places, then an A2 checkpoint test.
-- **French:** chapters 9 to 12, then an A2 checkpoint test.
-- **Latin:** describing words, was and will be, the third declension, then real texts.
+- Spanish: irregular favourites, what happened (past tense), describing people and places, then an A2 checkpoint/test.
+- French: chapters 9 to 12, then an A2 checkpoint/test.
+- Latin: describing words, was and will be, the third declension, then real texts.
 
 ## Licence
-MIT for the code, see [LICENSE](LICENSE). Lesson content is AI-written and shared as is. Fonts, icons and the design
-tool are credited in [NOTICES.md](NOTICES.md).
+MIT for the code, see [LICENSE](LICENSE). Lesson content is AI-written and shared as is.
