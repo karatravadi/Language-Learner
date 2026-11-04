@@ -156,13 +156,13 @@ t('merge streak: later day wins, same day keeps the larger count', () => {
 });
 t('merge dayXp: later day wins, same day keeps the larger', () => assert.deepEqual(M({ dayXp: { date: 'd2', xp: 30 } }, { dayXp: { date: 'd2', xp: 50 } }).dayXp, { date: 'd2', xp: 50 }));
 t('merge prefs: last saved Settings wins', () => {
-  const r = M({ name: 'Kara', goalMins: 45, prefsAt: 100 }, { name: 'K', goalMins: 30, prefsAt: 200 });
+  const r = M({ name: 'Sam', goalMins: 45, prefsAt: 100 }, { name: 'K', goalMins: 30, prefsAt: 200 });
   assert.equal(r.name, 'K'); assert.equal(r.goalMins, 30);
-  assert.equal(M({ name: 'Kara', prefsAt: 300 }, { name: 'K', prefsAt: 200 }).name, 'Kara');
+  assert.equal(M({ name: 'Sam', prefsAt: 300 }, { name: 'K', prefsAt: 200 }).name, 'Sam');
 });
 t('merge: same state twice changes nothing, and nothing studied is lost', () => {
   const a = { xp: 50, done: { 1: { acc: 80, best: 80, date: 'd1' } }, srs: { x: { box: 2, seen: 1 } }, time: { d1: 60 }, reviewed: { d1: true }, skills: { s: { r: 1, w: 1 } },
-    streak: { last: 'd1', count: 1 }, dayXp: { date: 'd1', xp: 50 }, wotd: { byDate: { d1: 'a' }, learned: ['a'], done: { d1: true }, answers: { d1: 's' } }, name: 'Kara', prefsAt: 1 };
+    streak: { last: 'd1', count: 1 }, dayXp: { date: 'd1', xp: 50 }, wotd: { byDate: { d1: 'a' }, learned: ['a'], done: { d1: true }, answers: { d1: 's' } }, name: 'Sam', prefsAt: 1 };
   assert.deepEqual(M(a, a), a);
   const b = { xp: 10, done: { 2: { acc: 70, best: 70, date: 'd2' } }, srs: { y: { box: 1 } } };
   const r = M(a, b); assert.deepEqual(Object.keys(r.done).sort(), ['1', '2']); assert.deepEqual(Object.keys(r.srs).sort(), ['x', 'y']);

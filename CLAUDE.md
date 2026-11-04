@@ -3,15 +3,15 @@
 Read this first, then `HANDOVER.md` for the next phase of work.
 
 ## What this is and who it's for
-- A web app Kara (UK, product manager, on sabbatical) uses to learn **Spanish from Spain**, from scratch to a
+- A web app for learning **Spanish from Spain**, from scratch to a
   conversational level (CEFR A1 to A2, then towards B1). It supplements Language Transfer and Duolingo, whose
-  audio-only format she finds easy to switch off from, so variety and active practice matter more than volume.
-- She studies about **45 minutes a day** in the app. The home screen plans that day: word of the day (3 min), review (10),
-  one chapter (15), then weak spots or AI chat (15). Practice time only counts while she is active on the page.
-- 2 to 3 friends with their own synced progress (Access policy added 2 Nov 2026; see `HANDOVER.md`). A **Latin** course (reading classical
+  audio-only format is easy to switch off from, so variety and active practice matter more than volume.
+- It is built for about **45 minutes a day**. The home screen plans that day: word of the day (3 min), review (10),
+  one chapter (15), then weak spots or AI chat (15). Practice time only counts while the learner is active on the page.
+- A small invited group, each with their own synced progress (Access Emails policy; see `HANDOVER.md`). A **Latin** course (reading classical
   texts, Roman history, roots of the Romance languages) has 4 chapters, about 25 minutes a day next to the Spanish.
   Spanish stays the priority and the default course. See "Latin course" below.
-- Kara is on Windows. Always lead with free options and state the price of anything paid upfront.
+- The owner develops on Windows. Always lead with free options and state the price of anything paid upfront.
 
 ## Run and test
 - `start.bat` (Windows) or `npm start`: local server at http://localhost:3000. No `npm install` needed to run.
@@ -20,7 +20,7 @@ Read this first, then `HANDOVER.md` for the next phase of work.
 - `npm run e2e`: plays every chapter in headless Chrome with a fake AI and without AI, at desktop and phone width:
   Spanish three times, Latin twice, French twice, then switches course and back.
   Needs `npm install` once (puppeteer, dev only). It also fails on emoji, `null/undefined/NaN` text or horizontal overflow.
-  On Kara's PC, use the installed Chrome instead of Puppeteer's download (npm 11 blocks that script):
+  On Windows, use the installed Chrome instead of Puppeteer's download (npm 11 blocks that script):
   `CHROME="C:/Program Files/Google/Chrome/Application/chrome.exe" npm run e2e`.
 - AI tutor: key in `settings.env` (`PROVIDER=gemini` with `GEMINI_API_KEY`, or DeepSeek). The model name
   `gemini-3.5-flash-lite` in settings.env is unverified; the hosted Worker uses `gemini-3.5-flash-lite` (500 free requests a day), confirmed in AI Studio.
@@ -30,13 +30,13 @@ Read this first, then `HANDOVER.md` for the next phase of work.
   `public/` and answers `/api/*`. Free plan. Cloudflare Access (team `divine-mouse-214c`, All traffic) asks for sign-in
   on every address; the Worker also verifies the `Cf-Access-Jwt-Assertion` token (issuer + AUD in `wrangler.jsonc`)
   and fails closed if they are blank.
-- Who can sign in: Zero Trust → Access → Policies (Kara's Cloudflare account plus an Emails policy for friends, added 2 Nov 2026).
+- Who can sign in: Zero Trust → Access → Policies (the owner's Cloudflare account plus an Emails policy for invited learners).
 - Until 2 Nov 2026 the Worker was `espanol-trainer` (espanol-trainer.karatravadi.workers.dev), with its own Access
   application and Gemini secret. `stilus` has its own of both; the AUD in `wrangler.jsonc` is stilus's.
 - D1 database `espanol-trainer` (WEUR, shared by both Workers, so progress carried over): `progress` (sync, versioned saves), `ai_usage` (daily AI caps) and `profiles` (one name and choice of endings per person, shared by every course; `/api/profile`). `/api/usage` and a `usage` field on every AI reply give the tutor calls left today.
   Schema changes go in `migrations/`; `npm run deploy` applies them, then deploys.
 - AI: Gemini 3.5 Flash-Lite, free tier 15 a minute and 500 a day for the whole project. Caps: 60 per person, 450 total.
-  Key is a Worker secret (`npx wrangler secret put GEMINI_API_KEY`, Kara types it herself).
+  Key is a Worker secret (`npx wrangler secret put GEMINI_API_KEY`, the owner types it in, never into a chat).
 - Local copy of the hosted version: `npm run dev:hosted` (port 3132, local database). `.dev.vars` (git-ignored) sets
   `DEV_USER`, a test login honoured on localhost only; switch person with an `X-Dev-User` header.
 - Sync rules are `L.mergeState` in logic.js (unit-tested). The app only syncs when `/api/status` says `sync: true`,
@@ -89,8 +89,8 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
 - Discover groups: `label` says what the examples share ("With ser"), never a colour name. Notes never repeat their
   own label ("Careful: …" under Careful). The checker rejects both.
 - Accuracy: the Spanish is written by an AI and checked by tests for consistency, not for correctness.
-  Flag anything unusual for Kara. A native speaker reviewing each batch is the best safeguard.
-- Pace: at 45 min a day Kara finishes a chapter every 1 to 2 days. Write chapters in batches of 4, run
+  Flag anything unusual for the owner. A native speaker reviewing each batch is the best safeguard.
+- Pace: at 45 min a day a learner finishes a chapter every 1 to 2 days. Write chapters in batches of 4, run
   `npm test` and `npm run e2e`, then hand over. The roadmap in course.json lists the next chapters (9 onwards).
 - The `boss.persona` text is the AI character's brief. Only the server reads it (from disk), so the page can never
   inject its own prompt.
@@ -127,7 +127,7 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
 - `npm run e2e` covers the local server only; the hosted Worker was checked by hand with `wrangler dev`.
 
 ## Latin course (public/courses/la)
-- Kara's second course, about 25 min a day next to 45 min of Spanish. Reading first: classical Latin,
+- The second course, about 25 min a day next to 45 min of Spanish. Reading first: classical Latin,
   Roman history as content, Romance roots (note kind `roots`, word-of-the-day `kin` lines).
 - Course choice: `?course=<id>`, then the last course used on the device (`trainer-course` in localStorage), then the
   first in index.json. The header switch (Español | Latīna) reloads with `?course=`. Each course has its own
@@ -144,7 +144,7 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
 - Macrons in all Latin text. Check new Latin against Whitaker's Words or Wheelock (both free online).
 
 ## French course (public/courses/fr-FR)
-- Kara's third course (added 2 Nov 2026): French (European), meaning French as spoken in France, A1 then A2, 25 min a day (`goalMins` 25, plan 2/7/8).
+- The third course (added 2 Nov 2026): French (European), meaning French as spoken in France, A1 then A2, 25 min a day (`goalMins` 25, plan 2/7/8).
   Chapters 1 to 8 are written (être and tu or vous, avoir and -er verbs and ne … pas, numbers and time, food and
   ordering, aller and directions, hotels with vouloir and pouvoir, likes and plans, daily routine with reflexive verbs).
   The roadmap in course.json plans 9 to 12 and ends in an A2 checkpoint, like Spanish.

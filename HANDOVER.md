@@ -1,12 +1,12 @@
-# Handover: putting Stilus online for Kara and friends
+# Handover: putting Stilus online for a small group
 
 > Status, 2 Nov 2026: Steps 0 to 4 are done and live (see the Hosted version section of `CLAUDE.md`). We chose a
-> Worker with static assets rather than Pages. Friends' Emails policy added the same day. Left: Step 5 (phone polish, offline),
+> Worker with static assets rather than Pages. The invite list (Access Emails policy) was added the same day. Left: Step 5 (phone polish, offline),
 > and automated tests for the Worker and the merge-on-conflict path in the browser.
 
 Written 2 November 2026 at the end of a build session in Claude's cloud workspace. That workspace could not reach
-hosting providers, auth services or the AI APIs, and could not hold Kara's logins, so this phase moves to
-Claude Code on her Windows PC. Read `CLAUDE.md` first.
+hosting providers, auth services or the AI APIs, and could not hold the owner's logins, so this phase moves to
+Claude Code on the owner's Windows PC. Read `CLAUDE.md` first.
 
 ## Where things stand
 - v2 works locally: 8 chapters (ser/estar, present tense, numbers and time, food and ordering, getting around,
@@ -17,16 +17,16 @@ Claude Code on her Windows PC. Read `CLAUDE.md` first.
 - Tests: `npm test` (62 checks) and `npm run e2e` (14 checks × 3 runs). All pass.
 
 ## Goal of this phase
-1. Kara and 2 to 3 friends open the app from any device (PC and phone) and sign in.
+1. The owner and 2 or 3 invited learners open the app from any device (PC and phone) and sign in.
 2. Each person's progress syncs across their devices.
 3. AI works for everyone through one shared key held on the server, with per-person daily limits.
 4. Nobody else can get in or use the key.
-5. Running cost stays at £0 if possible. Anything paid gets a price and Kara's OK first.
+5. Running cost stays at £0 if possible. Anything paid gets a price and the owner's OK first.
 
-Friends will not create their own AI keys, so bring-your-own-key is out.
+Invited learners will not create their own AI keys, so bring-your-own-key is out.
 
-## Step 0: check before building (Kara's rule: free first, prices upfront)
-Free tiers change. Verify each of these against the provider's own current pages and show Kara a short comparison
+## Step 0: check before building (rule: free first, prices upfront)
+Free tiers change. Verify each of these against the provider's own current pages and show the owner a short comparison
 with prices before choosing:
 
 | Option | Sign-in | Data | AI proxy | Things to verify |
@@ -35,7 +35,7 @@ with prices before choosing:
 | **B. Supabase** + any static host | Supabase Auth magic link | Postgres | Edge Function (Deno) | whether idle free projects get paused (believed after about a week, bad for a study app), email sending limits on the built-in mailer |
 | **C. Keep `server.js`** on a Node host with a disk, adding login code | write it yourself (riskier) | SQLite file | as now | which hosts still have a free tier with a persistent disk; cold starts |
 
-Recommendation to test first: **A**. An invite list of emails suits "me plus 2 or 3 friends", there's no password
+Recommendation to test first: **A**. An invite list of emails suits "the owner plus 2 or 3 others", there's no password
 or reset code to write, and nothing sleeps. The cost: `server.js` doesn't run on Workers as it is, because Workers are
 per-request functions with no disk, no long-running process and no in-memory counters. About a third to a half of it
 gets rewritten, namely startup, static serving, settings and rate limiting. Prompts, `shape()` and the provider calls
@@ -66,7 +66,7 @@ carry over.
   - `xp`: recompute from the merged state, or take the max (simpler, and fine for a game score)
   - `name`, `fem`, `goalMins`: last writer wins
 - First sign-in on a device that already has local progress: offer "Use this device's progress" (one-time upload),
-  so Kara keeps her streak.
+  so the learner keeps their streak.
 
 ## Step 4: hosted AI proxy
 - Same three modes (`correct`, `wotd`, `roleplay`) and the same rules: key as a platform secret, never in the page;
@@ -75,7 +75,7 @@ carry over.
   provider's free quota. Show a friendly message when a limit is hit.
 - Identity comes from the auth layer (with Access, validate the `Cf-Access-Jwt-Assertion` JWT, not just the email
   header). Same-origin only, no CORS.
-- Google's free Gemini tier may use prompts to improve its products. Tell friends that in the app's AI help text.
+- Google's free Gemini tier may use prompts to improve its products. Say so in the app's AI help text.
   If they'd rather not, the paid tier doesn't, and costs pennies at this volume, but check current prices first.
 
 ## Step 5: phone polish (done 4 Nov 2026: icon and manifest, offline via sw.js, e2e at 360, 390 and 430px)
@@ -84,13 +84,13 @@ carry over.
 - Spanish voices on phones are usually good. Test the listening exercises on a real phone.
 
 ## Acceptance checklist
-- [ ] Kara signs in on PC and phone and sees the same streak, chapters and review cards (PC done 2 Nov; phone to check)
-- [ ] A friend signs in with their own email and starts from zero. A stranger can't get in (Emails policy added 2 Nov; first friend sign-in to confirm)
-- [ ] Offline on the phone: lessons still work, and progress syncs when back online without losing anything (built 4 Nov, tested in headless Chrome; check on Kara's iPhone)
+- [ ] The owner signs in on PC and phone and sees the same streak, chapters and review cards (PC done 2 Nov; phone to check)
+- [ ] An invited learner signs in with their own email and starts from zero. A stranger can't get in (Emails policy added 2 Nov; first invited sign-in to confirm)
+- [ ] Offline on the phone: lessons still work, and progress syncs when back online without losing anything (built 4 Nov, tested in headless Chrome; check on a real iPhone)
 - [x] The AI key is not visible in page source, network responses or the repo
 - [ ] Per-person AI limit works, and the global cap works (calls left now shown in the app)
 - [ ] `npm test` and `npm run e2e` pass. Add tests for the merge rules
-- [x] Monthly cost confirmed with Kara (target £0): Cloudflare free plans, Gemini free tier
+- [x] Monthly cost confirmed with the owner (target £0): Cloudflare free plans, Gemini free tier
 
 ## After this phase
 - **More Spanish chapters (the main ongoing need).** Chapters 9 to 14 are on the roadmap in `course.json`.
@@ -105,7 +105,7 @@ carry over.
 
   Free references to check against: Perseus Digital Library, Whitaker's Words, Dickinson College Commentaries.
 
-## Open questions for Kara
+## Open questions for the owner
 - Hosting choice after the Step 0 comparison
-- Whether friends also learn Spain Spanish (their emails are on the invite list)
+- Whether the invited learners also learn Spain Spanish
 - Is a custom domain worth about £8 to £10 a year?

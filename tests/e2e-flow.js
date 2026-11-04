@@ -42,7 +42,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
     await sleep(80);
   };
   const state = () => page.evaluate(() => JSON.parse(JSON.stringify(window.__trainer.state())));
-  const T = s => String(s).replace(/\{name\}/g, 'Kara').replace(/\{o\}/g, 'a');
+  const T = s => String(s).replace(/\{name\}/g, 'Sam').replace(/\{o\}/g, 'a');
 
   await page.goto(BASE, { waitUntil: 'networkidle0' });
   await page.evaluate(() => localStorage.clear());
@@ -51,11 +51,11 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
 
   // ---------- first use ----------
   let t0 = await text();
-  assert.match(t0, /Before you start/); assert.doesNotMatch(t0, /Kara/);
+  assert.match(t0, /Before you start/); assert.doesNotMatch(t0, /Sam/);
   await clickText('button', 'Start'); assert.match(await text(), /Add the name/);
-  await page.type('input.text', 'Kara'); await clickText('button', 'Start'); await sleep(100);
+  await page.type('input.text', 'Sam'); await clickText('button', 'Start'); await sleep(100);
   const s0 = await page.evaluate(() => window.__trainer.state());
-  assert.equal(s0.name, 'Kara'); assert.ok(s0.prefsAt > 0);
+  assert.equal(s0.name, 'Sam'); assert.ok(s0.prefsAt > 0);
   ok('first use: asks for a name (none preset), refuses a blank one, then opens today');
 
   // ---------- home ----------
@@ -386,7 +386,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   await clickText('button', 'Reset progress'); await sleep(80);
   assert.equal(Object.keys((await state()).done).length, 0, 'reset should clear chapters');
   assert.doesNotMatch(await text(), /Before you start/, 'after a reset, the name is kept (it lives in the profile)');
-  assert.equal((await state()).name, 'Kara', 'reset keeps the name');
+  assert.equal((await state()).name, 'Sam', 'reset keeps the name');
   await page.click('button[aria-label="Settings"]'); await sleep(80);
   await (await page.$('input[type=file]')).uploadFile(path.join(dl, exported)); await sleep(200);
   const restored = await state();
@@ -410,7 +410,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   assert.ok(cached.filter(k => k.includes('/' + COURSE.id + '/chapters/')).length >= chapterFiles, 'every chapter of this course is kept for offline use');
   assert.ok(cached.some(k => k.endsWith('/app.js')) && cached.some(k => k.endsWith('.woff2')), 'the app and its fonts are kept');
   const seen = problems.length;
-  await page.evaluate(() => localStorage.setItem('stilus-account', 'kara@example.com')); // as if signed in on the hosted app
+  await page.evaluate(() => localStorage.setItem('stilus-account', 'learner@example.com')); // as if signed in on the hosted app
   await page.setOfflineMode(true);
   await page.reload({ waitUntil: 'domcontentloaded' }); await sleep(900);
   t = await text();
@@ -437,10 +437,10 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
     // The name is never asked again. A course with gendered endings asks for those once, with the name filled in.
     if (other.genderedExamples !== false && COURSE.genderedExamples === false) {
       assert.match(t, /Before you start/, 'endings not chosen yet, so they are asked');
-      assert.equal(await page.evaluate(() => document.querySelector('input.text').value), 'Kara', 'the name from the profile is filled in');
+      assert.equal(await page.evaluate(() => document.querySelector('input.text').value), 'Sam', 'the name from the profile is filled in');
       await clickText('button', 'Start'); await sleep(150);
     } else assert.doesNotMatch(t, /Before you start/, 'the name comes from the profile, not asked again');
-    assert.equal((await state()).name, 'Kara', 'the other course uses the profile name');
+    assert.equal((await state()).name, 'Sam', 'the other course uses the profile name');
     t = await text(); assert.ok(t.includes(other.title)); assert.ok(t.includes('of ' + (other.goalMins || 45) + ' min'));
     assert.equal(Object.keys((await state()).done).length, 0, 'the other course has its own progress');
     await Promise.all([page.waitForNavigation({ waitUntil: 'networkidle0' }), clickText('.switch-b', mine)]); await sleep(200);

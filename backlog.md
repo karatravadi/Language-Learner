@@ -42,7 +42,7 @@ Plan:
   For usted, use vive".
 - Only use grammar words the chapter has already taught.
 - Start with the known gaps: ustedes as the formal plural, usted vs tú, and verb endings.
-- Written by AI, so flag anything uncertain for Kara to check. Latin notes get checked against Whitaker's Words or Wheelock.
+- Written by AI, so flag anything uncertain for checking. Latin notes get checked against Whitaker's Words or Wheelock.
 - This is the first step on the open "clearer explanations for absolute beginners" item in HANDOVER.md.
 
 ## 4. Show AI calls left today (S) - DONE 2 Nov 2026
@@ -54,7 +54,7 @@ Plan:
 - When the cap is hit, say so and say when it resets. The non-AI checks keep working.
 
 ## 5. Spot the mistakes in a short paragraph (M)
-Problem: drills get repetitive, and Kara loses focus on passive formats.
+Problem: drills get repetitive, and passive formats are easy to lose focus on.
 
 Plan:
 - New exercise type, a cousin of `fix`: a 3 to 4 line paragraph with 2 or 3 errors. Tap the words you think are wrong,
@@ -72,7 +72,7 @@ Spanish (es-ES). It is free, but not sure it is reliable. If it is flaky, drop t
 Plan, if it works:
 - Say a key phrase out loud, the app shows what it heard, and marks it with the same close-match rules as item 2.
 - Spanish only. Browsers have no Latin voice, so Latin is out.
-- Check where the audio goes (the browser may send it to Apple or Google) and tell Kara before it ships.
+- Check where the audio goes (the browser may send it to Apple or Google) and say so in the app before it ships.
 
 # Bugs (found 3 Nov 2026)
 
@@ -89,10 +89,10 @@ Plan:
 - Check the same for Latin and French, and check the synced D1 copy as well as the local one.
 - Test: finish a chapter, reopen it, quit halfway, and confirm the score, tick and Today checklist are unchanged.
 
-Confirmed by Kara: it happens the moment the chapter is reopened, before any answer is given. Update the same evening:
+Confirmed: it happens the moment the chapter is reopened, before any answer is given. Update the same evening:
 after opening the next chapter, chapter 1 goes back to showing the original score. So the score is probably not lost. It
 looks like the app treats the reopened chapter as the "current" one and hides its saved result and ticks until another
-chapter becomes current. That makes it a display and state bug, not data loss. Confirmed by Kara: the percentage shows
+chapter becomes current. That makes it a display and state bug, not data loss. Confirmed: the percentage shows
 for every chapter except the most recently clicked one. So the fix is in how the course list and Today plan render the
 "last clicked" chapter: it should show its saved score and ticks like any other. First check that the first score is
 still in D1 while the chapter is reopened.
@@ -117,7 +117,7 @@ Plan:
 
 ## 10. Discover boxes are titled by colour, not by meaning (S) - FIXED 4 Nov 2026
 Seen: the first page of a chapter ("Work it out") shows two coloured boxes headed "Blue" and "Orange". In chapter 2 they
-should say what the group is, for example "I" and "we". Kara says it looks like every chapter.
+should say what the group is, for example "I" and "we". It looks like every chapter.
 
 Plan:
 - Give each box a title that says what its examples have in common, in plain English. Chapter 2: "One person (I)" and
@@ -145,7 +145,7 @@ Plan:
 Open question: should review ask for one form at a time (recommended) or the whole table at once?
 
 ## 12. Starting a new chapter erases progress in an unfinished one (M, fix first) - FIXED 4 Nov 2026
-Seen: halfway through chapter 2, Kara opened chapter 3 and the chapter 2 progress was gone.
+Seen: halfway through chapter 2, opening chapter 3 lost the chapter 2 progress.
 
 Likely cause, to verify: this probably shares a root cause with item 7. The app seems to keep one "current chapter"
 slot, so opening any chapter overwrites whatever the last one held. In item 7 only the display was affected. Here the
@@ -160,7 +160,7 @@ Plan:
 - Test: get halfway through chapter 2, open chapter 3, leave it, go back to chapter 2, and confirm it resumes at the
   same exercise with the same score. Repeat after a page reload and on a second device.
 
-Confirmed by Kara: going back to chapter 2 started it again from the very first step, so the position really is lost,
+Confirmed: going back to chapter 2 started it again from the very first step, so the position really is lost,
 not just hidden. Still to check: whether the answers and score from the first attempt were also dropped or only the position.
 
 # Done outside the numbered list
