@@ -63,7 +63,7 @@ START-HERE.txt       step-by-step setup on Windows
 ```
 
 ## Getting started
-You need [Node.js](https://nodejs.org) (the LTS version). Nothing else, and no account.
+You need [Node.js](https://nodejs.org) (the LTS version). The AI tutor also needs a free Gemini key, which needs a Google account.
 
 ```
 git clone https://github.com/karatravadi/Language-Learner.git
