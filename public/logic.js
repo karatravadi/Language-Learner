@@ -210,7 +210,15 @@
     const out = Object.assign({}, b, a);
 
     // chapters: best score ever; date and last score from the latest attempt
-    out.done = unionBy(a.done, b.done, (x, y) => Object.assign({}, later(x, y, 'date'), { best: Math.max(x.best || 0, y.best || 0) }));
+    out.done = unionBy(a.done, b.done, (x, y) => {
+      const r = Object.assign({}, later(x, y, 'date'), { best: Math.max(x.best || 0, y.best || 0) });
+      const first = x.first != null ? x.first : y.first; // the first run's score never changes
+      if (first != null) r.first = first;
+      return r;
+    });
+    // place in each chapter: the one saved last (a finished run leaves { off: true } so the other copy can't revive it)
+    if (a.lessons || b.lessons) out.lessons = unionBy(a.lessons, b.lessons, (x, y) => ((obj(y).at || 0) > (obj(x).at || 0) ? y : x));
+    delete out.lesson;
     // review cards: the one graded most recently (cards never graded have no seen)
     out.srs = unionBy(a.srs, b.srs, (x, y) => ((y.seen || 0) > (x.seen || 0) ? y : x));
     // practice seconds per day: the larger number, since two devices on one day would otherwise double-count

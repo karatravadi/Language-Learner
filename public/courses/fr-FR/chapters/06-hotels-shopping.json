@@ -15,8 +15,8 @@
   "discover": {
     "intro": "Every sentence picks out one thing to buy. Spot what decides ce or cette.",
     "groups": [
-      { "label": "Blue", "tone": "blue", "lines": [["Je prends ce pull.", "I'll take this jumper."], ["Je prends ce sac.", "I'll take this bag."], ["Je prends ce livre.", "I'll take this book."]] },
-      { "label": "Orange", "tone": "orange", "lines": [["Je prends cette robe.", "I'll take this dress."], ["Je prends cette veste.", "I'll take this jacket."], ["Je prends cette chambre.", "I'll take this room."]] }
+      { "label": "With ce", "tone": "blue", "lines": [["Je prends ce pull.", "I'll take this jumper."], ["Je prends ce sac.", "I'll take this bag."], ["Je prends ce livre.", "I'll take this book."]] },
+      { "label": "With cette", "tone": "orange", "lines": [["Je prends cette robe.", "I'll take this dress."], ["Je prends cette veste.", "I'll take this jacket."], ["Je prends cette chambre.", "I'll take this room."]] }
     ],
     "question": "What decides ce or cette?",
     "options": [

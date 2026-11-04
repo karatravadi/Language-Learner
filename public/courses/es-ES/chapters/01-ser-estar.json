@@ -18,7 +18,7 @@
     "intro": "Spanish has two verbs that both mean \"to be\". Before I explain anything, can you crack the code?",
     "groups": [
       {
-        "label": "Blue",
+        "label": "With ser (soy, es, somos)",
         "tone": "blue",
         "lines": [
           [
@@ -40,7 +40,7 @@
         ]
       },
       {
-        "label": "Orange",
+        "label": "With estar (estoy, está, estamos)",
         "tone": "orange",
         "lines": [
           [
@@ -261,7 +261,7 @@
       {
         "type": "note",
         "kind": "warn",
-        "text": "Careful: sleepy, hungry, thirsty and age use TENER, not ser or estar. Tengo sueño. Tengo hambre. Tengo treinta años."
+        "text": "Sleepy, hungry, thirsty and age use TENER, not ser or estar. Tengo sueño. Tengo hambre. Tengo treinta años."
       }
     ]
   },

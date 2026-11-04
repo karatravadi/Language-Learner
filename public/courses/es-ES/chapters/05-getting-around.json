@@ -15,8 +15,8 @@
   "discover": {
     "intro": "All six sentences are about where things are. See if you can spot when Spanish says hay and when it says está.",
     "groups": [
-      { "label": "Blue", "tone": "blue", "lines": [["¿Hay una farmacia por aquí?", "Is there a pharmacy around here?"], ["Hay un bar en la esquina.", "There's a bar on the corner."], ["No hay metro aquí.", "There's no metro here."]] },
-      { "label": "Orange", "tone": "orange", "lines": [["¿Dónde está la farmacia?", "Where is the pharmacy?"], ["El bar está en la esquina.", "The bar is on the corner."], ["La estación está cerca.", "The station is nearby."]] }
+      { "label": "With hay", "tone": "blue", "lines": [["¿Hay una farmacia por aquí?", "Is there a pharmacy around here?"], ["Hay un bar en la esquina.", "There's a bar on the corner."], ["No hay metro aquí.", "There's no metro here."]] },
+      { "label": "With está", "tone": "orange", "lines": [["¿Dónde está la farmacia?", "Where is the pharmacy?"], ["El bar está en la esquina.", "The bar is on the corner."], ["La estación está cerca.", "The station is nearby."]] }
     ],
     "question": "When does Spanish use hay, and when está?",
     "options": [
@@ -51,7 +51,7 @@
         { "title": "Where", "speak": "form", "rows": [["near", "cerca de"], ["far from", "lejos de"], ["next to", "al lado de"], ["opposite", "enfrente de"], ["on the corner", "en la esquina"], ["between", "entre"]] }
       ] },
       { "type": "note", "kind": "tip", "text": "a + el = al and de + el = del: al final de la calle, al lado del hotel. With la nothing joins up: al lado de la estación." },
-      { "type": "note", "kind": "spain", "text": "In Spain, coger means to take (a bus, a street, a train): coge la segunda a la derecha. In much of Latin America it is rude, so keep it for Spain." },
+      { "type": "note", "kind": "spain", "text": "Here coger means to take (a bus, a street, a train): coge la segunda a la derecha. In much of Latin America it is rude, so keep it for Spain." },
       { "type": "twist", "title": "Recto or derecha", "a": ["Sigue todo recto.", "Keep going straight on."], "b": ["Gira a la derecha.", "Turn right."], "note": "Recto sounds like \"right\", but todo recto means straight on. Right is a la derecha." },
       { "type": "note", "kind": "warn", "text": "Gira, sigue, cruza and coge are commands for tú. They look just like the él / ella form (gira = she turns), which makes them easy to remember. To a stranger you may hear the usted forms: gire, siga, cruce, coja." },
       { "type": "list", "title": "Around town", "rows": [["la estación", "the station"], ["la parada de autobús", "the bus stop"], ["el metro", "the underground"], ["el cajero", "the cash machine"], ["la farmacia", "the pharmacy"], ["el billete", "the ticket"], ["ida y vuelta", "return (there and back)"], ["el andén", "the platform"]] }

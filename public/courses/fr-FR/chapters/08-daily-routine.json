@@ -15,8 +15,8 @@
   "discover": {
     "intro": "Blue sentences have a small extra word before the verb. Orange sentences do not. Spot what it is.",
     "groups": [
-      { "label": "Blue", "tone": "blue", "lines": [["Je me lève à sept heures.", "I get up at seven."], ["Tu te lèves à huit heures.", "You get up at eight."], ["Elle se lève à neuf heures.", "She gets up at nine."]] },
-      { "label": "Orange", "tone": "orange", "lines": [["Je travaille à huit heures.", "I start work at eight."], ["Tu manges à midi.", "You eat at noon."], ["Elle regarde un film.", "She watches a film."]] }
+      { "label": "With me, te, se", "tone": "blue", "lines": [["Je me lève à sept heures.", "I get up at seven."], ["Tu te lèves à huit heures.", "You get up at eight."], ["Elle se lève à neuf heures.", "She gets up at nine."]] },
+      { "label": "Without them", "tone": "orange", "lines": [["Je travaille à huit heures.", "I start work at eight."], ["Tu manges à midi.", "You eat at noon."], ["Elle regarde un film.", "She watches a film."]] }
     ],
     "question": "What is the extra word in the blue sentences?",
     "options": [

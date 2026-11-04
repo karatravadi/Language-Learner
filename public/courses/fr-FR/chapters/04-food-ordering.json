@@ -15,8 +15,8 @@
   "discover": {
     "intro": "Every sentence orders something. Spot what decides whether it is un or une.",
     "groups": [
-      { "label": "Blue", "tone": "blue", "lines": [["Un café, s'il vous plaît.", "A coffee, please."], ["Un croissant, s'il vous plaît.", "A croissant, please."], ["Un sandwich, s'il vous plaît.", "A sandwich, please."]] },
-      { "label": "Orange", "tone": "orange", "lines": [["Une baguette, s'il vous plaît.", "A baguette, please."], ["Une salade, s'il vous plaît.", "A salad, please."], ["Une bière, s'il vous plaît.", "A beer, please."]] }
+      { "label": "With un", "tone": "blue", "lines": [["Un café, s'il vous plaît.", "A coffee, please."], ["Un croissant, s'il vous plaît.", "A croissant, please."], ["Un sandwich, s'il vous plaît.", "A sandwich, please."]] },
+      { "label": "With une", "tone": "orange", "lines": [["Une baguette, s'il vous plaît.", "A baguette, please."], ["Une salade, s'il vous plaît.", "A salad, please."], ["Une bière, s'il vous plaît.", "A beer, please."]] }
     ],
     "question": "What decides un or une?",
     "options": [

@@ -95,6 +95,14 @@ t('merge slips: latest change wins', () => assert.deepEqual(
   L.mergeState({ slips: { '5:3': { at: 10 }, '5:4': { at: 50, off: true } } }, { slips: { '5:4': { at: 40 }, '6:1': { at: 20 } } }).slips,
   { '5:3': { at: 10 }, '5:4': { at: 50, off: true }, '6:1': { at: 20 } }));
 
+// ---------- per-chapter place and first score (bugs 7 and 12) ----------
+t('merge lessons: each chapter keeps its own place, the later save wins', () => assert.deepEqual(
+  L.mergeState({ lessons: { 2: { step: 3, ex: 5, at: 20 }, 3: { off: true, at: 40 } } }, { lessons: { 2: { step: 1, at: 10 }, 3: { step: 4, at: 30 }, 4: { step: 2, at: 5 } } }).lessons,
+  { 2: { step: 3, ex: 5, at: 20 }, 3: { off: true, at: 40 }, 4: { step: 2, at: 5 } }));
+t('merge drops the old single lesson slot', () => assert.equal('lesson' in L.mergeState({ lesson: { n: 2 } }, {}), false));
+t('merge done keeps the first score', () => assert.equal(
+  L.mergeState({ done: { 1: { acc: 70, best: 90, first: 90, date: '2026-11-04' } } }, { done: { 1: { acc: 90, best: 90, date: '2026-11-02' } } }).done[1].first, 90));
+
 // ---------- sync merge (this device a, server b) ----------
 const M = L.mergeState;
 t('srsGrade stamps seen', () => assert.equal(L.srsGrade({ id: 'a', box: 1 }, true, now).seen, now));

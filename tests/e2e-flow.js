@@ -157,8 +157,9 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
           for (const it of ex.items) {
             const label = ex.choices.find(c => c.key === it.answer).label;
             await page.evaluate(lb => [...document.querySelectorAll('.rapid-btns button')].find(b => b.innerText === lb).click(), label);
-            await page.evaluate(() => [...document.querySelectorAll('.rapid-fb button')].pop().click());
+            await page.evaluate(() => { const b = [...document.querySelectorAll('.rapid-fb button')].pop(); if (b) b.click(); });
           }
+          assert.equal(await page.evaluate(() => document.querySelectorAll('.rapid-fb button').length), 0, 'rapid fire ends with one button (Continue), no Finish');
           if (n === 4) await shot('05-rapid-done');
           break;
         default: throw new Error('unknown type ' + ex.type);
@@ -223,7 +224,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
     // A spelling slip in chapter 3 is half a mark, so that chapter lands just under 100%, and above a full miss.
     const slipAcc = n === 3 && slipShown;
     const expectAcc = deliberateMiss ? s.done[n].acc < 100 : slipAcc ? s.done[n].acc < 100 && s.done[n].acc >= 90 : s.done[n].acc === (n === 1 ? s.done[n].acc : 100);
-    if (slipAcc) assert.equal(s.lesson, undefined);
+    if (slipAcc) assert.ok(!s.lessons[n] || s.lessons[n].off, 'a finished chapter keeps no place to resume');
     assert.ok(expectAcc, 'chapter ' + n + ' accuracy ' + s.done[n].acc);
     assert.ok(ch.phrases.every(p => s.srs[p.id]), 'phrases join the deck');
     if (n === 4) await shot('09-result');
@@ -278,11 +279,18 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   assert.ok(after > before, 'active time should be counted');
   ok('practice timer counts active time (' + before + 's → ' + after + 's)');
 
-  // ---------- chapters: carry on, no skipping the writing check, back ----------
-  await page.evaluate(() => { const S = window.__trainer.state(); S.lesson = { n: 1, step: 4, ex: 0, stats: { right: 5, total: 6 } }; window.__trainer.home(); });
-  await sleep(80);
-  assert.match(await text(), /Carry on/);
+  // ---------- chapters: resume, no skipping the writing check, back ----------
+  // Every chapter is finished by now. Its tick and best score stay on show while it is practised again (bug 7).
   const ch1 = await page.evaluate(() => window.__trainer.chapters[0]);
+  const ch2 = await page.evaluate(() => window.__trainer.chapters[1]);
+  const doneBefore = JSON.stringify((await state()).done);
+  await page.evaluate(() => { const S = window.__trainer.state(); S.lessons[1] = { step: 4, ex: 0, stats: { right: 5, total: 6 }, at: Date.now() }; window.__trainer.home(); });
+  await sleep(80);
+  t = await text();
+  assert.match(t, /Best \d+% · Resume/, 'a finished chapter being practised shows its score and Resume');
+  assert.match(t, /Best \d+% · Practise again/, 'other finished chapters show Practise again');
+  assert.doesNotMatch(t, /Carry on/);
+  assert.doesNotMatch(t, /Resume chapter 1/, 'Today does not suggest a finished chapter');
   await clickText('.chap', ch1.title); await sleep(120);
   assert.ok((await text()).includes(ch1.write.title));
   const locked = await page.evaluate(() => [...document.querySelectorAll('button')].find(b => b.innerText.includes('Continue to the scenario')).disabled);
@@ -291,11 +299,24 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   assert.ok((await text()).includes('Patterns · ' + T(ch1.sub))); assert.ok((await text()).includes(ch1.learn.blocks.find(b => b.type === 'tables').tables[0].title));
   await clickText('.modal button', 'Close'); await sleep(80);
   await page.click('button[aria-label="Back"]'); await sleep(120);
-  assert.match(await text(), /1 of \d+/); assert.equal((await state()).lesson.step, 3);
+  assert.match(await text(), /1 of \d+/); assert.equal((await state()).lessons[1].step, 3);
   await page.click('button[aria-label="Close lesson"]'); await sleep(80);
-  assert.match(await text(), /Carry on/);
-  await page.evaluate(() => { delete window.__trainer.state().lesson; window.__trainer.home(); }); await sleep(80);
-  ok('chapters: carry on from a saved step, the writing check cannot be skipped, patterns open mid-lesson, back returns to practice');
+  assert.match(await text(), /Best \d+% · Resume/);
+  // Opening another chapter never touches chapter 1's place (bug 12), and results are never changed by reopening.
+  await clickText('.chap', ch2.title); await sleep(120);
+  await page.click('button[aria-label="Close lesson"]'); await sleep(80);
+  let st = await state();
+  assert.equal(st.lessons[1].step, 3, 'chapter 1 keeps its place after chapter 2 is opened');
+  assert.ok(!st.lessons[2] || st.lessons[2].off, 'just opening a chapter saves no place');
+  assert.equal(JSON.stringify(st.done), doneBefore, 'reopening chapters never changes their saved results');
+  await page.reload({ waitUntil: 'networkidle0' }); await sleep(200);
+  st = await state();
+  assert.equal(st.lessons[1].step, 3, 'the place survives a reload');
+  await clickText('.chap', ch1.title); await sleep(120);
+  assert.match(await text(), /1 of \d+/, 'resumes at practice');
+  await page.click('button[aria-label="Close lesson"]'); await sleep(80);
+  await page.evaluate(() => { window.__trainer.state().lessons = {}; window.__trainer.home(); }); await sleep(80);
+  ok('chapters: each keeps its own place (opening another never wipes it, a reload keeps it), finished ones keep score and tick, the writing check cannot be skipped, patterns open mid-lesson, back returns to practice');
 
   // ---------- tap a word, My words ----------
   await page.evaluate(() => window.__trainer.wotdScreen()); await sleep(120);

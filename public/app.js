@@ -93,7 +93,7 @@
   function defaults() {
     return {
       name: '', fem: true, goalMins: (COURSE && COURSE.goalMins) || 45, xp: 0, streak: { last: null, count: 0 }, dayXp: { date: '', xp: 0 },
-      time: {}, reviewed: {}, done: {}, srs: {}, skills: {}, vocab: {}, wotd: { byDate: {}, learned: [], done: {}, answers: {} }
+      time: {}, reviewed: {}, done: {}, lessons: {}, srs: {}, skills: {}, vocab: {}, wotd: { byDate: {}, learned: [], done: {}, answers: {} }
     };
   }
   // A saved state (from storage or an imported file) on top of the defaults, so older saves gain new fields.
@@ -105,6 +105,13 @@
       dayXp: Object.assign(d.dayXp, o.dayXp || {}),
       wotd: Object.assign(d.wotd, o.wotd || {})
     });
+    // Before Nov 2026 one slot (lesson) held the place in whichever chapter was opened last, so opening another
+    // chapter wiped it. Now each chapter has its own (lessons[n]).
+    if (!s.lessons || typeof s.lessons !== 'object') s.lessons = {};
+    if (s.lesson && s.lesson.n != null) {
+      if (!s.lessons[s.lesson.n]) s.lessons[s.lesson.n] = { step: s.lesson.step || 0, ex: s.lesson.ex || 0, stats: s.lesson.stats || {}, at: 1 };
+      delete s.lesson;
+    }
     // Before Nov 2026 everyone started as "Kara". A name nobody ever saved in Settings is that old default: ask instead.
     if (s.name === 'Kara' && !s.prefsAt) s.name = '';
     return s;
@@ -433,10 +440,18 @@
     if (S.wotd.byDate[today] !== id) { S.wotd.byDate[today] = id; save(); }
     return WORDS.find(w => w.id === id);
   }
+  // The chapter Today suggests: an unfinished one you are part-way through (the latest), else the first not done yet.
+  // Null once every chapter is done: a finished chapter is never suggested again.
   function nextChapter() {
-    const going = S.lesson && CHAPTERS.find(c => c.n === S.lesson.n);
-    if (going) return going;
-    return CHAPTERS.find(c => !S.done[c.n]) || CHAPTERS.slice().sort((a, b) => S.done[a.n].best - S.done[b.n].best)[0];
+    const going = CHAPTERS.filter(c => !S.done[c.n] && inProgress(c)).sort((a, b) => (inProgress(b).at || 0) - (inProgress(a).at || 0))[0];
+    return going || CHAPTERS.find(c => !S.done[c.n]) || null;
+  }
+  // Where you are in a chapter, in words: "Exercise 6 of 15", or the step's name.
+  function placeIn(ch) {
+    const p = inProgress(ch);
+    if (!p) return '';
+    if (p.step === PRACTISE) return 'Exercise ' + Math.min((p.ex || 0) + 1, practiceCount(ch)) + ' of ' + practiceCount(ch);
+    return 'At ' + CHAPTER_STEPS[p.step].toLowerCase();
   }
 
   function home() {
@@ -448,7 +463,8 @@
     const wdone = !!S.wotd.done[today];
     const mins = minsToday();
     const nextCh = nextChapter();
-    const chapterToday = CHAPTERS.some(c => S.done[c.n] && S.done[c.n].date === today);
+    const doneToday = CHAPTERS.find(c => S.done[c.n] && S.done[c.n].date === today);
+    const chapterToday = !!doneToday;
     const reviewedToday = !!S.reviewed[today];
     const lastDone = CHAPTERS.filter(c => S.done[c.n]).pop();
 
@@ -467,7 +483,11 @@
     const plan = h('div', { class: 'plan' },
       planRow(wdone, 'Word of the day', word.es, PLAN.word + ' min', wotdScreen),
       planRow(reviewedToday && due === 0, 'Review', due ? due + ' cards due' : (reviewedToday ? 'All caught up' : 'Nothing due yet'), PLAN.review + ' min', due ? reviewFlow : null),
-      planRow(chapterToday && !inProgress(nextCh), chapterToday && !inProgress(nextCh) ? 'Chapter done today' : (inProgress(nextCh) ? 'Carry on: chapter ' : 'Chapter ') + nextCh.n, nextCh.title, nextCh.mins + ' min', () => chapterFlow(nextCh)),
+      chapterToday
+        ? planRow(true, 'Chapter done today', doneToday.title, (nextCh || doneToday).mins + ' min', nextCh ? () => chapterFlow(nextCh) : null)
+        : nextCh
+          ? planRow(false, (inProgress(nextCh) ? 'Resume chapter ' : 'Chapter ') + nextCh.n, inProgress(nextCh) ? nextCh.title + ' · ' + placeIn(nextCh) : nextCh.title, nextCh.mins + ' min', () => chapterFlow(nextCh))
+          : planRow(false, 'All chapters done', 'Practise any chapter again from the list', '', null),
       practise);
 
     const todayCard = h('section', { class: 'card', 'aria-label': 'Today' },
@@ -495,10 +515,12 @@
       const d = S.done[ch.n];
       const isNext = ch === nextCh && !d;
       const going = inProgress(ch);
-      return h('button', { class: 'chap' + (d ? ' done' : '') + (isNext || going ? ' next' : ''), type: 'button', onclick: () => chapterFlow(ch) },
+      // A finished chapter always shows its tick and best score, even while you practise it again.
+      const go = d ? 'Best ' + d.best + '% · ' + (going ? 'Resume' : 'Practise again') : going ? 'Resume' : isNext ? 'Start' : ch.mins + ' min';
+      return h('button', { class: 'chap' + (d ? ' done' : '') + (isNext || (going && !d) ? ' next' : ''), type: 'button', onclick: () => chapterFlow(ch) },
         h('div', { class: 'chap-n' }, d ? icon('check') : String(ch.n)),
-        h('div', {}, h('div', { class: 'chap-t' }, ch.title), h('div', { class: 'chap-s' }, ch.can)),
-        h('div', { class: 'chap-go' }, going ? 'Carry on' : d ? 'Best ' + d.best + '%' : (isNext ? 'Start' : ch.mins + ' min'), icon('next')));
+        h('div', {}, h('div', { class: 'chap-t' }, ch.title), h('div', { class: 'chap-s' }, going ? placeIn(ch) : ch.can)),
+        h('div', { class: 'chap-go' }, go, icon('next')));
     }).concat(ROADMAP.map(r => h('div', { class: 'chap locked', 'aria-disabled': 'true' },
       h('div', { class: 'chap-n' }, String(r.n)),
       h('div', {}, h('div', { class: 'chap-t' }, r.title), h('div', { class: 'chap-s' }, r.can)),
@@ -733,12 +755,15 @@
   }
 
   // ---------- chapter flow ----------
-  // Your place in a chapter is saved at every step (and every practice question) in S.lesson,
-  // so closing a chapter keeps it and the home screen offers to carry on.
+  // Your place in each chapter is saved at every step (and every practice question) in S.lessons[n], one record per
+  // chapter, so opening another chapter never touches it and the home screen offers to resume.
+  // A finished chapter's result (S.done) is separate and never changed by practising it again, except best and date.
   const PRACTISE = 3;
-  const inProgress = ch => (S.lesson && S.lesson.n === ch.n ? S.lesson : null);
+  const CHAPTER_STEPS = ['Discover', 'Learn', 'Phrases', 'Practise', 'Write', 'Scenario', 'Done'];
+  const inProgress = ch => { const p = S.lessons && S.lessons[ch.n]; return p && !p.off ? p : null; };
+  const practiceCount = ch => ch.exercises.filter(e => e.type !== 'listen' || hasVoice()).length;
   function chapterFlow(ch) {
-    const labels = ['Discover', 'Learn', 'Phrases', 'Practise', 'Write', 'Scenario', 'Done'];
+    const labels = CHAPTER_STEPS;
     const last = labels.length - 1;
     const saved = inProgress(ch);
     const stats = { right: 0, total: 0, t0: Date.now() };
@@ -746,8 +771,12 @@
     let i = saved ? Math.min(saved.step || 0, last - 1) : 0;
     let exAt = saved && i === PRACTISE ? saved.ex || 0 : 0;
     function keep() {
-      if (i >= last) delete S.lesson;
-      else S.lesson = { n: ch.n, step: i, ex: exAt, stats: { right: stats.right, total: stats.total } };
+      if (!S.lessons) S.lessons = {};
+      const had = inProgress(ch);
+      // Just opening a chapter (still on its first step) is not a place worth keeping.
+      if (i >= last) { if (had) S.lessons[ch.n] = { off: true, at: Date.now() }; }
+      else if (i > 0 || had) S.lessons[ch.n] = { step: i, ex: exAt, stats: { right: stats.right, total: stats.total }, at: Date.now() };
+      else return;
       save();
     }
     const builders = [discoverStep, learnStep, phrasesStep,
@@ -983,7 +1012,9 @@
           fb.className = 'rapid-fb ' + (ok ? 'good' : 'bad');
           put(fb, h('b', {}, ok ? '' : 'No: ', h('span', { lang: it.blank ? TL : null }, T(it.full))), h('span', { class: 'muted' }, ' ' + it.why));
           if (s.slot) s.slot.textContent = it.fill;
-          const nextBtn = h('button', { class: 'btn primary', type: 'button', onclick: () => { i++; show(); } }, i + 1 === ex.items.length ? 'Finish' : 'Next');
+          // After the last item the round ends at once, and the exercise's own Continue is the only button.
+          if (i + 1 === ex.items.length) { i++; show(); return; }
+          const nextBtn = h('button', { class: 'btn primary', type: 'button', onclick: () => { i++; show(); } }, 'Next');
           fb.append(h('div', { class: 'row end' }, nextBtn));
           nextBtn.focus();
         }
@@ -1309,7 +1340,7 @@
     const acc = stats.total ? Math.round(stats.right / stats.total * 100) : 100;
     const first = !S.done[ch.n];
     const prev = S.done[ch.n] || {};
-    S.done[ch.n] = { acc, best: Math.max(acc, prev.best || 0), date: L.dayKey() };
+    S.done[ch.n] = { acc, best: Math.max(acc, prev.best || 0), first: first ? acc : (prev.first != null ? prev.first : prev.acc), date: L.dayKey() };
     addXp(first ? 30 : 10);
     const due = L.dueCards(S.srs, Date.now()).length;
     const mins = Math.max(1, Math.round((Date.now() - stats.t0) / 60000));

@@ -15,8 +15,8 @@
   "discover": {
     "intro": "Every sentence says where someone is going. Look at what happens to à and the word after it.",
     "groups": [
-      { "label": "Blue", "tone": "blue", "lines": [["Je vais à la gare.", "I'm going to the station."], ["Je vais à la poste.", "I'm going to the post office."], ["Je vais à la plage.", "I'm going to the beach."]] },
-      { "label": "Orange", "tone": "orange", "lines": [["Je vais au café.", "I'm going to the café."], ["Je vais au musée.", "I'm going to the museum."], ["Je vais au marché.", "I'm going to the market."]] }
+      { "label": "With à la", "tone": "blue", "lines": [["Je vais à la gare.", "I'm going to the station."], ["Je vais à la poste.", "I'm going to the post office."], ["Je vais à la plage.", "I'm going to the beach."]] },
+      { "label": "With au", "tone": "orange", "lines": [["Je vais au café.", "I'm going to the café."], ["Je vais au musée.", "I'm going to the museum."], ["Je vais au marché.", "I'm going to the market."]] }
     ],
     "question": "Why à la in blue but au in orange?",
     "options": [

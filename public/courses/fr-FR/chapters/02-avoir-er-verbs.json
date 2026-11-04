@@ -14,8 +14,8 @@
   "discover": {
     "intro": "Blue sentences say yes. Orange sentences say no. Look at what happens to the verb.",
     "groups": [
-      { "label": "Blue", "tone": "blue", "lines": [["Je parle anglais.", "I speak English."], ["Tu habites à Paris.", "You live in Paris."], ["Il a un portable.", "He has a mobile."]] },
-      { "label": "Orange", "tone": "orange", "lines": [["Je ne parle pas anglais.", "I don't speak English."], ["Tu n'habites pas à Paris.", "You don't live in Paris."], ["Il n'a pas de portable.", "He hasn't got a mobile."]] }
+      { "label": "Doing it", "tone": "blue", "lines": [["Je parle anglais.", "I speak English."], ["Tu habites à Paris.", "You live in Paris."], ["Il a un portable.", "He has a mobile."]] },
+      { "label": "Not doing it", "tone": "orange", "lines": [["Je ne parle pas anglais.", "I don't speak English."], ["Tu n'habites pas à Paris.", "You don't live in Paris."], ["Il n'a pas de portable.", "He hasn't got a mobile."]] }
     ],
     "question": "What do you notice in the orange sentences?",
     "options": [

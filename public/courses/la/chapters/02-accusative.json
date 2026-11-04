@@ -14,8 +14,8 @@
   "discover": {
     "intro": "In each colour the words move around, but the meaning stays the same. Work out how Latin shows who sees whom.",
     "groups": [
-      { "label": "Blue", "tone": "blue", "lines": [["Puella agricolam videt.", "The girl sees the farmer."], ["Agricolam puella videt.", "The girl sees the farmer."]] },
-      { "label": "Orange", "tone": "orange", "lines": [["Agricola puellam videt.", "The farmer sees the girl."], ["Puellam agricola videt.", "The farmer sees the girl."]] }
+      { "label": "The girl sees", "tone": "blue", "lines": [["Puella agricolam videt.", "The girl sees the farmer."], ["Agricolam puella videt.", "The girl sees the farmer."]] },
+      { "label": "The farmer sees", "tone": "orange", "lines": [["Agricola puellam videt.", "The farmer sees the girl."], ["Puellam agricola videt.", "The farmer sees the girl."]] }
     ],
     "question": "How does Latin show who sees whom?",
     "options": [

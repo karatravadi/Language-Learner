@@ -15,8 +15,8 @@
   "discover": {
     "intro": "All of these sentences tell the time. Spot why some start with es and others with son.",
     "groups": [
-      { "label": "Blue", "tone": "blue", "lines": [["Es la una.", "It's one o'clock."], ["Es la una y media.", "It's half past one."], ["Es la una y diez.", "It's ten past one."]] },
-      { "label": "Orange", "tone": "orange", "lines": [["Son las dos.", "It's two o'clock."], ["Son las cinco y cuarto.", "It's quarter past five."], ["Son las diez menos cuarto.", "It's quarter to ten."]] }
+      { "label": "One o'clock", "tone": "blue", "lines": [["Es la una.", "It's one o'clock."], ["Es la una y media.", "It's half past one."], ["Es la una y diez.", "It's ten past one."]] },
+      { "label": "Every other hour", "tone": "orange", "lines": [["Son las dos.", "It's two o'clock."], ["Son las cinco y cuarto.", "It's quarter past five."], ["Son las diez menos cuarto.", "It's quarter to ten."]] }
     ],
     "question": "Why es in blue and son in orange?",
     "options": [

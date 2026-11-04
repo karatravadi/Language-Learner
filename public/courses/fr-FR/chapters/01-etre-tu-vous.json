@@ -15,8 +15,8 @@
   "discover": {
     "intro": "All of these sentences ask a question. Spot why some use tu and others use vous. The English tells you who is being asked.",
     "groups": [
-      { "label": "Blue", "tone": "blue", "lines": [["Tu es français ?", "Are you French? (asking a friend)"], ["Tu es étudiant ?", "Are you a student? (asking a classmate)"], ["Tu es d'où ?", "Where are you from? (asking a child)"]] },
-      { "label": "Orange", "tone": "orange", "lines": [["Vous êtes français ?", "Are you French? (asking a stranger)"], ["Vous êtes professeur ?", "Are you a teacher? (asking an adult you have just met)"], ["Vous êtes d'où ?", "Where are you from? (asking a friend's parents)"]] }
+      { "label": "With tu", "tone": "blue", "lines": [["Tu es français ?", "Are you French? (asking a friend)"], ["Tu es étudiant ?", "Are you a student? (asking a classmate)"], ["Tu es d'où ?", "Where are you from? (asking a child)"]] },
+      { "label": "With vous", "tone": "orange", "lines": [["Vous êtes français ?", "Are you French? (asking a stranger)"], ["Vous êtes professeur ?", "Are you a teacher? (asking an adult you have just met)"], ["Vous êtes d'où ?", "Where are you from? (asking a friend's parents)"]] }
     ],
     "question": "Why tu in blue and vous in orange?",
     "options": [

@@ -15,7 +15,7 @@
     "intro": "One colour is Latin, the other is Spanish. Compare them.",
     "groups": [
       {
-        "label": "Blue: Latin",
+        "label": "Latin",
         "tone": "blue",
         "lines": [
           [
@@ -37,7 +37,7 @@
         ]
       },
       {
-        "label": "Orange: Spanish",
+        "label": "Spanish",
         "tone": "orange",
         "lines": [
           [

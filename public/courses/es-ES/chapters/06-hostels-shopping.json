@@ -15,8 +15,8 @@
   "discover": {
     "intro": "Every sentence uses tener, to have. Look closely at how the verb starts in each colour.",
     "groups": [
-      { "label": "Blue", "tone": "blue", "lines": [["Tenemos una reserva.", "We have a booking."], ["¿Tenéis toallas?", "Do you (all) have towels?"]] },
-      { "label": "Orange", "tone": "orange", "lines": [["¿Tienes una toalla?", "Do you have a towel?"], ["La habitación tiene baño.", "The room has a bathroom."], ["Tienen wifi gratis.", "They have free wifi."]] }
+      { "label": "We, you all (tenemos, tenéis)", "tone": "blue", "lines": [["Tenemos una reserva.", "We have a booking."], ["¿Tenéis toallas?", "Do you (all) have towels?"]] },
+      { "label": "You, it, they (tienes, tiene, tienen)", "tone": "orange", "lines": [["¿Tienes una toalla?", "Do you have a towel?"], ["La habitación tiene baño.", "The room has a bathroom."], ["Tienen wifi gratis.", "They have free wifi."]] }
     ],
     "question": "Compare tenemos and tenéis with tienes, tiene and tienen. What changes?",
     "options": [

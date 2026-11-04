@@ -15,8 +15,8 @@
   "discover": {
     "intro": "All of these sentences tell the time. Spot why the blue ones say heure and the orange ones say heures.",
     "groups": [
-      { "label": "Blue", "tone": "blue", "lines": [["Il est une heure.", "It's one o'clock."], ["Il est une heure et demie.", "It's half past one."], ["Il est une heure dix.", "It's ten past one."]] },
-      { "label": "Orange", "tone": "orange", "lines": [["Il est deux heures.", "It's two o'clock."], ["Il est cinq heures et quart.", "It's quarter past five."], ["Il est dix heures moins le quart.", "It's quarter to ten."]] }
+      { "label": "One o'clock", "tone": "blue", "lines": [["Il est une heure.", "It's one o'clock."], ["Il est une heure et demie.", "It's half past one."], ["Il est une heure dix.", "It's ten past one."]] },
+      { "label": "Every other hour", "tone": "orange", "lines": [["Il est deux heures.", "It's two o'clock."], ["Il est cinq heures et quart.", "It's quarter past five."], ["Il est dix heures moins le quart.", "It's quarter to ten."]] }
     ],
     "question": "Why heure in blue and heures in orange?",
     "options": [

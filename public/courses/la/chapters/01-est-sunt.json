@@ -14,8 +14,8 @@
   "discover": {
     "intro": "Your first Latin. There's no word for \"the\" anywhere. See what changes when there's more than one.",
     "groups": [
-      { "label": "Blue", "tone": "blue", "lines": [["Puella est laeta.", "The girl is happy."], ["Rōma est magna.", "Rome is great."], ["Via est longa.", "The road is long."]] },
-      { "label": "Orange", "tone": "orange", "lines": [["Puellae sunt laetae.", "The girls are happy."], ["Viae sunt longae.", "The roads are long."], ["Statuae sunt pulchrae.", "The statues are beautiful."]] }
+      { "label": "One", "tone": "blue", "lines": [["Puella est laeta.", "The girl is happy."], ["Rōma est magna.", "Rome is great."], ["Via est longa.", "The road is long."]] },
+      { "label": "More than one", "tone": "orange", "lines": [["Puellae sunt laetae.", "The girls are happy."], ["Viae sunt longae.", "The roads are long."], ["Statuae sunt pulchrae.", "The statues are beautiful."]] }
     ],
     "question": "What changes when there is more than one?",
     "options": [

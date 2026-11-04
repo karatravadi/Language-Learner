@@ -16,7 +16,7 @@
     "intro": "None of these sentences has a word for \"I\" or \"we\". See if you can work out how Spanish shows who is doing it.",
     "groups": [
       {
-        "label": "Blue",
+        "label": "One person (I)",
         "tone": "blue",
         "lines": [
           [
@@ -34,7 +34,7 @@
         ]
       },
       {
-        "label": "Orange",
+        "label": "A group (we)",
         "tone": "orange",
         "lines": [
           [

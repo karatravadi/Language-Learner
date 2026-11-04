@@ -15,8 +15,8 @@
   "discover": {
     "intro": "All six sentences mean \"I like…\". Spot why the verb changes between blue and orange.",
     "groups": [
-      { "label": "Blue", "tone": "blue", "lines": [["Me gusta el café.", "I like coffee."], ["Me gusta bailar.", "I like dancing."], ["Me gusta Madrid.", "I like Madrid."]] },
-      { "label": "Orange", "tone": "orange", "lines": [["Me gustan los gatos.", "I like cats."], ["Me gustan las tapas.", "I like tapas."], ["Me gustan tus zapatos.", "I like your shoes."]] }
+      { "label": "With gusta", "tone": "blue", "lines": [["Me gusta el café.", "I like coffee."], ["Me gusta bailar.", "I like dancing."], ["Me gusta Madrid.", "I like Madrid."]] },
+      { "label": "With gustan", "tone": "orange", "lines": [["Me gustan los gatos.", "I like cats."], ["Me gustan las tapas.", "I like tapas."], ["Me gustan tus zapatos.", "I like your shoes."]] }
     ],
     "question": "Why gusta in blue but gustan in orange?",
     "options": [

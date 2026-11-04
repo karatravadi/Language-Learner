@@ -13,6 +13,9 @@ const PUBLIC = path.join(__dirname, '..', 'public');
 const COURSES = path.join(PUBLIC, 'courses');
 const TONES = new Set(['blue', 'orange', 'green']);
 const NOTE_KINDS = new Set(['tip', 'spain', 'warn', 'culture', 'roots']);
+const COLOUR_WORD = /\b(blue|orange|green|red|purple|yellow)\b/i;
+// The label the app puts on each kind of note (NOTE_LABEL in app.js). The text must not start with it again.
+const NOTE_REPEAT = { warn: /^careful\b/i, tip: /^tip\b/i, spain: /^in spain\s*[:,.]/i, culture: /^culture\b/i, roots: /^roots?\b/i };
 const TOKEN = /\{(?!name\}|o\})[^}]*\}/; // only {name} and {o} are allowed
 
 function check(dir = COURSES) {
@@ -98,6 +101,8 @@ function check(dir = COURSES) {
       if (!Array.isArray(d.groups) || d.groups.length < 1) err('needs at least one group');
       (d.groups || []).forEach(g => {
         if (!isStr(g.label)) err('group needs a label');
+        // The label says what the examples share. The colour is decoration and never the meaning on its own.
+        else if (COLOUR_WORD.test(g.label)) err('group label "' + g.label + '" names a colour: say what the examples have in common instead (e.g. "With ser")');
         if (g.tone && !TONES.has(g.tone)) err('unknown tone ' + g.tone);
         if (!Array.isArray(g.lines) || !g.lines.length || !g.lines.every(pair)) err('group "' + g.label + '" lines must be [spanish, english] pairs');
       });
@@ -127,6 +132,7 @@ function check(dir = COURSES) {
         } else if (b.type === 'note') {
           if (!NOTE_KINDS.has(b.kind)) err('note kind must be one of ' + [...NOTE_KINDS].join(', '));
           if (!isStr(b.text)) err('note needs text');
+          else if (NOTE_REPEAT[b.kind] && NOTE_REPEAT[b.kind].test(b.text)) err('note text repeats its own label ("' + b.text.slice(0, 24) + '…"): the label already says it');
         } else if (b.type === 'twist') {
           if (!isStr(b.title) || !pair(b.a) || !pair(b.b) || !isStr(b.note)) err('twist needs title, a, b and note');
         } else if (b.type === 'list') {

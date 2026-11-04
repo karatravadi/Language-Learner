@@ -15,8 +15,8 @@
   "discover": {
     "intro": "Blue sentences say what happens now. Orange sentences say what will happen. Spot how the verb changes.",
     "groups": [
-      { "label": "Blue", "tone": "blue", "lines": [["Je mange.", "I eat. I'm eating."], ["Je travaille.", "I work. I'm working."], ["Je regarde un film.", "I watch a film."]] },
-      { "label": "Orange", "tone": "orange", "lines": [["Je vais manger.", "I'm going to eat."], ["Je vais travailler.", "I'm going to work."], ["Je vais regarder un film.", "I'm going to watch a film."]] }
+      { "label": "Doing it now", "tone": "blue", "lines": [["Je mange.", "I eat. I'm eating."], ["Je travaille.", "I work. I'm working."], ["Je regarde un film.", "I watch a film."]] },
+      { "label": "Going to do it", "tone": "orange", "lines": [["Je vais manger.", "I'm going to eat."], ["Je vais travailler.", "I'm going to work."], ["Je vais regarder un film.", "I'm going to watch a film."]] }
     ],
     "question": "How do the orange sentences say what is going to happen?",
     "options": [

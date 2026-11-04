@@ -76,7 +76,7 @@ Plan, if it works:
 
 # Bugs (found 3 Nov 2026)
 
-## 7. The most recently clicked chapter hides its saved score and ticks (S)
+## 7. The most recently clicked chapter hides its saved score and ticks (S) - FIXED 4 Nov 2026
 Seen: chapter 1 shows a tick on the course list, but its button says "Carry on". Clicking it resets the chapter's
 progress in the left-hand Today checklist and the score from the first run is no longer shown. The Today plan also lists
 "Carry on: chapter 1" after the chapter was finished.
@@ -97,7 +97,7 @@ for every chapter except the most recently clicked one. So the fix is in how the
 "last clicked" chapter: it should show its saved score and ticks like any other. First check that the first score is
 still in D1 while the chapter is reopened.
 
-## 8. Rapid fire ends with Finish and Continue, and Finish goes nowhere (S)
+## 8. Rapid fire ends with Finish and Continue, and Finish goes nowhere (S) - FIXED 4 Nov 2026
 Seen: after the last rapid fire question (score "7 of 8") two buttons show. Finish does nothing visible.
 
 Plan:
@@ -105,7 +105,7 @@ Plan:
 - If Finish was meant to end a round early, give it a real destination or take it out.
 - Check the other exercise types that end a block for the same duplicate.
 
-## 9. "Careful" appears twice in warning notes (S)
+## 9. "Careful" appears twice in warning notes (S) - FIXED 4 Nov 2026
 Seen: in chapter 1 the note has the label "Careful" and the text starts with "Careful:" again (about sleepy, hungry,
 thirsty and age using tener).
 
@@ -115,7 +115,7 @@ Plan:
   (Careful, Tip, Spain, Culture) and fix them.
 - Add a rule to the content checker so a note that repeats its own label is rejected from now on.
 
-## 10. Discover boxes are titled by colour, not by meaning (S)
+## 10. Discover boxes are titled by colour, not by meaning (S) - FIXED 4 Nov 2026
 Seen: the first page of a chapter ("Work it out") shows two coloured boxes headed "Blue" and "Orange". In chapter 2 they
 should say what the group is, for example "I" and "we". Kara says it looks like every chapter.
 
@@ -144,7 +144,7 @@ Plan:
 
 Open question: should review ask for one form at a time (recommended) or the whole table at once?
 
-## 12. Starting a new chapter erases progress in an unfinished one (M, fix first)
+## 12. Starting a new chapter erases progress in an unfinished one (M, fix first) - FIXED 4 Nov 2026
 Seen: halfway through chapter 2, Kara opened chapter 3 and the chapter 2 progress was gone.
 
 Likely cause, to verify: this probably shares a root cause with item 7. The app seems to keep one "current chapter"

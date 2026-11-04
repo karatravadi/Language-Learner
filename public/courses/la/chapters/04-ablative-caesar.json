@@ -14,8 +14,8 @@
   "discover": {
     "intro": "Both colours use the same little word, in. Spot why the ending after it changes.",
     "groups": [
-      { "label": "Blue", "tone": "blue", "lines": [["Marcus in vīllā est.", "Marcus is in the villa."], ["Puella in viā ambulat.", "The girl is walking in the street."], ["Servī in oppidō labōrant.", "The slaves are working in the town."]] },
-      { "label": "Orange", "tone": "orange", "lines": [["Marcus in vīllam ambulat.", "Marcus walks into the villa."], ["Puella in viam ambulat.", "The girl walks into the street."], ["Servī in oppidum ambulant.", "The slaves walk into the town."]] }
+      { "label": "Being in a place", "tone": "blue", "lines": [["Marcus in vīllā est.", "Marcus is in the villa."], ["Puella in viā ambulat.", "The girl is walking in the street."], ["Servī in oppidō labōrant.", "The slaves are working in the town."]] },
+      { "label": "Moving into a place", "tone": "orange", "lines": [["Marcus in vīllam ambulat.", "Marcus walks into the villa."], ["Puella in viam ambulat.", "The girl walks into the street."], ["Servī in oppidum ambulant.", "The slaves walk into the town."]] }
     ],
     "question": "Why vīllā in blue but vīllam in orange?",
     "options": [

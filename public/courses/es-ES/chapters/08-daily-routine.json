@@ -14,8 +14,8 @@
   "discover": {
     "intro": "The same verbs appear in both colours. Spot what the little word me changes.",
     "groups": [
-      { "label": "Blue", "tone": "blue", "lines": [["Me levanto a las ocho.", "I get up at eight."], ["Me ducho por la mañana.", "I shower in the morning."], ["Me acuesto tarde.", "I go to bed late."]] },
-      { "label": "Orange", "tone": "orange", "lines": [["Levanto la maleta.", "I lift the suitcase."], ["Ducho al perro.", "I shower the dog."], ["Acuesto a los niños.", "I put the children to bed."]] }
+      { "label": "With me", "tone": "blue", "lines": [["Me levanto a las ocho.", "I get up at eight."], ["Me ducho por la mañana.", "I shower in the morning."], ["Me acuesto tarde.", "I go to bed late."]] },
+      { "label": "Without me", "tone": "orange", "lines": [["Levanto la maleta.", "I lift the suitcase."], ["Ducho al perro.", "I shower the dog."], ["Acuesto a los niños.", "I put the children to bed."]] }
     ],
     "question": "What does me add in the blue sentences?",
     "options": [
