@@ -29,6 +29,7 @@ Users can select courses, work through chapters and learn from past mistakes.
 - Free plans only. Cloudflare Workers, D1 and Access, plus the Gemini free tier. The cost of running Stilus is zero, and that shaped everything below.
 - A capped tutor. The AI tutor allows 60 calls per person and 450 in total per day. The caps keep the app inside the free tier, and the remaining calls are shown to the learner so the limit is never a surprise.
 - European Spanish content prioritised.
+- Content designed to align with CEFR levels. Spanish and French currently run from A1 to A2, ending in an A2 checkpoint. Latin isn't covered by CEFR, so it follows its own reading path.
 - Beginner-safe explanations. No grammar term is used before a chapter has taught it.
 - Calm interface. The look is an exercise book on a café table. Red-pen marks appear only for corrections.
 
