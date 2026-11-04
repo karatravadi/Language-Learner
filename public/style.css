@@ -72,6 +72,8 @@ p { margin: 0 0 12px; }
 .switch-b { min-height: 32px; padding: 0 12px; border: 0; border-radius: 8px; background: transparent; color: var(--ink-2); font-size: 14px; font-weight: 500; transition: background-color .15s var(--ease), color .15s var(--ease); }
 .switch-b:hover { color: var(--ink); }
 .switch-b.on { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+/* Small phones (360 to 400px): three courses in the switch leave no room for the wordmark; the mark stays. */
+@media (max-width: 400px) { .wordmark { display: none; } .top-r { gap: 8px; } .switch-b { padding: 0 10px; } }
 .icon-btn { width: 36px; height: 36px; border-radius: 10px; border: 0; background: transparent; color: var(--ink-2); display: grid; place-items: center; transition: background-color .15s var(--ease), color .15s var(--ease); }
 .icon-btn:hover { background: var(--raised); color: var(--ink); }
 
@@ -376,3 +378,6 @@ select.text { font-family: var(--sans); font-size: 16px; }
 /* The red pen on a single letter (a spelling slip): the word stays whole, only the slip is marked. */
 .pen.slip .pen-x { margin-right: 0; }
 .pen.slip .slip-w { margin-right: 8px; }
+
+/* Why your answer is wrong, from the chapter's tables: said plainly, before the general explanation. */
+.fb-hint { font-size: 15px; line-height: 22px; color: var(--ink); font-weight: 500; margin: 4px 0 4px; }

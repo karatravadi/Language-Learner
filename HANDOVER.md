@@ -78,7 +78,7 @@ carry over.
 - Google's free Gemini tier may use prompts to improve its products. Tell friends that in the app's AI help text.
   If they'd rather not, the paid tier doesn't, and costs pennies at this volume, but check current prices first.
 
-## Step 5: phone polish
+## Step 5: phone polish (done 4 Nov 2026: icon and manifest, offline via sw.js, e2e at 360, 390 and 430px)
 - Web app manifest plus icon, so "Add to Home Screen" works on iPhone and Android.
 - Check the layout at 360 to 430px wide (the e2e test already runs at 390).
 - Spanish voices on phones are usually good. Test the listening exercises on a real phone.
@@ -86,7 +86,7 @@ carry over.
 ## Acceptance checklist
 - [ ] Kara signs in on PC and phone and sees the same streak, chapters and review cards (PC done 2 Nov; phone to check)
 - [ ] A friend signs in with their own email and starts from zero. A stranger can't get in (Emails policy added 2 Nov; first friend sign-in to confirm)
-- [ ] Offline on the phone: lessons still work, and progress syncs when back online without losing anything
+- [ ] Offline on the phone: lessons still work, and progress syncs when back online without losing anything (built 4 Nov, tested in headless Chrome; check on Kara's iPhone)
 - [x] The AI key is not visible in page source, network responses or the repo
 - [ ] Per-person AI limit works, and the global cap works (calls left now shown in the app)
 - [ ] `npm test` and `npm run e2e` pass. Add tests for the merge rules

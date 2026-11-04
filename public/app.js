@@ -33,8 +33,17 @@
     return { r, near: r === 'close' ? L.nearMiss(input, answers, opts) : null };
   }
   let GLOSS_WORDS = [];
+
+  // ---------- why your answer is wrong (backlog 3) ----------
+  // The chapters' own tables (verbs by person, nouns by case, articles by gender) say what each form is for.
+  // When a wrong answer is the right sentence with another form from the same table, the feedback says so in
+  // plain words: "vives goes with tú (you, one person you know well). For usted (you, polite), use vive."
+  // Only tables from the chapter being practised and earlier ones are used, so it only names what has been taught.
+  let FORMS = [];
+  const hintFor = (input, answers, n) => L.formHint(FORMS, input, answers, n, COURSE.personNotes);
   const SPELLING = 'spelling';
   const EXKEY = new Map(); // exercise → 'chapter:index', so a spelling slip can be drilled later
+  const chapterOf = ex => { const k = EXKEY.get(ex); return k ? Number(k.split(':')[0]) : null; };
   let KEY = 'espanol-trainer-v1';
   let S = null;
 
@@ -239,15 +248,21 @@
 
   // ---------- AI (optional; the app works without it) ----------
   // usage: tutor calls left today ({ left, limit, resetAt }), hosted app only; the local server has no daily cap.
-  const AI = { on: false, model: '', provider: '', usage: null };
+  // offline: the hosted app could not reach its server (no connection, or signed out), so it runs from this
+  // device's copy until it can (see the service worker, sw.js, and reconnect()).
+  const AI = { on: false, model: '', provider: '', usage: null, offline: false };
   async function aiStatus() {
     try {
       const r = await fetch('/api/status'); const j = await r.json();
       AI.on = !!j.ai; AI.model = j.model || ''; AI.provider = j.provider || '';
       SYNC.on = j.sync === true && typeof j.user === 'string'; SYNC.user = j.user || '';
-      if (SYNC.on) PROFILE = cleanProfile(j.profile);
+      if (SYNC.on) { PROFILE = cleanProfile(j.profile); try { localStorage.setItem(ACCOUNT_KEY, SYNC.user); } catch (e) { /* private mode */ } cacheProfile(); }
       setUsage(j.usage);
-    } catch (e) { /* offline server */ }
+      AI.offline = false;
+    } catch (e) {
+      // A device that has synced before is using the hosted app: say "offline", not "set up the AI tutor".
+      AI.offline = !!lastAccount();
+    }
   }
   function setUsage(u) {
     if (!u || typeof u.left !== 'number') return;
@@ -288,17 +303,22 @@
     if (!o || typeof o.name !== 'string' || !o.name.trim()) return null;
     return { name: o.name.trim().slice(0, 30), fem: typeof o.fem === 'boolean' ? o.fem : null };
   }
-  function readLocalProfile() { try { return cleanProfile(JSON.parse(localStorage.getItem(PROFILE_KEY) || 'null', noProto)); } catch (e) { return null; } }
+  // Hosted, a copy is kept per account on the device too, so the name is there when the app opens offline.
+  // The account this device last signed in with (any course), so the app knows it is the hosted one when offline.
+  const ACCOUNT_KEY = 'stilus-account';
+  const lastAccount = () => { try { return localStorage.getItem(ACCOUNT_KEY) || ''; } catch (e) { return ''; } };
+  const profileKey = () => { const u = SYNC.on ? SYNC.user : lastAccount(); return u ? PROFILE_KEY + ':' + u : PROFILE_KEY; };
+  function readLocalProfile() { try { return cleanProfile(JSON.parse(localStorage.getItem(profileKey()) || 'null', noProto)); } catch (e) { return null; } }
+  function cacheProfile() { try { if (PROFILE) localStorage.setItem(profileKey(), JSON.stringify(PROFILE)); } catch (e) { /* private mode */ } }
   const gendered = () => COURSE.genderedExamples !== false;
   // fem: null when this course does not ask, which keeps the choice made in another course.
   function saveProfile(name, fem) {
     if (fem == null) fem = PROFILE && PROFILE.fem != null ? PROFILE.fem : null;
     PROFILE = { name, fem };
+    cacheProfile();
     if (SYNC.on) {
       fetch('/api/profile', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(fem == null ? { name } : { name, fem }) })
         .catch(() => { /* offline: the next start sends it again (see applyProfile) */ });
-    } else {
-      try { localStorage.setItem(PROFILE_KEY, JSON.stringify(PROFILE)); } catch (e) { /* private mode */ }
     }
   }
   // The profile's name and endings win over the copy kept in each course's progress.
@@ -391,7 +411,17 @@
   }
   // Reset and import replace the account copy instead of merging into it.
   function pushReplace() { if (SYNC.on) { SYNC.replace = true; syncPush(); } }
-  window.addEventListener('online', () => { if (SYNC.on) syncPush(); });
+  // Opened offline, then the connection comes back: sign in to sync as if the app had just started.
+  async function reconnect() {
+    if (SYNC.on) { syncPush(); return; }
+    if (!AI.offline) return;
+    await aiStatus();
+    if (!SYNC.on) return;
+    await syncStart();
+    applyProfile();
+    if (document.querySelector('.page.home')) home();
+  }
+  window.addEventListener('online', reconnect);
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { syncPull(); refreshUsage(); } });
 
   // ---------- small UI pieces ----------
@@ -527,7 +557,7 @@
       h('div', { class: 'chap-go' }, 'Later'))));
 
     const aiLine = h('button', { class: 'status' + (AI.on ? ' on' : ''), type: 'button', onclick: aiHelp }, h('i'),
-      AI.on ? 'AI tutor on · ' + AI.provider : 'AI tutor off · Set up',
+      AI.on ? 'AI tutor on · ' + AI.provider : AI.offline ? 'Offline · lessons still work' : 'AI tutor off · Set up',
       AI.on && AI.usage ? [' · ', h('span', { class: 'ai-left' }, usageText())] : null);
 
     mount(h('div', { class: 'page home' },
@@ -723,8 +753,12 @@
 
   function aiHelp() {
     modal(h('div', {},
-      h('h2', {}, AI.on ? 'AI tutor is on' : 'Switch on the AI tutor'),
-      AI.on
+      h('h2', {}, AI.on ? 'AI tutor is on' : AI.offline ? 'You are offline' : 'Switch on the AI tutor'),
+      AI.offline && !AI.on
+        ? h('div', {},
+          h('p', {}, 'Lessons, review and word of the day all work offline, and your progress is saved on this device. It syncs to your account when the connection comes back.'),
+          h('p', { class: 'meta' }, 'The AI tutor, and looking up words that are not in the glossary, need a connection.'))
+        : AI.on
         ? h('div', {},
           h('p', {}, 'Connected to ' + (AI.provider || 'AI') + ' (' + AI.model + '). It corrects your own sentences, checks your word-of-the-day answer and plays the characters in free chat. Everything else works without it.'),
           AI.provider === 'Gemini' ? h('p', { class: 'meta' }, 'This uses Google\'s free Gemini tier. Google says it may use what you type into the AI parts to improve its products, so keep anything private out of them.') : null,
@@ -907,7 +941,12 @@
       const btns = optionButtons(ex.options, i => { sel = i; if (s.hasSlot) s.slot.textContent = T(ex.options[i]); api.enable(); });
       push(el, h('p', { class: 'prompt' }, ex.prompt || 'Choose the right option'), ex.q ? s.el : null, ex.sub ? h('p', { class: 'sub' }, T(ex.sub)) : null, h('div', { class: 'opts' }, btns));
       return {
-        check() { if (sel < 0) return null; return { ok: sel === ex.answer, yours: T(ex.options[sel]), answer: T(ex.options[ex.answer]), why: ex.why }; },
+        check() {
+          if (sel < 0) return null;
+          const ok = sel === ex.answer;
+          const hint = ok ? null : (ex.wrong && ex.wrong[sel]) || (ex.q ? hintFor(T(ex.q).replace('___', T(ex.options[sel])), [T(ex.q).replace('___', T(ex.options[ex.answer]))], chapterOf(ex)) : null);
+          return { ok, yours: T(ex.options[sel]), answer: T(ex.options[ex.answer]), why: ex.why, hint };
+        },
         reveal(res) { btns[ex.answer].classList.add('good'); if (!res.ok && sel >= 0) btns[sel].classList.add('bad'); }
       };
     },
@@ -1045,6 +1084,7 @@
         // Labelled answers show the differences that matter (¿Vives aquí? (tú) / ¿Vive aquí? (usted)), up to four.
         const shown = isGap ? ex.answer[0] : prettyAns(ex.answer.slice(0, ex.who ? 4 : 2), ex.q, ex.who, toEn ? '' : null);
         const res = { ok: r === 'ok' || r === 'accent', almost: r === 'accent', near, typed: true, yours: input.value.trim(), answer: shown, hear: isGap || toEn ? null : ex.answer[0], why: ex.why };
+        if (r === 'no' && !toEn) res.hint = isGap ? hintFor(T(ex.q).replace('___', input.value), ex.answer.map(a => T(ex.q).replace('___', a)), chapterOf(ex)) : hintFor(input.value, ex.answer, chapterOf(ex));
         // A review card always asks for the course's language, so a missed translation into English makes none.
         if (!isGap && !toEn && r === 'no') res.card = { id: 'x-' + ex.q.toLowerCase().replace(/[^a-z]/g, '').slice(0, 24), es: prettyAns([ex.answer[0]], ex.q), en: ex.q, alts: ex.answer.slice(1).map(a => prettyAns([a], ex.q)) };
         return res;
@@ -1130,6 +1170,7 @@
           res.show && good && !res.almost ? h('div', { class: 'fb-ans', lang: TL }, res.show) : null,
           !good && res.penFrom ? h('div', { class: 'fb-ans', lang: TL }, res.show) : null,
           near ? h('div', { class: 'fb-ans', lang: ex.dir === 'toEn' ? null : TL }, res.answer) : null,
+          !good && !near && res.hint ? h('div', { class: 'fb-hint' }, res.hint) : null,
           res.why && !near ? h('div', { class: 'fb-why' }, res.why) : null,
           res.hear ? speakBtn(res.hear, 'Hear it') : null);
         fb.classList.remove('hidden');
@@ -1421,6 +1462,7 @@
           near ? penSlip(near.typed, near.right) : null,
           ok && r !== 'accent' || near ? h('div', { class: 'fb-ans', lang: TL }, card.es) : pen(input.value.trim(), card.es),
           card.alts && card.alts.length ? h('div', { class: 'meta' }, 'Also right: ' + card.alts.join(', ')) : null,
+          !ok && !near && hintFor(input.value, variants(card)) ? h('div', { class: 'fb-hint' }, hintFor(input.value, variants(card))) : null,
           card.ex ? h('div', { class: 'fb-why' }, card.ex) : null,
           speakBtn(card.es, 'Hear it'));
         fb.classList.remove('hidden');
@@ -1563,6 +1605,7 @@
       ROADMAP = COURSE.roadmap || [];
       SKILLS = Object.assign({ [SPELLING]: 'Spelling' }, COURSE.skills, ...CHAPTERS.map(c => c.skills || {}));
       GLOSS_WORDS = Object.keys(GLOSS);
+      FORMS = L.tableForms(CHAPTERS);
       CHAPTERS.forEach(ch => ch.exercises.forEach((e, i) => EXKEY.set(e, ch.n + ':' + i)));
       KEY = COURSE.storageKey;
       UI = Object.assign({}, UI_DEFAULTS, COURSE.ui || {});
@@ -1586,6 +1629,14 @@
     if (SYNC.on) await syncStart();
     applyProfile();
     if (needsWelcome()) welcome(); else home();
+    offlineReady();
+  }
+  // Keep a copy of the app and the courses on the device (sw.js), and refresh it now and then for new chapters.
+  function offlineReady() {
+    if (!('serviceWorker' in navigator) || !window.isSecureContext) return;
+    navigator.serviceWorker.register('sw.js').then(reg => {
+      if (navigator.onLine && reg.active) reg.active.postMessage('refresh');
+    }).catch(() => { /* not available: the app still works online */ });
   }
   boot();
 })();

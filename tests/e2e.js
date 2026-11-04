@@ -1,5 +1,5 @@
 // Runs the browser test seven times: Spanish with a fake AI tutor and with none, at desktop and phone width,
-// then Latin and French, each with the AI on (desktop) and off (phone width).
+// then Latin and French, each with the AI on (desktop) and off (Latin at 360px, a small phone; French at 430px, a large one).
 // Needs:  npm install   (installs puppeteer, dev only; the app itself has no dependencies)
 // Run:    npm run e2e    (set CHROME=path\to\chrome.exe to use an installed Chrome instead)
 const { spawn } = require('child_process');
@@ -17,8 +17,8 @@ const run = env => new Promise(res => { const p = spawn(process.execPath, [path.
   await sleep(1500);
   let failed = 0;
   for (const [label, env] of [['AI on, desktop', { BASE: 'http://localhost:3130' }], ['AI off, desktop', { BASE: 'http://localhost:3131', AI_ON: '0' }], ['AI on, phone width', { BASE: 'http://localhost:3130', W: '390' }],
-    ['Latin, AI on, desktop', { BASE: 'http://localhost:3130/?course=la' }], ['Latin, AI off, phone width', { BASE: 'http://localhost:3131/?course=la', AI_ON: '0', W: '390' }],
-    ['French, AI on, desktop', { BASE: 'http://localhost:3130/?course=fr-FR' }], ['French, AI off, phone width', { BASE: 'http://localhost:3131/?course=fr-FR', AI_ON: '0', W: '390' }]]) {
+    ['Latin, AI on, desktop', { BASE: 'http://localhost:3130/?course=la' }], ['Latin, AI off, small phone', { BASE: 'http://localhost:3131/?course=la', AI_ON: '0', W: '360' }],
+    ['French, AI on, desktop', { BASE: 'http://localhost:3130/?course=fr-FR' }], ['French, AI off, large phone', { BASE: 'http://localhost:3131/?course=fr-FR', AI_ON: '0', W: '430' }]]) {
     console.log('\n' + label);
     if (await run(env)) failed++;
   }

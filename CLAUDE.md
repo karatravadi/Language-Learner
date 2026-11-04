@@ -49,7 +49,9 @@ lib/ai.js                 AI tutor core shared with the hosted Worker: provider,
 worker/index.js           hosted Worker: Access check, /api/status, /api/ai (daily caps), /api/progress (sync)
 wrangler.jsonc            Worker config: assets, D1 binding, model, Access team and AUD, AI caps
 migrations/               D1 schema
-public/index.html         shell
+public/index.html         shell (manifest and icons for Add to Home Screen)
+public/sw.js              service worker: keeps the app and every course on the device, network first, never /api/*
+public/manifest.webmanifest, public/icons/  home-screen icon (red square, white Newsreader S)
 public/app.js             all screens, exercise engine, review, word of the day, practice timer
 public/logic.js           pure logic, unit-tested: judge() and nearMiss() (spelling slips), spaced repetition, word picker, streaks
 public/style.css          design tokens and components (direction in the header comment)
@@ -79,6 +81,13 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
   and last two letters, and not a real word (glossary), gets half a mark ("Nearly"). Add `"strict": true` to a gap or
   translate exercise where the spelling is the point.
 - Fix exercises: the fixed sentence must have the same number of words, so the red-pen mark can line up.
+- Why an answer is wrong: when a wrong answer is the right sentence with one form swapped for another from a chapter's
+  tables (taught so far), the feedback says what it is for: "vives goes with tú (…). For usted (…), use vive", or
+  "estoy is a form of estar. This one needs ser: soy". `L.formHint` in logic.js; the course's `personNotes` explain
+  each "you". So keep tables tidy: one form per cell (or `·` between two), row labels that are persons or plain words.
+  An `mc` exercise can add `wrong` (one note per option, "" for the right one) where the tables can't explain it.
+- Discover groups: `label` says what the examples share ("With ser"), never a colour name. Notes never repeat their
+  own label ("Careful: …" under Careful). The checker rejects both.
 - Accuracy: the Spanish is written by an AI and checked by tests for consistency, not for correctness.
   Flag anything unusual for Kara. A native speaker reviewing each batch is the best safeguard.
 - Pace: at 45 min a day Kara finishes a chapter every 1 to 2 days. Write chapters in batches of 4, run
@@ -109,7 +118,10 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
 - Listening exercises and speaker buttons need a Spanish voice in the browser (Edge on Windows usually has good ones).
   Headless Chrome has none, so the tests skip listening exercises.
 - Locally, progress lives in one browser's localStorage, behind `store` in app.js, with export/import in Settings.
-- Hosted, the app needs the network to load (no service worker yet): offline use is Step 5 in `HANDOVER.md`.
+- Offline: `sw.js` caches the app and all courses on first visit and refreshes the copy after each online load.
+  Offline, the home screen says "Offline · lessons still work"; progress stays on the device and syncs on reconnect.
+  The AI tutor and AI word lookups need a connection. iPhone home-screen apps keep their own sign-in, so Access asks
+  once more the first time the app is opened from the home screen.
 - `npm run e2e` covers the local server only; the hosted Worker was checked by hand with `wrangler dev`.
 
 ## Latin course (public/courses/la)

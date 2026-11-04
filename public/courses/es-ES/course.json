@@ -1,6 +1,7 @@
 {
   "id": "es-ES",
   "title": "Spanish (European)",
+  "personNotes": {"tú": "you, one person you know well", "usted": "you, one person, polite", "vosotros": "you all, informal", "ustedes": "you all, polite"},
   "level": "A1 to A2",
   "lang": "es-ES",
   "voice": ["^es[-_]ES", "^es"],

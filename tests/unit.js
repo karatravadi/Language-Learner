@@ -103,6 +103,26 @@ t('merge drops the old single lesson slot', () => assert.equal('lesson' in L.mer
 t('merge done keeps the first score', () => assert.equal(
   L.mergeState({ done: { 1: { acc: 70, best: 90, first: 90, date: '2026-11-04' } } }, { done: { 1: { acc: 90, best: 90, date: '2026-11-02' } } }).done[1].first, 90));
 
+// ---------- why your answer is wrong, from the chapters' tables (backlog 3) ----------
+{
+  const fs = require('fs'); const path = require('path');
+  const load = c => { const b = path.join(__dirname, '../public/courses', c); const cj = JSON.parse(fs.readFileSync(path.join(b, 'course.json'))); return { cj, F: L.tableForms(cj.chapters.map(f => JSON.parse(fs.readFileSync(path.join(b, f))))) }; };
+  const es = load('es-ES'); const la = load('la'); const fr = load('fr-FR');
+  const H = (c, input, answers, n) => L.formHint(c.F, input, answers, n, c.cj.personNotes);
+  t('hint: wrong person (tú for usted), with what each "you" means', () => assert.equal(H(es, 'vives aquí', ['vive aquí'], 2),
+    'vives goes with tú (you, one person you know well). For él, ella or usted (you, one person, polite), use vive.'));
+  t('hint: ustedes is named as the polite you all', () => assert.match(H(es, 'mis padres vive en leeds', ['mis padres viven en leeds'], 2), /ustedes \(you all, polite\), use viven/));
+  t('hint: the other verb (estar for ser)', () => assert.equal(H(es, 'estamos de inglaterra', ['somos de inglaterra'], 1), 'estamos is a form of estar. This one needs ser: somos.'));
+  t('hint: articles by gender', () => assert.equal(H(es, 'la café', ['el café'], 4), 'la is for feminine. For masculine, use el.'));
+  t('hint: only what has been taught (no tener table before chapter 6)', () => { assert.equal(H(es, 'tengo una reserva', ['tenemos una reserva'], 5), null); assert.match(H(es, 'tengo una reserva', ['tenemos una reserva'], 6), /^tengo goes with yo/); });
+  t('hint: none for an unrelated wrong answer', () => assert.equal(H(es, 'xyz', ['estamos'], 1), null));
+  t('hint: none when two forms swap at once', () => assert.equal(H(es, 'vivo como', ['vives comes'], 2), null));
+  t('hint: Latin quotes its English labels, with macrons', () => assert.equal(H(la, 'puellae est laetae', ['puellae sunt laetae'], 1), 'est is the form for "he, she or it is". Here you need the one for "they are": sunt.'));
+  t('hint: Latin cases', () => assert.equal(H(la, 'puella agricola videt', ['puella agricolam videt'], 2), null, 'agricola is not in a table, so no guess'));
+  t('hint: French person', () => assert.equal(H(fr, 'elle es anglaise', ['elle est anglaise'], 1), 'es goes with tu (you, one person you know well). For il, elle or on, use est.'));
+  t('hint: a form right for both persons is not the mistake (je prends, tu prends)', () => assert.equal(H(fr, 'je prends le bus', ['je prends le bus'], 5), null));
+}
+
 // ---------- sync merge (this device a, server b) ----------
 const M = L.mergeState;
 t('srsGrade stamps seen', () => assert.equal(L.srsGrade({ id: 'a', box: 1 }, true, now).seen, now));

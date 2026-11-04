@@ -111,6 +111,20 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
     return null;
   };
   let slipShown = false;
+  // A deliberate miss that the chapter's tables can explain ("vives goes with tú…"), when there is one.
+  const FORMS = L.tableForms(await page.evaluate(() => window.__trainer.chapters));
+  const hintMiss = (ex, n) => {
+    if (ex.type !== 'gap') return null;
+    const q = T(ex.q); const answers = ex.answer.map(a => q.replace('___', a));
+    for (const r of FORMS.filter(f => f.n <= n && ex.answer.some(a => L.stripAcc(L.norm(a)) === f.key))) {
+      for (const f of FORMS.filter(x => x.n <= n && x.table === r.table && x.key !== r.key)) {
+        if (L.judge(f.form, ex.answer, { marksOptional: !!UI.marksOptional }) !== 'no') continue;
+        if (L.formHint(FORMS, q.replace('___', f.form), answers, n, COURSE.personNotes)) return f.form;
+      }
+    }
+    return null;
+  };
+  let hintShown = false;
   for (const n of chapters) {
     const ch = await page.evaluate(n => window.__trainer.chapters.find(c => c.n === n), n);
     const deliberateMiss = n === 2;
@@ -141,7 +155,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
         case 'mc': case 'listen':
           await page.evaluate(i => document.querySelectorAll('.ex .opt')[i].click(), miss ? (ex.answer + 1) % ex.options.length : ex.answer); break;
         case 'gap': case 'translate':
-          await page.type('.ex input.text', miss ? 'xyz' : slip || (UI.marksOptional ? plain(ex.answer[0]) : ex.answer[0])); break;
+          await page.type('.ex input.text', miss ? (hintMiss(ex, n) || 'xyz') : slip || (UI.marksOptional ? plain(ex.answer[0]) : ex.answer[0])); break;
         case 'order':
           for (const word of ex.words) await page.evaluate(wd => [...document.querySelectorAll('.tiles.bank .tile')].find(b => b.innerText === wd).click(), word);
           break;
@@ -178,6 +192,15 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
         assert.ok(await page.$('.feedback .pen.slip .pen-x'), 'the red pen marks the slipped letters');
         await shot('06-slip');
         ok('chapter 3: a spelling slip ("' + slip + '") is marked "Nearly" with the red pen on the letters, no second chance');
+      }
+      const mcHint = miss && ex.type === 'mc' && ex.q && !(ex.wrong && ex.wrong[(ex.answer + 1) % ex.options.length])
+        ? L.formHint(FORMS, T(ex.q).replace('___', T(ex.options[(ex.answer + 1) % ex.options.length])), [T(ex.q).replace('___', T(ex.options[ex.answer]))], n, COURSE.personNotes) : null;
+      if (miss && ((ex.type === 'gap' && hintMiss(ex, n)) || mcHint)) {
+        const hint = await page.evaluate(() => (document.querySelector('.feedback .fb-hint') || {}).innerText);
+        assert.ok(hint, 'a wrong form from the tables gets a plain-words hint');
+        hintShown = true;
+        if (mcHint) assert.equal(hint, mcHint);
+        ok('chapter 2: a wrong form is explained from the tables ("' + hint + '")');
       }
       if (miss) {
         missedOne = true;
@@ -368,6 +391,35 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   assert.match(await text(), /of 30 min/);
   fs.rmSync(dl, { recursive: true, force: true });
   ok('export / import: a downloaded file restores chapters, review cards and settings after a reset; a wrong file is refused');
+
+  // ---------- offline: the service worker keeps the app and every course on the device ----------
+  await page.evaluate(() => navigator.serviceWorker.ready.then(() => true));
+  await page.reload({ waitUntil: 'networkidle0' }); await sleep(200);
+  await page.waitForFunction(() => !!navigator.serviceWorker.controller, { timeout: 10000 });
+  const cached = await page.evaluate(async () => {
+    const c = await caches.open('stilus-v1');
+    for (let i = 0; i < 40; i++) { const keys = (await c.keys()).map(r => new URL(r.url).pathname); if (keys.some(k => k.includes('/chapters/'))) return keys; await new Promise(r => setTimeout(r, 250)); }
+    return (await c.keys()).map(r => new URL(r.url).pathname);
+  });
+  const chapterFiles = await page.evaluate(() => window.__trainer.course.chapters.length);
+  assert.ok(cached.filter(k => k.includes('/' + COURSE.id + '/chapters/')).length >= chapterFiles, 'every chapter of this course is kept for offline use');
+  assert.ok(cached.some(k => k.endsWith('/app.js')) && cached.some(k => k.endsWith('.woff2')), 'the app and its fonts are kept');
+  const seen = problems.length;
+  await page.evaluate(() => localStorage.setItem('stilus-account', 'kara@example.com')); // as if signed in on the hosted app
+  await page.setOfflineMode(true);
+  await page.reload({ waitUntil: 'domcontentloaded' }); await sleep(900);
+  t = await text();
+  assert.ok(t.includes(COURSE.title), 'the app opens offline');
+  assert.match(t, /Offline · lessons still work/);
+  const ch1off = await page.evaluate(() => window.__trainer.chapters[0]);
+  await clickText('.chap', ch1off.title); await sleep(150);
+  assert.ok((await text()).includes(T(ch1off.discover.intro)), 'a chapter opens offline');
+  await page.click('button[aria-label="Close lesson"]'); await sleep(80);
+  await page.setOfflineMode(false);
+  problems.splice(seen).filter(p => !/Failed to load resource|ERR_INTERNET_DISCONNECTED|net::/.test(p)).forEach(p => problems.push(p));
+  await page.evaluate(() => localStorage.removeItem('stilus-account'));
+  await page.reload({ waitUntil: 'networkidle0' }); await sleep(200);
+  ok('offline: the app and all ' + chapterFiles + ' chapters are kept on the device, and it opens and runs a chapter with no connection');
 
   // ---------- course switch: each course keeps its own progress ----------
   const others = await page.evaluate(() => [...document.querySelectorAll('.switch-b:not(.on)')].map(b => b.innerText));

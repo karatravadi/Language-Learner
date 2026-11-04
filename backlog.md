@@ -34,7 +34,7 @@ Plan:
 
 Decided: half a mark counts towards both the chapter pass score and XP.
 
-## 3. Say why an answer is wrong (M)
+## 3. Say why an answer is wrong (M) - DONE 4 Nov 2026 (hints from the chapters' tables; "Four ways to say you" in Spanish chapter 1)
 Problem: the app says an answer is wrong but not why, which is hard for a complete beginner.
 
 Plan:
@@ -162,3 +162,7 @@ Plan:
 
 Confirmed by Kara: going back to chapter 2 started it again from the very first step, so the position really is lost,
 not just hidden. Still to check: whether the answers and score from the first attempt were also dropped or only the position.
+
+# Done outside the numbered list
+- Phone polish (HANDOVER Step 5), 4 Nov 2026: Add to Home Screen icon and manifest, lessons offline (sw.js),
+  layout checked at 360, 390 and 430px (the course switch no longer pushes the settings button off a small phone).

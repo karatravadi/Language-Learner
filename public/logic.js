@@ -109,6 +109,54 @@
     return 'no';
   }
 
+  // ----- why your answer is wrong: the chapters' own tables -----
+  // Every form in a chapter's tables (verbs by person, nouns by case, articles by gender), with what it is for.
+  function tableForms(chapters) {
+    const out = [];
+    (chapters || []).forEach(ch => ((ch.learn && ch.learn.blocks) || []).forEach(b => (b.type === 'tables' ? b.tables : []).forEach(t => t.rows.forEach(([label, cell]) =>
+      String(cell).split('·').map(f => f.trim()).filter(Boolean).forEach(form => out.push({ n: ch.n, table: t.title, rows: t.rows.length, label, form, key: stripAcc(norm(form)) }))))));
+    return out;
+  }
+  // "él / ella / usted" → "él, ella or usted", with a note for each "you" where the course gives one.
+  function who(label, notes) {
+    const parts = String(label).split('/').map(x => x.trim()).filter(x => x && !/^(as|os)$/.test(x));
+    const said = parts.map(x => (notes && notes[x] ? x + ' (' + notes[x] + ')' : x));
+    return said.length > 1 ? said.slice(0, -1).join(', ') + ' or ' + said[said.length - 1] : said[0] || label;
+  }
+  const verbOf = title => String(title).split(/[,:(]/)[0].trim();
+  const padded = s => ' ' + s + ' ';
+  // When a wrong answer is an accepted one with a single form swapped for another form from the same table, say
+  // what the typed form is for and which one was needed: "vives goes with tú. For usted, use vive."
+  // n: only tables from chapter n and earlier (what has been taught). Returns a sentence, or null.
+  function formHint(forms, input, answers, n, notes) {
+    const got = stripAcc(norm(input));
+    if (!got) return null;
+    const pool = (forms || []).filter(f => n == null || f.n <= n);
+    for (const a of (Array.isArray(answers) ? answers : [answers])) {
+      const want = padded(stripAcc(norm(a)));
+      for (const r of pool) {
+        if (!want.includes(padded(r.key))) continue;
+        for (const t of pool) {
+          if (t.key === r.key) continue;
+          const sameTable = t.table === r.table;
+          // Another verb in the same person (estoy for soy), only between verb tables, which have six persons.
+          const otherVerb = !sameTable && t.label === r.label && t.rows === 6 && r.rows === 6;
+          if (!sameTable && !otherVerb) continue;
+          if (want.replace(padded(r.key), padded(t.key)).trim() !== got) continue;
+          // A form that is also right for the wanted person (je prends, tu prends) is not the mistake.
+          if (sameTable && pool.some(x => x.table === t.table && x.key === t.key && x.label === r.label)) continue;
+          const verb = r.rows === 6;
+          if (otherVerb) return t.form + ' is a form of ' + verbOf(t.table) + '. This one needs ' + verbOf(r.table) + ': ' + r.form + '.';
+          // Courses whose tables are labelled with pronouns (yo, tú; je, tu) say "goes with". Where the labels are
+          // English (Latin: "I am", "receiver"), quote them.
+          if (notes) return t.form + (verb ? ' goes with ' : ' is for ') + who(t.label, verb ? notes : null) + '. For ' + who(r.label, verb ? notes : null) + ', use ' + r.form + '.';
+          return t.form + ' is the form for "' + who(t.label) + '". Here you need the one for "' + who(r.label) + '": ' + r.form + '.';
+        }
+      }
+    }
+    return null;
+  }
+
   // Did the sentence include one of the word's forms? (accent-insensitive substring match)
   function usedWord(sentence, forms) {
     const s = stripAcc(clean(sentence));
@@ -249,5 +297,5 @@
     return out;
   }
 
-  return { judge, nearMiss, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
+  return { judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
 });

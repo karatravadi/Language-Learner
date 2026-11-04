@@ -176,6 +176,16 @@
         "text": "Spanish has four ways to say \"you\": tú and usted for one person, vosotros and ustedes for several. Usted takes the same verb form as él and ella (usted es, ella es), and ustedes the same as ellos (ustedes son). Each person has its own verb ending, so the pronoun is usually left out: soy already means \"I am\"."
       },
       {
+        "type": "list",
+        "title": "Four ways to say you",
+        "rows": [
+          ["tú", "you: one person you know well (a friend, family, a child)"],
+          ["usted", "you: one person, polite (a stranger, someone older, at work)"],
+          ["vosotros / vosotras", "you all: several people you know well (used all the time in Spain)"],
+          ["ustedes", "you all: several people, polite"]
+        ]
+      },
+      {
         "type": "tables",
         "tables": [
           {

@@ -1,6 +1,7 @@
 {
   "id": "fr-FR",
   "title": "French (European)",
+  "personNotes": {"tu": "you, one person you know well", "vous": "you, polite, or more than one person"},
   "level": "A1 to A2",
   "lang": "fr-FR",
   "languageName": "French",
