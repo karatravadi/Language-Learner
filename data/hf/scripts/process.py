@@ -252,7 +252,7 @@ def latin(name):
         odd.append("Latin: some rows do have macrons, unlike the dataset description.")
 
 say("# Hugging Face reading data\n")
-say("Made by `scripts/process.py`. Rerun it to regenerate this file and `out/`.")
+say("Made by `scripts/process.py`. The passages in `out/` are not committed: rerun the script to regenerate them (and this file). From this folder: `python -m venv .venv`, then `.venv/bin/pip install datasets`, then `.venv/bin/python -I scripts/process.py` (on Windows use `.venv\\Scripts\\` instead of `.venv/bin/`). Downloads and cache stay in this folder.")
 cefr_lang("UniversalCEFR/hablacultura_es", "Spanish", latam=True)
 cefr_lang("UniversalCEFR/kwiqiz_fr", "French", latam=False, split=True)
 try:

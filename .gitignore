@@ -5,3 +5,5 @@ settings.env
 .env
 .dev.vars
 .wrangler/
+data/hf/out/
+__pycache__/
