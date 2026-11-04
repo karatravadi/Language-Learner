@@ -79,14 +79,14 @@ carry over.
   If they'd rather not, the paid tier doesn't, and costs pennies at this volume, but check current prices first.
 
 ## Step 5: phone polish (done 4 Nov 2026: icon and manifest, offline via sw.js, e2e at 360, 390 and 430px)
-- [x] Web app manifest plus icon, so "Add to Home Screen" works on iPhone and Android (4 Nov 2026: ink-blue cover, cream S, red-pen accent marks; files in `public/`). To check on a real iPhone after deploying: Access guards every address, so confirm the home-screen icon is the new S and not a blank tile. If blank, add an Access bypass policy for `/apple-touch-icon.png`, `/icon-192.png`, `/icon-512.png` and `/manifest.json`.
+- [x] Web app manifest plus icon, so "Add to Home Screen" works on iPhone and Android (4 Nov 2026: ink-blue cover, cream S, red-pen accent marks; files in `public/`). Checked on an iPhone 4 Nov 2026: the home-screen icon shows (no Access bypass needed).
 - Check the layout at 360 to 430px wide (the e2e test already runs at 390).
 - Spanish voices on phones are usually good. Test the listening exercises on a real phone.
 
 ## Acceptance checklist
 - [ ] The owner signs in on PC and phone and sees the same streak, chapters and review cards (PC done 2 Nov; phone to check)
 - [ ] An invited learner signs in with their own email and starts from zero. A stranger can't get in (Emails policy added 2 Nov; first invited sign-in to confirm)
-- [ ] Offline on the phone: lessons still work, and progress syncs when back online without losing anything (built 4 Nov, tested in headless Chrome; check on a real iPhone)
+- [x] Offline on the phone: lessons still work, and progress syncs when back online without losing anything (built 4 Nov; checked on an iPhone 4 Nov 2026)
 - [x] The AI key is not visible in page source, network responses or the repo
 - [ ] Per-person AI limit works, and the global cap works (calls left now shown in the app)
 - [ ] `npm test` and `npm run e2e` pass. Add tests for the merge rules
