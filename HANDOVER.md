@@ -79,7 +79,7 @@ carry over.
   If they'd rather not, the paid tier doesn't, and costs pennies at this volume, but check current prices first.
 
 ## Step 5: phone polish
-- Web app manifest plus icon, so "Add to Home Screen" works on iPhone and Android.
+- [x] Web app manifest plus icon, so "Add to Home Screen" works on iPhone and Android (4 Nov 2026: ink-blue cover, cream S, red-pen accent marks; files in `public/`). To check on a real iPhone after deploying: Access guards every address, so confirm the home-screen icon is the new S and not a blank tile. If blank, add an Access bypass policy for `/apple-touch-icon.png`, `/icon-192.png`, `/icon-512.png` and `/manifest.json`.
 - Check the layout at 360 to 430px wide (the e2e test already runs at 390).
 - Spanish voices on phones are usually good. Test the listening exercises on a real phone.
 
