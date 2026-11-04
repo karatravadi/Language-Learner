@@ -369,6 +369,40 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   await page.evaluate(() => window.__trainer.home()); await sleep(60);
   ok('words: tap for a meaning, save to My words and review, AI for unknown words, remove');
 
+  // ---------- save a whole verb (courses with verbs.json) ----------
+  if (COURSE.verbs) {
+    const VB = JSON.parse(require('fs').readFileSync(path.join(__dirname, '../public/courses', COURSE.id, COURSE.verbs), 'utf8'));
+    await page.evaluate(() => window.__trainer.wordsScreen()); await sleep(80);
+    await page.evaluate(tl => { const s = document.createElement('div'); s.lang = tl; s.id = 'probe'; s.textContent = 'Vivís en Madrid.'; document.querySelector('.step').append(s); }, TL);
+    await sleep(60);
+    await page.evaluate(() => [...document.querySelectorAll('#probe .w')].find(w => w.textContent === 'Vivís').click()); await sleep(80);
+    await clickText('.wcard button', 'Save verb: vivir'); await sleep(60);
+    let vs = await state();
+    assert.ok(vs.vocab.vivir && vs.vocab.vivir.verb && vs.srs['vb-vivir'], 'tapping any form saves the whole verb, with one review card');
+    await page.keyboard.press('Escape');
+    await page.evaluate(() => window.__trainer.wordsScreen()); await sleep(80);
+    t = await text();
+    assert.ok(t.includes('vivir') && t.includes('vivís') && t.includes('vosotros, vosotras'), 'My words shows the whole table');
+    // Review: only the verb is due. It asks for one person's form.
+    await page.evaluate(() => { const S = window.__trainer.state(); for (const k of Object.keys(S.srs)) S.srs[k].due = k === 'vb-vivir' ? 0 : Date.now() + 9e9; window.__trainer.reviewFlow(); });
+    await sleep(120);
+    const asked = await page.evaluate(() => document.querySelector('.sentence').innerText);
+    const who = asked.split(' · ')[0];
+    const idx = VB.persons.findIndex(p => p.includes(who));
+    assert.ok(idx >= 0 && asked.endsWith('vivir'), 'review asks "person · vivir": ' + asked);
+    await page.type('input.text', VB.verbs.vivir.forms[idx]); await page.keyboard.press('Enter'); await sleep(100);
+    assert.ok(await page.$('.feedback.good'), 'the right form is marked right');
+    assert.ok(await page.$('.feedback .verb-table'), 'the whole table follows the answer');
+    vs = await state();
+    assert.equal(vs.srs['vb-vivir'].box, 2, 'a right form moves the verb up a box');
+    await page.evaluate(() => window.__trainer.wordsScreen()); await sleep(80);
+    await page.evaluate(() => [...document.querySelectorAll('.phrase.verb button')].find(b => b.innerText === 'Remove').click()); await sleep(60);
+    vs = await state();
+    assert.ok(vs.vocab.vivir.off && vs.srs['vb-vivir'].off, 'removing the verb retires its card');
+    await page.evaluate(() => window.__trainer.home()); await sleep(60);
+    ok('verbs: tap vivís to save vivir whole, My words shows the table, review asks "' + asked + '" and takes ' + VB.verbs.vivir.forms[idx]);
+  }
+
   // ---------- export / import progress ----------
   const fs = require('fs'); const os = require('os');
   const dl = fs.mkdtempSync(path.join(os.tmpdir(), 'trainer-dl-'));

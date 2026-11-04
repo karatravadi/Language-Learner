@@ -127,7 +127,7 @@ Plan:
   label that is only a colour name. Fix all Spanish, French and Latin chapters in one pass.
 - Accessibility: colour-only headings fail for colour-blind users, so this also fixes that.
 
-## 11. Save a whole verb, with its conjugation, to My words (M)
+## 11. Save a whole verb, with its conjugation, to My words (M) - DONE 4 Nov 2026 (Spanish, 44 verbs; review asks one form at a time)
 Problem: tapping a verb saves one form (for example "vivo"), so learning a verb means saving six forms by hand.
 
 Plan:

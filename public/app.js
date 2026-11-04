@@ -19,7 +19,7 @@
   };
   const PLAN_DEFAULTS = { word: 3, review: 10, practise: 15 };
 
-  let COURSE = null; let CHAPTERS = []; let ROADMAP = []; let WORDS = []; let SKILLS = {}; let GLOSS = {}; let COURSES = [];
+  let COURSE = null; let CHAPTERS = []; let ROADMAP = []; let WORDS = []; let SKILLS = {}; let GLOSS = {}; let COURSES = []; let VERBS = null; let VERB_INDEX = new Map();
   let UI = UI_DEFAULTS; let PLAN = PLAN_DEFAULTS;
   // TL: the lang attribute of text in the course's language, which makes its words tappable (es, la).
   let TL = 'es';
@@ -629,6 +629,22 @@
     .observe(document.body, { childList: true, subtree: true });
 
   const myWords = () => Object.keys(S.vocab || {}).filter(k => !S.vocab[k].off).sort((a, b) => a.localeCompare(b, TL));
+  // A whole verb: one entry in My words and one review card, which asks for a different form each time.
+  function saveVerb(inf) {
+    const v = VERBS.verbs[inf]; const now = Date.now();
+    S.vocab[inf] = { es: inf, en: v.en, verb: true, at: now };
+    const id = 'vb-' + inf;
+    if (S.srs[id]) S.srs[id] = Object.assign({}, S.srs[id], { off: false, seen: now });
+    else S.srs[id] = L.newCard({ id, es: inf, en: v.en, verb: inf, alts: [] }, now);
+    save();
+  }
+  const verbSaved = inf => !!(S.vocab[inf] && S.vocab[inf].verb && !S.vocab[inf].off);
+  function verbTable(inf) {
+    const v = VERBS && VERBS.verbs[inf];
+    if (!v) return null;
+    return h('div', { class: 'verb-table' }, v.forms.map((f, i) => h('div', { class: 'verb-row' },
+      h('span', { class: 'verb-p' }, (VERBS.persons[i] || []).join(', ')), h('span', { class: 'verb-f' }, f))));
+  }
   function saveWord(key, en, note) {
     const now = Date.now();
     S.vocab[key] = { es: key, en, note: note || '', at: now };
@@ -639,8 +655,9 @@
   }
   function dropWord(key) {
     const now = Date.now();
+    const wasVerb = S.vocab[key] && S.vocab[key].verb;
     if (S.vocab[key]) S.vocab[key] = Object.assign({}, S.vocab[key], { off: true, at: now });
-    const id = 'v-' + key;
+    const id = (wasVerb ? 'vb-' : 'v-') + key;
     if (S.srs[id]) S.srs[id] = Object.assign({}, S.srs[id], { off: true, seen: now });
     save();
   }
@@ -665,7 +682,16 @@
         if (S.vocab[key] && !S.vocab[key].off) { dropWord(key); add.className = 'btn ghost'; put(add, 'Add to my words'); }
         else { saveWord(key, en, note); add.className = 'btn quiet'; put(add, icon('check'), 'In my words'); }
       });
-      put(body, h('div', { class: 'wcard-en' }, en), note ? h('div', { class: 'wcard-n' }, note) : null, h('div', { class: 'row' }, add));
+      const inf = VERB_INDEX.get(key);
+      let verbBtn = null;
+      if (inf) {
+        verbBtn = h('button', { class: 'btn ' + (verbSaved(inf) ? 'quiet' : 'ghost'), type: 'button' }, verbSaved(inf) ? [icon('check'), 'Verb saved: ' + inf] : 'Save verb: ' + inf);
+        verbBtn.addEventListener('click', () => {
+          if (verbSaved(inf)) { dropWord(inf); verbBtn.className = 'btn ghost'; put(verbBtn, 'Save verb: ' + inf); }
+          else { saveVerb(inf); verbBtn.className = 'btn quiet'; put(verbBtn, icon('check'), 'Verb saved: ' + inf); }
+        });
+      }
+      put(body, h('div', { class: 'wcard-en' }, en), note ? h('div', { class: 'wcard-n' }, note) : null, h('div', { class: 'row' }, add, verbBtn));
     }
     const g = GLOSS[key] || aiGloss[key] || (S.vocab[key] && [S.vocab[key].en, S.vocab[key].note]);
     if (g) show(g[0], g[1]);
@@ -700,11 +726,11 @@
       const keys = myWords();
       put(list, keys.length ? keys.map(k => {
         const v = S.vocab[k];
-        return h('div', { class: 'phrase' },
-          h('div', {}, h('div', { class: 'es' }, v.es), h('div', { class: 'en' }, v.en + (v.note ? ' · ' + v.note : ''))),
+        return h('div', { class: 'phrase' + (v.verb ? ' verb' : '') },
+          h('div', {}, h('div', { class: 'es' }, v.es), h('div', { class: 'en' }, v.en + (v.note ? ' · ' + v.note : '')), v.verb ? verbTable(k) : null),
           h('div', { class: 'row', style: { 'margin-top': '0' } }, speakBtn(v.es),
             h('button', { class: 'btn quiet', type: 'button', onclick: () => { dropWord(k); draw(); } }, 'Remove')));
-      }) : h('p', { class: 'muted' }, 'No words yet. In any lesson, tap a ' + (COURSE.languageName || 'Spanish') + ' word to see what it means, then choose Add to my words. Saved words join your review deck.'));
+      }) : h('p', { class: 'muted' }, 'No words yet. In any lesson, tap a ' + (COURSE.languageName || 'Spanish') + ' word to see what it means, then choose Add to my words. Saved words join your review deck.' + (VERBS ? ' For a verb, Save verb keeps its whole table, and review asks for one form at a time.' : '')));
     }
     draw();
     mount(h('div', { class: 'page lesson' }, backBar('My words', home),
@@ -1459,6 +1485,10 @@
       const card = queue.shift();
       if (!card) { done(); return; }
       let checked = false;
+      // A saved verb asks for one form, a different person each time ("vosotros · vivir").
+      const ask = card.verb && VERBS ? L.verbAsk(VERBS, card.verb) : null;
+      const wanted = ask ? [ask.answer] : variants(card);
+      const shown = ask ? ask.answer : card.es;
       const input = h('input', { class: 'text', type: 'text', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', placeholder: UI.placeholderTo, 'aria-label': 'Your answer' });
       const fb = h('div', { class: 'feedback hidden' });
       const btn = h('button', { class: 'btn primary big', type: 'button' }, 'Check');
@@ -1466,7 +1496,7 @@
         if (checked) { next(); return; }
         if (!input.value.trim()) return;
         checked = true;
-        const { r, near } = judgeTyped(input.value, variants(card));
+        const { r, near } = judgeTyped(input.value, wanted);
         const ok = r === 'ok' || r === 'accent';
         const relearn = lapsed.has(card.id);
         // A spelling slip neither moves the card up a box nor drops it back.
@@ -1481,11 +1511,12 @@
         put(fb,
           h('div', { class: 'fb-head' }, ok ? (r === 'accent' ? 'Right, but watch the accents' : praise()) : near ? 'Nearly. Check the spelling of ' + near.right : 'Not quite'),
           near ? penSlip(near.typed, near.right) : null,
-          ok && r !== 'accent' || near ? h('div', { class: 'fb-ans', lang: TL }, card.es) : pen(input.value.trim(), card.es),
-          card.alts && card.alts.length ? h('div', { class: 'meta' }, 'Also right: ' + card.alts.join(', ')) : null,
-          !ok && !near && hintFor(input.value, variants(card)) ? h('div', { class: 'fb-hint' }, hintFor(input.value, variants(card))) : null,
+          ok && r !== 'accent' || near ? h('div', { class: 'fb-ans', lang: TL }, shown) : pen(input.value.trim(), shown),
+          !ask && card.alts && card.alts.length ? h('div', { class: 'meta' }, 'Also right: ' + card.alts.join(', ')) : null,
+          !ok && !near && hintFor(input.value, wanted) ? h('div', { class: 'fb-hint' }, hintFor(input.value, wanted)) : null,
           card.ex ? h('div', { class: 'fb-why' }, card.ex) : null,
-          speakBtn(card.es, 'Hear it'));
+          ask ? verbTable(card.verb) : null,
+          speakBtn(shown, 'Hear it'));
         fb.classList.remove('hidden');
         btn.textContent = 'Continue';
         input.disabled = true;
@@ -1496,8 +1527,9 @@
       put(body,
         h('div', { class: 'counter' }, 'Card ' + Math.min(seen + 1, total) + ' of ' + total),
         h('div', { class: 'bar' }, h('i', { style: { transform: 'scaleX(' + (seen / total) + ')' } })),
-        h('p', { class: 'prompt', style: { 'margin-top': '32px' } }, 'How do you say'),
-        h('div', { class: 'sentence en-q' }, card.en),
+        h('p', { class: 'prompt', style: { 'margin-top': '32px' } }, ask ? 'Give the form' : 'How do you say'),
+        ask ? h('div', { class: 'sentence' }, h('span', { lang: TL }, ask.who + ' · ' + card.es)) : h('div', { class: 'sentence en-q' }, card.en),
+        ask ? h('p', { class: 'sub' }, card.es + ': ' + card.en) : null,
         input, fb, h('div', { class: 'row end sticky' }, btn));
       input.focus();
     }
@@ -1623,6 +1655,8 @@
       CHAPTERS = (await Promise.all(COURSE.chapters.map(f => getJson(base + f)))).sort((a, b) => a.n - b.n);
       WORDS = await getJson(base + COURSE.words);
       GLOSS = COURSE.glossary ? (await getJson(base + COURSE.glossary)).words || {} : {};
+      VERBS = COURSE.verbs ? await getJson(base + COURSE.verbs) : null;
+      VERB_INDEX = L.verbIndex(VERBS);
       ROADMAP = COURSE.roadmap || [];
       SKILLS = Object.assign({ [SPELLING]: 'Spelling' }, COURSE.skills, ...CHAPTERS.map(c => c.skills || {}));
       GLOSS_WORDS = Object.keys(GLOSS);

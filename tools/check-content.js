@@ -81,6 +81,21 @@ function check(dir = COURSES) {
     });
     where.pop();
 
+    // ---- verbs (saved whole to My words; optional) ----
+    if (course.verbs != null) {
+      where.push('verbs');
+      const vd = readJson(path.join(base, course.verbs)) || {};
+      if (!Array.isArray(vd.persons) || vd.persons.length !== 6 || !vd.persons.every(p => Array.isArray(p) && p.length && p.every(isStr))) err('persons must be 6 lists of pronouns');
+      if (vd.skipForms != null && (!Array.isArray(vd.skipForms) || !vd.skipForms.every(isStr))) err('skipForms must be a list of words');
+      for (const [inf, v] of Object.entries(vd.verbs || {})) {
+        if (!isStr(v.en)) err(inf + ': needs en');
+        if (!Array.isArray(v.forms) || v.forms.length !== 6 || !v.forms.every(isStr)) err(inf + ': needs 6 forms, one per person');
+        if (v.kind != null && !['irregular', 'go', 'boot', 'go-boot'].includes(v.kind)) err(inf + ': kind must be irregular, go, boot or go-boot');
+      }
+      if (!Object.keys(vd.verbs || {}).length) err('no verbs');
+      where.pop();
+    }
+
     // ---- chapters ----
     for (const file of course.chapters || []) {
       where.length = 1; where.push(file);

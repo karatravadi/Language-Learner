@@ -57,7 +57,7 @@ public/logic.js           pure logic, unit-tested: judge() and nearMiss() (spell
 public/style.css          design tokens and components (direction in the header comment)
 public/fonts/             Instrument Sans + Newsreader (OFL), bundled so it works offline
 public/courses/index.json list of courses, each with a label for the course switch in the header
-public/courses/es-ES/     course.json (meta, skills, roadmap), chapters/*.json, words.json, glossary.json
+public/courses/es-ES/     course.json (meta, skills, roadmap), chapters/*.json, words.json, glossary.json, verbs.json
 public/courses/la/        the Latin course, same shape
 public/courses/fr-FR/     the French (European) course, same shape
 tools/check-content.js    validates every course file; tests/unit.js runs it too
@@ -87,6 +87,10 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
   "estoy is a form of estar. This one needs ser: soy". `L.formHint` in logic.js; the course's `personNotes` explain
   each "you". So keep tables tidy: one form per cell (or `·` between two), row labels that are persons or plain words.
   An `mc` exercise can add `wrong` (one note per option, "" for the right one) where the tables can't explain it.
+- Whole verbs (`verbs.json`, Spanish only so far): present tense of 44 verbs, one form per person, with `kind` for the
+  irregular ones. Tapping any form offers Save verb; My words shows the table; review asks one random person's form
+  (`L.verbIndex`, `L.verbAsk`). A unit test checks every verb against its chapter table, so add new chapter verbs to
+  both. `skipForms` stops a form that is also a common word (como) from offering its verb.
 - Discover groups: `label` says what the examples share ("With ser"), never a colour name. Notes never repeat their
   own label ("Careful: …" under Careful). The checker rejects both.
 - Accuracy: the Spanish is written by an AI and checked by tests for consistency, not for correctness.

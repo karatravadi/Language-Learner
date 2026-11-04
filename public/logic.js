@@ -157,6 +157,29 @@
     return null;
   }
 
+  // ----- whole verbs (My words) -----
+  // Every present-tense form of the course's verbs (and the infinitive itself) → the infinitive. A reflexive form
+  // (me levanto) is found from its verb (levanto). Accents are kept, since está is a verb and esta is not.
+  function verbIndex(doc) {
+    const out = new Map();
+    if (!doc || !doc.verbs) return out;
+    const skip = new Set((doc.skipForms || []).map(w => String(w).toLowerCase()));
+    for (const [inf, v] of Object.entries(doc.verbs)) {
+      const keys = [inf, inf.replace(/se$/, '')].concat((v.forms || []).map(f => String(f).toLowerCase().split(' ').pop()));
+      for (const k of keys) if (k && !skip.has(k) && !out.has(k)) out.set(k, inf);
+    }
+    return out;
+  }
+  // Which form a verb card asks for: one person at random, and one of its pronouns (usted as well as él and ella).
+  function verbAsk(doc, inf, rnd) {
+    rnd = rnd || Math.random;
+    const v = doc && doc.verbs && doc.verbs[inf];
+    if (!v) return null;
+    const i = Math.floor(rnd() * v.forms.length);
+    const names = (doc.persons && doc.persons[i]) || [''];
+    return { i, who: names[Math.floor(rnd() * names.length)], answer: v.forms[i] };
+  }
+
   // Did the sentence include one of the word's forms? (accent-insensitive substring match)
   function usedWord(sentence, forms) {
     const s = stripAcc(clean(sentence));
@@ -304,5 +327,5 @@
     return out;
   }
 
-  return { daySecs, judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
+  return { verbIndex, verbAsk, daySecs, judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
 });

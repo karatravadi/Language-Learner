@@ -123,6 +123,29 @@ t('merge done keeps the first score', () => assert.equal(
   t('hint: a form right for both persons is not the mistake (je prends, tu prends)', () => assert.equal(H(fr, 'je prends le bus', ['je prends le bus'], 5), null));
 }
 
+// ---------- whole verbs in My words (backlog 11) ----------
+{
+  const fs = require('fs'); const path = require('path');
+  const vb = JSON.parse(fs.readFileSync(path.join(__dirname, '../public/courses/es-ES/verbs.json'), 'utf8'));
+  const ix = L.verbIndex(vb);
+  t('verbs: any form finds its verb', () => { assert.equal(ix.get('vivís'), 'vivir'); assert.equal(ix.get('vivo'), 'vivir'); assert.equal(ix.get('vivir'), 'vivir'); });
+  t('verbs: a reflexive verb is found from the verb part', () => { assert.equal(ix.get('levanto'), 'levantarse'); assert.equal(ix.get('levantar'), 'levantarse'); });
+  t('verbs: accents matter (está is estar, esta is not a verb)', () => { assert.equal(ix.get('está'), 'estar'); assert.equal(ix.get('esta'), undefined); });
+  t('verbs: forms that are also another common word are skipped (como)', () => assert.equal(ix.get('como'), undefined));
+  t('verbs: review asks one person and its form', () => { const a = L.verbAsk(vb, 'vivir', () => 0.7); assert.deepEqual(a, { i: 4, who: 'vosotras', answer: 'vivís' }); });
+  t('verbs: review sometimes asks usted', () => assert.equal(L.verbAsk(vb, 'ser', (() => { const r = [0.4, 0.9]; return () => r.shift(); })()).who, 'usted'));
+  t('verbs: unknown verb asks nothing', () => assert.equal(L.verbAsk(vb, 'nadar'), null));
+  // The saved tables must agree with the tables the chapters teach.
+  const es = JSON.parse(fs.readFileSync(path.join(__dirname, '../public/courses/es-ES/course.json'), 'utf8'));
+  let compared = 0;
+  es.chapters.forEach(f => JSON.parse(fs.readFileSync(path.join(__dirname, '../public/courses/es-ES', f), 'utf8')).learn.blocks
+    .filter(b => b.type === 'tables').forEach(b => b.tables.forEach(tb => {
+      const inf = tb.title.split(/[\s(,]/)[0];
+      if (vb.verbs[inf] && tb.rows.length === 6) { compared++; t('verbs: ' + inf + ' matches its chapter table', () => assert.deepEqual(vb.verbs[inf].forms, tb.rows.map(r => r[1]))); }
+    })));
+  t('verbs: the chapter tables were compared', () => assert.ok(compared >= 12, String(compared)));
+}
+
 // ---------- sync merge (this device a, server b) ----------
 const M = L.mergeState;
 t('srsGrade stamps seen', () => assert.equal(L.srsGrade({ id: 'a', box: 1 }, true, now).seen, now));
