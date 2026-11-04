@@ -5,8 +5,8 @@
   device and synced when the connection comes back, by app.js.
 */
 const CACHE = 'stilus-v1';
-const SHELL = ['./', 'index.html', 'app.js', 'logic.js', 'style.css', 'manifest.webmanifest',
-  'fonts/instrument-sans.woff2', 'fonts/newsreader.woff2', 'icons/icon-192.png', 'icons/apple-touch-icon.png', 'courses/index.json'];
+const SHELL = ['./', 'index.html', 'app.js', 'logic.js', 'style.css',
+  'fonts/instrument-sans.woff2', 'fonts/newsreader.woff2', 'icon.svg', 'favicon-32.png', 'icon-192.png', 'apple-touch-icon.png', 'manifest.json', 'courses/index.json'];
 
 // Every file of every course, read from the course list, so the first visit makes the whole app work offline.
 async function courseFiles() {

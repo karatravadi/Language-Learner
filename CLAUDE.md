@@ -51,7 +51,7 @@ wrangler.jsonc            Worker config: assets, D1 binding, model, Access team 
 migrations/               D1 schema
 public/index.html         shell (manifest and icons for Add to Home Screen)
 public/sw.js              service worker: keeps the app and every course on the device, network first, never /api/*
-public/manifest.webmanifest, public/icons/  home-screen icon (red square, white Newsreader S)
+public/manifest.json, icon.svg, icon-*.png, apple-touch-icon.png, favicon-32.png  app icon: ink-blue cover, cream S, red-pen accent marks
 public/app.js             all screens, exercise engine, review, word of the day, practice timer
 public/logic.js           pure logic, unit-tested: judge() and nearMiss() (spelling slips), spaced repetition, word picker, streaks
 public/style.css          design tokens and components (direction in the header comment)
