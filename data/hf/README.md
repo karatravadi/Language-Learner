@@ -394,3 +394,8 @@ Saved 4661 pairs (Cornelius Nepos 254, Phaedrus 599, Caesar 1211, Cicero 2597; L
 - Spanish: some saved rows are about Latin America as a topic (Mexico in 6 rows, Colombia 2, Argentina, Chile, Peru 1 each). The vocabulary checked looks like Spain's, but the content is not all about Spain.
 - French: kwiziq rows are whole articles (median 195 to 280 words at A2 and B1), so only 2 fit 20 to 80 words as whole rows. The output uses paragraphs instead, with `title` and `paragraph` to find the article. Many articles are dialogues, whose lines are dropped. Some text has a no-break space before ! ? : (French typography), left as is.
 - Filters are heuristics: a dropped row may be fine, and a kept one may still be a fragment. Read before use.
+
+## Glossary gaps
+
+`node data/hf/scripts/glossary-gaps.js` (from the repo root, after the script above) counts the words in each
+saved Spanish passage that have no entry in `public/courses/es-ES/glossary.json`, and writes `out/spanish_glossary_gaps.json`.

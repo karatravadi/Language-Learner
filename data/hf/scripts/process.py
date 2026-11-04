@@ -273,4 +273,7 @@ say("\n## Odd things\n")
 for o in odd or ["Nothing the script checks for (empty rows, duplicates, odd level labels, empty pairs)."]:
     say(f"- {o}")
 say("- Filters are heuristics: a dropped row may be fine, and a kept one may still be a fragment. Read before use.")
+say("\n## Glossary gaps\n")
+say("`node data/hf/scripts/glossary-gaps.js` (from the repo root, after the script above) counts the words in each")
+say("saved Spanish passage that have no entry in `public/courses/es-ES/glossary.json`, and writes `out/spanish_glossary_gaps.json`.")
 (HERE / "README.md").write_text("\n".join(report) + "\n", encoding="utf-8")
