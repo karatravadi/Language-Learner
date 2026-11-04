@@ -63,7 +63,61 @@ START-HERE.txt       step-by-step setup on Windows
 ```
 
 ## Getting started
-You need [Node.js](https://nodejs.org) (the LTS version). The AI tutor also needs a free Gemini key, which needs a Google account.
+There are two ways to run Stilus. Both are free.
+
+<details open>
+<summary><b>Online (recommended): your own copy on the web, about 30 minutes</b></summary>
+
+<br>
+
+Sign in from any device, with progress synced between your phone and computer, and an invite list for friends.
+Once opened, it also works offline and can be added to a phone's home screen.
+
+**You need:** [Node.js](https://nodejs.org) (the LTS version), a free [Cloudflare](https://dash.cloudflare.com/sign-up)
+account, and a Google account for a free Gemini key.
+
+1. Get the code and sign in to Cloudflare:
+   ```
+   git clone https://github.com/karatravadi/Language-Learner.git
+   cd Language-Learner
+   npm install
+   npx wrangler login
+   ```
+2. Create the database, keeping this exact name, then paste the `database_id` it prints into `wrangler.jsonc`:
+   ```
+   npx wrangler d1 create espanol-trainer
+   ```
+3. Deploy. This also sets up the database tables, then prints your address (`https://stilus.<your-subdomain>.workers.dev`):
+   ```
+   npm run deploy
+   ```
+4. Add your Gemini key from [Google AI Studio](https://aistudio.google.com/). Paste it when asked:
+   ```
+   npx wrangler secret put GEMINI_API_KEY
+   ```
+5. Turn on sign-in. In the Cloudflare dashboard go to **Workers & Pages**, open **stilus**, then **Domains**, and
+   choose **Enable Cloudflare Access** for `workers.dev`. Under **Manage Cloudflare Access**, add the email addresses
+   allowed in.
+6. Copy the team name and the **AUD** tag that Cloudflare shows into `ACCESS_TEAM` and `ACCESS_AUD` in
+   `wrangler.jsonc` (the values there are mine), then deploy again:
+   ```
+   npm run deploy
+   ```
+
+Until step 6 is done the app loads but refuses to sync or use the tutor, by design. Sign-in is a one-time code sent
+to your email.
+
+</details>
+
+<details>
+<summary><b>On one computer: try it in 5 minutes</b></summary>
+
+<br>
+
+Everything runs on your computer and progress is saved in your browser. No sign-in, no sync between devices.
+
+**You need:** [Node.js](https://nodejs.org) (the LTS version). The AI tutor is optional and needs a Google account
+for a free Gemini key.
 
 ```
 git clone https://github.com/karatravadi/Language-Learner.git
@@ -72,17 +126,13 @@ npm start
 ```
 
 Then open http://localhost:3000. On Windows you can double-click `start.bat` instead, and
-[START-HERE.txt](START-HERE.txt) walks through it step by step. Locally, progress is saved in your browser.
+[START-HERE.txt](START-HERE.txt) walks through every step.
 
-Every chapter, review and the word of the day work without a key. To switch on the AI tutor (sentence checking and
-chat), copy `settings.example.env` to `settings.env` and add your own free Gemini key from
-[Google AI Studio](https://aistudio.google.com/), then restart.
+Chapters, review and the word of the day all work without a key. To switch on the tutor (sentence checking and
+chat), copy `settings.example.env` to `settings.env`, add your key from [Google AI Studio](https://aistudio.google.com/),
+then restart.
 
-### The hosted version (sign-in and sync)
-This needs a free Cloudflare account. `npm install` once, then `npm run dev:hosted` runs it on your machine with a
-local database (add a `.dev.vars` file with `DEV_USER=you@example.com` as a test login). To deploy your own copy,
-create a D1 database and an Access application, put their IDs in `wrangler.jsonc` (`ACCESS_AUD` is the ID of my
-Access application, so replace it), add the key with `npx wrangler secret put GEMINI_API_KEY`, then `npm run deploy`.
+</details>
 
 ## Tests
 ```
