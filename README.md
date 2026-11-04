@@ -63,19 +63,21 @@ HANDOVER.md          open steps
 START-HERE.txt       step-by-step setup on Windows
 ```
 
+A note on names: sorry, the app is called Stilus, the repo Language-Learner, and some internal names (the database,
+the package and the saved-progress keys) still say espanol-trainer, from when it was Spanish only. Renaming the
+database and the progress keys would reset everyone's saved progress, so they stay.
+
 ## Getting started
-There are two ways to run Stilus. Both are free.
+Both options are free.
 
 <details open>
-<summary><b>Online (recommended): your own copy on the web, about 30 minutes</b></summary>
+<summary><b>Online (recommended): ~30 minutes</b></summary>
 
 <br>
 
-Sign in from any device, with progress synced between your phone and computer, and an invite list for friends.
-Once opened, it also works offline and can be added to a phone's home screen.
-
-**You need:** [Node.js](https://nodejs.org) (the LTS version), a free [Cloudflare](https://dash.cloudflare.com/sign-up)
-account, and a Google account for a free Gemini key.
+Sign in from any device, progress synced, an invite list, and offline use once opened.
+You need [Node.js](https://nodejs.org) (LTS), a free [Cloudflare](https://dash.cloudflare.com/sign-up) account and a
+Google account (for a free Gemini key).
 
 1. Get the code and sign in to Cloudflare:
    ```
@@ -84,41 +86,35 @@ account, and a Google account for a free Gemini key.
    npm install
    npx wrangler login
    ```
-2. Create the database, keeping this exact name, then paste the `database_id` it prints into `wrangler.jsonc`:
+2. Create the database (keep this name) and paste the `database_id` it prints into `wrangler.jsonc`:
    ```
    npx wrangler d1 create espanol-trainer
    ```
-3. Deploy. This also sets up the database tables, then prints your address (`https://stilus.<your-subdomain>.workers.dev`):
+3. Deploy. It prints your address, `https://stilus.<your-subdomain>.workers.dev`:
    ```
    npm run deploy
    ```
-4. Add your Gemini key from [Google AI Studio](https://aistudio.google.com/). Paste it when asked:
+4. In the Cloudflare dashboard: **Workers & Pages** › **stilus** › **Domains** › **Enable Cloudflare Access** for
+   `workers.dev`. Add the emails allowed in under **Manage Cloudflare Access**.
+5. Add three secrets, pasting each when asked: your Gemini key from [Google AI Studio](https://aistudio.google.com/),
+   then the team name and **AUD** tag Cloudflare showed in step 4:
    ```
    npx wrangler secret put GEMINI_API_KEY
-   ```
-5. Turn on sign-in. In the Cloudflare dashboard go to **Workers & Pages**, open **stilus**, then **Domains**, and
-   choose **Enable Cloudflare Access** for `workers.dev`. Under **Manage Cloudflare Access**, add the email addresses
-   allowed in.
-6. Copy the team name and the **AUD** tag that Cloudflare shows into `ACCESS_TEAM` and `ACCESS_AUD` in
-   `wrangler.jsonc` (the values there are mine), then deploy again:
-   ```
-   npm run deploy
+   npx wrangler secret put ACCESS_TEAM
+   npx wrangler secret put ACCESS_AUD
    ```
 
-Until step 6 is done the app loads but refuses to sync or use the tutor, by design. Sign-in is a one-time code sent
-to your email.
+Until step 5 is done the app loads but won't sync or use the tutor.
 
 </details>
 
 <details>
-<summary><b>On one computer: try it in 5 minutes</b></summary>
+<summary><b>Offline: ~5 minutes</b></summary>
 
 <br>
 
-Everything runs on your computer and progress is saved in your browser. No sign-in, no sync between devices.
-
-**You need:** [Node.js](https://nodejs.org) (the LTS version). The AI tutor is optional and needs a Google account
-for a free Gemini key.
+Runs on one computer, with progress saved in that browser. No sign-in or sync.
+You need [Node.js](https://nodejs.org) (LTS). The tutor is optional and needs a Google account (for a free Gemini key).
 
 ```
 git clone https://github.com/karatravadi/Language-Learner.git
@@ -126,12 +122,11 @@ cd Language-Learner
 npm start
 ```
 
-Then open http://localhost:3000. On Windows you can double-click `start.bat` instead, and
-[START-HERE.txt](START-HERE.txt) walks through every step.
-
-Chapters, review and the word of the day all work without a key. To switch on the tutor (sentence checking and
-chat), copy `settings.example.env` to `settings.env`, add your key from [Google AI Studio](https://aistudio.google.com/),
-then restart.
+- Open http://localhost:3000.
+- On Windows, you can double-click `start.bat` instead.
+- [START-HERE.txt](START-HERE.txt) walks through every step.
+- For the tutor, copy `settings.example.env` to `settings.env`, add your key from
+  [Google AI Studio](https://aistudio.google.com/), and restart.
 
 </details>
 

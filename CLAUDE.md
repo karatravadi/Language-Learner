@@ -27,12 +27,12 @@ Read this first, then `HANDOVER.md` for the next phase of work.
 
 ## Hosted version (live since 2 Nov 2026)
 - https://stilus.karatravadi.workers.dev: one Cloudflare Worker named `stilus` (`worker/index.js`, `wrangler.jsonc`) serves
-  `public/` and answers `/api/*`. Free plan. Cloudflare Access (team `divine-mouse-214c`, All traffic) asks for sign-in
-  on every address; the Worker also verifies the `Cf-Access-Jwt-Assertion` token (issuer + AUD in `wrangler.jsonc`)
-  and fails closed if they are blank.
+  `public/` and answers `/api/*`. Free plan. Cloudflare Access (All traffic) asks for sign-in
+  on every address; the Worker also verifies the `Cf-Access-Jwt-Assertion` token (issuer + AUD, held as the Worker secrets
+  `ACCESS_TEAM` and `ACCESS_AUD`, not in `wrangler.jsonc`, since the repo is public) and fails closed if they are blank.
 - Who can sign in: Zero Trust → Access → Policies (the owner's Cloudflare account plus an Emails policy for invited learners).
 - Until 2 Nov 2026 the Worker was `espanol-trainer` (espanol-trainer.karatravadi.workers.dev), with its own Access
-  application and Gemini secret. `stilus` has its own of both; the AUD in `wrangler.jsonc` is stilus's.
+  application and Gemini secret. `stilus` has its own of both.
 - D1 database `espanol-trainer` (WEUR, shared by both Workers, so progress carried over): `progress` (sync, versioned saves), `ai_usage` (daily AI caps) and `profiles` (one name and choice of endings per person, shared by every course; `/api/profile`). `/api/usage` and a `usage` field on every AI reply give the tutor calls left today.
   Schema changes go in `migrations/`; `npm run deploy` applies them, then deploys.
 - AI: Gemini 3.5 Flash-Lite, free tier 15 a minute and 500 a day for the whole project. Caps: 60 per person, 450 total.
@@ -47,7 +47,7 @@ Read this first, then `HANDOVER.md` for the next phase of work.
 server.js                 zero-dependency Node server: static files + /api/status + /api/ai (localhost only)
 lib/ai.js                 AI tutor core shared with the hosted Worker: provider, prompts, model call, shape()
 worker/index.js           hosted Worker: Access check, /api/status, /api/ai (daily caps), /api/progress (sync)
-wrangler.jsonc            Worker config: assets, D1 binding, model, Access team and AUD, AI caps
+wrangler.jsonc            Worker config: assets, D1 binding, model, AI caps (Access team and AUD are secrets)
 migrations/               D1 schema
 public/index.html         shell (manifest and icons for Add to Home Screen)
 public/sw.js              service worker: keeps the app and every course on the device, network first, never /api/*

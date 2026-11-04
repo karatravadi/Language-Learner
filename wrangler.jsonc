@@ -32,13 +32,13 @@
     "PROVIDER": "gemini",
     // Gemini 3.5 Flash-Lite, chosen 2 Nov 2026. Free tier: 15 requests a minute and 500 a day, for the whole project.
     "GEMINI_MODEL": "gemini-3.5-flash-lite",
-    // Cloudflare Access: your Zero Trust team name (the part before .cloudflareaccess.com) and the
-    // Application Audience (AUD) tag from the Worker's Access application. Both are filled in after Access is set up.
-    "ACCESS_TEAM": "divine-mouse-214c",
-    "ACCESS_AUD": "de7ffe98c442cae4319a0aca46ed0c717c165fca9be163fd9f7704f4a2624f99",
     // AI calls per person per day, and for everyone together (keep this under the provider's free daily quota).
     "AI_DAILY_PER_USER": "60",
     "AI_DAILY_GLOBAL": "450"
   }
-  // Secrets, set with `npx wrangler secret put NAME`, never in this file: GEMINI_API_KEY (or DEEPSEEK_API_KEY).
+  // Secrets, set with `npx wrangler secret put NAME`, never in this file:
+  //   GEMINI_API_KEY (or DEEPSEEK_API_KEY)
+  //   ACCESS_TEAM  your Zero Trust team name (the part before .cloudflareaccess.com; the full address also works)
+  //   ACCESS_AUD   the Application Audience (AUD) tag of the Worker's Access application
+  // Until both ACCESS_ values are set, the API refuses every request (the Worker fails closed).
 }
