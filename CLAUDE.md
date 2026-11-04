@@ -74,7 +74,8 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
   answer) → Scenario (a character, 4 turns, one right reply each with reasons for the wrong ones) → Results.
 - European Spanish: vosotros in every table, Spain vocabulary (vale, caña, móvil, ordenador, coger), Spain customs.
 - Tokens: `{name}` is the learner's name, `{o}` is a/o for gendered endings. Nothing else.
-- Every exercise has a `skill`; skills need a readable name in the chapter's `skills` (or the course's).
+- Every exercise has a `skill`; skills need a readable name in the chapter's `skills`, an earlier chapter's, or the course's
+  (the A2 checkpoint, chapter 12, reuses earlier skills so its misses land in the right weak spot).
   Weak-spot drills group by skill.
 - Translate answers: lowercase, no punctuation, list every natural variant (tú/usted/vosotros where sensible).
 - Spelling slips: a typed answer (gap, translate, review) one letter off in a word of 5+ letters, outside its first
@@ -91,7 +92,7 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
 - Accuracy: the Spanish is written by an AI and checked by tests for consistency, not for correctness.
   Flag anything unusual for the owner. A native speaker reviewing each batch is the best safeguard.
 - Pace: at 45 min a day a learner finishes a chapter every 1 to 2 days. Write chapters in batches of 4, run
-  `npm test` and `npm run e2e`, then hand over. The roadmap in course.json lists the next chapters (9 onwards).
+  `npm test` and `npm run e2e`, then hand over. The roadmap in course.json lists the next chapters (13 onwards, towards B1).
 - The `boss.persona` text is the AI character's brief. Only the server reads it (from disk), so the page can never
   inject its own prompt.
 

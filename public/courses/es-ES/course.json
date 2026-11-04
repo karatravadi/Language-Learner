@@ -16,14 +16,18 @@
     "chapters/05-getting-around.json",
     "chapters/06-hostels-shopping.json",
     "chapters/07-likes-plans.json",
-    "chapters/08-daily-routine.json"
+    "chapters/08-daily-routine.json",
+    "chapters/09-irregular-favourites.json",
+    "chapters/10-what-happened.json",
+    "chapters/11-describing.json",
+    "chapters/12-a2-checkpoint.json"
   ],
   "words": "words.json",
   "glossary": "glossary.json",
   "roadmap": [
-    { "n": 9, "title": "Irregular favourites", "can": "Master ir, hacer, tener, poder and querer" },
-    { "n": 10, "title": "What happened", "can": "Tell a short story with the pretérito perfecto: he perdido, he comido" },
-    { "n": 11, "title": "Describing people and places", "can": "Describe, compare and give opinions" },
-    { "n": 12, "title": "A2 checkpoint", "can": "Hold a full conversation with a stranger, then check your level" }
+    { "n": 13, "title": "What happened yesterday", "can": "Tell a story about yesterday or last year with the pretérito indefinido: fui, comí, vi" },
+    { "n": 14, "title": "When I was little", "can": "Describe how things used to be with the imperfecto: vivía, era, había" },
+    { "n": 15, "title": "What's coming", "can": "Talk about the future and make promises: iré, haré, vendré" },
+    { "n": 16, "title": "Wishes and advice", "can": "Give advice and say what you hope for with the subjuntivo: quiero que vengas" }
   ]
 }

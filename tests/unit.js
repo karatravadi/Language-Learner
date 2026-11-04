@@ -192,6 +192,7 @@ for (const entry of readJson(path.join(COURSES, 'index.json')).courses) {
   const base = path.dirname(file);
   const words = readJson(path.join(base, course.words));
   t(course.id + ' words: review answers accept themselves', () => words.forEach(w => assert.notEqual(L.judge(w.es, [w.es].concat(w.alts || [])), 'no', w.id)));
+  const earlierSkills = {}; // a later chapter (a checkpoint) can practise skills named in earlier ones
   for (const f of course.chapters) {
     const ch = readJson(path.join(base, f));
     const tag = course.id + ' ch' + ch.n;
@@ -201,9 +202,10 @@ for (const entry of readJson(path.join(COURSES, 'index.json')).courses) {
     t(tag + ': phrase cards accept their own Spanish and alternatives', () => ch.phrases.forEach(p => [p.es].concat(p.alts || []).forEach(a => assert.equal(L.judge(a, [p.es].concat(p.alts || [])), 'ok', a))));
     t(tag + ': fix sentences keep the same word count once fixed', () => ch.exercises.filter(e => e.type === 'fix').forEach(e => assert.equal(e.fixed.split(' ').length, e.sentence.split(' ').length, e.sentence)));
     t(tag + ': skills used by exercises have names', () => {
-      const names = Object.assign({}, course.skills, ch.skills);
+      const names = Object.assign({}, course.skills, earlierSkills, ch.skills);
       ch.exercises.forEach(e => assert.ok(names[e.skill], e.skill));
     });
+    Object.assign(earlierSkills, ch.skills);
   }
 }
 

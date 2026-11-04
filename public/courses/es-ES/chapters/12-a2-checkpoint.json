@@ -1,0 +1,127 @@
+{
+  "n": 12,
+  "title": "A2 checkpoint",
+  "sub": "everything from chapters 1 to 11",
+  "can": "Hold a full conversation with a stranger, then check your level.",
+  "mins": 20,
+  "doneText": "That's the end of A2. Anything you missed is now in your weak spots, ready to review.",
+  "skills": {
+    "tu-usted": "Tú or usted",
+    "keep-going": "Keeping a conversation going"
+  },
+  "discover": {
+    "intro": "The same questions, asked two ways. One way is for a friend, the other for a stranger.",
+    "groups": [
+      { "label": "To a friend", "tone": "blue", "lines": [["¿De dónde eres?", "Where are you from?"], ["¿Qué haces aquí?", "What are you doing here?"], ["¿Has estado en Sevilla?", "Have you been to Seville?"]] },
+      { "label": "To a stranger", "tone": "orange", "lines": [["¿De dónde es usted?", "Where are you from?"], ["¿Qué hace aquí?", "What are you doing here?"], ["¿Ha estado en Sevilla?", "Have you been to Seville?"]] }
+    ],
+    "question": "What changes when you talk to a stranger?",
+    "options": [
+      "The verb takes the él and ella form (es, hace, ha), and you can add usted.",
+      "You add por favor to every question.",
+      "Nothing: Spanish uses the same words for everyone."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Compare eres with es, haces with hace, and has with ha.",
+    "reveal": "With usted, every verb you know takes the él and ella form. That works in every tense you've met. Here is the whole course in one conversation:",
+    "hooks": [
+      { "title": "Four ways to ask how someone is", "tone": "blue", "rows": [
+        ["tú", "a friend", "¿Cómo estás?", "How are you?"],
+        ["usted", "a stranger", "¿Cómo está?", "How are you?"],
+        ["vosotros", "friends", "¿Cómo estáis?", "How are you all?"],
+        ["ustedes", "strangers", "¿Cómo están?", "How are you all?"]
+      ] },
+      { "title": "One conversation, every chapter", "tone": "orange", "rows": [
+        ["1", "who you are", "Soy de Inglaterra.", "I'm from England."],
+        ["6", "what you have", "Tengo dos hermanos.", "I have two brothers."],
+        ["7", "what you like", "Me gusta mucho viajar.", "I really like travelling."],
+        ["10", "what you've done", "He visitado Granada.", "I've visited Granada."],
+        ["11", "what you think", "Creo que es preciosa.", "I think it's beautiful."]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "Your A2 toolkit",
+    "sub": "Tap any row to hear it",
+    "blocks": [
+      { "type": "note", "kind": "tip", "text": "This chapter mixes everything from chapters 1 to 11. Each mistake goes to the weak spot it belongs to, so after it you'll know exactly what to review." },
+      { "type": "tables", "tables": [
+        { "title": "Now, next, done (yo)", "tone": "blue", "speak": "form", "rows": [["now", "hablo"], ["going to", "voy a hablar"], ["have done", "he hablado"]] },
+        { "title": "Now, next, done (usted)", "tone": "orange", "speak": "form", "rows": [["now", "habla"], ["going to", "va a hablar"], ["have done", "ha hablado"]] }
+      ] },
+      { "type": "note", "kind": "spain", "text": "With people around your own age, Spaniards move to tú very quickly, often straight away. Use usted with older people, officials and in formal places, and follow their lead." },
+      { "type": "twist", "title": "Keep it going", "a": ["¿Y tú?", "And you?"], "b": ["¿Y usted?", "And you? (polite)"], "note": "The easiest way to keep a conversation going: answer, then turn the question back." },
+      { "type": "list", "title": "Conversation savers", "rows": [["¿Puedes repetir, por favor?", "Can you say that again, please?"], ["Más despacio, por favor.", "Slower, please."], ["No entiendo.", "I don't understand."], ["¿Cómo se dice esto en español?", "How do you say this in Spanish?"], ["¿Qué significa?", "What does it mean?"], ["¡Qué interesante!", "How interesting!"]] },
+      { "type": "note", "kind": "culture", "text": "CEFR A2 means you can handle short everyday conversations: introducing yourself, ordering, shopping, directions, plans and what you've done. If you've got this far, that's you." }
+    ]
+  },
+  "phrases": [
+    { "id": "c12-where", "es": "¿De dónde es usted?", "en": "Where are you from? (polite)", "alts": ["¿De dónde es?"] },
+    { "id": "c12-slow", "es": "Más despacio, por favor.", "en": "Slower, please.", "alts": [] },
+    { "id": "c12-understand", "es": "No entiendo.", "en": "I don't understand.", "alts": [] },
+    { "id": "c12-howsay", "es": "¿Cómo se dice esto en español?", "en": "How do you say this in Spanish?", "alts": [] },
+    { "id": "c12-andyou", "es": "¿Y usted?", "en": "And you? (polite)", "alts": [] },
+    { "id": "c12-interesting", "es": "¡Qué interesante!", "en": "How interesting!", "alts": [] },
+    { "id": "c12-been", "es": "He estado en Granada y en Sevilla.", "en": "I've been to Granada and Seville.", "alts": [] },
+    { "id": "c12-plan", "es": "Mañana voy a visitar Córdoba.", "en": "Tomorrow I'm going to visit Córdoba.", "alts": [] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "ser-id", "q": "Usted ___ de Inglaterra, ¿verdad?", "sub": "(You're from England, aren't you?)", "options": ["es", "eres", "está"], "answer": 0, "why": "Usted takes the él and ella form, and origin takes ser: es." },
+    { "type": "gap", "skill": "hay-esta", "q": "Perdone, ¿dónde ___ la estación?", "hint": "estar", "hintLabel": "Verb", "hintTone": "orange", "answer": ["está"], "why": "A particular place you know about: está." },
+    {
+      "type": "rapid", "skill": "tu-usted", "prompt": "Rapid fire: tú or usted?",
+      "choices": [{ "key": "tu", "label": "tú", "tone": "blue" }, { "key": "usted", "label": "usted", "tone": "orange" }],
+      "items": [
+        { "text": "¿Cómo estás?", "full": "¿Cómo estás?", "answer": "tu", "skill": "tu-usted", "why": "Estás is the tú form." },
+        { "text": "¿De dónde es usted?", "full": "¿De dónde es usted?", "answer": "usted", "skill": "tu-usted", "why": "Usted is right there." },
+        { "text": "¿Tienes hermanos?", "full": "¿Tienes hermanos?", "answer": "tu", "skill": "tu-usted", "why": "Tienes is the tú form." },
+        { "text": "¿Qué hace aquí?", "full": "¿Qué hace aquí?", "answer": "usted", "skill": "tu-usted", "why": "Hace is the él, ella and usted form." },
+        { "text": "¿Has estado en Málaga?", "full": "¿Has estado en Málaga?", "answer": "tu", "skill": "tu-usted", "why": "Has is the tú form." },
+        { "text": "¿Puede repetir, por favor?", "full": "¿Puede repetir, por favor?", "answer": "usted", "skill": "tu-usted", "why": "Puede is the él, ella and usted form." },
+        { "text": "¿Te gusta Madrid?", "full": "¿Te gusta Madrid?", "answer": "tu", "skill": "tu-usted", "why": "Te gusta is for tú." },
+        { "text": "¿Le gusta Madrid?", "full": "¿Le gusta Madrid?", "answer": "usted", "skill": "tu-usted", "why": "Le gusta is for él, ella and usted." }
+      ]
+    },
+    { "type": "listen", "skill": "keep-going", "say": "Perdone, ¿puede hablar más despacio?", "options": ["Sorry, can you speak more slowly?", "Sorry, can you speak louder?", "Sorry, can I speak to you?"], "answer": 0, "why": "Puede hablar: can you speak. Más despacio: more slowly." },
+    { "type": "gap", "skill": "haber", "q": "Esta mañana ___ visitado el museo.", "hint": "yo", "hintLabel": "Who", "answer": ["he"], "why": "Yo: he. He visitado means I have visited." },
+    { "type": "fix", "skill": "gustar", "prompt": "Tap the word that is wrong.", "sentence": "Me gustan el café.", "wrong": 1, "fixed": "Me gusta el café.", "why": "One thing, el café: me gusta." },
+    { "type": "order", "skill": "ir-a", "prompt": "Tomorrow I'm going to visit Córdoba.", "words": ["Mañana", "voy", "a", "visitar", "Córdoba"], "answer": "Mañana voy a visitar Córdoba.", "why": "Ir a + the dictionary form, for plans." },
+    { "type": "match", "skill": "keep-going", "prompt": "Match the conversation savers.", "pairs": [["No entiendo.", "I don't understand."], ["Más despacio.", "Slower."], ["¿Y usted?", "And you? (polite)"], ["¡Qué interesante!", "How interesting!"], ["¿Qué significa?", "What does it mean?"]] },
+    { "type": "translate", "skill": "tener", "q": "I have two brothers.", "answer": ["tengo dos hermanos"], "why": "Tener with yo: tengo." },
+    { "type": "mc", "skill": "compare", "q": "Madrid es ___ grande que Granada.", "sub": "(Madrid is bigger than Granada.)", "options": ["más", "mejor", "muy"], "answer": 0, "why": "Más + describing word + que." },
+    { "type": "translate", "skill": "reflexive", "q": "I get up at eight.", "answer": ["me levanto a las ocho"], "why": "Levantarse needs me: me levanto." },
+    { "type": "gap", "skill": "yo-go", "q": "Esta noche ___ con unos amigos.", "hint": "salir", "hintLabel": "Verb", "hintTone": "orange", "answer": ["salgo"], "why": "Salir is a -go verb: yo salgo." },
+    { "type": "fix", "skill": "adj-agree", "prompt": "Tap the word that is wrong.", "sentence": "La ciudad es muy bonito.", "wrong": 4, "fixed": "La ciudad es muy bonita.", "why": "Ciudad is feminine: bonita." },
+    { "type": "translate", "skill": "tu-usted", "q": "Where are you from?", "answer": ["de dónde eres", "de dónde es", "de dónde es usted", "de dónde sois", "de dónde son ustedes"], "who": ["tú", "usted", "usted", "vosotros", "ustedes"], "why": "Origin takes ser: eres for tú, es for usted." },
+    { "type": "mc", "skill": "time", "prompt": "It's half past two.", "q": "Son las dos y ___.", "options": ["media", "cuarto", "menos"], "answer": 0, "why": "Y media means half past." },
+    { "type": "translate", "skill": "pp-spain", "q": "Have you been to Seville?", "answer": ["has estado en sevilla", "ha estado en sevilla", "ha estado usted en sevilla", "habéis estado en sevilla"], "who": ["tú", "usted", "usted", "vosotros"], "why": "He, has, ha + estado. Spain uses this for ever." },
+    { "type": "mc", "skill": "estar-state", "q": "Hoy ___ muy cansad{o}.", "sub": "(I'm very tired today.)", "options": ["estoy", "soy", "tengo"], "answer": 0, "why": "How you feel right now takes estar: estoy cansad{o}." }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Write a message to someone you met on the train: who you are, what you've done on your trip, what you like, and your plans for tomorrow.",
+    "starter": "Hola, soy {name}. Soy de…  He visitado…  Me gusta…  Mañana voy a…",
+    "model": "Hola, soy {name}. Soy de Inglaterra y estoy de viaje por España. Esta semana he visitado Granada y Sevilla. Me gusta mucho la comida, sobre todo las tapas. Creo que Sevilla es la ciudad más bonita. Mañana voy a visitar Córdoba. ¿Y tú?",
+    "checklist": ["Ser for who you are, estar for where you are", "He visitado for this week, voy a for tomorrow", "Me gusta, and an opinion with creo que"]
+  },
+  "boss": {
+    "title": "On the train to Sevilla",
+    "who": "Manuel",
+    "skill": "tu-usted",
+    "persona": "You are Manuel, a friendly retired teacher from Sevilla, sitting next to the learner on the AVE train from Madrid. Start with usted, and switch to tú if the learner suggests it. Chat about where they are from, their trip so far, what they like and their plans. This is the A2 checkpoint: use the present, ir a + verb, gustar and the pretérito perfecto, but keep each reply short and simple. Speak European Spanish.",
+    "turns": [
+      { "npc": "Buenas tardes. ¿Es usted de aquí?", "en": "Good afternoon. Are you from here?", "skill": "ser-id",
+        "choices": [["No, soy de Inglaterra. Estoy de viaje.", true, ""], ["No, estoy de Inglaterra. Soy de viaje.", false, "Where you're from takes ser: soy de Inglaterra. A trip takes estar: estoy de viaje."], ["No, es de Inglaterra. Está de viaje.", false, "Es and está are he, she or usted. About yourself: soy, estoy."]] },
+      { "npc": "¡Qué bien! ¿Y qué ha visitado en España?", "en": "How lovely! And what have you visited in Spain?", "skill": "haber",
+        "choices": [["He visitado Madrid y Granada.", true, ""], ["Ha visitado Madrid y Granada.", false, "Ha is he, she or usted. About yourself: he visitado."], ["He visitada Madrid y Granada.", false, "The -ado form never changes: visitado."]] },
+      { "npc": "¿Y le gusta la comida española?", "en": "And do you like Spanish food?", "skill": "gustar",
+        "choices": [["Sí, me gusta mucho, sobre todo las tapas.", true, ""], ["Sí, me gustan mucho la comida.", false, "One thing, la comida: me gusta."], ["Sí, le gusta mucho, sobre todo las tapas.", false, "Le gusta is he, she or usted. About yourself: me gusta."]] },
+      { "npc": "¿Y qué va a hacer en Sevilla?", "en": "And what are you going to do in Seville?", "skill": "ir-a",
+        "choices": [["Voy a ver la catedral y a comer tapas.", true, ""], ["Voy ver la catedral y comer tapas.", false, "Plans need the a: voy a ver."], ["Va a ver la catedral y a comer tapas.", false, "Va is he, she or usted. About yourself: voy a."]] }
+    ],
+    "closing": "¡Muy bien! Su español es muy bueno. ¡Disfrute de Sevilla!",
+    "closingEn": "Very good! Your Spanish is very good. Enjoy Seville!",
+    "chatOpening": "Por cierto, ¿nos tuteamos?",
+    "chatOpeningEn": "By the way, shall we use tú with each other?"
+  }
+}

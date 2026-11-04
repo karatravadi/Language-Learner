@@ -1,0 +1,136 @@
+{
+  "n": 9,
+  "title": "Irregular favourites",
+  "sub": "hago, puedo, salgo, vengo",
+  "can": "Use the everyday irregular verbs: hacer, poder, salir and venir, with tener, querer and ir.",
+  "mins": 15,
+  "doneText": "You can now say what you do, what you can do and where you're going, with the verbs Spaniards use most.",
+  "skills": {
+    "yo-go": "The -go verbs: hago, salgo, vengo",
+    "poder": "Forms of poder",
+    "hacer": "Hacer: doing, making and the weather",
+    "venir": "Venir and salir",
+    "permission": "Asking: ¿Puedo…? ¿Puedes…?",
+    "tener-que": "Tener que: having to"
+  },
+  "discover": {
+    "intro": "Every sentence here is about what I do. Look closely at the end of each verb.",
+    "groups": [
+      { "label": "Like chapter 2", "tone": "blue", "lines": [["Hablo con mi madre.", "I talk to my mum."], ["Como a las dos.", "I eat at two."], ["Vivo en Londres.", "I live in London."]] },
+      { "label": "The odd ones", "tone": "orange", "lines": [["Hago la cena.", "I make dinner."], ["Salgo a las ocho.", "I go out at eight."], ["Tengo un hermano.", "I have a brother."], ["Vengo de Madrid.", "I'm coming from Madrid."]] }
+    ],
+    "question": "What do the orange I forms have that the blue ones don't?",
+    "options": [
+      "A g before the final -o: hago, salgo, tengo, vengo.",
+      "They end in -a instead of -o.",
+      "They need yo in front of them."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Say the last two letters of each orange verb out loud.",
+    "reveal": "A handful of very common verbs add a g in the yo form only. The other persons have their own pattern, and poder is a boot verb like querer:",
+    "hooks": [
+      { "title": "The -go verbs", "tone": "orange", "rows": [
+        ["hacer", "to do, to make", "hago", "I do, I make"],
+        ["salir", "to go out, to leave", "salgo", "I go out"],
+        ["poner", "to put", "pongo", "I put"],
+        ["tener", "to have", "tengo", "I have"],
+        ["venir", "to come", "vengo", "I come"]
+      ] },
+      { "title": "poder: the boot again", "tone": "blue", "rows": [
+        ["ue", "yo", "puedo", "I can"],
+        ["ue", "tú", "puedes", "you can"],
+        ["ue", "él / ella / usted", "puede", "he / she can"],
+        ["o", "nosotros", "podemos", "we can"],
+        ["o", "vosotros", "podéis", "you all can"],
+        ["ue", "ellos / ellas", "pueden", "they can"]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "Four verbs you'll use every day",
+    "sub": "Tap any row to hear it",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "hacer", "tone": "orange", "rows": [["yo", "hago"], ["tú", "haces"], ["él / ella / usted", "hace"], ["nosotros/as", "hacemos"], ["vosotros/as", "hacéis"], ["ellos / ellas / ustedes", "hacen"]] },
+        { "title": "poder", "tone": "blue", "rows": [["yo", "puedo"], ["tú", "puedes"], ["él / ella / usted", "puede"], ["nosotros/as", "podemos"], ["vosotros/as", "podéis"], ["ellos / ellas / ustedes", "pueden"]] }
+      ] },
+      { "type": "tables", "tables": [
+        { "title": "salir", "tone": "orange", "rows": [["yo", "salgo"], ["tú", "sales"], ["él / ella / usted", "sale"], ["nosotros/as", "salimos"], ["vosotros/as", "salís"], ["ellos / ellas / ustedes", "salen"]] },
+        { "title": "venir", "tone": "green", "rows": [["yo", "vengo"], ["tú", "vienes"], ["él / ella / usted", "viene"], ["nosotros/as", "venimos"], ["vosotros/as", "venís"], ["ellos / ellas / ustedes", "vienen"]] }
+      ] },
+      { "type": "note", "kind": "tip", "text": "Venir is a -go verb and a boot verb at once: vengo, but vienes, viene, vienen. Tener works the same way: tengo, tienes, tiene. Nosotros and vosotros stay plain: venimos, venís." },
+      { "type": "twist", "title": "Can, the polite way to ask", "a": ["¿Puedo pagar con tarjeta?", "Can I pay by card?"], "b": ["¿Puedes repetir, por favor?", "Can you say that again, please?"], "note": "Puedo + verb asks if you may do something. Puedes (or puede, for usted) + verb asks someone else to do it. The second verb stays in its dictionary form: pagar, repetir." },
+      { "type": "note", "kind": "spain", "text": "Spain talks about the weather with hacer: hace calor (it's hot), hace frío (it's cold), hace sol (it's sunny). In Sevilla in August, hace mucho calor." },
+      { "type": "note", "kind": "warn", "text": "To have to is tener que + verb, and the que is easy to forget: tengo que trabajar (I have to work), not tengo trabajar." },
+      { "type": "list", "title": "Things we do", "rows": [["hacer la compra", "to do the food shopping"], ["hacer deporte", "to do sport, to exercise"], ["salir de fiesta", "to go out partying"], ["salir a cenar", "to go out for dinner"], ["poner la mesa", "to lay the table"], ["venir a casa", "to come round"], ["tengo que…", "I have to…"]] }
+    ]
+  },
+  "phrases": [
+    { "id": "c9-dinner", "es": "Hago la cena esta noche.", "en": "I'm making dinner tonight.", "alts": [] },
+    { "id": "c9-hot", "es": "Hoy hace mucho calor.", "en": "It's very hot today.", "alts": ["Hace mucho calor hoy."] },
+    { "id": "c9-card", "es": "¿Puedo pagar con tarjeta?", "en": "Can I pay by card?", "alts": [] },
+    { "id": "c9-repeat", "es": "¿Puedes repetir, por favor?", "en": "Can you say that again, please?", "alts": ["¿Puede repetir, por favor?"] },
+    { "id": "c9-leave", "es": "Salgo de casa a las ocho.", "en": "I leave home at eight.", "alts": [] },
+    { "id": "c9-coming", "es": "¿Vienes con nosotros?", "en": "Are you coming with us?", "alts": ["¿Viene con nosotros?", "¿Venís con nosotros?"] },
+    { "id": "c9-cant", "es": "No puedo, tengo que trabajar.", "en": "I can't, I have to work.", "alts": [] },
+    { "id": "c9-weekend", "es": "¿Qué haces este fin de semana?", "en": "What are you doing this weekend?", "alts": ["¿Qué hace este fin de semana?", "¿Qué hacéis este fin de semana?"] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "yo-go", "q": "___ la cena todos los días.", "sub": "(I make dinner every day.)", "options": ["Hago", "Hace", "Haco"], "answer": 0, "why": "Hacer with yo is hago: one of the -go verbs. Haco is not a word." },
+    { "type": "gap", "skill": "poder", "q": "¿___ pagar con tarjeta?", "hint": "yo", "hintLabel": "Who", "answer": ["puedo"], "why": "Poder is a boot verb: yo puedo. The next verb stays as it is: pagar." },
+    {
+      "type": "rapid", "skill": "yo-go", "prompt": "Rapid fire: which verb fits?",
+      "choices": [{ "key": "hago", "label": "hago" }, { "key": "salgo", "label": "salgo" }, { "key": "vengo", "label": "vengo" }, { "key": "pongo", "label": "pongo" }],
+      "items": [
+        { "blank": "___ deporte los lunes.", "full": "Hago deporte los lunes.", "fill": "Hago", "answer": "hago", "skill": "yo-go", "why": "Hacer deporte: to do sport." },
+        { "blank": "___ de casa a las ocho.", "full": "Salgo de casa a las ocho.", "fill": "Salgo", "answer": "salgo", "skill": "yo-go", "why": "Salir de casa: to leave home." },
+        { "blank": "___ de Madrid en tren.", "full": "Vengo de Madrid en tren.", "fill": "Vengo", "answer": "vengo", "skill": "yo-go", "why": "Venir: to come." },
+        { "blank": "___ la mesa para cenar.", "full": "Pongo la mesa para cenar.", "fill": "Pongo", "answer": "pongo", "skill": "yo-go", "why": "Poner la mesa: to lay the table." },
+        { "blank": "Los sábados ___ de fiesta.", "full": "Los sábados salgo de fiesta.", "fill": "salgo", "answer": "salgo", "skill": "yo-go", "why": "Salir de fiesta: to go out partying." },
+        { "blank": "___ la compra en el mercado.", "full": "Hago la compra en el mercado.", "fill": "Hago", "answer": "hago", "skill": "yo-go", "why": "Hacer la compra: to do the food shopping." },
+        { "blank": "Mañana ___ a tu casa.", "full": "Mañana vengo a tu casa.", "fill": "vengo", "answer": "vengo", "skill": "venir", "why": "Venir a casa: to come round." },
+        { "blank": "___ el móvil en la mesa.", "full": "Pongo el móvil en la mesa.", "fill": "Pongo", "answer": "pongo", "skill": "yo-go", "why": "Poner: to put." }
+      ]
+    },
+    { "type": "listen", "skill": "hacer", "say": "Hoy hace mucho calor en Sevilla.", "options": ["It's very hot in Seville today.", "It's very cold in Seville today.", "It's sunny in Seville today."], "answer": 0, "why": "Hace calor: it's hot. Mucho makes it very hot." },
+    { "type": "gap", "skill": "venir", "q": "¿Tú ___ a la fiesta?", "hint": "venir", "hintLabel": "Verb", "hintTone": "green", "answer": ["vienes"], "why": "Venir is a boot verb outside nosotros and vosotros: tú vienes." },
+    { "type": "fix", "skill": "poder", "prompt": "Tap the word that is wrong.", "sentence": "Nosotros puedemos venir mañana.", "wrong": 1, "fixed": "Nosotros podemos venir mañana.", "why": "Nosotros is outside the boot, so the o stays: podemos." },
+    { "type": "order", "skill": "permission", "prompt": "Can you say that again, please?", "words": ["¿Puedes", "repetir,", "por", "favor?"], "answer": "¿Puedes repetir, por favor?", "why": "Puedes + the dictionary form: repetir." },
+    { "type": "match", "skill": "hacer", "prompt": "Match the weather.", "pairs": [["hace calor", "it's hot"], ["hace frío", "it's cold"], ["hace sol", "it's sunny"], ["hace viento", "it's windy"], ["hace buen tiempo", "the weather's nice"]] },
+    { "type": "translate", "skill": "yo-go", "q": "I leave home at eight.", "answer": ["salgo de casa a las ocho"], "why": "Salir with yo: salgo. Salir de casa means to leave home." },
+    { "type": "mc", "skill": "poder", "q": "Lo siento, hoy no ___ salir.", "sub": "(Sorry, I can't go out today.)", "options": ["puedo", "podo", "puede"], "answer": 0, "why": "Poder with yo: puedo. Podo is not a word." },
+    { "type": "translate", "skill": "venir", "q": "Are you coming with us?", "answer": ["vienes con nosotros", "viene con nosotros", "viene usted con nosotros", "venís con nosotros"], "who": ["tú", "usted", "usted", "vosotros"], "why": "Venir: tú vienes, usted viene, vosotros venís." },
+    { "type": "gap", "skill": "hacer", "q": "¿Qué ___ vosotros esta noche?", "hint": "hacer", "hintLabel": "Verb", "hintTone": "orange", "answer": ["hacéis"], "why": "Hacer with vosotros: hacéis, with an accent." },
+    { "type": "fix", "skill": "yo-go", "prompt": "Tap the word that is wrong.", "sentence": "Yo salo con mis amigos.", "wrong": 1, "fixed": "Yo salgo con mis amigos.", "why": "Salir is a -go verb: yo salgo." },
+    { "type": "translate", "skill": "permission", "q": "Can I pay by card?", "answer": ["puedo pagar con tarjeta"], "why": "Puedo + pagar. Con tarjeta means by card." },
+    { "type": "mc", "skill": "tener-que", "q": "No puedo, ___ que trabajar.", "sub": "(I can't, I have to work.)", "options": ["tengo", "tiene", "hago"], "answer": 0, "why": "Tener que + verb means to have to. With yo: tengo que." },
+    { "type": "translate", "skill": "hacer", "q": "It's cold today.", "answer": ["hoy hace frío", "hace frío hoy"], "why": "Spanish uses hacer for the weather: hace frío." }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Tell a friend what you can and can't do this weekend, and invite them to something. Use puedo, no puedo, tengo que and ¿vienes?",
+    "starter": "Este fin de semana puedo…  No puedo… porque tengo que…  ¿Vienes…?",
+    "model": "Este fin de semana puedo salir el sábado por la noche. El domingo no puedo porque tengo que trabajar. El viernes hago una paella en casa. ¿Vienes?",
+    "checklist": ["Puedo or no puedo + a dictionary form: puedo salir", "The -go verbs: hago, salgo, tengo, vengo", "Tengo que + verb for what you have to do"]
+  },
+  "boss": {
+    "title": "A weekend in Valencia",
+    "who": "Inés",
+    "skill": "yo-go",
+    "persona": "You are Inés, a cheerful flatmate in Valencia. You are planning the weekend with the learner: going out, the beach, cooking a paella at home, and whether the learner can come. Use tú. Speak European Spanish.",
+    "turns": [
+      { "npc": "¡Hola! ¿Qué haces este fin de semana?", "en": "Hi! What are you doing this weekend?", "skill": "yo-go",
+        "choices": [["El sábado hago la compra y salgo con amigos.", true, ""], ["El sábado haco la compra y salo con amigos.", false, "Hacer and salir are -go verbs: hago, salgo."], ["El sábado hace la compra y sale con amigos.", false, "Hace and sale are he or she. About yourself: hago, salgo."]] },
+      { "npc": "¡Genial! El domingo vamos a la playa. ¿Vienes con nosotros?", "en": "Great! On Sunday we're going to the beach. Are you coming with us?", "skill": "venir",
+        "choices": [["¡Sí, vengo!", true, ""], ["¡Sí, veno!", false, "Venir is a -go verb: vengo."], ["¡Sí, vienes!", false, "Vienes is you. About yourself: vengo."]] },
+      { "npc": "Vale. ¿Puedes comprar el pan?", "en": "OK. Can you buy the bread?", "skill": "poder",
+        "choices": [["Sí, puedo comprar el pan.", true, ""], ["Sí, podo comprar el pan.", false, "Poder is a boot verb: puedo."], ["Sí, puedo compro el pan.", false, "After puedo, the next verb stays in its dictionary form: comprar."]] },
+      { "npc": "¿Y el lunes? ¿Hacemos una paella en casa?", "en": "And on Monday? Shall we make a paella at home?", "skill": "tener-que",
+        "choices": [["El lunes no puedo, tengo que trabajar.", true, ""], ["El lunes no puedo, tengo trabajar.", false, "To have to is tener que: tengo que trabajar."], ["El lunes no puedo, tiene que trabajar.", false, "Tiene is he or she. About yourself: tengo que."]] }
+    ],
+    "closing": "¡Vale! Entonces el martes. ¡Hasta luego!",
+    "closingEn": "OK! Tuesday then. See you later!",
+    "chatOpening": "¿Y qué te gusta hacer los fines de semana?",
+    "chatOpeningEn": "And what do you like doing at weekends?"
+  }
+}

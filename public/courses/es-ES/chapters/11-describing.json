@@ -1,0 +1,130 @@
+{
+  "n": 11,
+  "title": "Describing people and places",
+  "sub": "alto, alta, tan… como, mejor, creo que",
+  "can": "Describe people and places, compare them and give your opinion.",
+  "mins": 15,
+  "doneText": "You can now describe people and places, compare them, and say what you think.",
+  "skills": {
+    "adj-agree": "Describing words: alto, alta, altos",
+    "describe-ser": "Ser for what people and places are like",
+    "compare-more": "Comparing: tan… como, mejor, el más",
+    "opinion": "Giving opinions: creo que, para mí"
+  },
+  "discover": {
+    "intro": "The same describing words appear in both colours. Look at how each one ends.",
+    "groups": [
+      { "label": "About him", "tone": "blue", "lines": [["Mi hermano es alto.", "My brother is tall."], ["El camarero es muy simpático.", "The waiter is very nice."], ["Mi padre es tranquilo.", "My dad is calm."]] },
+      { "label": "About her", "tone": "orange", "lines": [["Mi hermana es alta.", "My sister is tall."], ["La camarera es muy simpática.", "The waitress is very nice."], ["Mi madre es tranquila.", "My mum is calm."]] }
+    ],
+    "question": "What changes in the describing words?",
+    "options": [
+      "The ending: -o when they describe him, -a when they describe her.",
+      "Nothing: describing words never change.",
+      "They come before the noun when they describe her."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Compare alto with alta, and simpático with simpática.",
+    "reveal": "Describing words match who or what they describe: -o for masculine, -a for feminine, and an -s on the end for more than one. You know más … que from chapter 6. Here are four more ways to compare:",
+    "hooks": [
+      { "title": "Matching", "tone": "blue", "rows": [
+        ["-o", "him", "Es alto.", "He's tall."],
+        ["-a", "her", "Es alta.", "She's tall."],
+        ["-os", "them", "Son altos.", "They're tall."],
+        ["-as", "them, all female", "Son altas.", "They're tall."]
+      ] },
+      { "title": "Comparing, one step on", "tone": "orange", "rows": [
+        ["=", "as … as", "tan alto como", "as tall as"],
+        ["+", "better than", "mejor que", "better than"],
+        ["−", "worse than", "peor que", "worse than"],
+        ["!", "the most", "el más alto", "the tallest"]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "Describing and comparing",
+    "sub": "Tap any row to hear it",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "alto (tall)", "tone": "blue", "speak": "form", "rows": [["masculine", "alto"], ["feminine", "alta"], ["masculine plural", "altos"], ["feminine plural", "altas"]] },
+        { "title": "simpático (nice)", "tone": "orange", "speak": "form", "rows": [["masculine", "simpático"], ["feminine", "simpática"], ["masculine plural", "simpáticos"], ["feminine plural", "simpáticas"]] },
+        { "title": "grande (big)", "tone": "green", "speak": "form", "rows": [["masculine", "grande"], ["feminine", "grande"], ["masculine plural", "grandes"], ["feminine plural", "grandes"]] }
+      ] },
+      { "type": "note", "kind": "tip", "text": "Words ending in -e or in a consonant don't change for masculine and feminine. They only add -s or -es for more than one: grande, grandes; joven, jóvenes. A mixed group takes the masculine: mis padres son altos." },
+      { "type": "note", "kind": "warn", "text": "Use ser to say what someone or somewhere is like (es alto, es tranquila), and estar for how they are right now (está cansado), as in chapter 1." },
+      { "type": "twist", "title": "Better and worse", "a": ["Este café es mejor.", "This coffee is better."], "b": ["Este café es peor.", "This coffee is worse."], "note": "Spanish has its own words for better and worse: mejor and peor, never más bueno or más malo." },
+      { "type": "note", "kind": "tip", "text": "To give your opinion: creo que (I think that), para mí (for me, in my opinion). Creo que la playa es preciosa. Para mí, el tren es mejor." },
+      { "type": "note", "kind": "culture", "text": "Spaniards give opinions freely and enjoy a friendly debate, especially about food and football. Disagreeing isn't rude, and ¿tú crees? (do you think so?) keeps it light." },
+      { "type": "list", "title": "Describing words", "rows": [["alto / bajo", "tall / short"], ["grande / pequeño", "big / small"], ["simpático / antipático", "nice / unpleasant"], ["bonito / feo", "pretty / ugly"], ["caro / barato", "expensive / cheap"], ["tranquilo / ruidoso", "quiet, calm / noisy"], ["joven / mayor", "young / older"]] }
+    ]
+  },
+  "phrases": [
+    { "id": "c11-taller", "es": "Mi hermano es más alto que yo.", "en": "My brother is taller than me.", "alts": [] },
+    { "id": "c11-nice", "es": "Tu amiga es muy simpática.", "en": "Your friend is very nice.", "alts": [] },
+    { "id": "c11-better", "es": "Este café es mejor.", "en": "This coffee is better.", "alts": [] },
+    { "id": "c11-asbig", "es": "Valencia es tan bonita como Sevilla.", "en": "Valencia is as pretty as Seville.", "alts": [] },
+    { "id": "c11-think", "es": "Creo que es preciosa.", "en": "I think it's beautiful.", "alts": ["Creo que es precioso."] },
+    { "id": "c11-quiet", "es": "El barrio es muy tranquilo.", "en": "The neighbourhood is very quiet.", "alts": [] },
+    { "id": "c11-best", "es": "Para mí, es el mejor restaurante.", "en": "For me, it's the best restaurant.", "alts": [] },
+    { "id": "c11-whatlike", "es": "¿Cómo es tu ciudad?", "en": "What's your town like?", "alts": ["¿Cómo es su ciudad?"] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "adj-agree", "q": "Mi hermana es muy ___.", "sub": "(My sister is very tall.)", "options": ["alta", "alto", "altos"], "answer": 0, "why": "Hermana is a woman: alta." },
+    { "type": "gap", "skill": "compare-more", "q": "Mi hermano es ___ alto como yo.", "hint": "as", "hintLabel": "Meaning", "answer": ["tan"], "why": "As … as is tan … como: tan alto como yo." },
+    {
+      "type": "rapid", "skill": "adj-agree", "prompt": "Rapid fire: which ending?",
+      "choices": [{ "key": "alto", "label": "alto" }, { "key": "alta", "label": "alta" }, { "key": "altos", "label": "altos" }, { "key": "altas", "label": "altas" }],
+      "items": [
+        { "blank": "Mi padre es ___.", "full": "Mi padre es alto.", "fill": "alto", "answer": "alto", "skill": "adj-agree", "why": "One man: alto." },
+        { "blank": "Mis hermanas son ___.", "full": "Mis hermanas son altas.", "fill": "altas", "answer": "altas", "skill": "adj-agree", "why": "More than one woman: altas." },
+        { "blank": "Tu amiga es ___.", "full": "Tu amiga es alta.", "fill": "alta", "answer": "alta", "skill": "adj-agree", "why": "One woman: alta." },
+        { "blank": "Los chicos son ___.", "full": "Los chicos son altos.", "fill": "altos", "answer": "altos", "skill": "adj-agree", "why": "More than one man or boy: altos." },
+        { "blank": "Mi madre no es muy ___.", "full": "Mi madre no es muy alta.", "fill": "alta", "answer": "alta", "skill": "adj-agree", "why": "One woman: alta." },
+        { "blank": "Mis padres son ___.", "full": "Mis padres son altos.", "fill": "altos", "answer": "altos", "skill": "adj-agree", "why": "A mixed group takes the masculine: altos." },
+        { "blank": "Tu hermano es muy ___.", "full": "Tu hermano es muy alto.", "fill": "alto", "answer": "alto", "skill": "adj-agree", "why": "One man: alto." },
+        { "blank": "Las chicas son ___.", "full": "Las chicas son altas.", "fill": "altas", "answer": "altas", "skill": "adj-agree", "why": "More than one woman or girl: altas." }
+      ]
+    },
+    { "type": "listen", "skill": "describe-ser", "say": "Mi ciudad es pequeña pero muy bonita.", "options": ["My town is small but very pretty.", "My town is big and very pretty.", "My town is small and very noisy."], "answer": 0, "why": "Pequeña means small, bonita means pretty." },
+    { "type": "gap", "skill": "compare-more", "q": "Este restaurante es ___ que el otro: la comida es muy buena.", "hint": "better", "hintLabel": "Meaning", "answer": ["mejor"], "why": "Better is mejor, never más bueno." },
+    { "type": "fix", "skill": "adj-agree", "prompt": "Tap the word that is wrong.", "sentence": "Mis amigas son muy simpáticos.", "wrong": 4, "fixed": "Mis amigas son muy simpáticas.", "why": "Amigas are women, more than one: simpáticas." },
+    { "type": "order", "skill": "compare-more", "prompt": "My sister is as tall as me.", "words": ["Mi", "hermana", "es", "tan", "alta", "como", "yo"], "answer": "Mi hermana es tan alta como yo.", "why": "Tan + describing word + como." },
+    { "type": "match", "skill": "describe-ser", "prompt": "Match the describing words.", "pairs": [["alto", "tall"], ["barato", "cheap"], ["tranquilo", "quiet, calm"], ["simpático", "nice"], ["ruidoso", "noisy"]] },
+    { "type": "translate", "skill": "compare", "q": "My brother is taller than me.", "answer": ["mi hermano es más alto que yo"], "why": "Más alto que, from chapter 6. After que, Spanish says yo." },
+    { "type": "mc", "skill": "opinion", "q": "___ que Sevilla es preciosa.", "sub": "(I think Seville is beautiful.)", "options": ["Creo", "Cree", "Creer"], "answer": 0, "why": "Creo que means I think that. Cree is he or she, creer is the dictionary form." },
+    { "type": "translate", "skill": "compare-more", "q": "This coffee is better.", "answer": ["este café es mejor"], "why": "Better is mejor: este café es mejor." },
+    { "type": "gap", "skill": "adj-agree", "q": "Las habitaciones son muy ___.", "hint": "pequeño", "hintLabel": "Word", "hintTone": "orange", "answer": ["pequeñas"], "why": "Habitaciones is feminine and more than one, so pequeñas." },
+    { "type": "fix", "skill": "compare", "prompt": "Tap the word that is wrong.", "sentence": "Madrid es más grande de Sevilla.", "wrong": 4, "fixed": "Madrid es más grande que Sevilla.", "why": "Than is que: más grande que." },
+    { "type": "mc", "skill": "compare-more", "q": "Es el restaurante ___ caro de la ciudad.", "sub": "(It's the most expensive restaurant in the city.)", "options": ["más", "tan", "muy"], "answer": 0, "why": "The most expensive: el más caro. De la ciudad means in the city." },
+    { "type": "translate", "skill": "opinion", "q": "I think the hotel is quiet.", "answer": ["creo que el hotel es tranquilo"], "why": "Creo que + what you think. Tranquilo matches el hotel." },
+    { "type": "mc", "skill": "describe-ser", "q": "Mi abuela ___ muy simpática.", "sub": "(My grandmother is very nice.)", "options": ["es", "está", "son"], "answer": 0, "why": "What someone is like takes ser: es simpática." },
+    { "type": "translate", "skill": "describe-ser", "q": "What's your town like?", "answer": ["cómo es tu ciudad", "cómo es su ciudad", "cómo es vuestra ciudad"], "who": ["tú", "usted", "vosotros"], "why": "¿Cómo es…? asks what something is like." }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Describe your home town for a Spanish friend: what it's like, how it compares with a Spanish city you know, and what you think.",
+    "starter": "Mi ciudad es…  Es más… que…  Creo que…",
+    "model": "Mi ciudad es pequeña y tranquila, pero muy bonita. Es menos grande que Madrid y tan bonita como Granada. Creo que Madrid es más divertida, pero para mí mi ciudad es la mejor.",
+    "checklist": ["Describing words match: una ciudad pequeña, tranquila", "Compare: más… que, tan… como, mejor", "Give an opinion: creo que, para mí"]
+  },
+  "boss": {
+    "title": "A room in Málaga",
+    "who": "Elena",
+    "skill": "describe-ser",
+    "persona": "You are Elena, who rents out rooms in a shared flat in Málaga. The learner is choosing between two rooms. Describe the rooms, the flatmates and the neighbourhood, compare them, and ask the learner what they are like and what they think of Málaga. Use tú. Speak European Spanish.",
+    "turns": [
+      { "npc": "Hola, soy Elena. Tengo dos habitaciones. ¿Cómo quieres la habitación?", "en": "Hi, I'm Elena. I've got two rooms. What kind of room do you want?", "skill": "adj-agree",
+        "choices": [["Grande y tranquila, por favor.", true, ""], ["Grande y tranquilo, por favor.", false, "Habitación is feminine: tranquila."], ["Grandes y tranquilas, por favor.", false, "One room: grande y tranquila, without the -s."]] },
+      { "npc": "Esta es más grande, pero esa es más tranquila. ¿Cuál prefieres?", "en": "This one is bigger, but that one is quieter. Which do you prefer?", "skill": "compare-more",
+        "choices": [["Creo que esa es mejor para mí.", true, ""], ["Creo que esa es más buena para mí.", false, "Better is mejor, never más buena."], ["Creo que esa es mejor para yo.", false, "For me is para mí."]] },
+      { "npc": "Tus compañeras de piso son muy simpáticas. ¿Y cómo eres tú?", "en": "Your flatmates are very nice. And what are you like?", "skill": "describe-ser",
+        "choices": [["Soy simpátic{o} y bastante tranquil{o}.", true, ""], ["Estoy simpátic{o} y bastante tranquil{o}.", false, "What someone is like takes ser: soy simpátic{o}."], ["Soy simpátic{o}s y bastante tranquil{o}s.", false, "Just you, one person: no -s on the end."]] },
+      { "npc": "¿Y qué te parece Málaga?", "en": "And what do you think of Málaga?", "skill": "opinion",
+        "choices": [["Para mí, es tan bonita como Sevilla.", true, ""], ["Para mí, es tan bonita que Sevilla.", false, "As … as is tan … como: tan bonita como Sevilla."], ["Para yo, es tan bonita como Sevilla.", false, "For me is para mí."]] }
+    ],
+    "closing": "¡Genial! Entonces la habitación es tuya. ¡Bienvenid{o}!",
+    "closingEn": "Great! The room is yours, then. Welcome!",
+    "chatOpening": "Cuéntame, ¿cómo es tu ciudad?",
+    "chatOpeningEn": "Tell me, what's your home town like?"
+  }
+}

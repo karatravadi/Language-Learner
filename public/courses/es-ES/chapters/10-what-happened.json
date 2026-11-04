@@ -1,0 +1,132 @@
+{
+  "n": 10,
+  "title": "What happened",
+  "sub": "he comido, has visto, ya, todavía no",
+  "can": "Say what you have done today, this week or ever, with he, has, ha + a verb ending in -ado or -ido.",
+  "mins": 15,
+  "doneText": "You can now say what you've done today and this week, the way Spain does.",
+  "skills": {
+    "haber": "He, has, ha: the forms of haber",
+    "participle": "Endings: -ado and -ido",
+    "irregular-pp": "The odd ones: hecho, visto, dicho",
+    "time-words": "Ya, todavía no, nunca",
+    "pp-spain": "Today and this week: he comido"
+  },
+  "discover": {
+    "intro": "Both colours use the same verbs. Look at how the blue ones are built.",
+    "groups": [
+      { "label": "Already happened", "tone": "blue", "lines": [["Hoy he comido paella.", "I've had paella today."], ["Esta mañana he visto a mi amiga.", "I saw my friend this morning."], ["Esta semana hemos trabajado mucho.", "We've worked a lot this week."]] },
+      { "label": "Happening now", "tone": "orange", "lines": [["Hoy como paella.", "I'm having paella today."], ["Veo a mi amiga.", "I see my friend."], ["Trabajamos mucho.", "We work a lot."]] }
+    ],
+    "question": "How does Spanish build the blue sentences?",
+    "options": [
+      "A small verb (he, hemos) and then the verb ending in -ado or -ido.",
+      "It changes the first letter of the verb.",
+      "It puts yo or nosotros in front."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Find the word just before comido, visto and trabajado.",
+    "reveal": "This is the pretérito perfecto, for things you have done. A form of haber (he, has, ha…) plus the verb with -ado (-ar verbs) or -ido (-er and -ir verbs):",
+    "hooks": [
+      { "title": "haber + -ado or -ido", "tone": "blue", "rows": [
+        ["he", "yo", "he hablado", "I have spoken"],
+        ["has", "tú", "has comido", "you have eaten"],
+        ["ha", "él / ella / usted", "ha vivido", "he / she has lived"],
+        ["hemos", "nosotros", "hemos viajado", "we have travelled"],
+        ["habéis", "vosotros", "habéis salido", "you all have gone out"],
+        ["han", "ellos / ellas", "han trabajado", "they have worked"]
+      ] },
+      { "title": "When Spain uses it", "tone": "orange", "rows": [
+        ["1", "today", "Hoy he comido tarde.", "I ate late today."],
+        ["2", "this week", "Esta semana he trabajado mucho.", "I've worked a lot this week."],
+        ["3", "already", "Ya he visto la catedral.", "I've already seen the cathedral."],
+        ["4", "not yet", "Todavía no he comido.", "I haven't eaten yet."],
+        ["5", "ever", "¿Has estado en Sevilla?", "Have you been to Seville?"]
+      ] }
+    ]
+  },
+  "learn": {
+    "title": "What you have done",
+    "sub": "Tap any row to hear it",
+    "blocks": [
+      { "type": "tables", "tables": [
+        { "title": "haber", "tone": "blue", "rows": [["yo", "he"], ["tú", "has"], ["él / ella / usted", "ha"], ["nosotros/as", "hemos"], ["vosotros/as", "habéis"], ["ellos / ellas / ustedes", "han"]] },
+        { "title": "-ado and -ido", "tone": "orange", "speak": "form", "rows": [["hablar", "hablado"], ["trabajar", "trabajado"], ["comer", "comido"], ["vivir", "vivido"], ["salir", "salido"], ["ir", "ido"]] }
+      ] },
+      { "type": "note", "kind": "tip", "text": "-ar verbs take -ado, -er and -ir verbs take -ido. Only he, has, ha changes with the person. The -ado form stays the same: he comido, ha comido, hemos comido." },
+      { "type": "note", "kind": "spain", "text": "Spain uses he comido for anything in a time that isn't over yet: today, this morning, this week, this year, or ever. Hoy he comido paella. Much of Latin America says comí instead. You'll hear both, but this is how Spain says it." },
+      { "type": "list", "title": "The odd ones", "rows": [["hacer · hecho", "done, made"], ["ver · visto", "seen"], ["decir · dicho", "said"], ["poner · puesto", "put"], ["volver · vuelto", "come back"], ["escribir · escrito", "written"], ["abrir · abierto", "opened"]] },
+      { "type": "twist", "title": "Ya or todavía no", "a": ["Ya he comido.", "I've already eaten."], "b": ["Todavía no he comido.", "I haven't eaten yet."], "note": "Ya means already. Todavía no means not yet. Both go before he, has, ha." },
+      { "type": "note", "kind": "warn", "text": "Nothing goes between he and the -ado form. No, ya and nunca go in front: no he comido, ya he comido, nunca he estado en Asia." },
+      { "type": "note", "kind": "tip", "text": "Perder (to lose) is the one for a lost bag or phone when you travel: he perdido el móvil (I've lost my phone)." }
+    ]
+  },
+  "phrases": [
+    { "id": "c10-already", "es": "Ya he comido.", "en": "I've already eaten.", "alts": [] },
+    { "id": "c10-notyet", "es": "Todavía no he comido.", "en": "I haven't eaten yet.", "alts": [] },
+    { "id": "c10-been", "es": "¿Has estado en Sevilla?", "en": "Have you been to Seville?", "alts": ["¿Ha estado en Sevilla?", "¿Habéis estado en Sevilla?"] },
+    { "id": "c10-lost", "es": "He perdido el móvil.", "en": "I've lost my phone.", "alts": [] },
+    { "id": "c10-today", "es": "Hoy he trabajado mucho.", "en": "I've worked a lot today.", "alts": ["He trabajado mucho hoy."] },
+    { "id": "c10-seen", "es": "¿Has visto la catedral?", "en": "Have you seen the cathedral?", "alts": ["¿Ha visto la catedral?"] },
+    { "id": "c10-done", "es": "¿Qué has hecho hoy?", "en": "What have you done today?", "alts": ["¿Qué ha hecho hoy?", "¿Qué habéis hecho hoy?"] },
+    { "id": "c10-never", "es": "Nunca he estado en Asia.", "en": "I've never been to Asia.", "alts": [] }
+  ],
+  "exercises": [
+    { "type": "mc", "skill": "haber", "q": "Hoy ___ comido paella.", "sub": "(I've had paella today.)", "options": ["he", "ha", "has"], "answer": 0, "why": "Yo: he. He comido means I have eaten." },
+    { "type": "gap", "skill": "participle", "q": "Esta semana he ___ mucho.", "hint": "trabajar", "hintLabel": "Verb", "hintTone": "orange", "answer": ["trabajado"], "why": "-ar verbs take -ado: trabajado." },
+    {
+      "type": "rapid", "skill": "participle", "prompt": "Rapid fire: -ado or -ido?",
+      "choices": [{ "key": "ado", "label": "-ado" }, { "key": "ido", "label": "-ido" }],
+      "items": [
+        { "blank": "He habl___ con mi madre.", "full": "He hablado con mi madre.", "fill": "ado", "answer": "ado", "skill": "participle", "why": "Hablar is an -ar verb: hablado." },
+        { "blank": "Hemos com___ en un bar.", "full": "Hemos comido en un bar.", "fill": "ido", "answer": "ido", "skill": "participle", "why": "Comer is an -er verb: comido." },
+        { "blank": "¿Has viv___ en Madrid?", "full": "¿Has vivido en Madrid?", "fill": "ido", "answer": "ido", "skill": "participle", "why": "Vivir is an -ir verb: vivido." },
+        { "blank": "Han viaj___ mucho.", "full": "Han viajado mucho.", "fill": "ado", "answer": "ado", "skill": "participle", "why": "Viajar is an -ar verb: viajado." },
+        { "blank": "Mi padre ha sal___ de casa.", "full": "Mi padre ha salido de casa.", "fill": "ido", "answer": "ido", "skill": "participle", "why": "Salir is an -ir verb: salido." },
+        { "blank": "He estudi___ español.", "full": "He estudiado español.", "fill": "ado", "answer": "ado", "skill": "participle", "why": "Estudiar is an -ar verb: estudiado." },
+        { "blank": "Habéis beb___ mucho café.", "full": "Habéis bebido mucho café.", "fill": "ido", "answer": "ido", "skill": "participle", "why": "Beber is an -er verb: bebido." },
+        { "blank": "Hoy hemos trabaj___ mucho.", "full": "Hoy hemos trabajado mucho.", "fill": "ado", "answer": "ado", "skill": "participle", "why": "Trabajar is an -ar verb: trabajado." }
+      ]
+    },
+    { "type": "listen", "skill": "pp-spain", "say": "Esta mañana he perdido el móvil.", "options": ["I lost my phone this morning.", "I'm going to lose my phone.", "I found my phone this morning."], "answer": 0, "why": "He perdido: I've lost. Perder means to lose." },
+    { "type": "gap", "skill": "irregular-pp", "q": "¿Qué has ___ hoy?", "hint": "hacer", "hintLabel": "Verb", "hintTone": "orange", "answer": ["hecho"], "why": "Hacer is one of the odd ones: hecho, not hacido." },
+    { "type": "fix", "skill": "irregular-pp", "prompt": "Tap the word that is wrong.", "sentence": "Ya he vido la catedral.", "wrong": 2, "fixed": "Ya he visto la catedral.", "why": "Ver is one of the odd ones: visto." },
+    { "type": "order", "skill": "time-words", "prompt": "I haven't eaten yet.", "words": ["Todavía", "no", "he", "comido"], "answer": "Todavía no he comido.", "why": "Todavía no goes before he." },
+    { "type": "match", "skill": "irregular-pp", "prompt": "Match the odd ones.", "pairs": [["hecho", "done, made"], ["visto", "seen"], ["dicho", "said"], ["puesto", "put"], ["escrito", "written"]] },
+    { "type": "translate", "skill": "haber", "q": "We have travelled a lot.", "answer": ["hemos viajado mucho"], "why": "Nosotros: hemos. Viajar: viajado." },
+    { "type": "mc", "skill": "haber", "q": "¿Vosotros ___ estado en Granada?", "sub": "(Have you all been to Granada?)", "options": ["habéis", "han", "hemos"], "answer": 0, "why": "Vosotros: habéis, with an accent." },
+    { "type": "translate", "skill": "time-words", "q": "I've already eaten.", "answer": ["ya he comido"], "why": "Ya goes before he: ya he comido." },
+    { "type": "gap", "skill": "haber", "q": "Mis padres ___ llegado hoy.", "hint": "ellos", "hintLabel": "Who", "answer": ["han"], "why": "Mis padres is they: han llegado." },
+    { "type": "fix", "skill": "participle", "prompt": "Tap the word that is wrong.", "sentence": "Hemos comedo en casa.", "wrong": 1, "fixed": "Hemos comido en casa.", "why": "Comer is an -er verb, so -ido: comido." },
+    { "type": "translate", "skill": "irregular-pp", "q": "Have you seen the cathedral?", "answer": ["has visto la catedral", "ha visto la catedral", "ha visto usted la catedral", "habéis visto la catedral"], "who": ["tú", "usted", "usted", "vosotros"], "why": "Ver is one of the odd ones: visto. Has for tú, ha for usted." },
+    { "type": "mc", "skill": "pp-spain", "prompt": "In Spain, how do you usually say \"I had paella today\"?", "q": "", "options": ["Hoy he comido paella.", "Hoy como paella.", "Hoy voy a comer paella."], "answer": 0, "why": "Spain uses he comido for anything that happened today." },
+    { "type": "translate", "skill": "pp-spain", "q": "I've lost my phone.", "answer": ["he perdido el móvil", "he perdido mi móvil"], "why": "Perder: perdido. In Spain it's el móvil." }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Write a short message to a friend about your day: three things you have done today and one thing you haven't done yet.",
+    "starter": "Hoy he…  También he…  Todavía no he…",
+    "model": "Hoy he visitado la catedral y he comido tapas con unos amigos. Por la tarde he hecho la compra. Todavía no he llamado a mi madre.",
+    "checklist": ["He, has, ha + -ado or -ido: he visitado, he comido", "The odd ones: hecho, visto, dicho", "Todavía no for something not done yet"]
+  },
+  "boss": {
+    "title": "Lost property at Atocha",
+    "who": "Rubén",
+    "skill": "pp-spain",
+    "persona": "You are Rubén, a patient lost-property officer at Atocha station in Madrid. The learner has lost a backpack. Ask what has happened, where they have been today, whether they have looked for it, and whether their name is on it. Use usted, and switch to tú if the learner does. Speak European Spanish.",
+    "turns": [
+      { "npc": "Buenos días. ¿Qué ha pasado?", "en": "Good morning. What's happened?", "skill": "pp-spain",
+        "choices": [["He perdido la mochila.", true, ""], ["Ha perdido la mochila.", false, "Ha is he, she or usted. About yourself: he perdido."], ["He perdo la mochila.", false, "Perder is an -er verb, so -ido: perdido."]] },
+      { "npc": "Vaya. ¿Dónde ha estado hoy?", "en": "Oh dear. Where have you been today?", "skill": "haber",
+        "choices": [["He estado en el museo y en un café.", true, ""], ["Estoy estado en el museo y en un café.", false, "Have been is he estado. Estoy means I am."], ["He estada en el museo y en un café.", false, "The -ado form never changes: estado."]] },
+      { "npc": "¿Y ha mirado en el café?", "en": "And have you looked in the café?", "skill": "time-words",
+        "choices": [["Sí, ya he mirado, pero no está.", true, ""], ["Sí, he ya mirado, pero no está.", false, "Ya goes before he: ya he mirado."], ["Sí, ya he mirando, pero no está.", false, "Have looked is he mirado, with -ado."]] },
+      { "npc": "¿Ha escrito su nombre en la mochila?", "en": "Have you written your name on the backpack?", "skill": "irregular-pp",
+        "choices": [["Sí, he escrito mi nombre dentro.", true, ""], ["Sí, he escribido mi nombre dentro.", false, "Escribir is one of the odd ones: escrito."], ["Sí, ha escrito mi nombre dentro.", false, "Ha is he, she or usted. About yourself: he escrito."]] }
+    ],
+    "closing": "¡Aquí está! Una mochila con su nombre. ¡Buen viaje!",
+    "closingEn": "Here it is! A backpack with your name in it. Have a good trip!",
+    "chatOpening": "¿Y qué más ha hecho hoy en Madrid?",
+    "chatOpeningEn": "And what else have you done in Madrid today?"
+  }
+}
