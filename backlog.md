@@ -1,9 +1,8 @@
 # Stilus backlog
 
-Last updated 2 Nov 2026. Newest at the bottom. Sizes: S under an hour of work, M a session, L several sessions.
+Last updated 3 Nov 2026. Newest at the bottom. Sizes: S under an hour of work, M a session, L several sessions.
 
-## 1. Save my name against my email (S)
-Done and deployed 2 Nov 2026.
+## 1. Save my name against my email (S) - DONE 2 Nov 2026
 Problem: adding a new language asks for my name again.
 
 Plan:
@@ -15,8 +14,7 @@ Plan:
 
 Answer: it was stored per course, inside each course's progress (S.name), so a new course started blank.
 
-## 2. Partial marks for small spelling slips (M)
-Done and deployed 2 Nov 2026.
+## 2. Partial marks for small spelling slips (M) - DONE 2 Nov 2026
 Problem: one wrong letter in a word gives a full fail.
 
 Plan:
@@ -47,8 +45,7 @@ Plan:
 - Written by AI, so flag anything uncertain for Kara to check. Latin notes get checked against Whitaker's Words or Wheelock.
 - This is the first step on the open "clearer explanations for absolute beginners" item in HANDOVER.md.
 
-## 4. Show AI calls left today (S)
-Done and deployed 2 Nov 2026.
+## 4. Show AI calls left today (S) - DONE 2 Nov 2026
 Problem: the tutor stops working when the daily cap is hit (60 per person, 450 in total), with no warning.
 
 Plan:
@@ -76,3 +73,92 @@ Plan, if it works:
 - Say a key phrase out loud, the app shows what it heard, and marks it with the same close-match rules as item 2.
 - Spanish only. Browsers have no Latin voice, so Latin is out.
 - Check where the audio goes (the browser may send it to Apple or Google) and tell Kara before it ships.
+
+# Bugs (found 3 Nov 2026)
+
+## 7. The most recently clicked chapter hides its saved score and ticks (S)
+Seen: chapter 1 shows a tick on the course list, but its button says "Carry on". Clicking it resets the chapter's
+progress in the left-hand Today checklist and the score from the first run is no longer shown. The Today plan also lists
+"Carry on: chapter 1" after the chapter was finished.
+
+Plan:
+- Treat a finished chapter as finished for good. Keep the completed flag, the first score and the best score.
+- Reopening starts a fresh practice run that is stored separately. It never overwrites the first score or clears today's ticks.
+- Change the button on finished chapters from "Carry on" to "Practise again", and show the score next to it.
+- The Today plan should not suggest a chapter that is already finished.
+- Check the same for Latin and French, and check the synced D1 copy as well as the local one.
+- Test: finish a chapter, reopen it, quit halfway, and confirm the score, tick and Today checklist are unchanged.
+
+Confirmed by Kara: it happens the moment the chapter is reopened, before any answer is given. Update the same evening:
+after opening the next chapter, chapter 1 goes back to showing the original score. So the score is probably not lost. It
+looks like the app treats the reopened chapter as the "current" one and hides its saved result and ticks until another
+chapter becomes current. That makes it a display and state bug, not data loss. Confirmed by Kara: the percentage shows
+for every chapter except the most recently clicked one. So the fix is in how the course list and Today plan render the
+"last clicked" chapter: it should show its saved score and ticks like any other. First check that the first score is
+still in D1 while the chapter is reopened.
+
+## 8. Rapid fire ends with Finish and Continue, and Finish goes nowhere (S)
+Seen: after the last rapid fire question (score "7 of 8") two buttons show. Finish does nothing visible.
+
+Plan:
+- Show one button after the final question. Keep Continue, remove Finish.
+- If Finish was meant to end a round early, give it a real destination or take it out.
+- Check the other exercise types that end a block for the same duplicate.
+
+## 9. "Careful" appears twice in warning notes (S)
+Seen: in chapter 1 the note has the label "Careful" and the text starts with "Careful:" again (about sleepy, hungry,
+thirsty and age using tener).
+
+Plan:
+- Remove the leading "Careful:" from the text. The label already says it.
+- Search all chapters (Spanish, French, Latin) for notes whose text starts with the same word as their label
+  (Careful, Tip, Spain, Culture) and fix them.
+- Add a rule to the content checker so a note that repeats its own label is rejected from now on.
+
+## 10. Discover boxes are titled by colour, not by meaning (S)
+Seen: the first page of a chapter ("Work it out") shows two coloured boxes headed "Blue" and "Orange". In chapter 2 they
+should say what the group is, for example "I" and "we". Kara says it looks like every chapter.
+
+Plan:
+- Give each box a title that says what its examples have in common, in plain English. Chapter 2: "One person (I)" and
+  "A group (we)". Chapter 1: ser and estar.
+- The colour stays as decoration, matching the colour coding used later in the chapter. It never carries the meaning on its own.
+- Add a `label` field to each group in the chapter JSON, and make the content checker reject a group with no label or a
+  label that is only a colour name. Fix all Spanish, French and Latin chapters in one pass.
+- Accessibility: colour-only headings fail for colour-blind users, so this also fixes that.
+
+## 11. Save a whole verb, with its conjugation, to My words (M)
+Problem: tapping a verb saves one form (for example "vivo"), so learning a verb means saving six forms by hand.
+
+Plan:
+- When the tapped word is a verb, offer "Save verb" next to the normal save. It saves the infinitive (vivir) with the
+  full present-tense table: yo, tú, él/ella/usted, nosotros, vosotros, ellos/ellas/ustedes. Spain Spanish, so vosotros
+  is always included.
+- One card per verb in My words, showing the table. Not six separate cards.
+- Review: the card asks for one form at a time, picked at random ("vosotros, vivir"), which suits active practice over
+  reading a table. Missing a form keeps the whole verb due sooner.
+- Source of the tables: ship them in the content, not from live AI calls, so it costs no tutor calls and works offline.
+  Mark irregular verbs (ser, estar, tener, ir, hacer) and have each table checked, since the content is AI-written.
+- Later tenses: when the past tense chapter arrives, the same card gains a tense switch.
+- Latin and French: same idea, with Latin showing the verb's endings by person and macrons throughout. Do Spanish first.
+
+Open question: should review ask for one form at a time (recommended) or the whole table at once?
+
+## 12. Starting a new chapter erases progress in an unfinished one (M, fix first)
+Seen: halfway through chapter 2, Kara opened chapter 3 and the chapter 2 progress was gone.
+
+Likely cause, to verify: this probably shares a root cause with item 7. The app seems to keep one "current chapter"
+slot, so opening any chapter overwrites whatever the last one held. In item 7 only the display was affected. Here the
+half-finished position may really be lost, which is worse. Fix both together.
+
+Plan:
+- Store progress per chapter, keyed by chapter id: step reached, answers so far and score so far. Opening a chapter must
+  never write to another chapter's record.
+- Save after every exercise, locally and to D1, so a closed tab or a crash loses at most one answer.
+- A chapter that is part-done shows "Resume" and where you are (for example "exercise 6 of 15"), not "Carry on" with no position.
+- Cover all three courses.
+- Test: get halfway through chapter 2, open chapter 3, leave it, go back to chapter 2, and confirm it resumes at the
+  same exercise with the same score. Repeat after a page reload and on a second device.
+
+Confirmed by Kara: going back to chapter 2 started it again from the very first step, so the position really is lost,
+not just hidden. Still to check: whether the answers and score from the first attempt were also dropped or only the position.
