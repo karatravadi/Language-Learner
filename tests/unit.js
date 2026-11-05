@@ -119,6 +119,12 @@ t('merge done keeps the first score', () => assert.equal(
   t('hint: none when two forms swap at once', () => assert.equal(H(es, 'vivo como', ['vives comes'], 2), null));
   t('hint: Latin quotes its English labels, with macrons', () => assert.equal(H(la, 'puellae est laetae', ['puellae sunt laetae'], 1), 'est is the form for "he, she or it is". Here you need the one for "they are": sunt.'));
   t('hint: Latin cases', () => assert.equal(H(la, 'puella agricola videt', ['puella agricolam videt'], 2), null, 'agricola is not in a table, so no guess'));
+  t('hint, second try: says what the form is for, not the answer', () => { const h = L.formHint(es.F, 'vives aquí', ['vive aquí'], 2, es.cj.personNotes, true); assert.equal(h, 'vives goes with tú. Which form goes with él, ella or usted?'); assert.ok(!/\bvive\b/.test(h)); });
+  t('hint, second try: the other verb, without the form', () => assert.equal(L.formHint(es.F, 'estamos de inglaterra', ['somos de inglaterra'], 1, es.cj.personNotes, true), 'estamos is a form of estar. This one needs ser.'));
+  t('hint, second try: a wrong ending', () => assert.equal(L.tryHint('ella hablo bien', ['ella habla bien']), 'Check the ending of hablo.'));
+  t('hint, second try: a different word', () => assert.equal(L.tryHint('tengo un perro', ['tengo un gato']), 'Look again at perro.'));
+  t('hint, second try: nothing to point at', () => { assert.equal(L.tryHint('xyz abc', ['estoy cansada hoy']), null); assert.equal(L.tryHint('el perro come', ['el gato bebe']), null); });
+  t('hint, second try: English answers too', () => assert.equal(L.tryHint('the girl sees the farmers', ['the girl sees the farmer'], { english: true }), 'Check the ending of farmers.'));
   t('hint: French person', () => assert.equal(H(fr, 'elle es anglaise', ['elle est anglaise'], 1), 'es goes with tu (you, one person you know well). For il, elle or on, use est.'));
   t('hint: a form right for both persons is not the mistake (je prends, tu prends)', () => assert.equal(H(fr, 'je prends le bus', ['je prends le bus'], 5), null));
 }
