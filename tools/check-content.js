@@ -115,6 +115,31 @@ function check(dir = COURSES) {
       where.pop();
     }
 
+    // ---- graded readings (optional): unlocked after a chapter, 100 to 150 words, with questions ----
+    if (course.readings != null) {
+      where.push('readings');
+      const rd = readJson(path.join(base, course.readings)) || {};
+      const rids = new Set();
+      (rd.readings || []).forEach(r => {
+        where.push(r.id || '?');
+        if (!isStr(r.id) || rids.has(r.id)) err('needs a unique id'); rids.add(r.id);
+        for (const k of ['title', 'text', 'en']) if (!isStr(r[k])) err('missing ' + k);
+        if (!Number.isInteger(r.after)) err('after must be the chapter number it follows');
+        const words = String(r.text || '').split(/\s+/).filter(w => /\p{L}/u.test(w)).length;
+        if (words < 80 || words > 170) warn('text has ' + words + ' words (aim for 100 to 150)');
+        if (!Array.isArray(r.questions) || r.questions.length < 2) err('needs at least 2 questions');
+        (r.questions || []).forEach((q, i) => {
+          if (!isStr(q.q)) err('question ' + (i + 1) + ' needs q');
+          if (q.type === 'mc') optionsCheck(q.options, q.answer, 'question ' + (i + 1));
+          else if (q.type === 'short') { if (!Array.isArray(q.answer) || !q.answer.length || !q.answer.every(isStr)) err('question ' + (i + 1) + ' needs a list of answers'); }
+          else err('question ' + (i + 1) + ': type must be mc or short');
+        });
+        where.pop();
+      });
+      if (!(rd.readings || []).length) err('no readings');
+      where.pop();
+    }
+
     // ---- chapters ----
     for (const file of course.chapters || []) {
       where.length = 1; where.push(file);

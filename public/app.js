@@ -19,7 +19,7 @@
   };
   const PLAN_DEFAULTS = { word: 3, review: 10, practise: 15 };
 
-  let COURSE = null; let CHAPTERS = []; let ROADMAP = []; let WORDS = []; let SKILLS = {}; let GLOSS = {}; let COURSES = []; let VERBS = null; let VERB_INDEX = new Map(); let DRILLS = null;
+  let COURSE = null; let CHAPTERS = []; let ROADMAP = []; let WORDS = []; let SKILLS = {}; let GLOSS = {}; let COURSES = []; let VERBS = null; let VERB_INDEX = new Map(); let DRILLS = null; let READINGS = [];
   let UI = UI_DEFAULTS; let PLAN = PLAN_DEFAULTS;
   // TL: the lang attribute of text in the course's language, which makes its words tappable (es, la).
   let TL = 'es';
@@ -561,6 +561,11 @@
     const nWords = myWords().length;
     const nDone = finishedChapters().length;
     const nFlash = flashDeck().length;
+    const nRead = READINGS.filter(readingOpen).length;
+    const readCard = READINGS.length ? h('button', { class: 'card wotd', type: 'button', onclick: readingsScreen },
+      h('div', { class: 'wotd-k' }, 'Reading'),
+      h('div', { class: 'wotd-m' }, nRead ? nRead + (nRead === 1 ? ' short text' : ' short texts') + ' to read, made of words you know' : 'Short texts open as you finish chapters'),
+      h('div', { class: 'wotd-go' }, nRead ? 'Read' : 'See them', icon('next'))) : null;
     const flashCard = h('button', { class: 'card wotd', type: 'button', disabled: nFlash < 4, onclick: flashcards },
       h('div', { class: 'wotd-k' }, 'Flashcards'),
       h('div', { class: 'wotd-m' }, nFlash >= 4 ? 'About 10 cards from your words and phrases, any time' : 'Opens once you have finished a chapter or saved a few words'),
@@ -598,7 +603,7 @@
         h('div', { class: 'top-r' }, courseSwitch(),
           h('button', { class: 'icon-btn', 'aria-label': 'Settings', onclick: settings }, icon('settings', 'lg')))),
       h('div', { class: 'home-grid' },
-        h('div', { class: 'home-side' }, todayCard, wotd, wordsCard, flashCard, mixCard),
+        h('div', { class: 'home-side' }, todayCard, wotd, readCard, wordsCard, flashCard, mixCard),
         h('div', {},
           h('h1', { class: 'page-title' }, COURSE.title), h('p', { class: 'muted' }, COURSE.level + ' · ' + CHAPTERS.length + ' chapters'),
           h('div', { class: 'path' }, path),
@@ -1518,6 +1523,77 @@
     mount(h('div', { class: 'page lesson' }, backBar('Weak spots · ' + skillName(weak[0]), home), content));
   }
 
+  // ---------- graded readings (backlog 15) ----------
+  // Short texts, each unlocked by the chapter it follows, made of mostly known words. Tap any word for its meaning
+  // and save it to My words as usual. A few gentle questions follow, and only then can the English be shown.
+  const readingOpen = r => !!S.done[r.after];
+  function readingsScreen() {
+    const list = READINGS.map(r => {
+      const open = readingOpen(r); const done = S.reads && S.reads[r.id];
+      return h('button', { class: 'chap' + (done ? ' done' : ''), type: 'button', disabled: !open, onclick: () => readingScreen(r) },
+        h('div', { class: 'chap-n' }, done ? icon('check') : String(r.after)),
+        h('div', {}, h('div', { class: 'chap-t', lang: TL }, T(r.title)), h('div', { class: 'chap-s' }, open ? 'After chapter ' + r.after : 'Opens after chapter ' + r.after)),
+        h('div', { class: 'chap-go' }, open ? (done ? done.right + ' of ' + done.total + ' · Read again' : 'Read') : 'Later', open ? icon('next') : null));
+    });
+    mount(h('div', { class: 'page lesson' }, backBar('Reading', home),
+      h('div', { class: 'step' }, h('h2', {}, 'Reading'),
+        h('p', { class: 'muted' }, 'Short texts made of words you know, plus a few new ones. Tap any word to see what it means or save it. Questions follow, then the English if you want it.'),
+        h('div', { class: 'path' }, list))));
+  }
+  function readingScreen(r) {
+    if (window.__trainer) window.__trainer.reading = r; // test hook
+    let answered = 0; let right = 0;
+    const total = r.questions.length;
+    const after = h('div', {});
+    const qs = r.questions.map((q, i) => {
+      const box = h('div', { class: 'read-q' }, h('p', { class: 'q' }, (i + 1) + '. ' + q.q));
+      const fb = h('p', { class: 'meta read-fb' });
+      const mark = ok => { answered++; if (ok) { right++; addXp(3); } box.classList.add(ok ? 'q-good' : 'q-bad'); if (answered === total) finish(); };
+      if (q.type === 'mc') {
+        const btns = q.options.map((o, k) => h('button', { class: 'opt', type: 'button', onclick: () => {
+          btns.forEach(b => { b.disabled = true; }); btns[q.answer].classList.add('good');
+          if (k !== q.answer) btns[k].classList.add('bad');
+          fb.textContent = k === q.answer ? praise() : 'It was: ' + q.options[q.answer];
+          mark(k === q.answer);
+        } }, o));
+        box.append(h('div', { class: 'opts' }, btns), fb);
+      } else {
+        const input = h('input', { class: 'text', type: 'text', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': 'Your answer' });
+        const go = h('button', { class: 'btn ghost', type: 'button' }, 'Check');
+        const check = () => {
+          if (!input.value.trim() || input.disabled) return;
+          const { r: res, near } = judgeTyped(input.value, q.answer);
+          const ok = res !== 'no' || !!near; // gentle: a slip or a missing accent still counts here
+          input.disabled = true; go.disabled = true;
+          fb.textContent = ok ? (res === 'ok' ? praise() : 'Yes: ' + q.answer[0]) : 'It was: ' + q.answer[0];
+          mark(ok);
+        };
+        go.addEventListener('click', check);
+        input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); check(); } });
+        box.append(accentBar(input), input, h('div', { class: 'row' }, go), fb);
+      }
+      return box;
+    });
+    function finish() {
+      if (!S.reads) S.reads = {};
+      S.reads[r.id] = { right, total, at: Date.now() };
+      save();
+      const en = h('div', { class: 'read-en hidden' }, T(r.en).split('\n').map(p => h('p', {}, p)));
+      put(after,
+        h('p', { class: 'lead' }, right + ' of ' + total + ' right.'),
+        h('div', { class: 'row' },
+          h('button', { class: 'btn ghost', type: 'button', onclick: e => { en.classList.toggle('hidden'); e.target.textContent = en.classList.contains('hidden') ? 'Show the English' : 'Hide the English'; } }, 'Show the English'),
+          h('button', { class: 'btn primary', type: 'button', onclick: readingsScreen }, 'Back to reading')),
+        en);
+    }
+    mount(h('div', { class: 'page lesson' }, backBar('Reading · after chapter ' + r.after, readingsScreen),
+      h('div', { class: 'step' },
+        h('h2', { lang: TL }, T(r.title)),
+        h('div', { class: 'read-text', lang: TL }, T(r.text).split('\n').map(p => h('p', {}, p))),
+        h('h3', { class: 'read-h' }, 'Questions'),
+        qs, after)));
+  }
+
   // ---------- the daily verb drill (backlog 14) ----------
   // Under 3 minutes on the core verbs (ser and estar first, side by side), so the forms come out without thinking.
   // Three formats rotate by day: a timed speed round of gap sentences; "who is it" (pick the person for a form);
@@ -2003,6 +2079,7 @@
       VERBS = COURSE.verbs ? await getJson(base + COURSE.verbs) : null;
       VERB_INDEX = L.verbIndex(VERBS);
       DRILLS = COURSE.drills && VERBS ? await getJson(base + COURSE.drills) : null;
+      READINGS = COURSE.readings ? ((await getJson(base + COURSE.readings)).readings || []) : [];
       ROADMAP = COURSE.roadmap || [];
       SKILLS = Object.assign({ [SPELLING]: 'Spelling' }, COURSE.skills, ...CHAPTERS.map(c => c.skills || {}));
       GLOSS_WORDS = Object.keys(GLOSS);
@@ -2025,7 +2102,7 @@
         h('p', { class: 'meta' }, String(e.message || e))));
       return;
     }
-    window.__trainer = { drillScreen, flashcards, mixedReview, idleFor: ms => { lastActive = Date.now() - ms; }, state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE, ui: UI };
+    window.__trainer = { readingsScreen, readingScreen, drillScreen, flashcards, mixedReview, idleFor: ms => { lastActive = Date.now() - ms; }, state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE, ui: UI };
     await aiStatus();
     if (SYNC.on) await syncStart();
     applyProfile();

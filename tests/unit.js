@@ -165,6 +165,17 @@ t('drill: merge unions the clean days and keeps graduation', () => {
   assert.equal(m.lastDay, 'd3'); assert.deepEqual(m.verbs.ser.days, ['d1', 'd2', 'd3']); assert.equal(m.verbs.estar.grad, 'd0');
 });
 
+// ---------- graded readings (backlog 15) ----------
+t('reads: merge keeps the latest result per text', () => assert.deepEqual(L.mergeState({ reads: { a: { right: 1, total: 3, at: 5 } } }, { reads: { a: { right: 3, total: 3, at: 9 }, b: { at: 1 } } }).reads, { a: { right: 3, total: 3, at: 9 }, b: { at: 1 } }));
+{
+  const fs = require('fs'); const path = require('path');
+  const base = path.join(__dirname, '../public/courses/es-ES');
+  const es = JSON.parse(fs.readFileSync(path.join(base, 'course.json'), 'utf8'));
+  const rd = JSON.parse(fs.readFileSync(path.join(base, es.readings), 'utf8')).readings;
+  t('reads: every text follows a chapter that exists', () => rd.forEach(r => assert.ok(r.after >= 1 && r.after <= es.chapters.length, r.id)));
+  t('reads: short answers accept themselves', () => rd.forEach(r => r.questions.filter(q => q.type === 'short').forEach(q => q.answer.forEach(a => assert.equal(L.judge(a, q.answer), 'ok', a)))));
+}
+
 // ---------- flashcards (backlog 13) ----------
 t('flash: English answers from a meaning', () => assert.deepEqual(L.englishAnswers('to speak, to talk').sort(), ['speak', 'talk', 'to speak', 'to speak, to talk', 'to talk'].sort()));
 t('flash: notes in brackets are dropped', () => assert.deepEqual(L.englishAnswers('you all go to bed (with os)'), ['you all go to bed']));

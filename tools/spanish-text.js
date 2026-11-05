@@ -48,6 +48,7 @@ function courseSpanish(dir, course) {
   const out = [];
   for (const f of course.chapters) out.push(...chapterSpanish(JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')), course));
   if (course.drills) JSON.parse(fs.readFileSync(path.join(dir, course.drills), 'utf8')).sentences.forEach((d, i) => d.answer.forEach(a => out.push({ text: fill(d.q.replace('___', a)), where: 'drill ' + (i + 1) })));
+  if (course.readings) JSON.parse(fs.readFileSync(path.join(dir, course.readings), 'utf8')).readings.forEach(r => { out.push({ text: fill(r.title), where: 'reading ' + r.id }); out.push({ text: fill(r.text), where: 'reading ' + r.id }); });
   if (course.words) JSON.parse(fs.readFileSync(path.join(dir, course.words), 'utf8')).forEach(w => { out.push({ text: w.es, where: 'word ' + w.id }); out.push({ text: w.ex.es, where: 'word ' + w.id }); });
   return out;
 }

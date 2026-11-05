@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "about": "Short graded readings (backlog 15): 100 to 150 words, each unlocked by the chapter it follows (after), using mostly words taught by then. Questions: one on the gist, one on a detail, one short typed answer. The English is shown only on request, after the questions. Written by an AI: worth a native speaker's check.",
+  "readings": [
+    {
+      "id": "r-marta", "after": 2, "title": "Marta en Madrid",
+      "text": "Hola, soy Marta. Soy de Sevilla, pero ahora vivo en Madrid. Trabajo en una oficina en el centro y estudio inglés por la noche. Mi piso es pequeño, pero estoy muy contenta aquí.\nMi hermano Javi también vive en Madrid. Él es médico y trabaja mucho. Los domingos comemos juntos en un bar cerca de mi casa. Él siempre come paella y yo como tortilla. Hablamos de la familia, del trabajo y de Sevilla.\nMis padres viven allí, y yo hablo con ellos todos los días por teléfono. Madrid es muy grande y a veces estoy cansada, pero ahora es mi ciudad.",
+      "en": "Hi, I'm Marta. I'm from Seville, but now I live in Madrid. I work in an office in the centre and I study English in the evenings. My flat is small, but I'm very happy here.\nMy brother Javi lives in Madrid too. He's a doctor and he works a lot. On Sundays we have lunch together in a bar near my home. He always has paella and I have tortilla. We talk about the family, about work and about Seville.\nMy parents live there, and I talk to them on the phone every day. Madrid is very big and sometimes I'm tired, but now it's my city.",
+      "questions": [
+        { "type": "mc", "q": "What is the text mostly about?", "options": ["Marta's life in Madrid", "A holiday in Seville", "Javi's job at the hospital"], "answer": 0 },
+        { "type": "mc", "q": "What does Javi eat on Sundays?", "options": ["Paella", "Tortilla", "A sandwich"], "answer": 0 },
+        { "type": "short", "q": "Where do Marta's parents live? One word, in Spanish.", "answer": ["sevilla", "en sevilla"] }
+      ]
+    },
+    {
+      "id": "r-bar", "after": 4, "title": "En un bar de Valencia",
+      "text": "Son las dos y media y Pablo y Ana están en un bar de Valencia. Tienen hambre.\n—¡Hola! ¿Qué os pongo? —pregunta el camarero.\n—Para mí, una caña y una tapa de tortilla, por favor —dice Ana.\n—Y para mí, un café con leche y un bocadillo de jamón —dice Pablo.\n—Vale. ¿Algo más?\n—No, gracias.\nLa tortilla está muy buena y el bocadillo es enorme. Al final, Pablo mira la cuenta: son doce euros con cincuenta. Ana paga con tarjeta. En España no es normal dejar una propina grande en un bar: a veces la gente deja un euro, o nada.",
+      "en": "It's half past two and Pablo and Ana are in a bar in Valencia. They're hungry.\n\"Hi! What can I get you?\" asks the waiter.\n\"For me, a small beer and a tapa of tortilla, please,\" says Ana.\n\"And for me, a white coffee and a ham sandwich,\" says Pablo.\n\"OK. Anything else?\"\n\"No, thanks.\"\nThe tortilla is very good and the sandwich is huge. In the end, Pablo looks at the bill: it's twelve euros fifty. Ana pays by card. In Spain it isn't usual to leave a big tip in a bar: sometimes people leave a euro, or nothing.",
+      "questions": [
+        { "type": "mc", "q": "Where are Pablo and Ana?", "options": ["In a bar in Valencia", "At home in Madrid", "In a restaurant in Seville"], "answer": 0 },
+        { "type": "mc", "q": "How much is the bill?", "options": ["€12.50", "€2.50", "€20"], "answer": 0 },
+        { "type": "short", "q": "What does Ana drink? In Spanish.", "answer": ["una caña", "caña"] }
+      ]
+    },
+    {
+      "id": "r-hostal", "after": 6, "title": "Un mensaje del hostal",
+      "text": "Hola, {name}:\nSoy Álvaro, del hostal Sol, en Sevilla. Tu habitación está lista. Es una habitación compartida con cuatro camas, pero esta semana solo tienes dos compañeros. La habitación tiene baño y una ventana grande.\nLas toallas están en la recepción y cuestan dos euros. Si necesitas una taquilla, tenemos candados en la recepción también. La cocina compartida está en la primera planta y está abierta de ocho a once. El desayuno no es caro: tres euros.\n¿Tienes alguna pregunta? Estoy en la recepción todos los días.\n¡Hasta pronto!\nÁlvaro",
+      "en": "Hi {name},\nI'm Álvaro, from the Sol hostel in Seville. Your room is ready. It's a shared room with four beds, but this week you only have two roommates. The room has a bathroom and a big window.\nThe towels are at reception and they cost two euros. If you need a locker, we have padlocks at reception too. The shared kitchen is on the first floor and it's open from eight to eleven. Breakfast isn't expensive: three euros.\nDo you have any questions? I'm at reception every day.\nSee you soon!\nÁlvaro",
+      "questions": [
+        { "type": "mc", "q": "What is this?", "options": ["A message from the hostel about your room", "An advert for a hotel", "A menu"], "answer": 0 },
+        { "type": "mc", "q": "How much do the towels cost?", "options": ["Two euros", "Three euros", "Nothing"], "answer": 0 },
+        { "type": "short", "q": "How many beds are in the room? A number.", "answer": ["4", "cuatro"] }
+      ]
+    },
+    {
+      "id": "r-jordi", "after": 8, "title": "La rutina de Jordi",
+      "text": "Jordi vive en Barcelona y trabaja en un restaurante, así que su día es un poco diferente. Se despierta a las diez y se levanta a las diez y media. Primero se ducha y luego desayuna un café y una tostada. Después sale a pasear por la playa.\nA la una va al restaurante y trabaja hasta las cinco. Por la tarde vuelve a casa y se echa la siesta. Por la noche trabaja otra vez, hasta las doce. Al final se acuesta a la una y media.\nLos lunes no trabaja: se queda en casa, lee y llama a su madre. Jordi dice: «Me gusta mi trabajo, pero no madrugo nunca».",
+      "en": "Jordi lives in Barcelona and works in a restaurant, so his day is a bit different. He wakes up at ten and gets up at half past ten. First he has a shower and then he has a coffee and a piece of toast for breakfast. After that he goes for a walk along the beach.\nAt one he goes to the restaurant and works until five. In the afternoon he goes back home and has a nap. In the evening he works again, until twelve. Finally he goes to bed at half past one.\nOn Mondays he doesn't work: he stays at home, reads and calls his mum. Jordi says: \"I like my job, but I never get up early.\"",
+      "questions": [
+        { "type": "mc", "q": "What is the text about?", "options": ["Jordi's day", "A trip to Barcelona", "A restaurant's menu"], "answer": 0 },
+        { "type": "mc", "q": "When does Jordi go to bed?", "options": ["At half past one", "At ten", "At midnight"], "answer": 0 },
+        { "type": "short", "q": "Which day doesn't Jordi work? In Spanish.", "answer": ["el lunes", "lunes", "los lunes"] }
+      ]
+    },
+    {
+      "id": "r-madrid", "after": 10, "title": "Un día en Madrid",
+      "text": "Querida mamá:\nHoy he tenido un día muy completo en Madrid. Esta mañana me he levantado temprano y he visitado el Museo del Prado. Después he comido un bocadillo de calamares en la Plaza Mayor. ¡Qué rico!\nPor la tarde he paseado por el Retiro y he visto a muchas familias. Pero también he tenido un problema: he perdido el móvil en el metro. He ido a objetos perdidos en la estación y, ¡qué suerte!, alguien lo ha dejado allí.\nTodavía no he visto el Palacio Real, pero mañana voy a ir. Esta noche voy a cenar con unos amigos.\nUn beso,\n{name}",
+      "en": "Dear Mum,\nToday I've had a really full day in Madrid. This morning I got up early and visited the Prado Museum. After that I had a squid sandwich in the Plaza Mayor. Delicious!\nIn the afternoon I walked around the Retiro park and saw lots of families. But I also had a problem: I lost my phone on the metro. I went to lost property at the station and, what luck, someone had handed it in.\nI haven't seen the Royal Palace yet, but I'm going tomorrow. Tonight I'm going to have dinner with some friends.\nLove,\n{name}",
+      "questions": [
+        { "type": "mc", "q": "What is this?", "options": ["A message to Mum about a day in Madrid", "A guide to the Prado Museum", "A train timetable"], "answer": 0 },
+        { "type": "mc", "q": "What went wrong?", "options": ["The phone was lost on the metro", "The museum was closed", "The train was late"], "answer": 0 },
+        { "type": "short", "q": "What hasn't the writer seen yet? In Spanish.", "answer": ["el palacio real", "palacio real"] }
+      ]
+    },
+    {
+      "id": "r-ciudades", "after": 12, "title": "Dos ciudades",
+      "text": "Mi amiga Elena vive en Málaga y yo vivo en Bilbao. Siempre hablamos de nuestras ciudades.\nMálaga es más grande que Bilbao y tiene playas preciosas. En verano hace mucho calor, y la gente sale mucho por la noche.\nBilbao es más pequeña y más tranquila. Llueve más que en Málaga, pero la ciudad es muy verde y la comida es buenísima: los pintxos son famosos.\nElena dice que Málaga es la mejor ciudad de España. Yo creo que Bilbao es tan bonita como Málaga, pero menos ruidosa. Para mí, lo mejor es que en las dos ciudades la gente es muy simpática.\n¿Y tú? ¿Qué ciudad prefieres?",
+      "en": "My friend Elena lives in Málaga and I live in Bilbao. We're always talking about our cities.\nMálaga is bigger than Bilbao and has beautiful beaches. In summer it's very hot, and people go out a lot at night.\nBilbao is smaller and quieter. It rains more than in Málaga, but the city is very green and the food is excellent: the pintxos are famous.\nElena says Málaga is the best city in Spain. I think Bilbao is as pretty as Málaga, but less noisy. For me, the best thing is that in both cities the people are very friendly.\nWhat about you? Which city do you prefer?",
+      "questions": [
+        { "type": "mc", "q": "What does the text do?", "options": ["Compares Málaga and Bilbao", "Tells the story of a trip", "Gives directions in Bilbao"], "answer": 0 },
+        { "type": "mc", "q": "Which city is quieter?", "options": ["Bilbao", "Málaga", "They're the same"], "answer": 0 },
+        { "type": "short", "q": "What food is Bilbao famous for? In Spanish.", "answer": ["los pintxos", "pintxos"] }
+      ]
+    }
+  ]
+}

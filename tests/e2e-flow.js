@@ -359,6 +359,29 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
     ok('verb drill: ser and estar, ' + Array.from(kinds).join(' + ') + ' today, a clean run counts 1 of 3 days, ticked in the plan');
   }
 
+  // ---------- graded readings (backlog 15; courses with readings.json) ----------
+  if (COURSE.readings) {
+    await page.evaluate(() => window.__trainer.home()); await sleep(60);
+    t = await text(); assert.match(t, /Reading/); assert.match(t, /short texts? to read/);
+    await clickText('.card', 'Reading'); await sleep(100);
+    await page.evaluate(() => [...document.querySelectorAll('.path .chap')].find(b => !b.disabled).click()); await sleep(100);
+    const rd = await page.evaluate(() => window.__trainer.reading);
+    assert.ok(await page.$('.read-text .w'), 'the text is tappable, word by word');
+    for (let i = 0; i < rd.questions.length; i++) {
+      const q = rd.questions[i];
+      if (q.type === 'mc') await page.evaluate((i, k) => document.querySelectorAll('.read-q')[i].querySelectorAll('.opt')[k].click(), i, q.answer);
+      else { const inp = (await page.$$('.read-q'))[i]; await (await inp.$('input.text')).type(q.answer[0]); await page.evaluate(i => [...document.querySelectorAll('.read-q')[i].querySelectorAll('button')].find(b => b.innerText === 'Check').click(), i); }
+      await sleep(40);
+    }
+    t = await text(); assert.ok(t.includes(rd.questions.length + ' of ' + rd.questions.length + ' right'), 'all questions marked');
+    assert.ok(await page.$('.read-en.hidden'), 'the English stays hidden until asked for');
+    await clickText('button', 'Show the English'); await sleep(40);
+    assert.equal(await page.$('.read-en.hidden'), null, 'the English shows on request');
+    const rs = await state(); assert.equal(rs.reads[rd.id].right, rd.questions.length);
+    await page.evaluate(() => window.__trainer.home()); await sleep(60);
+    ok('readings: the first text opens after its chapter, words are tappable, ' + rd.questions.length + ' questions, then the English on request');
+  }
+
   // ---------- flashcards (backlog 13) ----------
   t = await text(); assert.match(t, /Flashcards/);
   await page.evaluate(() => window.__trainer.flashcards()); await sleep(120);

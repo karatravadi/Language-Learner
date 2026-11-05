@@ -392,6 +392,8 @@
       out.drill = { lastDay: String(da.lastDay || '') > String(db.lastDay || '') ? da.lastDay : (db.lastDay || da.lastDay || ''),
         verbs: unionBy(da.verbs, db.verbs, (x, y) => ({ days: Array.from(new Set([].concat(obj(x).days || [], obj(y).days || []))).sort(), grad: obj(x).grad || obj(y).grad || '' })) };
     }
+    // readings: the latest result per text
+    if (a.reads || b.reads) out.reads = unionBy(a.reads, b.reads, (x, y) => ((obj(y).at || 0) > (obj(x).at || 0) ? y : x));
     // flashcard results per card and direction: the more recent record wins
     if (a.flash || b.flash) out.flash = unionBy(a.flash, b.flash, (x, y) => ((obj(y).at || 0) > (obj(x).at || 0) ? y : x));
     // exercises answered with a spelling slip (for the spelling drill): the latest change wins

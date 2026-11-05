@@ -173,7 +173,7 @@ Plan:
 - Errors drawn from what the chapter has taught. Add a `skill` to each so weak-spot drills pick them up.
 - Start with 1 per chapter from chapter 5 onwards, then see how it feels.
 
-## 15. Short graded readings with tap-to-save (M)
+## 15. Short graded readings with tap-to-save (M) - DONE 5 Nov 2026 (Spanish: 6 texts, one after every second chapter)
 
 Why: reading lots of easy text that is mostly understood is one of the best-supported ways to build vocabulary, and it is active, not audio-only.
 

@@ -407,3 +407,13 @@ select.text { font-family: var(--sans); font-size: 16px; }
 .drill-cell.cell-good { border-color: var(--ok); }
 .drill-cell.cell-bad { border-color: var(--pen); color: var(--pen); }
 .drill-result { margin: 16px 0 8px; padding-left: 20px; line-height: 28px; }
+
+/* Graded readings: the text in the serif, comfortably spaced; questions below. */
+.read-text { font: 400 20px/32px var(--serif); margin: 16px 0 8px; }
+.read-text p { margin: 0 0 16px; }
+.read-h { margin: 24px 0 8px; }
+.read-q { margin: 16px 0 24px; }
+.read-q .q { margin-bottom: 8px; }
+.read-fb { margin-top: 8px; }
+.read-en { margin-top: 16px; padding: 16px; border-radius: 12px; background: var(--raised); color: var(--ink-2); line-height: 24px; }
+.read-en p { margin: 0 0 12px; }
