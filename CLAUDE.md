@@ -15,7 +15,10 @@ Read this first, then `HANDOVER.md` for the next phase of work.
 
 ## Branches
 - Claude sessions work on `master-557jsx` and, by the owner's choice (5 Nov 2026), push every change to `master` as well,
-  after the tests pass, so the two stay the same. `master` is the default branch; deploys run from the owner's PC.
+  after the tests pass, so the two stay the same. `master` is the default branch.
+- Deploys: GitHub Actions (`.github/workflows/deploy.yml`) runs `npm test` then `npm run deploy` (migrations, then the
+  Worker) on every push to `master`, using the repo secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. Without
+  them it only tests. `npm run deploy` from the owner's PC still works too.
 
 ## Run and test
 - `start.bat` (Windows) or `npm start`: local server at http://localhost:3000. No `npm install` needed to run.
