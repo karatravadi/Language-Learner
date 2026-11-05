@@ -619,9 +619,10 @@
       h('div', {}, h('div', { class: 'chap-t' }, r.title), h('div', { class: 'chap-s' }, r.can)),
       h('div', { class: 'chap-go' }, 'Later')));
     const nLater = later.length + ROADMAP.length;
+    // In course order: finished ones folded above, the next one, then the later ones folded below.
     const chapters = h('section', { class: 'chapters', 'aria-label': 'Chapters' },
-      nextCh && !S.done[nextCh.n] ? h('div', { class: 'path' }, chapRow(nextCh)) : null,
       fold(finished.length + (finished.length === 1 ? ' chapter done' : ' chapters done'), finished.length, finished.map(chapRow)),
+      nextCh && !S.done[nextCh.n] ? h('div', { class: 'path' }, chapRow(nextCh)) : null,
       fold([later.length ? later.length + (later.length === 1 ? ' more chapter' : ' more chapters') : '', ROADMAP.length ? ROADMAP.length + ' coming later' : ''].filter(Boolean).join(' · '), nLater, later.map(chapRow).concat(roadmap)));
 
     const aiLine = h('button', { class: 'status' + (AI.on ? ' on' : ''), type: 'button', onclick: aiHelp }, h('i'),
