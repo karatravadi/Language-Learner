@@ -504,6 +504,19 @@
     return 'At ' + CHAPTER_STEPS[p.step].toLowerCase();
   }
 
+  // The home screen, top to bottom: Today (minutes, one step up next, the rest of the plan as a short checklist),
+  // the word of the day (the one rich thing here), Any time (reading, flashcards, mixed review, my words, as rows),
+  // then the chapters: the next one stands out, finished and later ones fold away.
+  const fmtXp = n => Number(n || 0).toLocaleString('en-GB');
+  function fold(label, count, items) {
+    if (!items.length) return null;
+    const hint = h('span', { class: 'fold-hint' }, 'Show');
+    const d = h('details', { class: 'fold' },
+      h('summary', {}, h('span', {}, label), h('span', { class: 'fold-dot', 'aria-hidden': 'true' }, '·'), hint),
+      h('div', { class: 'path' }, items));
+    d.addEventListener('toggle', () => { hint.textContent = d.open ? 'Hide' : 'Show'; });
+    return d;
+  }
   function home() {
     const today = L.dayKey();
     const streak = L.liveStreak(S.streak, today);
@@ -514,42 +527,46 @@
     const mins = minsToday();
     const nextCh = nextChapter();
     const doneToday = CHAPTERS.find(c => S.done[c.n] && S.done[c.n].date === today);
-    const chapterToday = !!doneToday;
     const reviewedToday = !!S.reviewed[today];
     const lastDone = CHAPTERS.filter(c => S.done[c.n]).pop();
-
-    const planRow = (done, title, sub, m, onclick) => h('button', { class: 'plan-row' + (done ? ' done' : ''), type: 'button', disabled: !onclick, onclick },
-      h('span', { class: 'dot' }, done ? icon('check') : null),
-      h('span', {}, h('span', { class: 'plan-t' }, title), sub ? h('span', { class: 'plan-s' }, sub) : null),
-      h('span', { class: 'plan-m' }, m),
-      onclick ? icon('next') : h('span'));
-
-    let practise;
-    if (weak.length) practise = planRow(false, 'Weak spots', skillName(weak[0]), PLAN.practise + ' min', drillWeak);
-    else if (AI.on && lastDone) practise = planRow(false, 'Free chat with ' + lastDone.boss.who, 'Use what you learned in chapter ' + lastDone.n, PLAN.practise + ' min', () => chatScreen(lastDone));
-    else if (canMix()) practise = planRow(false, 'Mixed review', '10 questions from your finished chapters', PLAN.practise + ' min', () => mixedReview());
-    else if (lastDone) practise = planRow(false, 'Replay a chapter', 'Chapter ' + lastDone.n + ': ' + lastDone.title, PLAN.practise + ' min', () => chapterFlow(lastDone));
-    else practise = planRow(false, 'Practise', 'Opens after your first chapter', PLAN.practise + ' min', null);
-
     const dv = drillVerbs();
-    const plan = h('div', { class: 'plan' },
-      dv.length ? planRow(drillDoneToday(), 'Verb drill', dv.join(' and ') + ' · optional', 'under 3 min', drillScreen) : null,
-      planRow(wdone, 'Word of the day', word.es, PLAN.word + ' min', wotdScreen),
-      planRow(reviewedToday && due === 0, 'Review', due ? due + ' cards due' : (reviewedToday ? 'All caught up' : 'Nothing due yet'), PLAN.review + ' min', due ? reviewFlow : null),
-      chapterToday
-        ? planRow(true, 'Chapter done today', doneToday.title, (nextCh || doneToday).mins + ' min', nextCh ? () => chapterFlow(nextCh) : null)
-        : nextCh
-          ? planRow(false, (inProgress(nextCh) ? 'Resume chapter ' : 'Chapter ') + nextCh.n, inProgress(nextCh) ? nextCh.title + ' · ' + placeIn(nextCh) : nextCh.title, nextCh.mins + ' min', () => chapterFlow(nextCh))
-          : planRow(false, 'All chapters done', 'Practise any chapter again from the list', '', null),
-      practise);
 
-    const todayCard = h('section', { class: 'card', 'aria-label': 'Today' },
+    // ---- the plan: steps in order; the first open one is "up next", the others a checklist ----
+    let practise;
+    if (weak.length) practise = { title: 'Weak spots', sub: skillName(weak[0]), m: PLAN.practise + ' min', go: drillWeak };
+    else if (AI.on && lastDone) practise = { title: 'Free chat with ' + lastDone.boss.who, sub: 'Use what you learned in chapter ' + lastDone.n, m: PLAN.practise + ' min', go: () => chatScreen(lastDone) };
+    else if (canMix()) practise = { title: 'Mixed review', sub: '10 questions from finished chapters', m: PLAN.practise + ' min', go: () => mixedReview(), mix: true };
+    else if (lastDone) practise = { title: 'Replay a chapter', sub: 'Chapter ' + lastDone.n + ': ' + lastDone.title, m: PLAN.practise + ' min', go: () => chapterFlow(lastDone) };
+    else practise = { title: 'Practise', sub: 'Opens after your first chapter', m: PLAN.practise + ' min', go: null };
+    const steps = [];
+    if (dv.length) steps.push({ title: 'Verb drill', sub: dv.join(' and ') + ' · optional', m: 'under 3 min', go: drillScreen, done: drillDoneToday(), optional: true });
+    steps.push({ title: 'Review', sub: due ? due + ' cards due' : (reviewedToday ? 'All caught up' : 'Nothing due yet'), m: due ? PLAN.review + ' min' : '', go: due ? reviewFlow : null, done: reviewedToday && due === 0 });
+    if (doneToday) steps.push({ title: 'Chapter done today', sub: doneToday.title, m: '', go: nextCh ? () => chapterFlow(nextCh) : null, done: true });
+    else if (nextCh) steps.push({ title: (inProgress(nextCh) ? 'Resume chapter ' : 'Chapter ') + nextCh.n, sub: inProgress(nextCh) ? nextCh.title + ' · ' + placeIn(nextCh) : nextCh.title, m: nextCh.mins + ' min', go: () => chapterFlow(nextCh) });
+    else steps.push({ title: 'All chapters done', sub: 'Practise any chapter again below', m: '', go: null });
+    steps.push(practise);
+    const upNext = steps.find(st => !st.done && !st.optional && st.go);
+
+    const row = st => h('button', { class: 'plan-row' + (st.done ? ' done' : ''), type: 'button', disabled: !st.go, onclick: st.go },
+      h('span', { class: 'dot' }, st.done ? icon('check') : null),
+      h('span', {}, h('span', { class: 'plan-t' }, st.title), st.sub ? h('span', { class: 'plan-s' }, st.sub) : null),
+      h('span', { class: 'plan-m' }, st.m || ''),
+      st.go ? icon('next') : h('span'));
+    const nextBtn = upNext ? h('button', { class: 'up-next', type: 'button', onclick: upNext.go },
+      h('span', { class: 'up-k' }, 'Up next'),
+      h('span', { class: 'up-t' }, upNext.title),
+      upNext.sub ? h('span', { class: 'up-s' }, upNext.sub) : null,
+      h('span', { class: 'up-go' }, upNext.m ? upNext.m : 'Start', icon('next'))) : h('p', { class: 'up-done' }, icon('check'), 'Today’s plan is done. Anything below is extra.');
+
+    const todayCard = h('section', { class: 'card today', 'aria-label': 'Today' },
       h('div', { class: 'today-h' }, h('b', {}, 'Today'), h('span', { class: 'meta' }, todayLong())),
       h('div', { class: 'today-fig' }, h('span', { id: 'mins-today', style: { 'font-size': 'inherit', color: 'inherit', 'font-weight': 'inherit' } }, String(mins)), h('span', {}, ' of ' + S.goalMins + ' min')),
       h('div', { class: 'bar pen' }, h('i', { id: 'mins-bar', style: { transform: 'scaleX(' + Math.min(1, mins / S.goalMins) + ')' } })),
-      h('div', { class: 'meta today-meta' }, streak + (streak === 1 ? ' day' : ' days') + ' in a row · ' + S.xp + ' XP'),
-      plan);
+      h('div', { class: 'meta today-meta' }, streak + (streak === 1 ? ' day' : ' days') + ' in a row · ' + fmtXp(S.xp) + ' XP'),
+      nextBtn,
+      h('div', { class: 'plan' }, steps.filter(st => st !== upNext).map(row)));
 
+    // ---- word of the day: the one rich card ----
     const wotd = h('button', { class: 'card wotd', type: 'button', onclick: wotdScreen },
       h('div', { class: 'wotd-k' }, UI.wordOfDay),
       h('div', { class: 'wotd-w' }, word.es),
@@ -558,28 +575,33 @@
       h('div', { class: 'wotd-ex' }, word.ex.es),
       h('div', { class: 'wotd-go' }, wdone ? [icon('check'), 'Done'] : ['Use it in a sentence', icon('next')]));
 
+    // ---- any time: one list; what isn't open yet is a quiet line ----
     const nWords = myWords().length;
     const nDone = finishedChapters().length;
     const nFlash = flashDeck().length;
     const nRead = READINGS.filter(readingOpen).length;
-    const readCard = READINGS.length ? h('button', { class: 'card wotd', type: 'button', onclick: readingsScreen },
-      h('div', { class: 'wotd-k' }, 'Reading'),
-      h('div', { class: 'wotd-m' }, nRead ? nRead + (nRead === 1 ? ' short text' : ' short texts') + ' to read, made of words you know' : 'Short texts open as you finish chapters'),
-      h('div', { class: 'wotd-go' }, nRead ? 'Read' : 'See them', icon('next'))) : null;
-    const flashCard = h('button', { class: 'card wotd', type: 'button', disabled: nFlash < 4, onclick: flashcards },
-      h('div', { class: 'wotd-k' }, 'Flashcards'),
-      h('div', { class: 'wotd-m' }, nFlash >= 4 ? 'About 10 cards from your words and phrases, any time' : 'Opens once you have finished a chapter or saved a few words'),
-      nFlash >= 4 ? h('div', { class: 'wotd-go' }, 'Start', icon('next')) : null);
-    const mixCard = h('button', { class: 'card wotd', type: 'button', disabled: nDone < 2, onclick: () => mixedReview() },
-      h('div', { class: 'wotd-k' }, 'Mixed review'),
-      h('div', { class: 'wotd-m' }, nDone >= 2 ? '10 questions from ' + nDone + ' finished chapters, mixed up' : 'Opens once you have finished two chapters'),
-      nDone >= 2 ? h('div', { class: 'wotd-go' }, 'Start', icon('next')) : null);
-    const wordsCard = h('button', { class: 'card wotd', type: 'button', onclick: wordsScreen },
-      h('div', { class: 'wotd-k' }, 'My words'),
-      h('div', { class: 'wotd-m' }, nWords ? nWords + (nWords === 1 ? ' word saved' : ' words saved') + ', in your review deck' : 'Tap any ' + (COURSE.languageName || 'Spanish') + ' word in a lesson to see what it means and save it here'),
-      h('div', { class: 'wotd-go' }, nWords ? 'See them' : 'How it works', icon('next')));
+    const open = []; const locked = [];
+    const anyRow = (title, sub, go) => h('button', { class: 'plan-row any-row', type: 'button', onclick: go },
+      h('span', {}, h('span', { class: 'plan-t' }, title), h('span', { class: 'plan-s' }, sub)), icon('next'));
+    if (READINGS.length) {
+      if (nRead) open.push(anyRow('Reading', nRead + (nRead === 1 ? ' short text' : ' short texts') + ' made of words you know', readingsScreen));
+      else locked.push('Reading opens after chapter ' + Math.min(...READINGS.map(r => r.after)));
+    }
+    if (nFlash >= 4) open.push(anyRow('Flashcards', 'About 10 cards from your words and phrases', flashcards));
+    else locked.push('Flashcards open once you finish a chapter or save a few words');
+    // Mixed review is on home once: here, unless the plan already suggests it.
+    if (!practise.mix) {
+      if (nDone >= 2) open.push(anyRow('Mixed review', '10 questions from ' + nDone + ' finished chapters', () => mixedReview()));
+      else locked.push('Mixed review opens after two finished chapters');
+    }
+    open.push(anyRow('My words', nWords ? nWords + (nWords === 1 ? ' word saved' : ' words saved') + ', in your review deck' : 'Tap any ' + (COURSE.languageName || 'Spanish') + ' word in a lesson to save it', wordsScreen));
+    const anyCard = h('section', { class: 'card any', 'aria-label': 'Any time' },
+      h('div', { class: 'today-h' }, h('b', {}, 'Any time')),
+      h('div', { class: 'plan' }, open),
+      locked.length ? h('ul', { class: 'locked-lines' }, locked.map(x => h('li', {}, x))) : null);
 
-    const path = CHAPTERS.map(ch => {
+    // ---- chapters: the next one stands out; finished and later ones fold ----
+    const chapRow = ch => {
       const d = S.done[ch.n];
       const isNext = ch === nextCh && !d;
       const going = inProgress(ch);
@@ -589,10 +611,18 @@
         h('div', { class: 'chap-n' }, d ? icon('check') : String(ch.n)),
         h('div', {}, h('div', { class: 'chap-t' }, ch.title), h('div', { class: 'chap-s' }, going ? placeIn(ch) : ch.can)),
         h('div', { class: 'chap-go' }, go, icon('next')));
-    }).concat(ROADMAP.map(r => h('div', { class: 'chap locked', 'aria-disabled': 'true' },
+    };
+    const finished = CHAPTERS.filter(c => S.done[c.n]);
+    const later = CHAPTERS.filter(c => !S.done[c.n] && c !== nextCh);
+    const roadmap = ROADMAP.map(r => h('div', { class: 'chap locked', 'aria-disabled': 'true' },
       h('div', { class: 'chap-n' }, String(r.n)),
       h('div', {}, h('div', { class: 'chap-t' }, r.title), h('div', { class: 'chap-s' }, r.can)),
-      h('div', { class: 'chap-go' }, 'Later'))));
+      h('div', { class: 'chap-go' }, 'Later')));
+    const nLater = later.length + ROADMAP.length;
+    const chapters = h('section', { class: 'chapters', 'aria-label': 'Chapters' },
+      nextCh && !S.done[nextCh.n] ? h('div', { class: 'path' }, chapRow(nextCh)) : null,
+      fold(finished.length + (finished.length === 1 ? ' chapter done' : ' chapters done'), finished.length, finished.map(chapRow)),
+      fold([later.length ? later.length + (later.length === 1 ? ' more chapter' : ' more chapters') : '', ROADMAP.length ? ROADMAP.length + ' coming later' : ''].filter(Boolean).join(' · '), nLater, later.map(chapRow).concat(roadmap)));
 
     const aiLine = h('button', { class: 'status' + (AI.on ? ' on' : ''), type: 'button', onclick: aiHelp }, h('i'),
       AI.on ? 'AI tutor on · ' + AI.provider : AI.offline ? 'Offline · lessons still work' : 'AI tutor off · Set up',
@@ -603,10 +633,10 @@
         h('div', { class: 'top-r' }, courseSwitch(),
           h('button', { class: 'icon-btn', 'aria-label': 'Settings', onclick: settings }, icon('settings', 'lg')))),
       h('div', { class: 'home-grid' },
-        h('div', { class: 'home-side' }, todayCard, wotd, readCard, wordsCard, flashCard, mixCard),
+        h('div', { class: 'home-side' }, todayCard, wotd, anyCard),
         h('div', {},
           h('h1', { class: 'page-title' }, COURSE.title), h('p', { class: 'muted' }, COURSE.level + ' · ' + CHAPTERS.length + ' chapters'),
-          h('div', { class: 'path' }, path),
+          chapters,
           h('div', { class: 'foot' }, aiLine)))));
   }
 
@@ -1528,17 +1558,19 @@
   // and save it to My words as usual. A few gentle questions follow, and only then can the English be shown.
   const readingOpen = r => !!S.done[r.after];
   function readingsScreen() {
-    const list = READINGS.map(r => {
-      const open = readingOpen(r); const done = S.reads && S.reads[r.id];
-      return h('button', { class: 'chap' + (done ? ' done' : ''), type: 'button', disabled: !open, onclick: () => readingScreen(r) },
+    const list = READINGS.filter(readingOpen).map(r => {
+      const done = S.reads && S.reads[r.id];
+      return h('button', { class: 'chap' + (done ? ' done' : ''), type: 'button', onclick: () => readingScreen(r) },
         h('div', { class: 'chap-n' }, done ? icon('check') : String(r.after)),
-        h('div', {}, h('div', { class: 'chap-t', lang: TL }, T(r.title)), h('div', { class: 'chap-s' }, open ? 'After chapter ' + r.after : 'Opens after chapter ' + r.after)),
-        h('div', { class: 'chap-go' }, open ? (done ? done.right + ' of ' + done.total + ' · Read again' : 'Read') : 'Later', open ? icon('next') : null));
+        h('div', {}, h('div', { class: 'chap-t', lang: TL }, T(r.title)), h('div', { class: 'chap-s' }, 'After chapter ' + r.after)),
+        h('div', { class: 'chap-go' }, done ? done.right + ' of ' + done.total + ' · Read again' : 'Read', icon('next')));
     });
+    const later = READINGS.filter(r => !readingOpen(r));
     mount(h('div', { class: 'page lesson' }, backBar('Reading', home),
       h('div', { class: 'step' }, h('h2', {}, 'Reading'),
         h('p', { class: 'muted' }, 'Short texts made of words you know, plus a few new ones. Tap any word to see what it means or save it. Questions follow, then the English if you want it.'),
-        h('div', { class: 'path' }, list))));
+        list.length ? h('div', { class: 'path' }, list) : null,
+        later.length ? h('ul', { class: 'locked-lines' }, later.map(r => h('li', {}, h('span', { lang: TL }, T(r.title)), ' opens after chapter ' + r.after))) : null)));
   }
   function readingScreen(r) {
     if (window.__trainer) window.__trainer.reading = r; // test hook

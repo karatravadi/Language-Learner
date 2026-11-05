@@ -421,3 +421,29 @@ select.text { font-family: var(--sans); font-size: 16px; }
 /* Flashcards: counting a different right wording. */
 .meant { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
 .meant .meta { margin: 0 0 8px; }
+
+/* Home, refreshed (6 Nov 2026): one step up next, a short checklist, one Any time list, folded chapters. */
+.up-next { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "k go" "t go" "s go"; align-items: center; column-gap: 12px;
+  width: 100%; margin-top: 16px; padding: 12px 16px; text-align: left; border: 1px solid var(--ink); border-radius: 12px; background: var(--surface); color: var(--ink); cursor: pointer;
+  transition: background-color .15s var(--ease); }
+.up-next:hover { background: var(--raised); }
+.up-k { grid-area: k; font-size: 13px; line-height: 18px; color: var(--ink-2); }
+.up-t { grid-area: t; font-size: 17px; line-height: 24px; font-weight: 500; }
+.up-s { grid-area: s; font-size: 14px; line-height: 20px; color: var(--ink-2); }
+.up-go { grid-area: go; display: flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 500; white-space: nowrap; }
+.up-done { display: flex; align-items: center; gap: 8px; margin: 16px 0 0; font-size: 14px; color: var(--ink-2); }
+.up-done .ic { color: var(--ok); }
+.today .plan { margin-top: 8px; gap: 0; }
+.today .plan-row { min-height: 40px; }
+.any .today-h { margin-bottom: 4px; }
+.any .plan { margin-top: 0; gap: 0; }
+.plan-row.any-row { grid-template-columns: 1fr 16px; }
+.locked-lines { list-style: none; margin: 8px 0 0; padding: 8px 0 0; border-top: 1px solid var(--line); }
+.locked-lines li { font-size: 13px; line-height: 20px; color: var(--ink-3); padding: 2px 0; }
+.chapters { display: grid; gap: 8px; margin-top: 16px; }
+.fold > summary { display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 4px; cursor: pointer; list-style: none; font-size: 15px; color: var(--ink-2); }
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary:hover { color: var(--ink); }
+.fold-hint { color: var(--ink); font-weight: 500; }
+.fold > .path { margin: 4px 0 8px; }
+.fold-dot { color: var(--ink-3); }

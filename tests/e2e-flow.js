@@ -25,7 +25,9 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
 
   const JUNK = /\b(null|undefined|NaN)\b|\[object Object\]/;
   const EMOJI = /\p{Extended_Pictographic}/u;
+  const openFolds = () => page.evaluate(() => document.querySelectorAll('details.fold').forEach(d => { d.open = true; }));
   const text = async () => {
+    await openFolds();
     const t = await page.evaluate(() => document.body.innerText);
     if (JUNK.test(t)) throw new Error('stray junk text: ...' + (t.match(/[\s\S]{0,50}(null|undefined|NaN|\[object Object\])[\s\S]{0,30}/) || [''])[0].replace(/\n/g, ' | '));
     const e = t.match(EMOJI); if (e) throw new Error('emoji left in the interface: ' + e[0]);
@@ -34,6 +36,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
     return t;
   };
   const clickText = async (sel, txt) => {
+    await openFolds();
     const done = await page.evaluate((sel, txt) => {
       const el = [...document.querySelectorAll(sel)].find(e => e.innerText.trim().includes(txt) && !e.disabled);
       if (!el) return false; el.click(); return true;
@@ -70,6 +73,8 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   if (COURSE.id === 'es-ES') assert.match(t, /Who you are and where you are/);
   const fonts = await page.evaluate(async () => { await document.fonts.ready; return [document.fonts.check('16px "Instrument Sans"'), document.fonts.check('16px "Newsreader"')]; });
   assert.deepStrictEqual(fonts, [true, true], 'bundled fonts should load');
+  assert.ok(await page.$('.up-next'), 'one step up next');
+  assert.equal(await page.evaluate(() => [...document.querySelectorAll('.plan-row')].some(r => r.innerText.startsWith('Word of the day'))), false, 'word of the day is not in the plan');
   ok('home: plan for ' + (COURSE.goalMins || 45) + ' min, ' + meta.titles.length + ' chapters + roadmap, no greeting, no emoji, bundled fonts load');
   await shot('01-home');
 
@@ -92,8 +97,8 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   ok('word of the day: completes, joins review deck, streak starts' + (AI_ON ? ', AI correction in red pen' : ''));
   await shot('02-wotd');
   await page.click('.icon-btn'); await sleep(150);
-  assert.ok(await page.$('.plan-row.done'), 'plan should tick the word');
-  ok('home plan ticks the word of the day');
+  assert.ok(await page.evaluate(() => /Done/.test(document.querySelector('.card.wotd').innerText)), 'the word of the day card shows Done');
+  ok('home: the word of the day card shows it done');
 
   // ---------- play every chapter ----------
   const chapters = await page.evaluate(() => window.__trainer.chapters.map(c => c.n));
@@ -269,6 +274,9 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   // ---------- home after chapters ----------
   t = await text();
   assert.match(t, /Chapter done today/); assert.match(t, /Best 100%/);
+  assert.equal(await page.evaluate(() => [...document.querySelectorAll('.page.home button')].filter(b => /^Mixed review/.test(b.innerText.trim()) || /Mixed review/.test((b.querySelector('.plan-t, .up-t') || {}).innerText || '')).length), 1, 'Mixed review appears once on home');
+  assert.match(await page.evaluate(() => document.querySelector('.today-meta').innerText), /^\d+ days? in a row · [\d,]+ XP$/);
+  const xp0 = (await state()).xp; if (xp0 >= 1000) assert.ok((await text()).includes(xp0.toLocaleString('en-GB') + ' XP'), 'XP has a comma');
   ok('home shows chapters done and best scores');
 
   // ---------- review ----------
@@ -295,14 +303,14 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   const weakName = await page.evaluate(k => Object.assign({}, window.__trainer.course.skills, ...window.__trainer.chapters.map(c => c.skills))[k], weakKey);
   await sleep(80);
   t = await text(); assert.match(t, /Weak spots/); assert.ok(t.includes(weakName));
-  await clickText('.plan-row', 'Weak spots'); await sleep(100);
+  await clickText('.plan-row, .up-next', 'Weak spots'); await sleep(100);
   assert.ok((await text()).includes('Weak spots · ' + weakName));
   ok('weak spots: skill names come from the course files and the drill opens');
 
   // ---------- mixed review: several finished chapters, skill named only after answering ----------
   await page.evaluate(() => window.__trainer.home()); await sleep(80);
   t = await text(); assert.match(t, /Mixed review/); assert.match(t, /10 questions from \d+ finished chapters/);
-  await clickText('.card', 'Mixed review'); await sleep(120);
+  await clickText('.plan-row, .up-next', 'Mixed review'); await sleep(120);
   const firstFrom = await page.evaluate(() => { const T = window.__trainer; const c = T.chapters.find(ch => ch.exercises.includes(T.current)); return c ? !!T.state().done[c.n] : false; });
   assert.ok(firstFrom, 'the first question comes from a finished chapter');
   assert.equal(await page.$('.fb-skill'), null, 'no skill shown before answering');
@@ -362,8 +370,8 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   // ---------- graded readings (backlog 15; courses with readings.json) ----------
   if (COURSE.readings) {
     await page.evaluate(() => window.__trainer.home()); await sleep(60);
-    t = await text(); assert.match(t, /Reading/); assert.match(t, /short texts? to read/);
-    await clickText('.card', 'Reading'); await sleep(100);
+    t = await text(); assert.match(t, /Reading/); assert.match(t, /short texts? made of words you know/);
+    await clickText('.any-row', 'Reading'); await sleep(100);
     await page.evaluate(() => [...document.querySelectorAll('.path .chap')].find(b => !b.disabled).click()); await sleep(100);
     const rd = await page.evaluate(() => window.__trainer.reading);
     assert.ok(await page.$('.read-text .w'), 'the text is tappable, word by word');
