@@ -25,6 +25,7 @@
   "words": "words.json",
   "glossary": "glossary.json",
   "verbs": "verbs.json",
+  "drills": "drills.json",
   "roadmap": [
     { "n": 13, "title": "What happened yesterday", "can": "Tell a story about yesterday or last year with the pretérito indefinido: fui, comí, vi" },
     { "n": 14, "title": "When I was little", "can": "Describe how things used to be with the imperfecto: vivía, era, había" },

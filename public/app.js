@@ -19,7 +19,7 @@
   };
   const PLAN_DEFAULTS = { word: 3, review: 10, practise: 15 };
 
-  let COURSE = null; let CHAPTERS = []; let ROADMAP = []; let WORDS = []; let SKILLS = {}; let GLOSS = {}; let COURSES = []; let VERBS = null; let VERB_INDEX = new Map();
+  let COURSE = null; let CHAPTERS = []; let ROADMAP = []; let WORDS = []; let SKILLS = {}; let GLOSS = {}; let COURSES = []; let VERBS = null; let VERB_INDEX = new Map(); let DRILLS = null;
   let UI = UI_DEFAULTS; let PLAN = PLAN_DEFAULTS;
   // TL: the lang attribute of text in the course's language, which makes its words tappable (es, la).
   let TL = 'es';
@@ -531,7 +531,9 @@
     else if (lastDone) practise = planRow(false, 'Replay a chapter', 'Chapter ' + lastDone.n + ': ' + lastDone.title, PLAN.practise + ' min', () => chapterFlow(lastDone));
     else practise = planRow(false, 'Practise', 'Opens after your first chapter', PLAN.practise + ' min', null);
 
+    const dv = drillVerbs();
     const plan = h('div', { class: 'plan' },
+      dv.length ? planRow(drillDoneToday(), 'Verb drill', dv.join(' and ') + ' · optional', 'under 3 min', drillScreen) : null,
       planRow(wdone, 'Word of the day', word.es, PLAN.word + ' min', wotdScreen),
       planRow(reviewedToday && due === 0, 'Review', due ? due + ' cards due' : (reviewedToday ? 'All caught up' : 'Nothing due yet'), PLAN.review + ' min', due ? reviewFlow : null),
       chapterToday
@@ -1516,6 +1518,146 @@
     mount(h('div', { class: 'page lesson' }, backBar('Weak spots · ' + skillName(weak[0]), home), content));
   }
 
+  // ---------- the daily verb drill (backlog 14) ----------
+  // Under 3 minutes on the core verbs (ser and estar first, side by side), so the forms come out without thinking.
+  // Three formats rotate by day: a timed speed round of gap sentences; "who is it" (pick the person for a form);
+  // and, now and then, the whole table typed from memory as a warm-up. A verb graduates after three clean, fast
+  // runs on different days, then comes back now and then as a card in Review.
+  // Only verbs already taught: one whose table appears in a finished chapter (ser and estar after chapter 1).
+  function taughtVerbs() {
+    const out = new Set();
+    for (const ch of CHAPTERS) if (S.done[ch.n]) (ch.learn.blocks || []).forEach(b => (b.type === 'tables' ? b.tables : []).forEach(t => out.add(String(t.title).split(/[\s(,:]/)[0].toLowerCase())));
+    return out;
+  }
+  const drillVerbs = () => { if (!DRILLS) return []; const t = taughtVerbs(); return L.drillActive(DRILLS.order.filter(v => t.has(v)), S.drill); };
+  const drillDoneToday = () => !!(S.drill && S.drill.lastDay === L.dayKey());
+  function drillScreen() {
+    const verbs = drillVerbs();
+    if (!verbs.length) return home();
+    if (!S.drill) S.drill = { lastDay: '', verbs: {} };
+    const today = L.dayKey();
+    const format = L.daysBetween('2026-01-01', today) % 3; // 0 speed round, 1 with who-is-it, 2 with a table first
+    const sentences = L.mixedPick(verbs.map(v => DRILLS.sentences.filter(d => d.verb === v)), format === 0 ? 8 : 5);
+    const items = [];
+    if (format === 2) items.push({ kind: 'table', verb: verbs[Math.floor(Math.random() * verbs.length)] });
+    if (format === 1) L.mixedPick(verbs.map(v => VERBS.verbs[v].forms.map((f, i) => ({ kind: 'who', verb: v, person: i }))), 4).forEach(x => items.push(x));
+    sentences.forEach(d => items.push({ kind: 'gap', verb: d.verb, d }));
+    const mixed = format === 1 ? L.shuffle(items) : items;
+    const per = {}; verbs.forEach(v => { per[v] = { right: 0, total: 0, secs: 0, timed: 0 }; });
+    let at = 0; let tick = 0;
+    const body = h('div', { class: 'step' });
+    mount(h('div', { class: 'page lesson' }, backBar('Verb drill · ' + verbs.join(' and '), () => { clearInterval(tick); home(); }), body));
+
+    function score(verb, ok, secs) {
+      const p = per[verb]; p.total++; if (ok) p.right++;
+      if (secs != null) { p.secs += secs; p.timed++; }
+      if (DRILLS.skills && DRILLS.skills[verb]) recordSkill(DRILLS.skills[verb], ok); // misses feed that verb's weak spot
+      if (ok) addXp(1);
+    }
+    function next() {
+      clearInterval(tick);
+      if (at >= mixed.length) { done(); return; }
+      const it = mixed[at++];
+      if (window.__trainer) window.__trainer.drillItem = it; // test hook
+      const t0 = Date.now();
+      const clock = h('span', { class: 'drill-clock' }, '0s');
+      if (it.kind !== 'table') tick = setInterval(() => { clock.textContent = Math.floor((Date.now() - t0) / 1000) + 's'; }, 250);
+      const fb = h('div', { class: 'feedback hidden', 'aria-live': 'polite' });
+      const btn = h('button', { class: 'btn primary big', type: 'button' }, 'Check');
+      let checked = false;
+      const head = h('div', { class: 'counter' }, (it.kind === 'table' ? 'Warm-up' : it.kind === 'who' ? 'Who is it' : 'Speed round') + ' · ' + at + ' of ' + mixed.length, it.kind === 'table' ? null : [' · ', clock]);
+      let content; let check;
+      if (it.kind === 'gap') {
+        const input = h('input', { class: 'text', type: 'text', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': 'The missing form' });
+        content = [h('p', { class: 'prompt', style: { 'margin-top': '24px' } }, 'Type the missing form'), h('div', { class: 'sentence', lang: TL }, T(it.d.q).replace('___', '…')), h('p', { class: 'sub' }, it.d.en), accentBar(input), input];
+        input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); btn.click(); } });
+        setTimeout(() => input.focus(), 30);
+        check = () => {
+          if (!input.value.trim()) return false;
+          const secs = (Date.now() - t0) / 1000;
+          const { r, near } = judgeTyped(input.value, it.d.answer);
+          const ok = r === 'ok' || r === 'accent';
+          score(it.verb, ok, secs); input.disabled = true;
+          fb.className = 'feedback ' + (ok ? (r === 'accent' ? 'warn' : 'good') : near ? 'warn' : 'bad');
+          put(fb, h('div', { class: 'fb-head' }, ok ? (r === 'accent' ? 'Right, but watch the accents' : praise() + ' · ' + secs.toFixed(1) + 's') : near ? 'Nearly. Check the spelling of ' + near.right : 'Not quite'),
+            ok && r !== 'accent' ? h('div', { class: 'fb-ans', lang: TL }, T(it.d.q).replace('___', it.d.answer[0])) : pen(input.value.trim(), it.d.answer[0]),
+            !ok ? h('div', { class: 'fb-hint' }, hintFor(T(it.d.q).replace('___', input.value), [T(it.d.q).replace('___', it.d.answer[0])]) || (it.verb + ', ' + VERBS.persons[it.d.person].join(', ') + ': ' + it.d.answer[0])) : null);
+          return true;
+        };
+      } else if (it.kind === 'who') {
+        const form = VERBS.verbs[it.verb].forms[it.person];
+        let picked = -1;
+        const opts = VERBS.persons.map((names, i) => h('button', { class: 'opt', type: 'button', onclick: () => { picked = i; opts.forEach((b, j) => b.classList.toggle('sel', j === i)); btn.disabled = false; btn.click(); } }, names.join(', ')));
+        content = [h('p', { class: 'prompt', style: { 'margin-top': '24px' } }, 'Who is it?'), h('div', { class: 'sentence', lang: TL }, form), h('div', { class: 'opts' }, opts)];
+        check = () => {
+          if (picked < 0) return false;
+          const secs = (Date.now() - t0) / 1000;
+          // The same form can belong to two persons (none of the core verbs do, but keep it fair).
+          const ok = VERBS.verbs[it.verb].forms[picked] === form;
+          score(it.verb, ok, secs);
+          opts[it.person].classList.add('good'); if (!ok) opts[picked].classList.add('bad');
+          opts.forEach(b => { b.disabled = true; });
+          fb.className = 'feedback ' + (ok ? 'good' : 'bad');
+          put(fb, h('div', { class: 'fb-head' }, ok ? praise() + ' · ' + secs.toFixed(1) + 's' : 'Not quite'), h('div', { class: 'fb-why' }, form + ' is ' + it.verb + ' with ' + VERBS.persons[it.person].join(', ') + '.'));
+          return true;
+        };
+      } else {
+        const v = VERBS.verbs[it.verb];
+        const inputs = v.forms.map((f, i) => h('input', { class: 'text drill-cell', type: 'text', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': VERBS.persons[i].join(', ') }));
+        content = [h('p', { class: 'prompt', style: { 'margin-top': '24px' } }, 'Fill in the whole table from memory'), h('div', { class: 'sentence', lang: TL }, it.verb), h('p', { class: 'sub' }, v.en),
+          h('div', { class: 'drill-table' }, inputs.map((inp, i) => h('label', { class: 'drill-row' }, h('span', { class: 'verb-p' }, VERBS.persons[i].join(', ')), inp))), accentBar(inputs[0])];
+        inputs.forEach((inp, i) => {
+          inp.addEventListener('focus', () => { const bar = body.querySelector('.accent-bar'); if (bar) bar.replaceWith(accentBar(inp)); });
+          inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); if (i < inputs.length - 1) inputs[i + 1].focus(); else btn.click(); } });
+        });
+        setTimeout(() => inputs[0].focus(), 30);
+        check = () => {
+          let allRight = true;
+          inputs.forEach((inp, i) => {
+            const r = judgeTyped(inp.value, [v.forms[i]]).r; const ok = r === 'ok' || r === 'accent';
+            if (!ok) allRight = false;
+            score(it.verb, ok, null);
+            inp.disabled = true; inp.classList.add(ok ? 'cell-good' : 'cell-bad');
+            if (!ok) inp.value = (inp.value.trim() ? inp.value.trim() + ' → ' : '') + v.forms[i];
+          });
+          fb.className = 'feedback ' + (allRight ? 'good' : 'bad');
+          put(fb, h('div', { class: 'fb-head' }, allRight ? 'The whole table, right' : 'The right forms are filled in'));
+          return true;
+        };
+      }
+      btn.addEventListener('click', () => {
+        if (checked) { next(); return; }
+        if (check() === false) return;
+        checked = true; clearInterval(tick);
+        fb.classList.remove('hidden'); btn.textContent = at >= mixed.length ? 'Finish' : 'Next'; btn.disabled = false; btn.focus();
+      });
+      put(body, head, h('div', { class: 'bar' }, h('i', { style: { transform: 'scaleX(' + ((at - 1) / mixed.length) + ')' } })), ...content, fb, h('div', { class: 'row end sticky' }, btn));
+    }
+    function done() {
+      clearInterval(tick);
+      S.drill.lastDay = today;
+      const lines = [];
+      for (const v of verbs) {
+        const p = per[v];
+        const avg = p.timed ? p.secs / p.timed : 0;
+        const clean = p.total > 0 && p.right === p.total && (!p.timed || avg <= (DRILLS.fastSecs || 7));
+        const before = S.drill.verbs[v] || {};
+        const rec = L.drillRecord(before, today, clean);
+        S.drill.verbs[v] = rec;
+        if (rec.grad && !before.grad && VERBS.verbs[v] && !verbSaved(v)) saveVerb(v); // graduates into Review
+        lines.push(h('li', {}, h('b', { lang: TL }, v), ': ' + p.right + ' of ' + p.total + (p.timed ? ', ' + avg.toFixed(1) + 's an answer' : '') + ' · ' +
+          (rec.grad ? 'graduated, it now comes back in Review' : (clean ? 'a clean run, ' : 'not clean yet, ') + rec.days.length + ' of 3 clean days')));
+      }
+      save();
+      put(body,
+        h('div', { class: 'result-k' }, 'Verb drill done'),
+        h('ul', { class: 'drill-result' }, lines),
+        h('p', { class: 'meta' }, 'A clean run is every answer right first time, in under ' + (DRILLS.fastSecs || 7) + ' seconds each on average.'),
+        h('div', { class: 'row' }, h('button', { class: 'btn primary big', onclick: home }, 'Back to today')));
+    }
+    next();
+  }
+
   // ---------- accent keys: tap to type the letters a phone or a UK keyboard makes awkward ----------
   const ACCENT_KEYS = { es: ['á', 'é', 'í', 'ó', 'ú', 'ñ', 'ü', '¿', '¡'], fr: ['é', 'è', 'ê', 'à', 'â', 'ç', 'ô', 'î', 'ù', 'œ'], la: ['ā', 'ē', 'ī', 'ō', 'ū'] };
   function accentBar(input) {
@@ -1860,6 +2002,7 @@
       GLOSS = COURSE.glossary ? (await getJson(base + COURSE.glossary)).words || {} : {};
       VERBS = COURSE.verbs ? await getJson(base + COURSE.verbs) : null;
       VERB_INDEX = L.verbIndex(VERBS);
+      DRILLS = COURSE.drills && VERBS ? await getJson(base + COURSE.drills) : null;
       ROADMAP = COURSE.roadmap || [];
       SKILLS = Object.assign({ [SPELLING]: 'Spelling' }, COURSE.skills, ...CHAPTERS.map(c => c.skills || {}));
       GLOSS_WORDS = Object.keys(GLOSS);
@@ -1882,7 +2025,7 @@
         h('p', { class: 'meta' }, String(e.message || e))));
       return;
     }
-    window.__trainer = { flashcards, mixedReview, idleFor: ms => { lastActive = Date.now() - ms; }, state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE, ui: UI };
+    window.__trainer = { drillScreen, flashcards, mixedReview, idleFor: ms => { lastActive = Date.now() - ms; }, state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE, ui: UI };
     await aiStatus();
     if (SYNC.on) await syncStart();
     applyProfile();

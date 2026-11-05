@@ -143,7 +143,7 @@ Plan:
 
 Decided: a missed card comes back once at the end of the same session.
 
-## 14. Rote drills for the core verbs, starting with ser and estar (M)
+## 14. Rote drills for the core verbs, starting with ser and estar (M) - DONE 5 Nov 2026 (Spanish: ser, estar, tener, ir, hacer)
 
 Idea (Kara, 5 Nov 2026): use rote learning to get the basics automatic, particularly soy and estoy and the verbs like them. (Written as "rota"; read as "rote".)
 

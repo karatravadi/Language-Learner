@@ -163,6 +163,20 @@
     return null;
   }
 
+  // ----- the daily verb drill (backlog 14) -----
+  // The verbs being drilled: the first two in order that haven't graduated (ser and estar first, side by side).
+  function drillActive(order, rec) {
+    const verbs = (rec && rec.verbs) || {};
+    return (order || []).filter(v => !(verbs[v] && verbs[v].grad)).slice(0, 2);
+  }
+  // A run on a day: a clean one (all right first time, fast) counts towards graduating, which takes 3 different days.
+  function drillRecord(v, day, clean) {
+    const r = { days: ((v && v.days) || []).slice(), grad: (v && v.grad) || '' };
+    if (clean && !r.days.includes(day)) r.days.push(day);
+    if (!r.grad && r.days.length >= 3) r.grad = day;
+    return r;
+  }
+
   // ----- flashcards (backlog 13) -----
   // The English answers a card accepts, from its meaning: "to speak, to talk" gives to speak, to talk, speak, talk.
   // Notes in brackets are dropped ("you all go to bed (with os)"), and a / or ; separates meanings too.
@@ -372,6 +386,12 @@
     Object.keys(time).sort().slice(-TIME_DAYS).forEach(k => { out.time[k] = time[k]; });
     out.reviewed = unionBy(a.reviewed, b.reviewed, (x, y) => x || y);
     out.skills = unionBy(a.skills, b.skills, (x, y) => ({ r: Math.max(x.r || 0, y.r || 0), w: Math.max(x.w || 0, y.w || 0) }));
+    // verb drill: clean days per verb (a union), graduated if either copy says so
+    if (a.drill || b.drill) {
+      const da = obj(a.drill); const db = obj(b.drill);
+      out.drill = { lastDay: String(da.lastDay || '') > String(db.lastDay || '') ? da.lastDay : (db.lastDay || da.lastDay || ''),
+        verbs: unionBy(da.verbs, db.verbs, (x, y) => ({ days: Array.from(new Set([].concat(obj(x).days || [], obj(y).days || []))).sort(), grad: obj(x).grad || obj(y).grad || '' })) };
+    }
     // flashcard results per card and direction: the more recent record wins
     if (a.flash || b.flash) out.flash = unionBy(a.flash, b.flash, (x, y) => ((obj(y).at || 0) > (obj(x).at || 0) ? y : x));
     // exercises answered with a spelling slip (for the spelling drill): the latest change wins
@@ -396,5 +416,5 @@
     return out;
   }
 
-  return { englishAnswers, weightedPick, flashWeight, tryHint, mixedPick, verbIndex, verbAsk, daySecs, judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
+  return { drillActive, drillRecord, englishAnswers, weightedPick, flashWeight, tryHint, mixedPick, verbIndex, verbAsk, daySecs, judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
 });

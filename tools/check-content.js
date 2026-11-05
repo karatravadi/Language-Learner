@@ -96,6 +96,25 @@ function check(dir = COURSES) {
       where.pop();
     }
 
+    // ---- the daily verb drill (optional): every answer must be that verb's form in verbs.json ----
+    if (course.drills != null) {
+      where.push('drills');
+      const dd = readJson(path.join(base, course.drills)) || {};
+      const vd = course.verbs ? (readJson(path.join(base, course.verbs)) || {}) : {};
+      const known = (vd.verbs || {});
+      if (!Array.isArray(dd.order) || !dd.order.length) err('needs an order of verbs');
+      (dd.order || []).forEach(v => { if (!known[v]) err('verb ' + v + ' is not in ' + (course.verbs || 'verbs.json')); });
+      (dd.sentences || []).forEach((d, i) => {
+        if (!isStr(d.q) || d.q.split('___').length !== 2) err('sentence ' + (i + 1) + ' needs exactly one ___');
+        if (!known[d.verb]) err('sentence ' + (i + 1) + ': unknown verb ' + d.verb);
+        else if (!Array.isArray(d.answer) || d.answer[0] !== known[d.verb].forms[d.person]) err('sentence ' + (i + 1) + ' "' + d.q + '": answer should be ' + known[d.verb].forms[d.person] + ' (' + d.verb + ', person ' + d.person + ')');
+        if (!isStr(d.en)) err('sentence ' + (i + 1) + ' needs en');
+      });
+      for (const v of dd.order || []) if (!(dd.sentences || []).some(d => d.verb === v)) err('no sentences for ' + v);
+      for (const [v, k] of Object.entries(dd.skills || {})) if (!skillNames[k] && !course.chapters.some(f => { const c = readJson(path.join(base, f)); return c && c.skills && c.skills[k]; })) err('drill skill ' + k + ' (for ' + v + ') has no name in any chapter');
+      where.pop();
+    }
+
     // ---- chapters ----
     for (const file of course.chapters || []) {
       where.length = 1; where.push(file);

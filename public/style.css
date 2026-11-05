@@ -395,6 +395,15 @@ select.text { font-family: var(--sans); font-size: 16px; }
 /* Accent keys above a typing box (flashcards): quiet, small, in the serif so the letters read clearly. */
 .accent-bar { display: flex; flex-wrap: wrap; gap: 4px; margin: 16px 0 0; }
 .accent-bar + input.text { margin-top: 8px; }
-.accent-key { min-width: 36px; height: 36px; padding: 0 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); font: 400 18px/1 var(--serif); }
+.accent-key { min-width: 32px; height: 36px; padding: 0 6px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); font: 400 18px/1 var(--serif); }
 .accent-key:active { background: var(--raised); }
 .again-list { margin: 8px 0 0; padding-left: 20px; font: 400 18px/28px var(--serif); }
+
+/* The verb drill: a quiet running clock, and the table typed from memory. */
+.drill-clock { font-variant-numeric: tabular-nums; }
+.drill-table { display: grid; gap: 8px; margin-top: 16px; }
+.drill-row { display: grid; grid-template-columns: 9.5em 1fr; align-items: center; gap: 12px; }
+.drill-cell { margin-top: 0; }
+.drill-cell.cell-good { border-color: var(--ok); }
+.drill-cell.cell-bad { border-color: var(--pen); color: var(--pen); }
+.drill-result { margin: 16px 0 8px; padding-left: 20px; line-height: 28px; }

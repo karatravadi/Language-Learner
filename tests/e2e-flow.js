@@ -331,6 +331,34 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   await page.evaluate(() => window.__trainer.home()); await sleep(60);
   ok('mixed review: opens from home, draws from finished chapters, names the skill only after answering ("' + skill0 + '"), lists what to look at again');
 
+  // ---------- the daily verb drill (backlog 14; courses with drills.json) ----------
+  if (COURSE.drills) {
+    const VBd = JSON.parse(require('fs').readFileSync(path.join(__dirname, '../public/courses', COURSE.id, COURSE.verbs), 'utf8'));
+    await page.evaluate(() => window.__trainer.home()); await sleep(60);
+    t = await text(); assert.match(t, /Verb drill/); assert.match(t, /ser and estar · optional/);
+    await clickText('.plan-row', 'Verb drill'); await sleep(100);
+    const kinds = new Set();
+    for (let k = 0; k < 20 && !(await text()).includes('Verb drill done'); k++) {
+      const it = await page.evaluate(() => window.__trainer.drillItem);
+      kinds.add(it.kind);
+      if (it.kind === 'gap') { await page.type('.step input.text', it.d.answer[0]); await page.keyboard.press('Enter'); }
+      else if (it.kind === 'who') { await page.evaluate(i => document.querySelectorAll('.opts .opt')[i].click(), it.person); }
+      else {
+        const forms = VBd.verbs[it.verb].forms; const cells = await page.$$('.drill-cell');
+        for (let i = 0; i < cells.length; i++) await cells[i].type(forms[i]);
+        await page.evaluate(() => [...document.querySelectorAll('button')].find(b => b.innerText === 'Check').click());
+      }
+      await sleep(60);
+      assert.ok(await page.$('.feedback.good'), 'a right ' + it.kind + ' answer is marked right');
+      await page.evaluate(() => [...document.querySelectorAll('.row.end button')].pop().click()); await sleep(60);
+    }
+    t = await text(); assert.match(t, /Verb drill done/); assert.match(t, /1 of 3 clean days/);
+    const ds = await state(); assert.equal(ds.drill.lastDay, today); assert.deepEqual(ds.drill.verbs.ser.days, [today]);
+    await page.evaluate(() => window.__trainer.home()); await sleep(60);
+    assert.ok(await page.evaluate(() => [...document.querySelectorAll('.plan-row')].find(r => r.innerText.includes('Verb drill')).classList.contains('done')), 'the drill is ticked off for today');
+    ok('verb drill: ser and estar, ' + Array.from(kinds).join(' + ') + ' today, a clean run counts 1 of 3 days, ticked in the plan');
+  }
+
   // ---------- flashcards (backlog 13) ----------
   t = await text(); assert.match(t, /Flashcards/);
   await page.evaluate(() => window.__trainer.flashcards()); await sleep(120);

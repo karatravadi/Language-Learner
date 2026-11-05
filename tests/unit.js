@@ -152,6 +152,19 @@ t('merge done keeps the first score', () => assert.equal(
   t('verbs: the chapter tables were compared', () => assert.ok(compared >= 12, String(compared)));
 }
 
+// ---------- the daily verb drill (backlog 14) ----------
+t('drill: ser and estar first, side by side', () => assert.deepEqual(L.drillActive(['ser', 'estar', 'tener', 'ir'], null), ['ser', 'estar']));
+t('drill: a graduated verb makes room for the next', () => assert.deepEqual(L.drillActive(['ser', 'estar', 'tener'], { verbs: { ser: { grad: 'd3' } } }), ['estar', 'tener']));
+t('drill: three clean runs on different days graduate a verb', () => {
+  let r = L.drillRecord(null, 'd1', true); r = L.drillRecord(r, 'd1', true); assert.equal(r.days.length, 1, 'same day counts once');
+  r = L.drillRecord(r, 'd2', false); assert.equal(r.days.length, 1, 'a run that is not clean does not count');
+  r = L.drillRecord(r, 'd3', true); assert.equal(r.grad, ''); r = L.drillRecord(r, 'd4', true); assert.equal(r.grad, 'd4');
+});
+t('drill: merge unions the clean days and keeps graduation', () => {
+  const m = L.mergeState({ drill: { lastDay: 'd2', verbs: { ser: { days: ['d1', 'd2'], grad: '' } } } }, { drill: { lastDay: 'd3', verbs: { ser: { days: ['d3'], grad: '' }, estar: { days: [], grad: 'd0' } } } }).drill;
+  assert.equal(m.lastDay, 'd3'); assert.deepEqual(m.verbs.ser.days, ['d1', 'd2', 'd3']); assert.equal(m.verbs.estar.grad, 'd0');
+});
+
 // ---------- flashcards (backlog 13) ----------
 t('flash: English answers from a meaning', () => assert.deepEqual(L.englishAnswers('to speak, to talk').sort(), ['speak', 'talk', 'to speak', 'to speak, to talk', 'to talk'].sort()));
 t('flash: notes in brackets are dropped', () => assert.deepEqual(L.englishAnswers('you all go to bed (with os)'), ['you all go to bed']));
