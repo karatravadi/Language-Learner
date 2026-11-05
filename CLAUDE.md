@@ -46,6 +46,7 @@ Read this first, then `HANDOVER.md` for the next phase of work.
   Key is a Worker secret (`npx wrangler secret put GEMINI_API_KEY`, the owner types it in, never into a chat).
 - Local copy of the hosted version: `npm run dev:hosted` (port 3132, local database). `.dev.vars` (git-ignored) sets
   `DEV_USER`, a test login honoured on localhost only; switch person with an `X-Dev-User` header.
+- A chapter skipped by the level check is `S.done[n] = { placed: true, date }` (no score): code reading `S.done` must allow for it.
 - Sync rules are `L.mergeState` in logic.js (unit-tested). The app only syncs when `/api/status` says `sync: true`,
   so `start.bat` keeps working exactly as before.
 

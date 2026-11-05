@@ -245,6 +245,42 @@
     return out;
   }
 
+  // ----- try these again (end of a chapter) -----
+  // missed: the skills missed on the first try, with repeats (the most missed comes first). pool: { key, skill }
+  // for every exercise that may be asked. avoid: keys of the exercises missed, so the retry is never the same
+  // question from memory. Up to perSkill per skill, max in all; a skill with nothing else to ask is left out.
+  function retryPick(missed, pool, avoid, opts) {
+    opts = opts || {};
+    const per = opts.perSkill || 2; const max = opts.max || 6;
+    const count = {};
+    (missed || []).forEach(k => { if (k) count[k] = (count[k] || 0) + 1; });
+    const skills = Object.keys(count).sort((a, b) => count[b] - count[a]);
+    const skip = new Set(avoid || []);
+    const out = [];
+    for (const sk of skills) {
+      const cands = shuffle((pool || []).filter(p => p.skill === sk && !skip.has(p.key) && !out.includes(p.key)), opts.rnd);
+      for (const c of cands.slice(0, per)) if (out.length < max) out.push(c.key);
+    }
+    return shuffle(out, opts.rnd);
+  }
+
+  // ----- level check (where a learner who knows some already should start) -----
+  // chapters: chapter numbers in course order. answers: [{ n, ok }] so far. One question per chapter; a miss gets a
+  // second question from the same chapter, and a second miss there means start at that chapter. Returns
+  // { ask: n } for the next question, or { start: n }. Knowing everything still starts at the last chapter.
+  function levelNext(chapters, answers) {
+    chapters = chapters || [];
+    for (const n of chapters) {
+      const a = (answers || []).filter(x => x.n === n);
+      if (!a.length) return { ask: n };
+      if (a[0].ok) continue;
+      if (a.length === 1) return { ask: n };
+      if (a[1].ok) continue;
+      return { start: n };
+    }
+    return { start: chapters.length ? chapters[chapters.length - 1] : null };
+  }
+
   // ----- whole verbs (My words) -----
   // Every present-tense form of the course's verbs (and the infinitive itself) → the infinitive. A reflexive form
   // (me levanto) is found from its verb (levanto). Accents are kept, since está is a verb and esta is not.
@@ -373,6 +409,9 @@
 
     // chapters: best score ever; date and last score from the latest attempt
     out.done = unionBy(a.done, b.done, (x, y) => {
+      // a chapter skipped by the level check gives way to one actually played, on either copy
+      if (obj(x).placed && !obj(y).placed) return y;
+      if (obj(y).placed && !obj(x).placed) return x;
       const r = Object.assign({}, later(x, y, 'date'), { best: Math.max(x.best || 0, y.best || 0) });
       const first = x.first != null ? x.first : y.first; // the first run's score never changes
       if (first != null) r.first = first;
@@ -425,5 +464,5 @@
     return out;
   }
 
-  return { sameWordsEnglish, drillActive, drillRecord, englishAnswers, weightedPick, flashWeight, tryHint, mixedPick, verbIndex, verbAsk, daySecs, judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
+  return { retryPick, levelNext, sameWordsEnglish, drillActive, drillRecord, englishAnswers, weightedPick, flashWeight, tryHint, mixedPick, verbIndex, verbAsk, daySecs, judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
 });

@@ -447,3 +447,9 @@ select.text { font-family: var(--sans); font-size: 16px; }
 .fold-hint { color: var(--ink); font-weight: 500; }
 .fold > .path { margin: 4px 0 8px; }
 .fold-dot { color: var(--ink-3); }
+/* Level check offer, skipped chapters, Try these again (6 Nov 2026). */
+.level-row { margin-top: 4px; }
+.chap.skipped .chap-n { border-style: dashed; border-color: var(--line-2); background: transparent; color: var(--ink-3); }
+.retry { margin-top: 16px; padding: 12px 16px; border-left: 2px solid var(--line-2); }
+.retry p { margin: 0; font-size: 15px; line-height: 22px; color: var(--ink-2); }
+.level-skip { margin-top: 8px; }

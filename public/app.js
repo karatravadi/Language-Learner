@@ -526,7 +526,7 @@
     const wdone = !!S.wotd.done[today];
     const mins = minsToday();
     const nextCh = nextChapter();
-    const doneToday = CHAPTERS.find(c => S.done[c.n] && S.done[c.n].date === today);
+    const doneToday = CHAPTERS.find(c => S.done[c.n] && !S.done[c.n].placed && S.done[c.n].date === today);
     const reviewedToday = !!S.reviewed[today];
     const lastDone = CHAPTERS.filter(c => S.done[c.n]).pop();
     const dv = drillVerbs();
@@ -606,9 +606,10 @@
       const isNext = ch === nextCh && !d;
       const going = inProgress(ch);
       // A finished chapter always shows its tick and best score, even while you practise it again.
-      const go = d ? 'Best ' + d.best + '% · ' + (going ? 'Resume' : 'Practise again') : going ? 'Resume' : isNext ? 'Start' : ch.mins + ' min';
-      return h('button', { class: 'chap' + (d ? ' done' : '') + (isNext || (going && !d) ? ' next' : ''), type: 'button', onclick: () => chapterFlow(ch) },
-        h('div', { class: 'chap-n' }, d ? icon('check') : String(ch.n)),
+      const placed = d && d.placed;
+      const go = placed ? 'Skipped · ' + (going ? 'Resume' : 'Start') : d ? 'Best ' + d.best + '% · ' + (going ? 'Resume' : 'Practise again') : going ? 'Resume' : isNext ? 'Start' : ch.mins + ' min';
+      return h('button', { class: 'chap' + (d ? ' done' : '') + (placed ? ' skipped' : '') + (isNext || (going && !d) ? ' next' : ''), type: 'button', onclick: () => chapterFlow(ch) },
+        h('div', { class: 'chap-n' }, d && !placed ? icon('check') : String(ch.n)),
         h('div', {}, h('div', { class: 'chap-t' }, ch.title), h('div', { class: 'chap-s' }, going ? placeIn(ch) : ch.can)),
         h('div', { class: 'chap-go' }, go, icon('next')));
     };
@@ -619,10 +620,17 @@
       h('div', {}, h('div', { class: 'chap-t' }, r.title), h('div', { class: 'chap-s' }, r.can)),
       h('div', { class: 'chap-go' }, 'Later')));
     const nLater = later.length + ROADMAP.length;
+    const nSkipped = finished.filter(c => S.done[c.n].placed).length;
+    const nPlayed = finished.length - nSkipped;
+    // A new learner who knows some already can find their starting chapter, once, before any chapter is begun.
+    const offerLevel = !finished.length && !S.levelCheck && CHAPTERS.length > 1 && !CHAPTERS.some(c => inProgress(c));
+    const levelRow = offerLevel ? h('button', { class: 'plan-row any-row level-row', type: 'button', onclick: levelCheck },
+      h('span', {}, h('span', { class: 'plan-t' }, 'Know some ' + (COURSE.languageName || 'Spanish') + ' already?'), h('span', { class: 'plan-s' }, 'A short level check finds the chapter to start at')), icon('next')) : null;
     // In course order: finished ones folded above, the next one, then the later ones folded below.
     const chapters = h('section', { class: 'chapters', 'aria-label': 'Chapters' },
-      fold(finished.length + (finished.length === 1 ? ' chapter done' : ' chapters done'), finished.length, finished.map(chapRow)),
+      fold([nPlayed ? nPlayed + (nPlayed === 1 ? ' chapter done' : ' chapters done') : '', nSkipped ? nSkipped + ' skipped' : ''].filter(Boolean).join(' · '), finished.length, finished.map(chapRow)),
       nextCh && !S.done[nextCh.n] ? h('div', { class: 'path' }, chapRow(nextCh)) : null,
+      levelRow,
       fold([later.length ? later.length + (later.length === 1 ? ' more chapter' : ' more chapters') : '', ROADMAP.length ? ROADMAP.length + ' coming later' : ''].filter(Boolean).join(' · '), nLater, later.map(chapRow).concat(roadmap)));
 
     const aiLine = h('button', { class: 'status' + (AI.on ? ' on' : ''), type: 'button', onclick: aiHelp }, h('i'),
@@ -895,8 +903,11 @@
     const labels = CHAPTER_STEPS;
     const last = labels.length - 1;
     const saved = inProgress(ch);
-    const stats = { right: 0, total: 0, t0: Date.now(), a0: ACTIVE };
-    if (saved && saved.stats) { stats.right = saved.stats.right || 0; stats.total = saved.stats.total || 0; }
+    const stats = { right: 0, total: 0, t0: Date.now(), a0: ACTIVE, missed: [], missedKeys: [] };
+    if (saved && saved.stats) {
+      stats.right = saved.stats.right || 0; stats.total = saved.stats.total || 0;
+      stats.missed = (saved.stats.missed || []).slice(); stats.missedKeys = (saved.stats.missedKeys || []).slice();
+    }
     let i = saved ? Math.min(saved.step || 0, last - 1) : 0;
     let exAt = saved && i === PRACTISE ? saved.ex || 0 : 0;
     function keep() {
@@ -904,7 +915,7 @@
       const had = inProgress(ch);
       // Just opening a chapter (still on its first step) is not a place worth keeping.
       if (i >= last) { if (had) S.lessons[ch.n] = { off: true, at: Date.now() }; }
-      else if (i > 0 || had) S.lessons[ch.n] = { step: i, ex: exAt, stats: { right: stats.right, total: stats.total }, at: Date.now() };
+      else if (i > 0 || had) S.lessons[ch.n] = { step: i, ex: exAt, stats: { right: stats.right, total: stats.total, missed: stats.missed, missedKeys: stats.missedKeys }, at: Date.now() };
       else return;
       save();
     }
@@ -913,7 +924,7 @@
       writeStep, bossStep, resultStep];
     function go(to) {
       // Coming back to practice starts it from the first question, so its score is not counted twice.
-      if (to === PRACTISE) { stats.right = 0; stats.total = 0; exAt = 0; }
+      if (to === PRACTISE) { stats.right = 0; stats.total = 0; exAt = 0; stats.missed = []; stats.missedKeys = []; }
       i = to; keep(); render();
     }
     function render() {
@@ -1199,7 +1210,9 @@
   }
 
   // opts.showSkill: name the skill under each question once it is answered (mixed review, where the skill would
-  // give the answer away beforehand). stats.missed, if given, collects the skills missed on the first try.
+  // give the answer away beforehand). stats.missed, if given, collects the skills missed on the first try, and
+  // stats.missedKeys the exercises ('chapter:index'). opts.quiet (the level check): no XP, no weak spots, no review
+  // cards, no hint and no second chance, just the mark. opts.counter: the line above the question.
   function exerciseRunner(list, stats, onDone, startAt, onProgress, opts) {
     opts = opts || {};
     const usable = list.filter(e => e.type !== 'listen' || hasVoice());
@@ -1222,7 +1235,7 @@
     function renderItem(item) {
       const ex = item.e;
       if (window.__trainer) window.__trainer.current = ex; // test hook
-      counter.textContent = item.retry ? 'Second chance' : Math.min(finished + 1, total) + ' of ' + total;
+      counter.textContent = item.retry ? 'Second chance' : opts.counter || Math.min(finished + 1, total) + ' of ' + total;
       fill.style.transform = 'scaleX(' + (finished / Math.max(total, 1)) + ')';
       const holder = h('div', { class: 'ex ex-' + ex.type });
       const fb = h('div', { class: 'feedback hidden', 'aria-live': 'polite' });
@@ -1241,19 +1254,25 @@
         submit() { if (!btn.disabled) btn.click(); },
         record(skill, ok) {
           if (!root.isConnected) return;
-          stats.total++; if (ok) { stats.right++; addXp(5); }
+          stats.total++; if (ok) stats.right++;
+          if (opts.quiet) return;
+          if (ok) addXp(5);
           recordSkill(skill, ok); save();
         },
         complete(res) { if (!root.isConnected || checked) return; finish(res); }
       };
 
       const inst = TYPES[ex.type](ex, api, holder) || {};
+      const missed = () => {
+        if (stats.missed && ex.skill) stats.missed.push(ex.skill);
+        if (stats.missedKeys && EXKEY.get(ex)) stats.missedKeys.push(EXKEY.get(ex));
+      };
 
       // A wrong typed answer on the first try: mark it now (the first try is what counts), then give a hint and
       // let the learner fix it. The answer and the red pen only come after a second miss.
       function hintFirst(res) {
         hinted = true;
-        if (!item.retry) { stats.total++; if (stats.missed && ex.skill) stats.missed.push(ex.skill); }
+        if (!item.retry) { stats.total++; missed(); }
         recordSkill(ex.skill, false);
         if (res.typed) noteSpelling(ex, true);
         save();
@@ -1274,15 +1293,17 @@
           // Second try: no marks either way (the first try counted), a little XP for fixing it.
           if (res.ok) addXp(2);
         } else if (!res.counted) {
-          if (!item.retry) { stats.total++; if (res.ok) stats.right++; else if (near) stats.right += 0.5; else if (stats.missed && ex.skill) stats.missed.push(ex.skill); }
-          if (res.ok) addXp(item.retry ? 5 : 10); else if (near) addXp(item.retry ? 2 : 5);
-          recordSkill(ex.skill, res.ok || !!near);
-          if (res.typed) noteSpelling(ex, !near);
-          save();
+          if (!item.retry) { stats.total++; if (res.ok) stats.right++; else if (near) stats.right += 0.5; else missed(); }
+          if (!opts.quiet) {
+            if (res.ok) addXp(item.retry ? 5 : 10); else if (near) addXp(item.retry ? 2 : 5);
+            recordSkill(ex.skill, res.ok || !!near);
+            if (res.typed) noteSpelling(ex, !near);
+            save();
+          }
         }
         if (!item.retry) { finished++; if (onProgress) onProgress(finished); }
-        if (!res.ok && !near && !item.retry && ex.type !== 'rapid') queue.push({ e: ex, retry: true });
-        if (!res.ok && res.card) addCards([res.card]);
+        if (!res.ok && !near && !item.retry && ex.type !== 'rapid' && !opts.quiet) queue.push({ e: ex, retry: true });
+        if (!res.ok && res.card && !opts.quiet) addCards([res.card]);
         // Fixed on the second try: it was still a miss, so the card joins the deck, but no second chance is needed.
         if (hinted && res.ok && !item.retry) { const c = inst.missCard && inst.missCard(); if (c) addCards([c]); }
 
@@ -1317,7 +1338,7 @@
         if (checked) { advance(); return; }
         const res = inst.check && inst.check();
         if (!res) return;
-        if (!hinted && res.typed && !res.ok && !res.near && res.nudge) { hintFirst(res); return; }
+        if (!hinted && !opts.quiet && res.typed && !res.ok && !res.near && res.nudge) { hintFirst(res); return; }
         finish(res);
       });
       document.addEventListener('keydown', onKey);
@@ -1513,13 +1534,16 @@
   // ---------- results ----------
   function resultStep(ch, next, stats) {
     const acc = stats.total ? Math.round(stats.right / stats.total * 100) : 100;
-    const first = !S.done[ch.n];
-    const prev = S.done[ch.n] || {};
+    // A chapter skipped by the level check counts as played for the first time.
+    const prev = S.done[ch.n] && !S.done[ch.n].placed ? S.done[ch.n] : {};
+    const first = !prev.date;
     S.done[ch.n] = { acc, best: Math.max(acc, prev.best || 0), first: first ? acc : (prev.first != null ? prev.first : prev.acc), date: L.dayKey() };
     addXp(first ? 30 : 10);
     const due = L.dueCards(S.srs, Date.now()).length;
     // Active time in this sitting, counted the same way as the minutes on the home screen.
     const mins = Math.max(1, Math.round((ACTIVE - (stats.a0 || 0)) / 60));
+    const retry = retryList(ch, stats);
+    const missedNames = Array.from(new Set(stats.missed || [])).map(skillName);
     return h('div', { class: 'step result' },
       h('div', { class: 'result-k' }, UI.chapterDone.replace('{n}', ch.n)),
       h('div', { class: 'result-fig' }, acc + '%'),
@@ -1529,9 +1553,94 @@
         h('div', { class: 'stat' }, h('b', {}, mins + ' min'), h('span', {}, 'in this chapter')),
         h('div', { class: 'stat' }, h('b', {}, String(ch.phrases.length)), h('span', {}, 'phrases in your deck'))),
       h('p', { class: 'lead' }, T(ch.doneText) + ' Your phrases are in the review deck and will come back at the right moment.'),
+      retry.length ? h('div', { class: 'retry' },
+        h('p', {}, 'Missed on the first try: ' + missedNames.join(', ') + '. Try ' + retry.length + ' different questions on ' + (missedNames.length === 1 ? 'it' : 'them') + ' while it is fresh.')) : null,
       h('div', { class: 'row' },
-        h('button', { class: 'btn primary big', onclick: home }, 'Back to today'),
+        retry.length ? h('button', { class: 'btn primary big', onclick: () => tryAgain(ch, retry) }, 'Try these again') : null,
+        h('button', { class: 'btn ' + (retry.length ? 'ghost' : 'primary') + ' big', onclick: home }, 'Back to today'),
         due ? h('button', { class: 'btn ghost big', onclick: reviewFlow }, 'Review ' + due + ' now') : null));
+  }
+
+  // ---------- try these again (after a chapter) ----------
+  // Other questions on the skills missed on the first try: from this chapter and the ones before it, never the
+  // questions that were missed, so the answer is not just remembered.
+  const askable = e => e.type !== 'rapid' && (e.type !== 'listen' || hasVoice());
+  function retryList(ch, stats) {
+    if (!stats.missed || !stats.missed.length) return [];
+    const byKey = new Map(); const pool = [];
+    CHAPTERS.filter(c => c.n <= ch.n).forEach(c => c.exercises.forEach(e => {
+      const k = EXKEY.get(e);
+      if (k && e.skill && askable(e)) { byKey.set(k, e); pool.push({ key: k, skill: e.skill }); }
+    }));
+    return L.retryPick(stats.missed, pool, stats.missedKeys).map(k => byKey.get(k));
+  }
+  function tryAgain(ch, list) {
+    const stats = { right: 0, total: 0, t0: Date.now(), missed: [] };
+    const content = exerciseRunner(list, stats, () => {
+      const still = Array.from(new Set(stats.missed)).map(skillName);
+      const due = L.dueCards(S.srs, Date.now()).length;
+      mount(h('div', { class: 'page lesson' }, backBar('Try these again', home), h('div', { class: 'step result' },
+        h('div', { class: 'result-k' }, 'Tried again'),
+        h('div', { class: 'result-fig' }, stats.right + ' of ' + stats.total),
+        h('div', { class: 'result-k' }, 'right first time'),
+        h('p', { class: 'lead', style: { 'margin-top': '24px' } }, still.length ? 'Still shaky: ' + still.join(', ') + '. These stay in your weak spots for another day.' : 'All right this time. These look solid now.'),
+        h('div', { class: 'row' },
+          h('button', { class: 'btn primary big', onclick: home }, 'Back to today'),
+          due ? h('button', { class: 'btn ghost big', onclick: reviewFlow }, 'Review ' + due + ' now') : null))));
+    }, 0, null, { showSkill: true });
+    mount(h('div', { class: 'page lesson' }, backBar('Chapter ' + ch.n + ' · Try these again', home), content));
+  }
+
+  // ---------- level check (for a learner who knows some already) ----------
+  // One question per chapter, in order, typed where the chapter has typed ones (a guess rarely gets those right).
+  // A miss gets a second question from the same chapter; a second miss there is where to start. Nothing here
+  // counts: no XP, no weak spots, no review cards. Starting further on marks the chapters before it as skipped.
+  const levelKinds = ['gap', 'translate', 'order'];
+  function levelCheck() {
+    const order = CHAPTERS.map(c => c.n);
+    const answers = []; const used = new Set();
+    function pick(ch) {
+      const free = ch.exercises.filter(e => askable(e) && e.type !== 'match' && e.type !== 'listen' && !used.has(e));
+      const typed = free.filter(e => levelKinds.includes(e.type));
+      const list = L.shuffle(typed.length ? typed : free);
+      return list[0] || null;
+    }
+    function step() {
+      const next = L.levelNext(order, answers);
+      if (next.start != null) return levelDone(next.start);
+      const ch = CHAPTERS.find(c => c.n === next.ask);
+      const ex = pick(ch);
+      if (!ex) { answers.push({ n: ch.n, ok: false }); return step(); }
+      used.add(ex);
+      const stats = { right: 0, total: 0, t0: Date.now() };
+      const content = exerciseRunner([ex], stats, () => { answers.push({ n: ch.n, ok: stats.right > 0 }); step(); }, 0, null,
+        { quiet: true, counter: 'Chapter ' + ch.n + ' of ' + CHAPTERS.length });
+      const skip = h('button', { class: 'btn ghost', type: 'button', onclick: () => {
+        while (answers.filter(a => a.n === ch.n).length < 2) answers.push({ n: ch.n, ok: false });
+        step();
+      } }, 'I don’t know this yet');
+      mount(h('div', { class: 'page lesson' }, backBar('Level check', home), content, h('div', { class: 'row level-skip' }, skip)));
+    }
+    function levelDone(n) {
+      const ch = CHAPTERS.find(c => c.n === n);
+      S.levelCheck = { date: L.dayKey(), start: n }; save();
+      const begin = () => {
+        CHAPTERS.filter(c => c.n < n && !S.done[c.n]).forEach(c => { S.done[c.n] = { placed: true, date: L.dayKey() }; });
+        save(); chapterFlow(ch);
+      };
+      const firstCh = CHAPTERS[0];
+      mount(h('div', { class: 'page lesson' }, backBar('Level check', home), h('div', { class: 'step result' },
+        h('div', { class: 'result-k' }, 'Level check done'),
+        h('div', { class: 'result-fig' }, 'Chapter ' + n),
+        h('div', { class: 'result-k' }, T(ch.title)),
+        h('p', { class: 'lead', style: { 'margin-top': '24px' } }, ch === firstCh
+          ? 'Chapter ' + n + ' is the right place to start. It moves quickly over anything you know already.'
+          : 'Start here. Chapters ' + firstCh.n + ' to ' + (n - 1) + ' will show as skipped, and you can open any of them later. Their questions still come up in mixed review.'),
+        h('div', { class: 'row' },
+          h('button', { class: 'btn primary big', onclick: ch === firstCh ? () => chapterFlow(ch) : begin }, 'Start chapter ' + n),
+          ch === firstCh ? null : h('button', { class: 'btn ghost big', onclick: () => chapterFlow(firstCh) }, 'Start from chapter ' + firstCh.n + ' instead')))));
+    }
+    step();
   }
 
   // ---------- weak-spot drill ----------
@@ -2139,7 +2248,7 @@
         h('p', { class: 'meta' }, String(e.message || e))));
       return;
     }
-    window.__trainer = { readingsScreen, readingScreen, drillScreen, flashcards, mixedReview, idleFor: ms => { lastActive = Date.now() - ms; }, state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE, ui: UI };
+    window.__trainer = { levelCheck, readingsScreen, readingScreen, drillScreen, flashcards, mixedReview, idleFor: ms => { lastActive = Date.now() - ms; }, state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE, ui: UI };
     await aiStatus();
     if (SYNC.on) await syncStart();
     applyProfile();

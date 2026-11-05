@@ -212,6 +212,40 @@ t('flash: merge keeps the latest record per card', () => assert.deepEqual(L.merg
   t('mixed: empty chapters are ignored', () => assert.deepEqual(L.mixedPick([[], ['x']], 3), ['x']));
 }
 
+// ---------- try these again (end of a chapter) ----------
+{
+  const pool = [{ key: '1:0', skill: 'ser' }, { key: '1:1', skill: 'ser' }, { key: '1:2', skill: 'ser' }, { key: '1:3', skill: 'ser' },
+    { key: '2:0', skill: 'tu' }, { key: '2:1', skill: 'tu' }, { key: '2:2', skill: 'gen' }];
+  t('retry: never asks a missed question again', () => { for (let k = 0; k < 20; k++) assert.ok(!L.retryPick(['ser', 'tu'], pool, ['1:0', '2:0']).some(x => x === '1:0' || x === '2:0')); });
+  t('retry: other questions on each missed skill, two per skill', () => {
+    const r = L.retryPick(['ser', 'ser', 'tu'], pool, ['1:0', '2:0']);
+    assert.equal(r.filter(k => k.startsWith('1:')).length, 2); assert.deepEqual(r.filter(k => k.startsWith('2:')), ['2:1']);
+  });
+  t('retry: a skill with nothing else to ask is left out', () => assert.deepEqual(L.retryPick(['gen'], pool, ['2:2']), []));
+  t('retry: no more than max, the most missed skill first', () => {
+    const r = L.retryPick(['tu', 'ser', 'ser'], pool, [], { perSkill: 3, max: 3 });
+    assert.equal(r.length, 3); assert.ok(r.every(k => k.startsWith('1:')));
+  });
+  t('retry: nothing missed, nothing to try', () => assert.deepEqual(L.retryPick([], pool, []), []));
+}
+
+// ---------- level check ----------
+{
+  const chs = [1, 2, 3, 4];
+  t('level: starts by asking chapter 1', () => assert.deepEqual(L.levelNext(chs, []), { ask: 1 }));
+  t('level: right moves to the next chapter', () => assert.deepEqual(L.levelNext(chs, [{ n: 1, ok: true }]), { ask: 2 }));
+  t('level: a miss asks the same chapter again', () => assert.deepEqual(L.levelNext(chs, [{ n: 1, ok: true }, { n: 2, ok: false }]), { ask: 2 }));
+  t('level: a miss then a right answer moves on', () => assert.deepEqual(L.levelNext(chs, [{ n: 1, ok: false }, { n: 1, ok: true }]), { ask: 2 }));
+  t('level: two misses in a chapter start there', () => assert.deepEqual(L.levelNext(chs, [{ n: 1, ok: true }, { n: 2, ok: false }, { n: 2, ok: false }]), { start: 2 }));
+  t('level: two misses in chapter 1 start at chapter 1', () => assert.deepEqual(L.levelNext(chs, [{ n: 1, ok: false }, { n: 1, ok: false }]), { start: 1 }));
+  t('level: knowing everything starts at the last chapter', () => assert.deepEqual(L.levelNext(chs, chs.map(n => ({ n, ok: true }))), { start: 4 }));
+  t('level: merge prefers a played chapter over a skipped one', () => {
+    const played = { acc: 80, best: 80, first: 80, date: '2026-11-01' }; const placed = { placed: true, date: '2026-11-05' };
+    assert.deepEqual(L.mergeState({ done: { 1: placed } }, { done: { 1: played } }).done[1], played);
+    assert.deepEqual(L.mergeState({ done: { 1: played } }, { done: { 1: placed } }).done[1], played);
+  });
+}
+
 // ---------- sync merge (this device a, server b) ----------
 const M = L.mergeState;
 t('srsGrade stamps seen', () => assert.equal(L.srsGrade({ id: 'a', box: 1 }, true, now).seen, now));

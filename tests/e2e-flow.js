@@ -131,6 +131,78 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   };
   let hintShown = false;
   let hintTried = '';
+  // Answers the exercise on screen: right, or wrong when miss is set, or with a spelling slip.
+  const answer = async (ex, miss, slip, n) => {
+    switch (ex.type) {
+      case 'mc': case 'listen':
+        await page.evaluate(i => document.querySelectorAll('.ex .opt')[i].click(), miss ? (ex.answer + 1) % ex.options.length : ex.answer); break;
+      case 'gap': case 'translate':
+        await page.type('.ex input.text', miss ? (hintMiss(ex, n) || 'xyz') : slip || (UI.marksOptional ? plain(ex.answer[0]) : ex.answer[0])); break;
+      case 'order':
+        for (const word of ex.words) await page.evaluate(wd => [...document.querySelectorAll('.tiles.bank .tile')].find(b => b.innerText === wd).click(), word);
+        break;
+      case 'fix':
+        await page.evaluate(i => document.querySelectorAll('.ex .word')[i].click(), miss ? (ex.wrong + 1) % 3 : ex.wrong); break;
+      case 'match':
+        for (const [l, r] of ex.pairs) {
+          await page.evaluate(x => [...document.querySelectorAll('.mcol')[0].querySelectorAll('.opt')].find(b => b.innerText === x).click(), l);
+          await page.evaluate(x => [...document.querySelectorAll('.mcol')[1].querySelectorAll('.opt')].find(b => b.innerText === x).click(), r);
+        }
+        break;
+      case 'rapid':
+        for (const it of ex.items) {
+          const label = ex.choices.find(c => c.key === it.answer).label;
+          await page.evaluate(lb => [...document.querySelectorAll('.rapid-btns button')].find(b => b.innerText === lb).click(), label);
+          await page.evaluate(() => { const b = [...document.querySelectorAll('.rapid-fb button')].pop(); if (b) b.click(); });
+        }
+        assert.equal(await page.evaluate(() => document.querySelectorAll('.rapid-fb button').length), 0, 'rapid fire ends with one button (Continue), no Finish');
+        if (n === 4) await shot('05-rapid-done');
+        break;
+      default: throw new Error('unknown type ' + ex.type);
+    }
+  };
+  // Answers every question of a runner right, until it ends; returns the exercises it asked.
+  const answerAll = async () => {
+    const asked = []; let g = 0;
+    while (g++ < 30) {
+      const ex = await page.evaluate(() => document.querySelector('.runner') && window.__trainer.current);
+      if (!ex) break;
+      asked.push(ex);
+      await answer(ex, false, null, 0); await sleep(40);
+      await page.evaluate(() => { const b = document.querySelector('.btn.check'); if (b && b.innerText === 'Check' && !b.disabled) b.click(); }); await sleep(60);
+      await page.evaluate(() => { const b = document.querySelector('.btn.check'); if (b && !b.classList.contains('hidden')) b.click(); }); await sleep(80);
+    }
+    return asked;
+  };
+  const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
+  // ---------- level check (a learner who knows some already) ----------
+  {
+    assert.match(await text(), /already\?/, 'home offers the level check to a new learner');
+    const before = await state();
+    await clickText('.level-row', 'already?'); await sleep(120);
+    assert.match(await page.evaluate(() => document.querySelector('.counter').innerText), /^Chapter 1 of \d+$/);
+    const lex = await page.evaluate(() => window.__trainer.current);
+    await answer(lex, false, null, 0); await sleep(40);
+    await page.evaluate(() => { const b = document.querySelector('.btn.check'); if (b && b.innerText === 'Check') b.click(); }); await sleep(60);
+    await page.evaluate(() => document.querySelector('.btn.check').click()); await sleep(100);
+    assert.match(await page.evaluate(() => document.querySelector('.counter').innerText), /^Chapter 2 of /, 'a right answer moves to chapter 2');
+    await clickText('button', 'know this yet'); await sleep(100);
+    t = await text();
+    assert.match(t, /Level check done/); assert.ok(t.includes('Start chapter 2') && t.includes('Start from chapter 1 instead'));
+    let sl = await state();
+    assert.equal(sl.xp, before.xp, 'the level check gives no XP');
+    assert.equal(Object.keys(sl.srs).length, Object.keys(before.srs).length, 'and adds no review cards');
+    assert.deepEqual(sl.skills, before.skills, 'and no weak spots');
+    await clickText('button', 'Start chapter 2'); await sleep(120);
+    sl = await state();
+    assert.ok(sl.done[1] && sl.done[1].placed && !sl.done[2], 'chapter 1 is skipped, chapter 2 is next');
+    await page.evaluate(() => window.__trainer.home()); await sleep(100);
+    t = await text();
+    assert.match(t, /1 skipped/); assert.match(t, /Skipped · Start/); assert.doesNotMatch(t, /already\?/); assert.doesNotMatch(t, /Chapter done today/);
+    ok('level check: one question a chapter, "I don’t know this yet" stops it, start at chapter 2 skips chapter 1, no XP or cards');
+  }
+
   for (const n of chapters) {
     const ch = await page.evaluate(n => window.__trainer.chapters.find(c => c.n === n), n);
     const deliberateMiss = n === 2;
@@ -150,40 +222,14 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
     await clickText('button', 'Start practising');
 
     // exercises
-    let guard = 0; let missedOne = false;
+    let guard = 0; let missedOne = false; let missedEx = null;
     while (guard++ < 60) {
       const ex = await page.evaluate(() => document.querySelector('.runner') && window.__trainer.current);
       if (!ex) break;
       const counter = await page.evaluate(() => document.querySelector('.counter').innerText);
       const miss = deliberateMiss && !missedOne && ['gap', 'translate', 'fix', 'mc'].includes(ex.type) && !counter.includes('Second');
       const slip = !slipShown && n === 3 && !counter.includes('Second') ? slipOf(ex) : null;
-      switch (ex.type) {
-        case 'mc': case 'listen':
-          await page.evaluate(i => document.querySelectorAll('.ex .opt')[i].click(), miss ? (ex.answer + 1) % ex.options.length : ex.answer); break;
-        case 'gap': case 'translate':
-          await page.type('.ex input.text', miss ? (hintMiss(ex, n) || 'xyz') : slip || (UI.marksOptional ? plain(ex.answer[0]) : ex.answer[0])); break;
-        case 'order':
-          for (const word of ex.words) await page.evaluate(wd => [...document.querySelectorAll('.tiles.bank .tile')].find(b => b.innerText === wd).click(), word);
-          break;
-        case 'fix':
-          await page.evaluate(i => document.querySelectorAll('.ex .word')[i].click(), miss ? (ex.wrong + 1) % 3 : ex.wrong); break;
-        case 'match':
-          for (const [l, r] of ex.pairs) {
-            await page.evaluate(x => [...document.querySelectorAll('.mcol')[0].querySelectorAll('.opt')].find(b => b.innerText === x).click(), l);
-            await page.evaluate(x => [...document.querySelectorAll('.mcol')[1].querySelectorAll('.opt')].find(b => b.innerText === x).click(), r);
-          }
-          break;
-        case 'rapid':
-          for (const it of ex.items) {
-            const label = ex.choices.find(c => c.key === it.answer).label;
-            await page.evaluate(lb => [...document.querySelectorAll('.rapid-btns button')].find(b => b.innerText === lb).click(), label);
-            await page.evaluate(() => { const b = [...document.querySelectorAll('.rapid-fb button')].pop(); if (b) b.click(); });
-          }
-          assert.equal(await page.evaluate(() => document.querySelectorAll('.rapid-fb button').length), 0, 'rapid fire ends with one button (Continue), no Finish');
-          if (n === 4) await shot('05-rapid-done');
-          break;
-        default: throw new Error('unknown type ' + ex.type);
-      }
+      await answer(ex, miss, slip, n);
       await sleep(40);
       const checkBtn = await page.$('.btn.check:not(.hidden)');
       if (checkBtn && !['match', 'rapid'].includes(ex.type)) {
@@ -219,7 +265,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
         ok('chapter 2: a wrong form is explained from the tables ("' + hint + '")');
       }
       if (miss) {
-        missedOne = true;
+        missedOne = true; missedEx = ex;
         t = await text();
         assert.match(t, /Not quite/);
         assert.ok(await page.$('.feedback .pen-ok'), 'red pen should show the right answer');
@@ -268,6 +314,17 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
     assert.ok(ch.phrases.every(p => s.srs[p.id]), 'phrases join the deck');
     if (n === 4) await shot('09-result');
     ok('chapter ' + n + ' "' + ch.title + '" plays through: ' + s.done[n].acc + '% first try, ' + ch.phrases.length + ' phrases added');
+    if (n === 1) assert.ok(!s.done[1].placed && s.done[1].first != null, 'playing a skipped chapter records its score');
+    if (missedEx) {
+      // Try these again: other questions on the missed skill, never the missed question itself.
+      assert.match(t, /Missed on the first try/);
+      await clickText('button', 'Try these again'); await sleep(120);
+      const asked = await answerAll();
+      assert.ok(asked.length >= 1, 'try these again asks something');
+      assert.ok(asked.every(e => e.skill === missedEx.skill && !same(e, missedEx)), 'only the missed skill, and never the missed question');
+      t = await text(); assert.match(t, /Tried again/); assert.match(t, /All right this time/);
+      ok('try these again: ' + asked.length + ' other questions on "' + missedEx.skill + '" after chapter ' + n + ', not the one missed');
+    } else assert.doesNotMatch(t, /Try these again/, 'nothing missed, nothing to try again');
     await clickText('button', 'Back to today'); await sleep(100);
   }
 

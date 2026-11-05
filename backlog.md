@@ -6,9 +6,10 @@ Last updated 5 Nov 2026. Sizes: S under an hour of work, M a session, L several 
 
 | Stage | Items | Why |
 |---|---|---|
-| Bigger features | 5 | 16, 21, 13, 14 and 15 are done. |
+| Bigger features | 5, then 24 to 28 | 16, 21, 13, 14, 15, 22 and 23 are done. 24 to 30 are ideas from Sotto, OpenLingo and FreeLingo (5 Nov 2026). |
 | Content checks | 18, 19, then 20 (15 is done) | Keep the course coherent as chapters are added |
-| Test on the phone first | 6, 17 | Each starts with a five-minute test. Drop the item if it fails. |
+| Test on the phone first | 6, 17, then 29 | Each starts with a five-minute test. Drop the item if it fails. 29 needs the voice from 17. |
+| Housekeeping | 30 | Free, quick, any time. |
 
 ---
 
@@ -29,6 +30,50 @@ Plan:
 - Red-pen marks on the wrong words after checking, as in `fix`.
 - Errors drawn from what the chapter has taught. Add a `skill` to each so weak-spot drills pick them up.
 - Start with 1 per chapter from chapter 5 onwards, then see how it feels.
+
+## 24. Learner notes that shape the content (S)
+
+Idea from Sotto and OpenLingo, whose tutors remember notes about the learner.
+
+Plan:
+- One "About me" field in Settings, shared by every course through the profile (item 1): work, interests, where you are going. For example "I work in tech, I like football, going to Madrid in May".
+- The tutor's prompts (write step, free chat, word of the day) get it inside the existing `<learner>` tags, capped at about 300 characters, so it shapes examples without becoming an instruction.
+- No automatic memory. Kara writes the notes and can change them.
+
+## 25. Writing corrections as old → new, with why (S)
+
+Idea from Sotto.
+
+Plan:
+- The write step already gets corrections from the AI. Show each one as its own red-pen line: the wrong words struck through, the right ones written in, and one plain-English reason underneath.
+- Keep the polished version below, as now.
+- `shape()` in lib/ai.js already fixes the reply's shape, so this is mostly display.
+
+## 26. A2 mock exam in DELE format (M)
+
+Idea from Sotto (practice exams in real exam formats) and FreeLingo (end-of-level tests).
+
+Plan:
+- After chapter 12 (the A2 checkpoint), a practice exam laid out like the DELE A2 papers: reading tasks, a short listening part if the voice works (item 17), and two writing tasks marked by the AI against the DELE criteria.
+- Content shipped in the course files, not generated live, so it is the same for everyone and can be checked.
+- A native speaker should check the exam before anyone relies on it. It is practice, not a prediction of a grade.
+
+## 27. Read an article at your level (M)
+
+Idea from OpenLingo: paste a web article, and it is rewritten paragraph by paragraph in the course language at your level.
+
+Plan:
+- Paste the text (not a link, so the Worker never fetches pages), up to about 2,000 characters. The AI rewrites it at A1, A2 or B1 using mostly words from finished chapters.
+- Opens in the Reading screen with tap-to-save, like the shipped readings (item 15). No questions, since nobody has checked them.
+- Costs one or two tutor calls per article. Say so on the button.
+
+## 28. A week of practice on the home screen (S)
+
+Idea from FreeLingo's dashboard (seven days of activity).
+
+Plan:
+- A quiet row of seven small bars under today's minutes, one for each of the last seven days, from `S.time`.
+- No colour alarm on missed days, and no streak shaming.
 
 # Content checks
 
@@ -91,7 +136,49 @@ Plan, if the voice is fine:
 
 ---
 
+## 29. Listening episodes built from the words due for review (M, needs item 17's voice test)
+
+Idea from Sotto. This is the best fit for the problem in "What this is": audio courses are easy to switch off from.
+
+Plan:
+- A short story or dialogue (about 1 minute) written by the AI around 6 to 10 words due for review, at the learner's level, read aloud by the browser's Spain Spanish voice.
+- A few quick questions while listening keep it active, not passive. Show the text only after the questions.
+- One tutor call per episode. Spanish first. There is no Latin voice in browsers.
+- Depends on the voice being good enough (item 17, step 0).
+
+---
+
+# Housekeeping
+
+## 30. Changelog and free GitHub checks (S)
+
+Ideas from the Sotto and FreeLingo repos.
+
+Plan:
+- A short `CHANGELOG.md` in plain words, so invited learners can see what is new.
+- Turn on Dependabot (alerts when a package is out of date) and CodeQL (a free security scan) in GitHub settings. Both are free for public repos.
+
+---
+
 # Done
+
+## 22. Try these again after a chapter (S) - DONE 5 Nov 2026
+
+Idea from Sotto, which regenerates a failed section in a similar form.
+
+- The results screen lists the skills missed on the first try and offers "Try these again": up to 6 other questions on those skills, from that chapter and the ones before it. The questions that were missed are never asked again here, so the answer is not just remembered.
+- Not a gate: the chapter is finished either way.
+- Uses the course's own exercises, so it costs no tutor calls and works offline.
+- Not done: AI-written new questions in the same form. Possible later if the shipped ones run out.
+
+## 23. Level check for new learners (S) - DONE 5 Nov 2026
+
+Idea from Sotto and FreeLingo (placement test).
+
+- Offered on home until a first chapter is started: "Know some Spanish already?". One question per chapter, in order, typed where possible, so a guess rarely passes. A miss gets a second question from the same chapter, and a second miss there is where to start. "I don't know this yet" stops it straight away.
+- Nothing in it counts: no XP, no weak spots, no review cards.
+- Starting further on marks the chapters before as skipped. They show "Skipped" on home, can still be opened, and count for mixed review, readings and flashcards. Playing one later records a normal score.
+- Works the same in every course.
 
 ## 1. Save my name against my email (S) - DONE 2 Nov 2026
 
