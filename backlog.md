@@ -78,7 +78,7 @@ Plan:
 
 # 2. Quick win
 
-## 16. Mixed review across chapters (S)
+## 16. Mixed review across chapters (S) - DONE 5 Nov 2026 (drills; flashcards get it with item 13)
 
 Why: mixing old topics in one session feels harder than one topic at a time, but it improves long-term retention and forces a choice between forms (ser or estar, tú or usted).
 

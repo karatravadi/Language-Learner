@@ -287,6 +287,38 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   await clickText('.plan-row', 'Weak spots'); await sleep(100);
   assert.ok((await text()).includes('Weak spots · ' + weakName));
   ok('weak spots: skill names come from the course files and the drill opens');
+
+  // ---------- mixed review: several finished chapters, skill named only after answering ----------
+  await page.evaluate(() => window.__trainer.home()); await sleep(80);
+  t = await text(); assert.match(t, /Mixed review/); assert.match(t, /10 questions from \d+ finished chapters/);
+  await clickText('.card', 'Mixed review'); await sleep(120);
+  const firstFrom = await page.evaluate(() => { const T = window.__trainer; const c = T.chapters.find(ch => ch.exercises.includes(T.current)); return c ? !!T.state().done[c.n] : false; });
+  assert.ok(firstFrom, 'the first question comes from a finished chapter');
+  assert.equal(await page.$('.fb-skill'), null, 'no skill shown before answering');
+  const pool = await page.evaluate(() => {
+    const T = window.__trainer; const pick = [];
+    for (const c of T.chapters) { const e = c.exercises.find(x => x.type === 'mc' && x.q); if (e && pick.length < 2 && !pick.some(p => p.c === c.n)) pick.push({ c: c.n, i: c.exercises.indexOf(e) }); }
+    return pick;
+  });
+  await page.evaluate(p => { const T = window.__trainer; T.mixedReview(p.map(x => T.chapters.find(c => c.n === x.c).exercises[x.i])); }, pool);
+  await sleep(120);
+  assert.equal(await page.$('.fb-skill'), null, 'the skill is not shown before answering');
+  const ex0 = await page.evaluate(() => window.__trainer.current);
+  await page.evaluate(i => document.querySelectorAll('.ex .opt')[i].click(), (ex0.answer + 1) % ex0.options.length);
+  await page.evaluate(() => document.querySelector('.btn.check').click()); await sleep(80);
+  const skill0 = await page.evaluate(() => (document.querySelector('.fb-skill') || {}).innerText || '');
+  assert.match(skill0, /^Skill: /, 'the skill is named once answered');
+  await page.evaluate(() => document.querySelector('.btn.check').click()); await sleep(80);
+  for (let k = 0; k < 3 && !(await text()).includes('Mixed review done'); k++) {
+    const ex = await page.evaluate(() => window.__trainer.current);
+    await page.evaluate(i => document.querySelectorAll('.ex .opt')[i].click(), ex.answer);
+    await page.evaluate(() => document.querySelector('.btn.check').click()); await sleep(60);
+    await page.evaluate(() => document.querySelector('.btn.check').click()); await sleep(80);
+  }
+  t = await text();
+  assert.match(t, /Mixed review done/); assert.ok(t.includes('To look at again: ' + skill0.replace('Skill: ', '')), 'the missed skill is listed');
+  await page.evaluate(() => window.__trainer.home()); await sleep(60);
+  ok('mixed review: opens from home, draws from finished chapters, names the skill only after answering ("' + skill0 + '"), lists what to look at again');
   await page.evaluate(() => window.__trainer.home()); await sleep(80);
 
   // ---------- settings ----------

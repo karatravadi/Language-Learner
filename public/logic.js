@@ -157,6 +157,18 @@
     return null;
   }
 
+  // ----- mixed review -----
+  // Up to n items drawn from several groups (one group per finished chapter), taking one from each group in turn
+  // (groups in random order, items shuffled within each), so the mix moves between chapters instead of staying on one.
+  function mixedPick(groups, n, rnd) {
+    const lists = shuffle((groups || []).filter(g => g && g.length).map(g => shuffle(g, rnd)), rnd);
+    const out = [];
+    while (out.length < n && lists.some(l => l.length)) {
+      for (const l of lists) { if (l.length && out.length < n) out.push(l.shift()); }
+    }
+    return out;
+  }
+
   // ----- whole verbs (My words) -----
   // Every present-tense form of the course's verbs (and the infinitive itself) → the infinitive. A reflexive form
   // (me levanto) is found from its verb (levanto). Accents are kept, since está is a verb and esta is not.
@@ -327,5 +339,5 @@
     return out;
   }
 
-  return { verbIndex, verbAsk, daySecs, judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
+  return { mixedPick, verbIndex, verbAsk, daySecs, judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
 });

@@ -527,6 +527,7 @@
     let practise;
     if (weak.length) practise = planRow(false, 'Weak spots', skillName(weak[0]), PLAN.practise + ' min', drillWeak);
     else if (AI.on && lastDone) practise = planRow(false, 'Free chat with ' + lastDone.boss.who, 'Use what you learned in chapter ' + lastDone.n, PLAN.practise + ' min', () => chatScreen(lastDone));
+    else if (canMix()) practise = planRow(false, 'Mixed review', '10 questions from your finished chapters', PLAN.practise + ' min', () => mixedReview());
     else if (lastDone) practise = planRow(false, 'Replay a chapter', 'Chapter ' + lastDone.n + ': ' + lastDone.title, PLAN.practise + ' min', () => chapterFlow(lastDone));
     else practise = planRow(false, 'Practise', 'Opens after your first chapter', PLAN.practise + ' min', null);
 
@@ -556,6 +557,11 @@
       h('div', { class: 'wotd-go' }, wdone ? [icon('check'), 'Done'] : ['Use it in a sentence', icon('next')]));
 
     const nWords = myWords().length;
+    const nDone = finishedChapters().length;
+    const mixCard = h('button', { class: 'card wotd', type: 'button', disabled: nDone < 2, onclick: () => mixedReview() },
+      h('div', { class: 'wotd-k' }, 'Mixed review'),
+      h('div', { class: 'wotd-m' }, nDone >= 2 ? '10 questions from ' + nDone + ' finished chapters, mixed up' : 'Opens once you have finished two chapters'),
+      nDone >= 2 ? h('div', { class: 'wotd-go' }, 'Start', icon('next')) : null);
     const wordsCard = h('button', { class: 'card wotd', type: 'button', onclick: wordsScreen },
       h('div', { class: 'wotd-k' }, 'My words'),
       h('div', { class: 'wotd-m' }, nWords ? nWords + (nWords === 1 ? ' word saved' : ' words saved') + ', in your review deck' : 'Tap any ' + (COURSE.languageName || 'Spanish') + ' word in a lesson to see what it means and save it here'),
@@ -585,7 +591,7 @@
         h('div', { class: 'top-r' }, courseSwitch(),
           h('button', { class: 'icon-btn', 'aria-label': 'Settings', onclick: settings }, icon('settings', 'lg')))),
       h('div', { class: 'home-grid' },
-        h('div', { class: 'home-side' }, todayCard, wotd, wordsCard),
+        h('div', { class: 'home-side' }, todayCard, wotd, wordsCard, mixCard),
         h('div', {},
           h('h1', { class: 'page-title' }, COURSE.title), h('p', { class: 'muted' }, COURSE.level + ' · ' + CHAPTERS.length + ' chapters'),
           h('div', { class: 'path' }, path),
@@ -1138,7 +1144,10 @@
     };
   }
 
-  function exerciseRunner(list, stats, onDone, startAt, onProgress) {
+  // opts.showSkill: name the skill under each question once it is answered (mixed review, where the skill would
+  // give the answer away beforehand). stats.missed, if given, collects the skills missed on the first try.
+  function exerciseRunner(list, stats, onDone, startAt, onProgress, opts) {
+    opts = opts || {};
     const usable = list.filter(e => e.type !== 'listen' || hasVoice());
     const from = Math.min(startAt || 0, usable.length);
     const queue = usable.slice(from).map(e => ({ e, retry: false }));
@@ -1191,7 +1200,7 @@
         if (inst.reveal) inst.reveal(res);
         const near = res.near; // a small spelling slip: half a mark, no second chance needed
         if (!res.counted) {
-          if (!item.retry) { stats.total++; if (res.ok) stats.right++; else if (near) stats.right += 0.5; }
+          if (!item.retry) { stats.total++; if (res.ok) stats.right++; else if (near) stats.right += 0.5; else if (stats.missed && ex.skill) stats.missed.push(ex.skill); }
           if (res.ok) addXp(item.retry ? 5 : 10); else if (near) addXp(item.retry ? 2 : 5);
           recordSkill(ex.skill, res.ok || !!near);
           if (res.typed) noteSpelling(ex, !near);
@@ -1218,6 +1227,7 @@
           near ? h('div', { class: 'fb-ans', lang: ex.dir === 'toEn' ? null : TL }, res.answer) : null,
           !good && !near && res.hint ? h('div', { class: 'fb-hint' }, res.hint) : null,
           res.why && !near ? h('div', { class: 'fb-why' }, res.why) : null,
+          opts.showSkill && ex.skill ? h('div', { class: 'meta fb-skill' }, 'Skill: ' + skillName(ex.skill)) : null,
           res.hear ? speakBtn(res.hear, 'Hear it') : null);
         fb.classList.remove('hidden');
         btn.classList.remove('hidden');
@@ -1460,9 +1470,34 @@
         h('div', { class: 'result-k' }, 'Weak spots done'),
         h('div', { class: 'result-fig' }, stats.right + ' of ' + stats.total),
         h('div', { class: 'result-k' }, 'right first time'),
-        h('div', { class: 'row' }, h('button', { class: 'btn primary big', onclick: home }, 'Back to today')))));
+        h('div', { class: 'row' }, h('button', { class: 'btn primary big', onclick: home }, 'Back to today'),
+          canMix() ? h('button', { class: 'btn ghost big', onclick: () => mixedReview() }, 'Mixed review') : null))));
     });
     mount(h('div', { class: 'page lesson' }, backBar('Weak spots · ' + skillName(weak[0]), home), content));
+  }
+
+  // ---------- mixed review (backlog 16) ----------
+  // Ten questions from the finished chapters, a different chapter each time, in random order. Mixing topics is
+  // harder than one skill at a time, but it is what makes them stick, and it forces a choice (ser or estar, tú or
+  // usted). The skill is only named once a question is answered. pool: tests can pass their own exercises.
+  const finishedChapters = () => CHAPTERS.filter(c => S.done[c.n]);
+  const canMix = () => finishedChapters().length >= 2;
+  function mixedReview(pool) {
+    const list = pool || L.mixedPick(finishedChapters().map(ch => ch.exercises.filter(e => e.type !== 'rapid' && (e.type !== 'listen' || hasVoice()))), 10);
+    if (!list.length) return home();
+    const stats = { right: 0, total: 0, t0: Date.now(), missed: [] };
+    const content = exerciseRunner(list, stats, () => {
+      const missed = Array.from(new Set(stats.missed)).map(skillName);
+      mount(h('div', { class: 'page lesson' }, backBar('Mixed review', home), h('div', { class: 'step result' },
+        h('div', { class: 'result-k' }, 'Mixed review done'),
+        h('div', { class: 'result-fig' }, stats.right + ' of ' + stats.total),
+        h('div', { class: 'result-k' }, 'right first time'),
+        h('p', { class: 'lead', style: { 'margin-top': '24px' } }, missed.length ? 'To look at again: ' + missed.join(', ') + '. These now count towards your weak spots.' : 'Nothing to look at again this time.'),
+        h('div', { class: 'row' },
+          h('button', { class: 'btn primary big', onclick: home }, 'Back to today'),
+          h('button', { class: 'btn ghost big', onclick: () => mixedReview() }, 'Another mix')))));
+    }, 0, null, { showSkill: true });
+    mount(h('div', { class: 'page lesson' }, backBar('Mixed review', home), content));
   }
 
   // ---------- review (spaced repetition) ----------
@@ -1679,7 +1714,7 @@
         h('p', { class: 'meta' }, String(e.message || e))));
       return;
     }
-    window.__trainer = { idleFor: ms => { lastActive = Date.now() - ms; }, state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE, ui: UI };
+    window.__trainer = { mixedReview, idleFor: ms => { lastActive = Date.now() - ms; }, state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE, ui: UI };
     await aiStatus();
     if (SYNC.on) await syncStart();
     applyProfile();

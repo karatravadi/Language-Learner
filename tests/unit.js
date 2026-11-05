@@ -146,6 +146,19 @@ t('merge done keeps the first score', () => assert.equal(
   t('verbs: the chapter tables were compared', () => assert.ok(compared >= 12, String(compared)));
 }
 
+// ---------- mixed review (backlog 16) ----------
+{
+  const groups = [['a1', 'a2', 'a3', 'a4', 'a5'], ['b1', 'b2', 'b3'], ['c1', 'c2', 'c3', 'c4']];
+  const ch = x => x[0];
+  t('mixed: draws n items with no repeats', () => { const m = L.mixedPick(groups, 10); assert.equal(m.length, 10); assert.equal(new Set(m).size, 10); });
+  t('mixed: uses every chapter', () => assert.equal(new Set(L.mixedPick(groups, 6).map(ch)).size, 3));
+  t('mixed: never two from the same chapter in a row while others are left', () => {
+    for (let k = 0; k < 20; k++) { const m = L.mixedPick(groups, 9); for (let i = 1; i < m.length; i++) assert.notEqual(ch(m[i]), ch(m[i - 1]), m.join(' ')); }
+  });
+  t('mixed: fewer items than asked when the chapters run out', () => assert.equal(L.mixedPick([['a'], ['b']], 10).length, 2));
+  t('mixed: empty chapters are ignored', () => assert.deepEqual(L.mixedPick([[], ['x']], 3), ['x']));
+}
+
 // ---------- sync merge (this device a, server b) ----------
 const M = L.mergeState;
 t('srsGrade stamps seen', () => assert.equal(L.srsGrade({ id: 'a', box: 1 }, true, now).seen, now));
