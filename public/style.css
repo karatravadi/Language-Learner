@@ -391,3 +391,10 @@ select.text { font-family: var(--sans); font-size: 16px; }
 .verb-row { display: contents; }
 .verb-p { font-size: 14px; line-height: 24px; color: var(--ink-3); }
 .verb-f { font: 400 18px/24px var(--serif); color: var(--ink); }
+
+/* Accent keys above a typing box (flashcards): quiet, small, in the serif so the letters read clearly. */
+.accent-bar { display: flex; flex-wrap: wrap; gap: 4px; margin: 16px 0 0; }
+.accent-bar + input.text { margin-top: 8px; }
+.accent-key { min-width: 36px; height: 36px; padding: 0 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); font: 400 18px/1 var(--serif); }
+.accent-key:active { background: var(--raised); }
+.again-list { margin: 8px 0 0; padding-left: 20px; font: 400 18px/28px var(--serif); }

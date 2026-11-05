@@ -152,6 +152,19 @@ t('merge done keeps the first score', () => assert.equal(
   t('verbs: the chapter tables were compared', () => assert.ok(compared >= 12, String(compared)));
 }
 
+// ---------- flashcards (backlog 13) ----------
+t('flash: English answers from a meaning', () => assert.deepEqual(L.englishAnswers('to speak, to talk').sort(), ['speak', 'talk', 'to speak', 'to speak, to talk', 'to talk'].sort()));
+t('flash: notes in brackets are dropped', () => assert.deepEqual(L.englishAnswers('you all go to bed (with os)'), ['you all go to bed']));
+t('flash: a / separates meanings', () => assert.ok(L.englishAnswers('bored (with estar) / boring (with ser)').includes('boring')));
+t('flash: typed English is judged loosely (articles, contractions, case)', () => assert.equal(L.judge("I'm tired", L.englishAnswers("I'm tired."), { english: true }), 'ok'));
+t('flash: weighted pick has no repeats and favours heavy weights', () => {
+  const p = L.weightedPick(['a', 'b', 'c', 'd'], [1, 1, 1, 1], 4); assert.equal(new Set(p).size, 4);
+  let heavy = 0; for (let k = 0; k < 200; k++) if (L.weightedPick(['a', 'b'], [9, 1], 1)[0] === 'a') heavy++;
+  assert.ok(heavy > 150, String(heavy));
+});
+t('flash: missed cards weigh more, known cards less', () => { assert.ok(L.flashWeight({ f: { r: 0, w: 3 } }, 'f') > L.flashWeight(null, 'f')); assert.ok(L.flashWeight({ f: { r: 9, w: 0 } }, 'f') < 1); });
+t('flash: merge keeps the latest record per card', () => assert.deepEqual(L.mergeState({ flash: { x: { at: 5, f: { r: 1, w: 0 } } } }, { flash: { x: { at: 9, f: { r: 2, w: 1 } }, y: { at: 1 } } }).flash, { x: { at: 9, f: { r: 2, w: 1 } }, y: { at: 1 } }));
+
 // ---------- mixed review (backlog 16) ----------
 {
   const groups = [['a1', 'a2', 'a3', 'a4', 'a5'], ['b1', 'b2', 'b3'], ['c1', 'c2', 'c3', 'c4']];

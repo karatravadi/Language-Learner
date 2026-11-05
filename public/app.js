@@ -558,6 +558,11 @@
 
     const nWords = myWords().length;
     const nDone = finishedChapters().length;
+    const nFlash = flashDeck().length;
+    const flashCard = h('button', { class: 'card wotd', type: 'button', disabled: nFlash < 4, onclick: flashcards },
+      h('div', { class: 'wotd-k' }, 'Flashcards'),
+      h('div', { class: 'wotd-m' }, nFlash >= 4 ? 'About 10 cards from your words and phrases, any time' : 'Opens once you have finished a chapter or saved a few words'),
+      nFlash >= 4 ? h('div', { class: 'wotd-go' }, 'Start', icon('next')) : null);
     const mixCard = h('button', { class: 'card wotd', type: 'button', disabled: nDone < 2, onclick: () => mixedReview() },
       h('div', { class: 'wotd-k' }, 'Mixed review'),
       h('div', { class: 'wotd-m' }, nDone >= 2 ? '10 questions from ' + nDone + ' finished chapters, mixed up' : 'Opens once you have finished two chapters'),
@@ -591,7 +596,7 @@
         h('div', { class: 'top-r' }, courseSwitch(),
           h('button', { class: 'icon-btn', 'aria-label': 'Settings', onclick: settings }, icon('settings', 'lg')))),
       h('div', { class: 'home-grid' },
-        h('div', { class: 'home-side' }, todayCard, wotd, wordsCard, mixCard),
+        h('div', { class: 'home-side' }, todayCard, wotd, wordsCard, flashCard, mixCard),
         h('div', {},
           h('h1', { class: 'page-title' }, COURSE.title), h('p', { class: 'muted' }, COURSE.level + ' · ' + CHAPTERS.length + ' chapters'),
           h('div', { class: 'path' }, path),
@@ -1511,6 +1516,134 @@
     mount(h('div', { class: 'page lesson' }, backBar('Weak spots · ' + skillName(weak[0]), home), content));
   }
 
+  // ---------- accent keys: tap to type the letters a phone or a UK keyboard makes awkward ----------
+  const ACCENT_KEYS = { es: ['á', 'é', 'í', 'ó', 'ú', 'ñ', 'ü', '¿', '¡'], fr: ['é', 'è', 'ê', 'à', 'â', 'ç', 'ô', 'î', 'ù', 'œ'], la: ['ā', 'ē', 'ī', 'ō', 'ū'] };
+  function accentBar(input) {
+    const keys = ACCENT_KEYS[TL];
+    if (!keys) return null;
+    return h('div', { class: 'accent-bar', role: 'group', 'aria-label': 'Accented letters' }, keys.map(k => h('button', {
+      class: 'accent-key', type: 'button', tabindex: '-1', onpointerdown: e => e.preventDefault(),
+      onclick: () => {
+        const a = input.selectionStart == null ? input.value.length : input.selectionStart;
+        const b = input.selectionEnd == null ? a : input.selectionEnd;
+        input.value = input.value.slice(0, a) + k + input.value.slice(b);
+        input.setSelectionRange(a + k.length, a + k.length);
+        input.dispatchEvent(new Event('input')); input.focus();
+      }
+    }, k)));
+  }
+
+  // ---------- flashcards (backlog 13) ----------
+  // Free practice, any time, separate from Review's schedule: about 10 cards from My words and the phrases of
+  // finished chapters, more often the ones missed. See the course language, type the English. After a right answer
+  // a third of the cards that allow it flip, and you type the course language. A missed card comes back once at the
+  // end. Results are kept per card and direction in S.flash.
+  function flashDeck() {
+    const deck = [];
+    for (const k of myWords()) {
+      const v = S.vocab[k];
+      if (v.verb && VERBS && VERBS.verbs[k]) deck.push({ id: 'vb-' + k, es: k, en: v.en, verb: k, back: true });
+      else if (!v.verb) deck.push({ id: 'v-' + k, es: v.es, en: v.en, alts: [], back: true });
+    }
+    for (const ch of finishedChapters()) for (const p of ch.phrases) {
+      // A phrase flips only when its other Spanish versions are listed, so a right variant is never marked wrong.
+      deck.push({ id: p.id, es: T(p.es), en: p.en, alts: (p.alts || []).map(T), back: (p.alts || []).length > 0 });
+    }
+    return deck;
+  }
+  const canFlash = () => flashDeck().length >= 4;
+  function flashcards() {
+    const deck = flashDeck();
+    if (!deck.length) return home();
+    if (!S.flash) S.flash = {};
+    const picked = L.weightedPick(deck, deck.map(c => L.flashWeight(S.flash[c.id], 'f') + ((S.srs[c.id] && S.srs[c.id].box <= 2) ? 0.5 : 0)), 10);
+    const queue = picked.map(card => ({ card, dir: 'f', again: false }));
+    let asked = 0; let right = 0; let dealt = 0; const missed = new Set(); const wasMissed = new Set();
+    const body = h('div', { class: 'step' });
+    mount(h('div', { class: 'page lesson' }, backBar('Flashcards', home), body));
+
+    function note(card, dir, ok) {
+      const rec = S.flash[card.id] || (S.flash[card.id] = { f: { r: 0, w: 0 }, b: { r: 0, w: 0 } });
+      rec[dir] = rec[dir] || { r: 0, w: 0 };
+      if (ok) rec[dir].r++; else rec[dir].w++;
+      rec.at = Date.now();
+      save();
+    }
+    function next() {
+      const item = queue.shift();
+      if (!item) { done(); return; }
+      const { card, dir } = item;
+      if (dir === 'f' && !item.again) dealt++;
+      const ask = dir === 'b' && card.verb ? L.verbAsk(VERBS, card.verb) : null;
+      const target = dir === 'f';
+      const prompt = target ? card.es : (ask ? ask.who + ' · ' + card.en : card.en);
+      const answers = target ? L.englishAnswers(card.en) : (ask ? [ask.answer] : [card.es].concat(card.alts || []));
+      const shown = target ? card.en.replace(/\s*\([^)]*\)/g, '') : (ask ? ask.answer : card.es);
+      let checked = false;
+      if (window.__trainer) window.__trainer.flash = { answers, target, id: card.id }; // test hook
+      const input = h('input', { class: 'text' + (target ? ' en-in' : ''), type: 'text', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': 'Your answer', placeholder: target ? 'In English' : UI.placeholderTo });
+      const fb = h('div', { class: 'feedback hidden', 'aria-live': 'polite' });
+      const btn = h('button', { class: 'btn primary big', type: 'button' }, 'Check');
+      function check() {
+        if (checked) { next(); return; }
+        if (!input.value.trim()) return;
+        checked = true; input.disabled = true;
+        const { r, near } = judgeTyped(input.value, answers, target);
+        const ok = r === 'ok' || r === 'accent';
+        const first = !item.again;
+        if (first) asked++;
+        if (ok && first) right++;
+        if (ok) addXp(first ? 3 : 1); else if (near) addXp(1);
+        note(card, dir, ok);
+        if (!ok) { missed.add(card.es); if (!wasMissed.has(card.id + dir)) { wasMissed.add(card.id + dir); queue.push({ card, dir, again: true }); } }
+        // After a right answer, a third of the cards that can flip come straight back the other way.
+        else if (target && card.back && !item.again && Math.random() < 1 / 3) queue.unshift({ card, dir: 'b', again: false });
+        fb.className = 'feedback ' + (ok ? (r === 'accent' ? 'warn' : 'good') : near ? 'warn' : 'bad');
+        const meant = h('button', { class: 'btn quiet', type: 'button', onclick: () => {
+          // A different right meaning in English: count it, and don't bring the card back.
+          note(card, dir, true); S.flash[card.id][dir].w = Math.max(0, S.flash[card.id][dir].w - 1); save();
+          if (first) right++;
+          missed.delete(card.es);
+          const k = queue.findIndex(q => q.card === card && q.again); if (k >= 0) queue.splice(k, 1);
+          put(fb, h('div', { class: 'fb-head' }, 'Counted as right'), h('div', { class: 'fb-ans' }, shown));
+          fb.className = 'feedback good';
+        } }, 'I was right');
+        put(fb,
+          h('div', { class: 'fb-head' }, ok ? (r === 'accent' ? 'Right, but watch the accents' : praise()) : near ? 'Nearly. Check the spelling of ' + near.right : 'Not quite'),
+          near ? penSlip(near.typed, near.right) : ok && r !== 'accent' ? h('div', { class: 'fb-ans', lang: target ? null : TL }, shown) : pen(input.value.trim(), shown),
+          !ok && !target && hintFor(input.value, answers) ? h('div', { class: 'fb-hint' }, hintFor(input.value, answers)) : null,
+          !ok && target ? h('div', { class: 'row', style: { 'margin-top': '8px' } }, meant) : null,
+          !target && ask ? verbTable(card.verb) : null,
+          target ? null : speakBtn(shown, 'Hear it'));
+        fb.classList.remove('hidden');
+        btn.textContent = 'Next';
+        btn.focus();
+      }
+      btn.addEventListener('click', check);
+      input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); check(); } });
+      put(body,
+        h('div', { class: 'counter' }, item.again ? 'Once more' : dir === 'b' ? 'The other way' : 'Card ' + dealt + ' of ' + picked.length),
+        h('div', { class: 'bar' }, h('i', { style: { transform: 'scaleX(' + ((dealt - 1) / Math.max(1, picked.length)) + ')' } })),
+        h('p', { class: 'prompt', style: { 'margin-top': '32px' } }, target ? 'What does it mean' : 'How do you say'),
+        target ? h('div', { class: 'sentence', lang: TL }, prompt) : h('div', { class: 'sentence en-q' }, prompt),
+        target ? null : accentBar(input),
+        input, fb, h('div', { class: 'row end sticky' }, btn));
+      input.focus();
+    }
+    function done() {
+      const again = Array.from(missed);
+      put(body,
+        h('div', { class: 'result-k' }, 'Flashcards done'),
+        h('div', { class: 'result-fig' }, right + ' of ' + asked),
+        h('div', { class: 'result-k' }, 'right first time'),
+        again.length ? h('div', { style: { 'margin-top': '24px' } }, h('p', { class: 'lead' }, 'To look at again:'),
+          h('ul', { class: 'again-list' }, again.map(x => h('li', { lang: TL }, x)))) : h('p', { class: 'lead', style: { 'margin-top': '24px' } }, 'Nothing to look at again.'),
+        h('div', { class: 'row' }, h('button', { class: 'btn primary big', onclick: home }, 'Back to today'),
+          h('button', { class: 'btn ghost big', onclick: flashcards }, 'Ten more')));
+    }
+    next();
+  }
+
   // ---------- mixed review (backlog 16) ----------
   // Ten questions from the finished chapters, a different chapter each time, in random order. Mixing topics is
   // harder than one skill at a time, but it is what makes them stick, and it forces a choice (ser or estar, tú or
@@ -1749,7 +1882,7 @@
         h('p', { class: 'meta' }, String(e.message || e))));
       return;
     }
-    window.__trainer = { mixedReview, idleFor: ms => { lastActive = Date.now() - ms; }, state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE, ui: UI };
+    window.__trainer = { flashcards, mixedReview, idleFor: ms => { lastActive = Date.now() - ms; }, state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE, ui: UI };
     await aiStatus();
     if (SYNC.on) await syncStart();
     applyProfile();

@@ -331,6 +331,33 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   await page.evaluate(() => window.__trainer.home()); await sleep(60);
   ok('mixed review: opens from home, draws from finished chapters, names the skill only after answering ("' + skill0 + '"), lists what to look at again');
 
+  // ---------- flashcards (backlog 13) ----------
+  t = await text(); assert.match(t, /Flashcards/);
+  await page.evaluate(() => window.__trainer.flashcards()); await sleep(120);
+  let flips = 0; let sawKeys = false; let missedOnPurpose = false; let rightAfter = false;
+  for (let k = 0; k < 40 && !(await text()).includes('Flashcards done'); k++) {
+    const f = await page.evaluate(() => window.__trainer.flash);
+    if (!f.target) { flips++; if (TL !== 'la' && await page.$('.accent-bar .accent-key')) sawKeys = true; }
+    if (f.target && !missedOnPurpose) {
+      missedOnPurpose = true;
+      await page.type('input.text', 'qqq'); await page.keyboard.press('Enter'); await sleep(60);
+      assert.match(await text(), /Not quite/);
+      await clickText('.feedback button', 'I was right'); await sleep(40);
+      assert.match(await text(), /Counted as right/);
+      rightAfter = true;
+    } else {
+      await page.type('input.text', UI.marksOptional && !f.target ? plain(f.answers[0]) : f.answers[0]); await page.keyboard.press('Enter'); await sleep(60);
+      assert.ok(await page.$('.feedback.good, .feedback.warn'), 'the right answer is accepted: ' + f.answers[0]);
+    }
+    await page.evaluate(() => [...document.querySelectorAll('button')].find(b => b.innerText === 'Next').click()); await sleep(60);
+  }
+  t = await text(); assert.match(t, /Flashcards done/); assert.match(t, /\d+ of \d+/);
+  const fs0 = await state();
+  assert.ok(Object.keys(fs0.flash || {}).length > 0, 'results are kept per card');
+  if (flips && TL !== 'la') assert.ok(sawKeys, 'typing the course language shows the accent keys');
+  await page.evaluate(() => window.__trainer.home()); await sleep(60);
+  ok('flashcards: a session of cards, ' + flips + ' flipped to the course language' + (sawKeys ? ' with accent keys' : '') + ', "I was right" counts a different meaning' + (rightAfter ? '' : ''));
+
   // ---------- hint first, then a second try (backlog 21) ----------
   const hx = await page.evaluate(() => window.__trainer.chapters.map(c => c.exercises.map((e, i) => ({ c: c.n, i, e })).filter(x => x.e.type === 'gap')).flat());
   const target2 = hx.map(x => ({ x, wrong: hintMiss(x.e, x.c) })).find(y => y.wrong);

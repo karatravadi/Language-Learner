@@ -163,6 +163,35 @@
     return null;
   }
 
+  // ----- flashcards (backlog 13) -----
+  // The English answers a card accepts, from its meaning: "to speak, to talk" gives to speak, to talk, speak, talk.
+  // Notes in brackets are dropped ("you all go to bed (with os)"), and a / or ; separates meanings too.
+  function englishAnswers(en) {
+    const out = new Set();
+    const base = String(en || '').replace(/\([^)]*\)/g, ' ');
+    const parts = base.split(/[,;\/]| or /).map(x => x.trim()).filter(Boolean);
+    for (const p of parts.length ? parts : [base.trim()]) { out.add(p); const bare = p.replace(/^to\s+/i, ''); if (bare && bare !== p) out.add(bare); }
+    if (parts.length > 1) out.add(base.trim()); // the whole meaning typed out is right too
+    return Array.from(out).filter(Boolean);
+  }
+  // n items, without repeats, more likely the heavier their weight.
+  function weightedPick(items, weights, n, rnd) {
+    rnd = rnd || Math.random;
+    const pool = items.map((it, i) => ({ it, w: Math.max(0.01, weights[i] || 0) }));
+    const out = [];
+    while (out.length < n && pool.length) {
+      let r = rnd() * pool.reduce((s, x) => s + x.w, 0); let k = 0;
+      while (k < pool.length - 1 && (r -= pool[k].w) > 0) k++;
+      out.push(pool.splice(k, 1)[0].it);
+    }
+    return out;
+  }
+  // A card's weight for a session: cards often missed in a direction come up more, well-known ones less.
+  function flashWeight(rec, dir) {
+    const d = (rec && rec[dir]) || {};
+    return Math.max(0.3, 1 + 2 * (d.w || 0) - 0.5 * (d.r || 0));
+  }
+
   // ----- a hint before the answer (backlog 21) -----
   // For a wrong typed answer that differs from an accepted one in a single word: point at that word without
   // giving the answer. Same start, different ending: "Check the ending of habla". Otherwise "Look again at libro".
@@ -343,6 +372,8 @@
     Object.keys(time).sort().slice(-TIME_DAYS).forEach(k => { out.time[k] = time[k]; });
     out.reviewed = unionBy(a.reviewed, b.reviewed, (x, y) => x || y);
     out.skills = unionBy(a.skills, b.skills, (x, y) => ({ r: Math.max(x.r || 0, y.r || 0), w: Math.max(x.w || 0, y.w || 0) }));
+    // flashcard results per card and direction: the more recent record wins
+    if (a.flash || b.flash) out.flash = unionBy(a.flash, b.flash, (x, y) => ((obj(y).at || 0) > (obj(x).at || 0) ? y : x));
     // exercises answered with a spelling slip (for the spelling drill): the latest change wins
     if (a.slips || b.slips) out.slips = unionBy(a.slips, b.slips, (x, y) => ((obj(y).at || 0) > (obj(x).at || 0) ? y : x));
     // saved words: the latest change (added or removed) wins
@@ -365,5 +396,5 @@
     return out;
   }
 
-  return { tryHint, mixedPick, verbIndex, verbAsk, daySecs, judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
+  return { englishAnswers, weightedPick, flashWeight, tryHint, mixedPick, verbIndex, verbAsk, daySecs, judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
 });

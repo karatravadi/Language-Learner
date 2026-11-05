@@ -126,7 +126,7 @@ Plan:
 
 Open question: should review ask for one form at a time (recommended) or the whole table at once?
 
-## 13. Flashcards: type the English, then sometimes type the Spanish (M)
+## 13. Flashcards: type the English, then sometimes type the Spanish (M) - DONE 5 Nov 2026
 
 Idea (Kara, 5 Nov 2026): a flashcard mode, Spanish first. A Spanish word shows and she types the English. After a right answer the card sometimes flips at random, showing the English so she types the Spanish.
 
