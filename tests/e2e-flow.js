@@ -125,6 +125,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
     return null;
   };
   let hintShown = false;
+  let hintTried = '';
   for (const n of chapters) {
     const ch = await page.evaluate(n => window.__trainer.chapters.find(c => c.n === n), n);
     const deliberateMiss = n === 2;
@@ -184,6 +185,16 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
         const label = await page.evaluate(b => b.innerText, checkBtn);
         if (label === 'Check') { await checkBtn.click(); await sleep(60); }
       }
+      // A wrong typed answer first gets a hint and a second try (backlog 21); the hint never gives the answer.
+      if (miss && ['gap', 'translate'].includes(ex.type) && /Not yet\. Try again/.test(await text())) {
+        const nudge = await page.evaluate(() => document.querySelector('.feedback .fb-hint').innerText);
+        assert.ok(!ex.answer.some(a => new RegExp('\\b' + a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i').test(nudge)), 'the hint does not give the answer: ' + nudge);
+        assert.equal(await page.$('.feedback .pen-ok'), null, 'no red-pen answer before the second try');
+        await page.evaluate(() => { const i = document.querySelector('.ex input.text'); i.value = ''; });
+        await page.type('.ex input.text', 'xyz');
+        await page.evaluate(() => document.querySelector('.btn.check').click()); await sleep(60);
+        hintTried = nudge;
+      }
       if (UI.marksOptional && ['gap', 'translate'].includes(ex.type) && !miss) assert.doesNotMatch(await text(), /watch the accents/, 'missing macrons are not a mistake');
       if (slip) {
         slipShown = true;
@@ -208,7 +219,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
         assert.match(t, /Not quite/);
         assert.ok(await page.$('.feedback .pen-ok'), 'red pen should show the right answer');
         await shot('06-redpen');
-        ok('chapter 2: a wrong answer gets the red-pen correction and comes back as a second chance');
+        ok('chapter 2: a wrong answer gets the red-pen correction and comes back as a second chance' + (hintTried ? ', after a hint and a second try ("' + hintTried + '")' : ''));
       }
       await page.evaluate(() => { const b = document.querySelector('.btn.check'); if (b && !b.classList.contains('hidden')) b.click(); });
       await sleep(60);
@@ -319,6 +330,30 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   assert.match(t, /Mixed review done/); assert.ok(t.includes('To look at again: ' + skill0.replace('Skill: ', '')), 'the missed skill is listed');
   await page.evaluate(() => window.__trainer.home()); await sleep(60);
   ok('mixed review: opens from home, draws from finished chapters, names the skill only after answering ("' + skill0 + '"), lists what to look at again');
+
+  // ---------- hint first, then a second try (backlog 21) ----------
+  const hx = await page.evaluate(() => window.__trainer.chapters.map(c => c.exercises.map((e, i) => ({ c: c.n, i, e })).filter(x => x.e.type === 'gap')).flat());
+  const target2 = hx.map(x => ({ x, wrong: hintMiss(x.e, x.c) })).find(y => y.wrong);
+  if (target2) {
+    await page.evaluate(x => { const T = window.__trainer; T.mixedReview([T.chapters.find(c => c.n === x.c).exercises[x.i]]); }, target2.x);
+    await sleep(100);
+    await page.type('.ex input.text', target2.wrong);
+    await page.evaluate(() => document.querySelector('.btn.check').click()); await sleep(80);
+    t = await text();
+    assert.match(t, /Not yet\. Try again/, 'a wrong form gets a hint first');
+    const nudge2 = await page.evaluate(() => document.querySelector('.feedback .fb-hint').innerText);
+    assert.ok(!target2.x.e.answer.some(a => (' ' + nudge2.toLowerCase().replace(/[^\p{L} ]/gu, ' ') + ' ').includes(' ' + a.toLowerCase() + ' ')), 'the hint does not give the answer: ' + nudge2);
+    await page.evaluate(() => { const i = document.querySelector('.ex input.text'); i.value = ''; });
+    await page.type('.ex input.text', UI.marksOptional ? plain(target2.x.e.answer[0]) : target2.x.e.answer[0]);
+    await page.evaluate(() => document.querySelector('.btn.check').click()); await sleep(80);
+    t = await text();
+    assert.match(t, /Right on the second try/);
+    await page.evaluate(() => document.querySelector('.btn.check').click()); await sleep(80);
+    t = await text();
+    assert.match(t, /0 of 1/, 'only the first try counts for marks');
+    await page.evaluate(() => window.__trainer.home()); await sleep(60);
+    ok('hint first: "' + target2.wrong + '" gets "' + nudge2 + '", the second try is accepted, the first try is what counts');
+  }
   await page.evaluate(() => window.__trainer.home()); await sleep(80);
 
   // ---------- settings ----------

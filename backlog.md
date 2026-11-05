@@ -102,7 +102,7 @@ Plan:
 - Written by AI, so flag anything uncertain for Kara to check. Latin notes get checked against Whitaker's Words or Wheelock.
 - This is the first step on the open "clearer explanations for absolute beginners" item in HANDOVER.md.
 
-## 21. Give a hint before showing the answer (S, build with item 3)
+## 21. Give a hint before showing the answer (S, build with item 3) - DONE 5 Nov 2026 (chapter exercises, drills and mixed review)
 
 Why: studies of corrective feedback find that prompting the learner to fix their own mistake can help lasting learning more than just giving the answer.
 

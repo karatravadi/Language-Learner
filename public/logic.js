@@ -128,7 +128,8 @@
   // When a wrong answer is an accepted one with a single form swapped for another form from the same table, say
   // what the typed form is for and which one was needed: "vives goes with tú. For usted, use vive."
   // n: only tables from chapter n and earlier (what has been taught). Returns a sentence, or null.
-  function formHint(forms, input, answers, n, notes) {
+  // short: a hint for a second try that doesn't give the answer away ("hablas goes with tú. Which form goes with yo?").
+  function formHint(forms, input, answers, n, notes, short) {
     const got = stripAcc(norm(input));
     if (!got) return null;
     const pool = (forms || []).filter(f => n == null || f.n <= n);
@@ -146,6 +147,11 @@
           // A form that is also right for the wanted person (je prends, tu prends) is not the mistake.
           if (sameTable && pool.some(x => x.table === t.table && x.key === t.key && x.label === r.label)) continue;
           const verb = r.rows === 6;
+          if (short) {
+            if (otherVerb) return t.form + ' is a form of ' + verbOf(t.table) + '. This one needs ' + verbOf(r.table) + '.';
+            if (notes) return t.form + (verb ? ' goes with ' : ' is for ') + who(t.label) + '. Which form ' + (verb ? 'goes with ' : 'is for ') + who(r.label) + '?';
+            return t.form + ' is the form for "' + who(t.label) + '". Which one is for "' + who(r.label) + '"?';
+          }
           if (otherVerb) return t.form + ' is a form of ' + verbOf(t.table) + '. This one needs ' + verbOf(r.table) + ': ' + r.form + '.';
           // Courses whose tables are labelled with pronouns (yo, tú; je, tu) say "goes with". Where the labels are
           // English (Latin: "I am", "receiver"), quote them.
@@ -153,6 +159,26 @@
           return t.form + ' is the form for "' + who(t.label) + '". Here you need the one for "' + who(r.label) + '": ' + r.form + '.';
         }
       }
+    }
+    return null;
+  }
+
+  // ----- a hint before the answer (backlog 21) -----
+  // For a wrong typed answer that differs from an accepted one in a single word: point at that word without
+  // giving the answer. Same start, different ending: "Check the ending of habla". Otherwise "Look again at libro".
+  function tryHint(input, answers, opts) {
+    opts = opts || {};
+    const prep = opts.english ? english : norm;
+    const got = prep(input).split(' ').filter(Boolean);
+    if (!got.length) return null;
+    for (const a of (Array.isArray(answers) ? answers : [answers])) {
+      const want = prep(a).split(' ').filter(Boolean);
+      if (want.length !== got.length) continue;
+      const diff = want.map((w, k) => (stripAcc(w) === stripAcc(got[k]) ? -1 : k)).filter(k => k >= 0);
+      if (diff.length !== 1) continue;
+      const k = diff[0]; const y = got[k]; const w = want[k];
+      const shared = (() => { let i = 0; while (i < y.length && i < w.length && y[i] === w[i]) i++; return i; })();
+      return shared >= 3 && shared >= Math.min(y.length, w.length) - 3 ? 'Check the ending of ' + y + '.' : 'Look again at ' + y + '.';
     }
     return null;
   }
@@ -339,5 +365,5 @@
     return out;
   }
 
-  return { mixedPick, verbIndex, verbAsk, daySecs, judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
+  return { tryHint, mixedPick, verbIndex, verbAsk, daySecs, judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
 });

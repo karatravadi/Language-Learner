@@ -1137,11 +1137,22 @@
         const shown = isGap ? ex.answer[0] : prettyAns(ex.answer.slice(0, ex.who ? 4 : 2), ex.q, ex.who, toEn ? '' : null);
         const res = { ok: r === 'ok' || r === 'accent', almost: r === 'accent', near, typed: true, yours: input.value.trim(), answer: shown, hear: isGap || toEn ? null : ex.answer[0], why: ex.why };
         if (r === 'no' && !toEn) res.hint = isGap ? hintFor(T(ex.q).replace('___', input.value), ex.answer.map(a => T(ex.q).replace('___', a)), chapterOf(ex)) : hintFor(input.value, ex.answer, chapterOf(ex));
+        // A hint for a second try (backlog 21): what the typed form is for, or which word to look at, never the answer.
+        if (r === 'no') {
+          const tried = isGap ? T(ex.q).replace('___', input.value) : input.value;
+          const wanted = isGap ? ex.answer.map(a => T(ex.q).replace('___', a)) : ex.answer;
+          res.nudge = (!toEn && L.formHint(FORMS, tried, wanted, chapterOf(ex), COURSE.personNotes, true)) || L.tryHint(tried, wanted, { english: toEn });
+        }
         // A review card always asks for the course's language, so a missed translation into English makes none.
-        if (!isGap && !toEn && r === 'no') res.card = { id: 'x-' + ex.q.toLowerCase().replace(/[^a-z]/g, '').slice(0, 24), es: prettyAns([ex.answer[0]], ex.q), en: ex.q, alts: ex.answer.slice(1).map(a => prettyAns([a], ex.q)) };
+        if (!isGap && !toEn && r === 'no') res.card = missCard();
         return res;
-      }
+      },
+      missCard
     };
+    function missCard() {
+      if (isGap || toEn) return null;
+      return { id: 'x-' + ex.q.toLowerCase().replace(/[^a-z]/g, '').slice(0, 24), es: prettyAns([ex.answer[0]], ex.q), en: ex.q, alts: ex.answer.slice(1).map(a => prettyAns([a], ex.q)) };
+    }
   }
 
   // opts.showSkill: name the skill under each question once it is answered (mixed review, where the skill would
@@ -1174,6 +1185,7 @@
       const fb = h('div', { class: 'feedback hidden', 'aria-live': 'polite' });
       const btn = h('button', { class: 'btn primary big check', type: 'button', disabled: true }, 'Check');
       let checked = false;
+      let hinted = false; // a hint was shown after a wrong first try; the first try has already been marked
 
       function onKey(e) {
         if (e.key === 'Enter' && !e.repeat && checked && e.target === document.body) { e.preventDefault(); advance(); }
@@ -1194,12 +1206,31 @@
 
       const inst = TYPES[ex.type](ex, api, holder) || {};
 
+      // A wrong typed answer on the first try: mark it now (the first try is what counts), then give a hint and
+      // let the learner fix it. The answer and the red pen only come after a second miss.
+      function hintFirst(res) {
+        hinted = true;
+        if (!item.retry) { stats.total++; if (stats.missed && ex.skill) stats.missed.push(ex.skill); }
+        recordSkill(ex.skill, false);
+        if (res.typed) noteSpelling(ex, true);
+        save();
+        fb.className = 'feedback warn';
+        put(fb, h('div', { class: 'fb-head' }, 'Not yet. Try again'), h('div', { class: 'fb-hint' }, res.nudge));
+        fb.classList.remove('hidden');
+        const input = holder.querySelector('input.text');
+        if (input) { input.select(); input.focus(); }
+        fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
       function finish(res) {
         checked = true;
         holder.classList.add('locked');
         if (inst.reveal) inst.reveal(res);
         const near = res.near; // a small spelling slip: half a mark, no second chance needed
-        if (!res.counted) {
+        if (hinted) {
+          // Second try: no marks either way (the first try counted), a little XP for fixing it.
+          if (res.ok) addXp(2);
+        } else if (!res.counted) {
           if (!item.retry) { stats.total++; if (res.ok) stats.right++; else if (near) stats.right += 0.5; else if (stats.missed && ex.skill) stats.missed.push(ex.skill); }
           if (res.ok) addXp(item.retry ? 5 : 10); else if (near) addXp(item.retry ? 2 : 5);
           recordSkill(ex.skill, res.ok || !!near);
@@ -1209,10 +1240,12 @@
         if (!item.retry) { finished++; if (onProgress) onProgress(finished); }
         if (!res.ok && !near && !item.retry && ex.type !== 'rapid') queue.push({ e: ex, retry: true });
         if (!res.ok && res.card) addCards([res.card]);
+        // Fixed on the second try: it was still a miss, so the card joins the deck, but no second chance is needed.
+        if (hinted && res.ok && !item.retry) { const c = inst.missCard && inst.missCard(); if (c) addCards([c]); }
 
         const good = res.ok;
         fb.className = 'feedback ' + (good ? (res.almost ? 'warn' : 'good') : near ? 'warn' : 'bad');
-        const head = res.head || (good ? (res.almost ? 'Right, but watch the accents' : praise()) : near ? 'Nearly. Check the spelling of ' + near.right : (item.retry ? 'Not quite. Moving on' : 'Not quite'));
+        const head = res.head || (good ? (hinted ? 'Right on the second try' : res.almost ? 'Right, but watch the accents' : praise()) : near ? 'Nearly. Check the spelling of ' + near.right : (item.retry ? 'Not quite. Moving on' : 'Not quite'));
         let mark = null;
         if (near) mark = penSlip(near.typed, near.right);
         else if (res.penFrom && !good) mark = pen(res.penFrom, res.penTo);
@@ -1240,7 +1273,9 @@
       btn.addEventListener('click', () => {
         if (checked) { advance(); return; }
         const res = inst.check && inst.check();
-        if (res) finish(res);
+        if (!res) return;
+        if (!hinted && res.typed && !res.ok && !res.near && res.nudge) { hintFirst(res); return; }
+        finish(res);
       });
       document.addEventListener('keydown', onKey);
       put(body, holder, fb, h('div', { class: 'row end sticky' }, btn));
