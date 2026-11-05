@@ -1,6 +1,7 @@
 const assert = require('assert');
 const L = require('../public/logic.js');
 let n = 0; const t = (name, fn) => { fn(); n++; console.log('ok -', name); };
+const asyncTests = []; // run in order at the end (they need await)
 
 t('exact match', () => assert.equal(L.judge('Estoy cansado.', ['estoy cansado']), 'ok'));
 t('accent-only error is "accent"', () => assert.equal(L.judge('estais', ['estáis']), 'accent'));
@@ -325,6 +326,27 @@ const AI = require('../lib/ai.js');
     assert.deepEqual(m.map(x => x.role), ['system', 'user']);
     assert.ok(m[0].content.includes('¿Necesitas algo?')); assert.ok(m[1].content.includes('Sí') && m[1].content.includes('Un mapa'));
   });
+  // A provider that is briefly overloaded (Gemini 503) gets two more tries; other errors are not retried.
+  {
+    const realFetch = global.fetch;
+    const P = { base: 'http://x', key: 'k', model: 'm', label: 'Gemini', where: 'settings.env', extras: [{}] };
+    const msgs = [{ role: 'user', content: 'hi' }];
+    const replies = list => { let i = 0; global.fetch = async () => { const r = list[Math.min(i++, list.length - 1)]; return { status: r[0], text: async () => r[1] }; }; return () => i; };
+    const ok = JSON.stringify({ choices: [{ message: { content: '{"reply":"hola"}' } }] });
+    const noWait = async () => {};
+    asyncTests.push(async () => {
+      let calls = replies([[503, 'overloaded'], [503, 'overloaded'], [200, ok]]);
+      const d = await AI.callModel(P, msgs, 50, noWait); assert.equal(d.reply, 'hola'); assert.equal(calls(), 3);
+      console.log('ok - ai: retries when the provider is busy (503), then succeeds'); n++;
+      calls = replies([[503, 'overloaded']]);
+      await assert.rejects(AI.callModel(P, msgs, 50, noWait), /busy right now \(503/); assert.equal(calls(), 3);
+      console.log('ok - ai: still busy after two retries gives a plain message'); n++;
+      calls = replies([[429, 'quota']]);
+      await assert.rejects(AI.callModel(P, msgs, 50, noWait), /rate-limiting/); assert.equal(calls(), 1);
+      console.log('ok - ai: a rate limit (429) is not retried'); n++;
+      global.fetch = realFetch;
+    });
+  }
   t('ai: unknown mode is rejected', () => assert.equal(AI.buildMessages(courses, { mode: 'free' }), null));
   t('ai: Latin prompts name Latin, use its role-play rules and never count macrons', () => {
     const r = AI.buildMessages(courses, { mode: 'roleplay', course: 'la', chapter: 1, user: 'salve' })[0].content;
@@ -348,5 +370,6 @@ const AI = require('../lib/ai.js');
   t('ai: shape replaces an unknown verdict', () => assert.equal(AI.shape('correct', { verdict: 'wow' }).verdict, 'good'));
   t('ai: provider picks gemini when only its key is set', () => assert.equal(AI.providerFrom({ GEMINI_API_KEY: 'k' }).name, 'gemini'));
   t('ai: error messages name where the key lives', () => assert.equal(AI.providerFrom({}, 'the Cloudflare dashboard').where, 'the Cloudflare dashboard'));
+  for (const f of asyncTests) await f();
   console.log('\n' + n + ' checks passed');
 })().catch(e => { console.error(e); process.exit(1); });
