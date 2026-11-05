@@ -66,14 +66,14 @@
     ]
   },
   "phrases": [
-    { "id": "c9-dinner", "es": "Hago la cena esta noche.", "en": "I'm making dinner tonight.", "alts": [] },
-    { "id": "c9-hot", "es": "Hoy hace mucho calor.", "en": "It's very hot today.", "alts": ["Hace mucho calor hoy."] },
-    { "id": "c9-card", "es": "¿Puedo pagar con tarjeta?", "en": "Can I pay by card?", "alts": [] },
-    { "id": "c9-repeat", "es": "¿Puedes repetir, por favor?", "en": "Can you say that again, please?", "alts": ["¿Puede repetir, por favor?"] },
-    { "id": "c9-leave", "es": "Salgo de casa a las ocho.", "en": "I leave home at eight.", "alts": [] },
-    { "id": "c9-coming", "es": "¿Vienes con nosotros?", "en": "Are you coming with us?", "alts": ["¿Viene con nosotros?", "¿Venís con nosotros?"] },
-    { "id": "c9-cant", "es": "No puedo, tengo que trabajar.", "en": "I can't, I have to work.", "alts": [] },
-    { "id": "c9-weekend", "es": "¿Qué haces este fin de semana?", "en": "What are you doing this weekend?", "alts": ["¿Qué hace este fin de semana?", "¿Qué hacéis este fin de semana?"] }
+    { "id": "c9-dinner", "es": "Hago la cena esta noche.", "en": "I'm making dinner tonight.", "alts": [], "enAlts": ["I'm cooking dinner tonight.", "I make dinner tonight.", "I'm making tea tonight."] },
+    { "id": "c9-hot", "es": "Hoy hace mucho calor.", "en": "It's very hot today.", "alts": ["Hace mucho calor hoy."], "enAlts": ["It's really hot today.", "Today it's very hot."] },
+    { "id": "c9-card", "es": "¿Puedo pagar con tarjeta?", "en": "Can I pay by card?", "alts": [], "enAlts": ["Can I pay with a card?", "Can I pay with card?", "Can I pay by credit card?"] },
+    { "id": "c9-repeat", "es": "¿Puedes repetir, por favor?", "en": "Can you say that again, please?", "alts": ["¿Puede repetir, por favor?"], "enAlts": ["Can you repeat that, please?", "Could you repeat, please?", "Can you repeat, please?"] },
+    { "id": "c9-leave", "es": "Salgo de casa a las ocho.", "en": "I leave home at eight.", "alts": [], "enAlts": ["I leave the house at eight.", "I go out at eight."] },
+    { "id": "c9-coming", "es": "¿Vienes con nosotros?", "en": "Are you coming with us?", "alts": ["¿Viene con nosotros?", "¿Venís con nosotros?"], "enAlts": ["Do you want to come with us?", "Are you coming with us?"] },
+    { "id": "c9-cant", "es": "No puedo, tengo que trabajar.", "en": "I can't, I have to work.", "alts": [], "enAlts": ["I can't, I've got to work.", "I can't, I need to work."] },
+    { "id": "c9-weekend", "es": "¿Qué haces este fin de semana?", "en": "What are you doing this weekend?", "alts": ["¿Qué hace este fin de semana?", "¿Qué hacéis este fin de semana?"], "enAlts": ["What are you up to this weekend?", "What are you doing at the weekend?"] }
   ],
   "exercises": [
     { "type": "mc", "skill": "yo-go", "q": "___ la cena todos los días.", "sub": "(I make dinner every day.)", "options": ["Hago", "Hace", "Haco"], "answer": 0, "why": "Hacer with yo is hago: one of the -go verbs. Haco is not a word." },

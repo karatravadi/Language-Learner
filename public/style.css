@@ -417,3 +417,7 @@ select.text { font-family: var(--sans); font-size: 16px; }
 .read-fb { margin-top: 8px; }
 .read-en { margin-top: 16px; padding: 16px; border-radius: 12px; background: var(--raised); color: var(--ink-2); line-height: 24px; }
 .read-en p { margin: 0 0 12px; }
+
+/* Flashcards: counting a different right wording. */
+.meant { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.meant .meta { margin: 0 0 8px; }

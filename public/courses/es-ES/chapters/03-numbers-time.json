@@ -60,14 +60,14 @@
     ]
   },
   "phrases": [
-    { "id": "c3-time", "es": "¿Qué hora es?", "en": "What time is it?", "alts": [] },
-    { "id": "c3-half", "es": "Son las dos y media.", "en": "It's half past two.", "alts": [] },
-    { "id": "c3-when", "es": "¿A qué hora quedamos?", "en": "What time shall we meet?", "alts": [] },
-    { "id": "c3-eight", "es": "Quedamos a las ocho.", "en": "Let's meet at eight.", "alts": [] },
-    { "id": "c3-cost", "es": "¿Cuánto cuesta?", "en": "How much does it cost?", "alts": ["¿Cuánto vale?"] },
-    { "id": "c3-total", "es": "¿Cuánto es?", "en": "How much is it altogether?", "alts": [] },
-    { "id": "c3-weekend", "es": "el fin de semana", "en": "the weekend", "alts": ["el finde"] },
-    { "id": "c3-tomorrow", "es": "Hasta mañana.", "en": "See you tomorrow.", "alts": [] }
+    { "id": "c3-time", "es": "¿Qué hora es?", "en": "What time is it?", "alts": [], "enAlts": ["What's the time?", "What is the time?"] },
+    { "id": "c3-half", "es": "Son las dos y media.", "en": "It's half past two.", "alts": [], "enAlts": ["It's two thirty.", "Half past two."] },
+    { "id": "c3-when", "es": "¿A qué hora quedamos?", "en": "What time shall we meet?", "alts": [], "enAlts": ["What time are we meeting?", "What time do we meet?", "When shall we meet?"] },
+    { "id": "c3-eight", "es": "Quedamos a las ocho.", "en": "Let's meet at eight.", "alts": [], "enAlts": ["We'll meet at eight.", "See you at eight.", "Shall we meet at eight?"] },
+    { "id": "c3-cost", "es": "¿Cuánto cuesta?", "en": "How much does it cost?", "alts": ["¿Cuánto vale?"], "enAlts": ["How much is it?", "How much is this?", "How much does this cost?", "What does it cost?"] },
+    { "id": "c3-total", "es": "¿Cuánto es?", "en": "How much is it altogether?", "alts": [], "enAlts": ["How much is it?", "How much is that?", "What do I owe you?", "How much altogether?"] },
+    { "id": "c3-weekend", "es": "el fin de semana", "en": "the weekend", "alts": ["el finde"], "enAlts": ["weekend", "at the weekend", "the weekend"] },
+    { "id": "c3-tomorrow", "es": "Hasta mañana.", "en": "See you tomorrow.", "alts": [], "enAlts": ["Until tomorrow.", "See you tomorrow!"] }
   ],
   "exercises": [
     { "type": "mc", "skill": "es-son", "q": "___ la una.", "sub": "(It's one o'clock.)", "options": ["Es", "Son"], "answer": 0, "why": "One o'clock is singular: es la una." },

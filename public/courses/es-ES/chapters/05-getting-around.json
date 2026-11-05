@@ -58,14 +58,14 @@
     ]
   },
   "phrases": [
-    { "id": "c5-pharmacy", "es": "¿Hay una farmacia por aquí?", "en": "Is there a pharmacy around here?", "alts": ["¿Hay una farmacia cerca?"] },
-    { "id": "c5-station", "es": "¿Dónde está la estación?", "en": "Where is the station?", "alts": [] },
-    { "id": "c5-far", "es": "¿Está lejos?", "en": "Is it far?", "alts": [] },
-    { "id": "c5-straight", "es": "Sigue todo recto.", "en": "Keep going straight on.", "alts": ["Siga todo recto."] },
-    { "id": "c5-right", "es": "Gira a la derecha.", "en": "Turn right.", "alts": ["Gire a la derecha."] },
-    { "id": "c5-left", "es": "Gira a la izquierda.", "en": "Turn left.", "alts": ["Gire a la izquierda."] },
-    { "id": "c5-return", "es": "Un billete de ida y vuelta, por favor.", "en": "A return ticket, please.", "alts": [] },
-    { "id": "c5-centre", "es": "¿Cómo llego al centro?", "en": "How do I get to the centre?", "alts": [] }
+    { "id": "c5-pharmacy", "es": "¿Hay una farmacia por aquí?", "en": "Is there a pharmacy around here?", "alts": ["¿Hay una farmacia cerca?"], "enAlts": ["Is there a chemist nearby?", "Is there a pharmacy near here?", "Is there a chemist around here?"] },
+    { "id": "c5-station", "es": "¿Dónde está la estación?", "en": "Where is the station?", "alts": [], "enAlts": ["Where's the station?"] },
+    { "id": "c5-far", "es": "¿Está lejos?", "en": "Is it far?", "alts": [], "enAlts": ["Is it a long way?", "Is it far away?", "Is it a long way away?"] },
+    { "id": "c5-straight", "es": "Sigue todo recto.", "en": "Keep going straight on.", "alts": ["Siga todo recto."], "enAlts": ["Go straight on.", "Keep going straight.", "Carry on straight ahead.", "Go straight ahead.", "Go straight.", "Straight on.", "Straight ahead.", "Continue straight on.", "Keep straight on."] },
+    { "id": "c5-right", "es": "Gira a la derecha.", "en": "Turn right.", "alts": ["Gire a la derecha."], "enAlts": ["Turn to the right.", "Take a right.", "Turn right please.", "Go right."] },
+    { "id": "c5-left", "es": "Gira a la izquierda.", "en": "Turn left.", "alts": ["Gire a la izquierda."], "enAlts": ["Turn to the left.", "Take a left.", "Turn left please.", "Go left."] },
+    { "id": "c5-return", "es": "Un billete de ida y vuelta, por favor.", "en": "A return ticket, please.", "alts": [], "enAlts": ["A return, please.", "A round trip ticket, please.", "One return ticket, please."] },
+    { "id": "c5-centre", "es": "¿Cómo llego al centro?", "en": "How do I get to the centre?", "alts": [], "enAlts": ["How do I get to the city centre?", "How do I get to the town centre?", "How can I get to the centre?", "How do I get to the center?", "How do I get into town?"] }
   ],
   "exercises": [
     { "type": "mc", "skill": "hay-esta", "q": "¿___ un cajero por aquí?", "sub": "(Is there a cash machine around here?)", "options": ["Hay", "Está", "Es"], "answer": 0, "why": "Un cajero is any cash machine, something new: hay." },

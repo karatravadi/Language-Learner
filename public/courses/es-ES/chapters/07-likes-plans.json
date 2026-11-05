@@ -63,14 +63,14 @@
     ]
   },
   "phrases": [
-    { "id": "c7-flamenco", "es": "¿Te gusta el flamenco?", "en": "Do you like flamenco?", "alts": ["¿Le gusta el flamenco?"] },
-    { "id": "c7-love", "es": "Me encanta.", "en": "I love it.", "alts": [] },
-    { "id": "c7-fancy", "es": "¿Te apetece un café?", "en": "Do you fancy a coffee?", "alts": [] },
-    { "id": "c7-want", "es": "Quiero ver la Alhambra.", "en": "I want to see the Alhambra.", "alts": [] },
-    { "id": "c7-tonight", "es": "¿Qué vas a hacer esta noche?", "en": "What are you going to do tonight?", "alts": [] },
-    { "id": "c7-going", "es": "Voy a salir con amigos.", "en": "I'm going to go out with friends.", "alts": ["Voy a salir con unos amigos."] },
-    { "id": "c7-meet", "es": "¿Quedamos mañana?", "en": "Shall we meet tomorrow?", "alts": [] },
-    { "id": "c7-notatall", "es": "No me gusta nada.", "en": "I don't like it at all.", "alts": [] }
+    { "id": "c7-flamenco", "es": "¿Te gusta el flamenco?", "en": "Do you like flamenco?", "alts": ["¿Le gusta el flamenco?"], "enAlts": ["Do you like flamenco?"] },
+    { "id": "c7-love", "es": "Me encanta.", "en": "I love it.", "alts": [], "enAlts": ["I really like it.", "I love that."] },
+    { "id": "c7-fancy", "es": "¿Te apetece un café?", "en": "Do you fancy a coffee?", "alts": [], "enAlts": ["Would you like a coffee?", "Do you want a coffee?", "Fancy a coffee?"] },
+    { "id": "c7-want", "es": "Quiero ver la Alhambra.", "en": "I want to see the Alhambra.", "alts": [], "enAlts": ["I'd like to see the Alhambra.", "I want to visit the Alhambra."] },
+    { "id": "c7-tonight", "es": "¿Qué vas a hacer esta noche?", "en": "What are you going to do tonight?", "alts": [], "enAlts": ["What are you doing tonight?", "What will you do tonight?"] },
+    { "id": "c7-going", "es": "Voy a salir con amigos.", "en": "I'm going to go out with friends.", "alts": ["Voy a salir con unos amigos."], "enAlts": ["I'm going out with friends.", "I'm going to go out with some friends."] },
+    { "id": "c7-meet", "es": "¿Quedamos mañana?", "en": "Shall we meet tomorrow?", "alts": [], "enAlts": ["Shall we meet up tomorrow?", "Are we meeting tomorrow?", "Shall we meet tomorrow?"] },
+    { "id": "c7-notatall", "es": "No me gusta nada.", "en": "I don't like it at all.", "alts": [], "enAlts": ["I don't like it one bit.", "I really don't like it."] }
   ],
   "exercises": [
     { "type": "mc", "skill": "gustar", "q": "Me ___ las tapas.", "options": ["gustan", "gusta", "gusto"], "answer": 0, "why": "Las tapas is plural: gustan." },

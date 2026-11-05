@@ -393,7 +393,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
       missedOnPurpose = true;
       await page.type('input.text', 'qqq'); await page.keyboard.press('Enter'); await sleep(60);
       assert.match(await text(), /Not quite/);
-      await clickText('.feedback button', 'I was right'); await sleep(40);
+      await clickText('.feedback button', 'Mine means the same'); await sleep(40);
       assert.match(await text(), /Counted as right/);
       rightAfter = true;
     } else {
@@ -407,7 +407,7 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   assert.ok(Object.keys(fs0.flash || {}).length > 0, 'results are kept per card');
   if (flips && TL !== 'la') assert.ok(sawKeys, 'typing the course language shows the accent keys');
   await page.evaluate(() => window.__trainer.home()); await sleep(60);
-  ok('flashcards: a session of cards, ' + flips + ' flipped to the course language' + (sawKeys ? ' with accent keys' : '') + ', "I was right" counts a different meaning' + (rightAfter ? '' : ''));
+  ok('flashcards: a session of cards, ' + flips + ' flipped to the course language' + (sawKeys ? ' with accent keys' : '') + ', "Mine means the same" counts a different wording' + (rightAfter ? '' : ''));
 
   // ---------- hint first, then a second try (backlog 21) ----------
   const hx = await page.evaluate(() => window.__trainer.chapters.map(c => c.exercises.map((e, i) => ({ c: c.n, i, e })).filter(x => x.e.type === 'gap')).flat());

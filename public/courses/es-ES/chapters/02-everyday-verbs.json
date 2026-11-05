@@ -328,13 +328,15 @@
       "alts": [
         "¿Habla inglés?",
         "¿Habla usted inglés?"
-      ]
+      ],
+      "enAlts": ["Can you speak English?", "Do you know English?"]
     },
     {
       "id": "c2-little",
       "es": "Hablo un poco de español.",
       "en": "I speak a little Spanish.",
-      "alts": []
+      "alts": [],
+      "enAlts": ["I speak some Spanish.", "I speak a bit of Spanish."]
     },
     {
       "id": "c2-where",
@@ -343,13 +345,15 @@
       "alts": [
         "¿Dónde vive?",
         "¿Dónde vivís?"
-      ]
+      ],
+      "enAlts": ["Where are you living?"]
     },
     {
       "id": "c2-london",
       "es": "Vivo en Londres.",
       "en": "I live in London.",
-      "alts": []
+      "alts": [],
+      "enAlts": ["I'm living in London."]
     },
     {
       "id": "c2-job",
@@ -357,13 +361,15 @@
       "en": "What do you do for a living?",
       "alts": [
         "¿En qué trabajas?"
-      ]
+      ],
+      "enAlts": ["What do you do?", "What's your job?", "What is your job?", "What do you do for work?"]
     },
     {
       "id": "c2-understand",
       "es": "No entiendo.",
       "en": "I don't understand.",
-      "alts": []
+      "alts": [],
+      "enAlts": ["I don't get it.", "I do not understand."]
     },
     {
       "id": "c2-slowly",
@@ -372,7 +378,8 @@
       "alts": [
         "¿Puede hablar más despacio?",
         "¿Puedes hablar más lento?"
-      ]
+      ],
+      "enAlts": ["Could you speak more slowly?", "Can you speak slower?", "Can you talk more slowly?"]
     },
     {
       "id": "c2-mean",
@@ -380,7 +387,8 @@
       "en": "What does it mean?",
       "alts": [
         "¿Qué quiere decir?"
-      ]
+      ],
+      "enAlts": ["What does that mean?", "What does this mean?"]
     }
   ],
   "exercises": [

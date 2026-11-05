@@ -255,7 +255,8 @@
       "alts": [
         "¿Me pone un café con leche?",
         "Un café con leche, por favor."
-      ]
+      ],
+      "enAlts": ["Can I have a coffee with milk?", "Could I have a white coffee?", "A white coffee, please.", "Can I get a white coffee?"]
     },
     {
       "id": "c4-bill",
@@ -264,19 +265,22 @@
       "alts": [
         "¿Me traes la cuenta?",
         "¿Nos traes la cuenta?"
-      ]
+      ],
+      "enAlts": ["The check, please.", "Can I have the bill, please?", "The bill please."]
     },
     {
       "id": "c4-table",
       "es": "Una mesa para dos, por favor.",
       "en": "A table for two, please.",
-      "alts": []
+      "alts": [],
+      "enAlts": ["A table for two people, please.", "Table for two, please."]
     },
     {
       "id": "c4-what",
       "es": "¿Qué lleva?",
       "en": "What's in it?",
-      "alts": []
+      "alts": [],
+      "enAlts": ["What does it have in it?", "What does it come with?", "What's in this?"]
     },
     {
       "id": "c4-allergy",
@@ -285,7 +289,8 @@
       "alts": [
         "Soy alérgico a los frutos secos.",
         "Tengo alergia a los frutos secos."
-      ]
+      ],
+      "enAlts": ["I have a nut allergy.", "I am allergic to nuts."]
     },
     {
       "id": "c4-menu",
@@ -293,7 +298,8 @@
       "en": "The set lunch for me.",
       "alts": [
         "El menú del día, por favor."
-      ]
+      ],
+      "enAlts": ["For me, the set menu.", "The menu of the day for me.", "The set menu for me.", "I'll have the set lunch.", "For me, the set lunch.", "The set menu, please.", "I'll have the menu of the day."]
     },
     {
       "id": "c4-veg",
@@ -302,7 +308,8 @@
       "alts": [
         "¿Tienen algo vegetariano?",
         "¿Tienes algo vegetariano?"
-      ]
+      ],
+      "enAlts": ["Have you got anything vegetarian?", "Do you have something vegetarian?", "Is there anything vegetarian?"]
     },
     {
       "id": "c4-good",
@@ -312,7 +319,8 @@
         "Está buenísima.",
         "Está muy rico.",
         "Está muy rica."
-      ]
+      ],
+      "enAlts": ["It's very good.", "It is delicious.", "It's really good.", "It's lovely."]
     }
   ],
   "exercises": [

@@ -209,6 +209,7 @@ function check(dir = COURSES) {
         if (cardIds.has(p.id)) err('duplicate review card id ' + p.id);
         cardIds.add(p.id);
         if (p.alts && !Array.isArray(p.alts)) err(p.id + ': alts must be a list');
+        if (p.enAlts != null && (!Array.isArray(p.enAlts) || !p.enAlts.every(isStr))) err(p.id + ': enAlts must be a list of other English wordings');
       });
       where.pop();
 

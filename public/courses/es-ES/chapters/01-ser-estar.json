@@ -280,25 +280,29 @@
       "id": "c1-name",
       "es": "¿Cómo te llamas?",
       "en": "What's your name?",
-      "alts": []
+      "alts": [],
+      "enAlts": ["What is your name?", "What are you called?"]
     },
     {
       "id": "c1-from",
       "es": "¿De dónde eres?",
       "en": "Where are you from?",
-      "alts": []
+      "alts": [],
+      "enAlts": ["Where do you come from?"]
     },
     {
       "id": "c1-england",
       "es": "Soy de Inglaterra.",
       "en": "I'm from England.",
-      "alts": []
+      "alts": [],
+      "enAlts": ["I come from England.", "I am English."]
     },
     {
       "id": "c1-travel",
       "es": "Estoy de viaje.",
       "en": "I'm travelling / I'm on a trip.",
-      "alts": []
+      "alts": [],
+      "enAlts": ["I'm on holiday.", "I'm travelling.", "I'm on a trip."]
     },
     {
       "id": "c1-tired",
@@ -306,7 +310,8 @@
       "en": "I'm tired.",
       "alts": [
         "Estoy cansada."
-      ]
+      ],
+      "enAlts": ["I am tired."]
     },
     {
       "id": "c1-nice",
@@ -315,13 +320,15 @@
       "alts": [
         "Encantado.",
         "Encantada."
-      ]
+      ],
+      "enAlts": ["Pleased to meet you.", "Nice to meet you too.", "Good to meet you."]
     },
     {
       "id": "c1-how",
       "es": "¿Cómo estás?",
       "en": "How are you?",
-      "alts": []
+      "alts": [],
+      "enAlts": ["How are you doing?", "How's it going?"]
     },
     {
       "id": "c1-loo",
@@ -330,7 +337,8 @@
       "alts": [
         "¿Dónde están los aseos?",
         "¿Dónde está el servicio?"
-      ]
+      ],
+      "enAlts": ["Where is the toilet?", "Where's the toilet?", "Where is the loo?", "Where's the bathroom?"]
     }
   ],
   "exercises": [

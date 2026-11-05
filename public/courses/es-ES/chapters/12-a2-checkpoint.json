@@ -56,14 +56,14 @@
     ]
   },
   "phrases": [
-    { "id": "c12-where", "es": "¿De dónde es usted?", "en": "Where are you from? (polite)", "alts": ["¿De dónde es?"] },
-    { "id": "c12-slow", "es": "Más despacio, por favor.", "en": "Slower, please.", "alts": [] },
-    { "id": "c12-understand", "es": "No entiendo.", "en": "I don't understand.", "alts": [] },
-    { "id": "c12-howsay", "es": "¿Cómo se dice esto en español?", "en": "How do you say this in Spanish?", "alts": [] },
-    { "id": "c12-andyou", "es": "¿Y usted?", "en": "And you? (polite)", "alts": [] },
-    { "id": "c12-interesting", "es": "¡Qué interesante!", "en": "How interesting!", "alts": [] },
-    { "id": "c12-been", "es": "He estado en Granada y en Sevilla.", "en": "I've been to Granada and Seville.", "alts": [] },
-    { "id": "c12-plan", "es": "Mañana voy a visitar Córdoba.", "en": "Tomorrow I'm going to visit Córdoba.", "alts": [] }
+    { "id": "c12-where", "es": "¿De dónde es usted?", "en": "Where are you from? (polite)", "alts": ["¿De dónde es?"], "enAlts": ["Where are you from?", "Where do you come from?"] },
+    { "id": "c12-slow", "es": "Más despacio, por favor.", "en": "Slower, please.", "alts": [], "enAlts": ["More slowly, please.", "Slowly, please.", "Slower please.", "Slowly please.", "More slowly please."] },
+    { "id": "c12-understand", "es": "No entiendo.", "en": "I don't understand.", "alts": [], "enAlts": ["I don't get it.", "I do not understand."] },
+    { "id": "c12-howsay", "es": "¿Cómo se dice esto en español?", "en": "How do you say this in Spanish?", "alts": [], "enAlts": ["How do you say this in Spanish?", "How do you say that in Spanish?"] },
+    { "id": "c12-andyou", "es": "¿Y usted?", "en": "And you? (polite)", "alts": [], "enAlts": ["And you?", "What about you?"] },
+    { "id": "c12-interesting", "es": "¡Qué interesante!", "en": "How interesting!", "alts": [], "enAlts": ["That's interesting.", "How interesting."] },
+    { "id": "c12-been", "es": "He estado en Granada y en Sevilla.", "en": "I've been to Granada and Seville.", "alts": [], "enAlts": ["I've been to Granada and Sevilla."] },
+    { "id": "c12-plan", "es": "Mañana voy a visitar Córdoba.", "en": "Tomorrow I'm going to visit Córdoba.", "alts": [], "enAlts": ["I'm going to visit Córdoba tomorrow.", "Tomorrow I will visit Córdoba.", "I'm visiting Córdoba tomorrow."] }
   ],
   "exercises": [
     { "type": "mc", "skill": "ser-id", "q": "Usted ___ de Inglaterra, ¿verdad?", "sub": "(You're from England, aren't you?)", "options": ["es", "eres", "está"], "answer": 0, "why": "Usted takes the él and ella form, and origin takes ser: es." },

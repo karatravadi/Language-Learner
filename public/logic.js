@@ -188,6 +188,13 @@
     if (parts.length > 1) out.add(base.trim()); // the whole meaning typed out is right too
     return Array.from(out).filter(Boolean);
   }
+  // Flashcards into English: the same words in another order mean the same ("For me, the set lunch" and "The set lunch
+  // for me"). Only for English meanings, never for the course language, where word order can be the point.
+  function sameWordsEnglish(input, answers) {
+    const bag = x => english(x).split(' ').filter(Boolean).sort().join(' ');
+    const got = bag(input);
+    return !!got && (Array.isArray(answers) ? answers : [answers]).some(a => bag(a) === got);
+  }
   // n items, without repeats, more likely the heavier their weight.
   function weightedPick(items, weights, n, rnd) {
     rnd = rnd || Math.random;
@@ -418,5 +425,5 @@
     return out;
   }
 
-  return { drillActive, drillRecord, englishAnswers, weightedPick, flashWeight, tryHint, mixedPick, verbIndex, verbAsk, daySecs, judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
+  return { sameWordsEnglish, drillActive, drillRecord, englishAnswers, weightedPick, flashWeight, tryHint, mixedPick, verbIndex, verbAsk, daySecs, judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
 });

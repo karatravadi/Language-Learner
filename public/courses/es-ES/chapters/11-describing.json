@@ -59,14 +59,14 @@
     ]
   },
   "phrases": [
-    { "id": "c11-taller", "es": "Mi hermano es más alto que yo.", "en": "My brother is taller than me.", "alts": [] },
-    { "id": "c11-nice", "es": "Tu amiga es muy simpática.", "en": "Your friend is very nice.", "alts": [] },
-    { "id": "c11-better", "es": "Este café es mejor.", "en": "This coffee is better.", "alts": [] },
-    { "id": "c11-asbig", "es": "Valencia es tan bonita como Sevilla.", "en": "Valencia is as pretty as Seville.", "alts": [] },
-    { "id": "c11-think", "es": "Creo que es preciosa.", "en": "I think it's beautiful.", "alts": ["Creo que es precioso."] },
-    { "id": "c11-quiet", "es": "El barrio es muy tranquilo.", "en": "The neighbourhood is very quiet.", "alts": [] },
-    { "id": "c11-best", "es": "Para mí, es el mejor restaurante.", "en": "For me, it's the best restaurant.", "alts": [] },
-    { "id": "c11-whatlike", "es": "¿Cómo es tu ciudad?", "en": "What's your town like?", "alts": ["¿Cómo es su ciudad?"] }
+    { "id": "c11-taller", "es": "Mi hermano es más alto que yo.", "en": "My brother is taller than me.", "alts": [], "enAlts": ["My brother is taller than I am."] },
+    { "id": "c11-nice", "es": "Tu amiga es muy simpática.", "en": "Your friend is very nice.", "alts": [], "enAlts": ["Your friend is really nice.", "Your friend is very friendly."] },
+    { "id": "c11-better", "es": "Este café es mejor.", "en": "This coffee is better.", "alts": [], "enAlts": ["This coffee's better."] },
+    { "id": "c11-asbig", "es": "Valencia es tan bonita como Sevilla.", "en": "Valencia is as pretty as Seville.", "alts": [], "enAlts": ["Valencia is as beautiful as Seville.", "Valencia is as pretty as Sevilla."] },
+    { "id": "c11-think", "es": "Creo que es preciosa.", "en": "I think it's beautiful.", "alts": ["Creo que es precioso."], "enAlts": ["I think it's lovely.", "I think it is beautiful."] },
+    { "id": "c11-quiet", "es": "El barrio es muy tranquilo.", "en": "The neighbourhood is very quiet.", "alts": [], "enAlts": ["The area is very quiet.", "The neighbourhood is really quiet."] },
+    { "id": "c11-best", "es": "Para mí, es el mejor restaurante.", "en": "For me, it's the best restaurant.", "alts": [], "enAlts": ["In my opinion, it's the best restaurant.", "For me, it is the best restaurant."] },
+    { "id": "c11-whatlike", "es": "¿Cómo es tu ciudad?", "en": "What's your town like?", "alts": ["¿Cómo es su ciudad?"], "enAlts": ["What's your city like?", "What is your town like?"] }
   ],
   "exercises": [
     { "type": "mc", "skill": "adj-agree", "q": "Mi hermana es muy ___.", "sub": "(My sister is very tall.)", "options": ["alta", "alto", "altos"], "answer": 0, "why": "Hermana is a woman: alta." },

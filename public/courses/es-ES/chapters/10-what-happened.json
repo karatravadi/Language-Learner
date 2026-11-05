@@ -62,14 +62,14 @@
     ]
   },
   "phrases": [
-    { "id": "c10-already", "es": "Ya he comido.", "en": "I've already eaten.", "alts": [] },
-    { "id": "c10-notyet", "es": "Todavía no he comido.", "en": "I haven't eaten yet.", "alts": [] },
-    { "id": "c10-been", "es": "¿Has estado en Sevilla?", "en": "Have you been to Seville?", "alts": ["¿Ha estado en Sevilla?", "¿Habéis estado en Sevilla?"] },
-    { "id": "c10-lost", "es": "He perdido el móvil.", "en": "I've lost my phone.", "alts": [] },
-    { "id": "c10-today", "es": "Hoy he trabajado mucho.", "en": "I've worked a lot today.", "alts": ["He trabajado mucho hoy."] },
-    { "id": "c10-seen", "es": "¿Has visto la catedral?", "en": "Have you seen the cathedral?", "alts": ["¿Ha visto la catedral?"] },
-    { "id": "c10-done", "es": "¿Qué has hecho hoy?", "en": "What have you done today?", "alts": ["¿Qué ha hecho hoy?", "¿Qué habéis hecho hoy?"] },
-    { "id": "c10-never", "es": "Nunca he estado en Asia.", "en": "I've never been to Asia.", "alts": [] }
+    { "id": "c10-already", "es": "Ya he comido.", "en": "I've already eaten.", "alts": [], "enAlts": ["I have already eaten.", "I've eaten already."] },
+    { "id": "c10-notyet", "es": "Todavía no he comido.", "en": "I haven't eaten yet.", "alts": [], "enAlts": ["I have not eaten yet.", "I haven't had anything to eat yet."] },
+    { "id": "c10-been", "es": "¿Has estado en Sevilla?", "en": "Have you been to Seville?", "alts": ["¿Ha estado en Sevilla?", "¿Habéis estado en Sevilla?"], "enAlts": ["Have you ever been to Seville?", "Have you been to Sevilla?"] },
+    { "id": "c10-lost", "es": "He perdido el móvil.", "en": "I've lost my phone.", "alts": [], "enAlts": ["I have lost my phone.", "I've lost my mobile.", "I've lost my mobile phone."] },
+    { "id": "c10-today", "es": "Hoy he trabajado mucho.", "en": "I've worked a lot today.", "alts": ["He trabajado mucho hoy."], "enAlts": ["I've done a lot of work today.", "I have worked a lot today."] },
+    { "id": "c10-seen", "es": "¿Has visto la catedral?", "en": "Have you seen the cathedral?", "alts": ["¿Ha visto la catedral?"], "enAlts": ["Have you seen the cathedral yet?"] },
+    { "id": "c10-done", "es": "¿Qué has hecho hoy?", "en": "What have you done today?", "alts": ["¿Qué ha hecho hoy?", "¿Qué habéis hecho hoy?"], "enAlts": ["What did you do today?", "What have you been doing today?"] },
+    { "id": "c10-never", "es": "Nunca he estado en Asia.", "en": "I've never been to Asia.", "alts": [], "enAlts": ["I have never been to Asia."] }
   ],
   "exercises": [
     { "type": "mc", "skill": "haber", "q": "Hoy ___ comido paella.", "sub": "(I've had paella today.)", "options": ["he", "ha", "has"], "answer": 0, "why": "Yo: he. He comido means I have eaten." },

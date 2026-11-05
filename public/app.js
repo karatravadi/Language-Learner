@@ -1765,7 +1765,7 @@
     }
     for (const ch of finishedChapters()) for (const p of ch.phrases) {
       // A phrase flips only when its other Spanish versions are listed, so a right variant is never marked wrong.
-      deck.push({ id: p.id, es: T(p.es), en: p.en, alts: (p.alts || []).map(T), back: (p.alts || []).length > 0 });
+      deck.push({ id: p.id, es: T(p.es), en: p.en, enAlts: p.enAlts || [], alts: (p.alts || []).map(T), back: (p.alts || []).length > 0 });
     }
     return deck;
   }
@@ -1795,7 +1795,8 @@
       const ask = dir === 'b' && card.verb ? L.verbAsk(VERBS, card.verb) : null;
       const target = dir === 'f';
       const prompt = target ? card.es : (ask ? ask.who + ' · ' + card.en : card.en);
-      const answers = target ? L.englishAnswers(card.en) : (ask ? [ask.answer] : [card.es].concat(card.alts || []));
+      // Into English, other natural wordings count too (enAlts: "How much is it?" for ¿Cuánto cuesta?).
+      const answers = target ? L.englishAnswers(card.en).concat(card.enAlts || []) : (ask ? [ask.answer] : [card.es].concat(card.alts || []));
       const shown = target ? card.en.replace(/\s*\([^)]*\)/g, '') : (ask ? ask.answer : card.es);
       let checked = false;
       if (window.__trainer) window.__trainer.flash = { answers, target, id: card.id }; // test hook
@@ -1806,7 +1807,8 @@
         if (checked) { next(); return; }
         if (!input.value.trim()) return;
         checked = true; input.disabled = true;
-        const { r, near } = judgeTyped(input.value, answers, target);
+        let { r, near } = judgeTyped(input.value, answers, target);
+        if (target && r !== 'ok' && L.sameWordsEnglish(input.value, answers)) { r = 'ok'; near = null; }
         const ok = r === 'ok' || r === 'accent';
         const first = !item.again;
         if (first) asked++;
@@ -1825,12 +1827,14 @@
           const k = queue.findIndex(q => q.card === card && q.again); if (k >= 0) queue.splice(k, 1);
           put(fb, h('div', { class: 'fb-head' }, 'Counted as right'), h('div', { class: 'fb-ans' }, shown));
           fb.className = 'feedback good';
-        } }, 'I was right');
+        } }, 'Mine means the same');
         put(fb,
           h('div', { class: 'fb-head' }, ok ? (r === 'accent' ? 'Right, but watch the accents' : praise()) : near ? 'Nearly. Check the spelling of ' + near.right : 'Not quite'),
           near ? penSlip(near.typed, near.right) : ok && r !== 'accent' ? h('div', { class: 'fb-ans', lang: target ? null : TL }, shown) : pen(input.value.trim(), shown),
           !ok && !target && hintFor(input.value, answers) ? h('div', { class: 'fb-hint' }, hintFor(input.value, answers)) : null,
-          !ok && target ? h('div', { class: 'row', style: { 'margin-top': '8px' } }, meant) : null,
+          target && card.enAlts && card.enAlts.length ? h('div', { class: 'meta' }, 'Also right: ' + card.enAlts.slice(0, 3).join(' · ')) : null,
+          // English can be said many ways: if yours means the same, one tap counts it.
+          !ok && target ? h('div', { class: 'meant' }, h('p', { class: 'meta' }, 'Said it another way? If your answer means the same, count it as right.'), meant) : null,
           !target && ask ? verbTable(card.verb) : null,
           target ? null : speakBtn(shown, 'Hear it'));
         fb.classList.remove('hidden');

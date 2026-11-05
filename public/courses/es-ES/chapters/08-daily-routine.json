@@ -60,14 +60,14 @@
     ]
   },
   "phrases": [
-    { "id": "c8-wake", "es": "Me despierto a las siete.", "en": "I wake up at seven.", "alts": [] },
-    { "id": "c8-early", "es": "Me levanto temprano.", "en": "I get up early.", "alts": [] },
-    { "id": "c8-shower", "es": "Me ducho por la mañana.", "en": "I shower in the morning.", "alts": [] },
-    { "id": "c8-teeth", "es": "Me lavo los dientes.", "en": "I brush my teeth.", "alts": [] },
-    { "id": "c8-bedtime", "es": "¿A qué hora te acuestas?", "en": "What time do you go to bed?", "alts": ["¿A qué hora se acuesta?"] },
-    { "id": "c8-late", "es": "Me acuesto tarde.", "en": "I go to bed late.", "alts": [] },
-    { "id": "c8-siesta", "es": "Me echo la siesta.", "en": "I have a nap.", "alts": [] },
-    { "id": "c8-weekend", "es": "Los fines de semana no madrugo.", "en": "I don't get up early at the weekend.", "alts": [] }
+    { "id": "c8-wake", "es": "Me despierto a las siete.", "en": "I wake up at seven.", "alts": [], "enAlts": ["I wake at seven.", "I wake up at seven o'clock."] },
+    { "id": "c8-early", "es": "Me levanto temprano.", "en": "I get up early.", "alts": [], "enAlts": ["I get up early in the morning."] },
+    { "id": "c8-shower", "es": "Me ducho por la mañana.", "en": "I shower in the morning.", "alts": [], "enAlts": ["I have a shower in the morning.", "I take a shower in the morning."] },
+    { "id": "c8-teeth", "es": "Me lavo los dientes.", "en": "I brush my teeth.", "alts": [], "enAlts": ["I clean my teeth."] },
+    { "id": "c8-bedtime", "es": "¿A qué hora te acuestas?", "en": "What time do you go to bed?", "alts": ["¿A qué hora se acuesta?"], "enAlts": ["When do you go to bed?", "What time are you going to bed?"] },
+    { "id": "c8-late", "es": "Me acuesto tarde.", "en": "I go to bed late.", "alts": [], "enAlts": ["I go to sleep late."] },
+    { "id": "c8-siesta", "es": "Me echo la siesta.", "en": "I have a nap.", "alts": [], "enAlts": ["I take a nap.", "I have a siesta.", "I take a siesta."] },
+    { "id": "c8-weekend", "es": "Los fines de semana no madrugo.", "en": "I don't get up early at the weekend.", "alts": [], "enAlts": ["At the weekend I don't get up early.", "I don't get up early at weekends.", "On weekends I don't get up early."] }
   ],
   "exercises": [
     { "type": "mc", "skill": "reflexive", "q": "___ levanto a las ocho.", "options": ["Me", "Te", "Se"], "answer": 0, "why": "Levanto is yo, so me: me levanto." },

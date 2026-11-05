@@ -182,6 +182,15 @@ t('flash: English answers from a meaning', () => assert.deepEqual(L.englishAnswe
 t('flash: notes in brackets are dropped', () => assert.deepEqual(L.englishAnswers('you all go to bed (with os)'), ['you all go to bed']));
 t('flash: a / separates meanings', () => assert.ok(L.englishAnswers('bored (with estar) / boring (with ser)').includes('boring')));
 t('flash: typed English is judged loosely (articles, contractions, case)', () => assert.equal(L.judge("I'm tired", L.englishAnswers("I'm tired."), { english: true }), 'ok'));
+{
+  const fs = require('fs'); const path = require('path');
+  const base = path.join(__dirname, '../public/courses/es-ES');
+  const es = JSON.parse(fs.readFileSync(path.join(base, 'course.json'), 'utf8'));
+  const phrases = es.chapters.flatMap(f => JSON.parse(fs.readFileSync(path.join(base, f), 'utf8')).phrases);
+  t('flash: every Spanish phrase lists other English wordings', () => phrases.forEach(p => assert.ok((p.enAlts || []).length > 0, p.id)));
+  t('flash: "How much is it?" is right for ¿Cuánto cuesta?', () => { const p = phrases.find(x => x.id === 'c3-cost'); assert.equal(L.judge('How much is it?', L.englishAnswers(p.en).concat(p.enAlts), { english: true }), 'ok'); });
+}
+t('flash: same words in another order count (English only)', () => { assert.ok(L.sameWordsEnglish('For me, the set lunch', ['The set lunch for me.'])); assert.ok(!L.sameWordsEnglish('For me, the lunch', ['The set lunch for me.'])); assert.ok(!L.sameWordsEnglish('', ['x'])); });
 t('flash: weighted pick has no repeats and favours heavy weights', () => {
   const p = L.weightedPick(['a', 'b', 'c', 'd'], [1, 1, 1, 1], 4); assert.equal(new Set(p).size, 4);
   let heavy = 0; for (let k = 0; k < 200; k++) if (L.weightedPick(['a', 'b'], [9, 1], 1)[0] === 'a') heavy++;

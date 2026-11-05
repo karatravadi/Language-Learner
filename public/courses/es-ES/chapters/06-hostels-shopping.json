@@ -63,14 +63,14 @@
     ]
   },
   "phrases": [
-    { "id": "c6-booking", "es": "Tengo una reserva.", "en": "I have a booking.", "alts": [] },
-    { "id": "c6-towel", "es": "¿Tienes una toalla?", "en": "Do you have a towel?", "alts": ["¿Tiene una toalla?", "¿Tenéis toallas?"] },
-    { "id": "c6-padlock", "es": "Necesito un candado.", "en": "I need a padlock.", "alts": [] },
-    { "id": "c6-card", "es": "¿Puedo pagar con tarjeta?", "en": "Can I pay by card?", "alts": [] },
-    { "id": "c6-looking", "es": "Solo estoy mirando, gracias.", "en": "I'm just looking, thanks.", "alts": ["Solo estoy mirando."] },
-    { "id": "c6-cheaper", "es": "¿Tienes algo más barato?", "en": "Do you have anything cheaper?", "alts": ["¿Tiene algo más barato?"] },
-    { "id": "c6-take", "es": "Me llevo esta.", "en": "I'll take this one.", "alts": ["Me llevo este."] },
-    { "id": "c6-wifi", "es": "¿Cuál es la contraseña del wifi?", "en": "What's the wifi password?", "alts": [] }
+    { "id": "c6-booking", "es": "Tengo una reserva.", "en": "I have a booking.", "alts": [], "enAlts": ["I have a reservation.", "I've got a booking.", "I've got a reservation."] },
+    { "id": "c6-towel", "es": "¿Tienes una toalla?", "en": "Do you have a towel?", "alts": ["¿Tiene una toalla?", "¿Tenéis toallas?"], "enAlts": ["Have you got a towel?", "Do you have a towel for me?"] },
+    { "id": "c6-padlock", "es": "Necesito un candado.", "en": "I need a padlock.", "alts": [], "enAlts": ["I need a lock."] },
+    { "id": "c6-card", "es": "¿Puedo pagar con tarjeta?", "en": "Can I pay by card?", "alts": [], "enAlts": ["Can I pay with a card?", "Can I pay by credit card?", "Can I pay with card?"] },
+    { "id": "c6-looking", "es": "Solo estoy mirando, gracias.", "en": "I'm just looking, thanks.", "alts": ["Solo estoy mirando."], "enAlts": ["I'm only looking, thanks.", "Just looking, thanks.", "I'm just browsing, thanks."] },
+    { "id": "c6-cheaper", "es": "¿Tienes algo más barato?", "en": "Do you have anything cheaper?", "alts": ["¿Tiene algo más barato?"], "enAlts": ["Have you got anything cheaper?", "Do you have something cheaper?"] },
+    { "id": "c6-take", "es": "Me llevo esta.", "en": "I'll take this one.", "alts": ["Me llevo este."], "enAlts": ["I'll take this.", "I'll take it.", "I'll have this one."] },
+    { "id": "c6-wifi", "es": "¿Cuál es la contraseña del wifi?", "en": "What's the wifi password?", "alts": [], "enAlts": ["What is the wifi password?", "What's the password for the wifi?"] }
   ],
   "exercises": [
     { "type": "mc", "skill": "tener", "q": "___ una reserva para dos noches.", "sub": "(I have a booking for two nights.)", "options": ["Tengo", "Teno", "Tiengo"], "answer": 0, "why": "The yo form of tener is irregular: tengo." },
