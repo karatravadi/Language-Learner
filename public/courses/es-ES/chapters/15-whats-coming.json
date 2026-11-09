@@ -1,0 +1,822 @@
+{
+  "n": 15,
+  "title": "What's coming",
+  "sub": "iré, haré, vendré, te llamaré",
+  "can": "Talk about the future and make promises: iré, haré, vendré.",
+  "mins": 15,
+  "doneText": "You can now make promises, talk about next year and say what the weather will do.",
+  "skills": {
+    "fut-reg": "Future endings: hablaré, comerá",
+    "fut-odd": "The odd ones: haré, tendré, vendré",
+    "fut-plans": "Voy a or iré: plans, promises and forecasts"
+  },
+  "discover": {
+    "intro": "Same verbs in both colours. Look at how the blue ones end.",
+    "groups": [
+      {
+        "label": "Still to come",
+        "tone": "blue",
+        "lines": [
+          [
+            "Te llamaré mañana.",
+            "I'll call you tomorrow."
+          ],
+          [
+            "Mañana lloverá en Madrid.",
+            "It will rain in Madrid tomorrow."
+          ],
+          [
+            "El año que viene viviré en Valencia.",
+            "Next year I'll live in Valencia."
+          ]
+        ]
+      },
+      {
+        "label": "Now",
+        "tone": "orange",
+        "lines": [
+          [
+            "Te llamo ahora.",
+            "I'm calling you now."
+          ],
+          [
+            "Hoy llueve en Madrid.",
+            "It's raining in Madrid today."
+          ],
+          [
+            "Ahora vivo en Valencia.",
+            "I live in Valencia now."
+          ]
+        ]
+      }
+    ],
+    "question": "How is the blue future built?",
+    "options": [
+      "The whole verb (llamar, vivir) plus an ending like -é or -á.",
+      "A small word before the verb, like he.",
+      "The verb loses its -ar, -er or -ir."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Find llamar inside llamaré, and vivir inside viviré.",
+    "reveal": "This is the futuro. Keep the whole verb and add one set of endings, the same for -ar, -er and -ir:",
+    "hooks": [
+      {
+        "title": "One set of endings",
+        "tone": "blue",
+        "rows": [
+          [
+            "-é",
+            "yo",
+            "hablaré",
+            "I will speak"
+          ],
+          [
+            "-ás",
+            "tú",
+            "comerás",
+            "you will eat"
+          ],
+          [
+            "-á",
+            "él / ella / usted",
+            "vivirá",
+            "he or she will live"
+          ],
+          [
+            "-emos",
+            "nosotros",
+            "iremos",
+            "we will go"
+          ],
+          [
+            "-éis",
+            "vosotros",
+            "veréis",
+            "you all will see"
+          ],
+          [
+            "-án",
+            "ellos / ellas",
+            "llegarán",
+            "they will arrive"
+          ]
+        ]
+      },
+      {
+        "title": "When to use it",
+        "tone": "orange",
+        "rows": [
+          [
+            "1",
+            "a promise",
+            "Te llamaré.",
+            "I'll call you."
+          ],
+          [
+            "2",
+            "a forecast",
+            "Mañana lloverá.",
+            "It will rain tomorrow."
+          ],
+          [
+            "3",
+            "later on",
+            "El año que viene viviré en Madrid.",
+            "Next year I'll live in Madrid."
+          ],
+          [
+            "4",
+            "a guess",
+            "Será el cartero.",
+            "That'll be the postman."
+          ],
+          [
+            "5",
+            "a plan already made",
+            "Voy a cenar con Ana.",
+            "I'm going to have dinner with Ana."
+          ]
+        ]
+      }
+    ]
+  },
+  "learn": {
+    "title": "What will happen",
+    "sub": "Tap any row to hear it",
+    "blocks": [
+      {
+        "type": "tables",
+        "tables": [
+          {
+            "title": "hablar",
+            "tense": "future",
+            "tone": "blue",
+            "rows": [
+              [
+                "yo",
+                "hablaré"
+              ],
+              [
+                "tú",
+                "hablarás"
+              ],
+              [
+                "él / ella / usted",
+                "hablará"
+              ],
+              [
+                "nosotros/as",
+                "hablaremos"
+              ],
+              [
+                "vosotros/as",
+                "hablaréis"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "hablarán"
+              ]
+            ]
+          },
+          {
+            "title": "vivir",
+            "tense": "future",
+            "tone": "orange",
+            "rows": [
+              [
+                "yo",
+                "viviré"
+              ],
+              [
+                "tú",
+                "vivirás"
+              ],
+              [
+                "él / ella / usted",
+                "vivirá"
+              ],
+              [
+                "nosotros/as",
+                "viviremos"
+              ],
+              [
+                "vosotros/as",
+                "viviréis"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "vivirán"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "note",
+        "kind": "tip",
+        "text": "Every verb takes the same endings. The odd ones only change the start: tener becomes tendr-, hacer becomes har-. The endings stay: tendré, haré."
+      },
+      {
+        "type": "tables",
+        "tables": [
+          {
+            "title": "hacer",
+            "tense": "future",
+            "tone": "blue",
+            "rows": [
+              [
+                "yo",
+                "haré"
+              ],
+              [
+                "tú",
+                "harás"
+              ],
+              [
+                "él / ella / usted",
+                "hará"
+              ],
+              [
+                "nosotros/as",
+                "haremos"
+              ],
+              [
+                "vosotros/as",
+                "haréis"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "harán"
+              ]
+            ]
+          },
+          {
+            "title": "tener",
+            "tense": "future",
+            "tone": "orange",
+            "rows": [
+              [
+                "yo",
+                "tendré"
+              ],
+              [
+                "tú",
+                "tendrás"
+              ],
+              [
+                "él / ella / usted",
+                "tendrá"
+              ],
+              [
+                "nosotros/as",
+                "tendremos"
+              ],
+              [
+                "vosotros/as",
+                "tendréis"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "tendrán"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "list",
+        "title": "More odd ones (yo)",
+        "rows": [
+          [
+            "venir · vendré",
+            "I'll come"
+          ],
+          [
+            "salir · saldré",
+            "I'll go out, I'll leave"
+          ],
+          [
+            "poder · podré",
+            "I'll be able to"
+          ],
+          [
+            "decir · diré",
+            "I'll say"
+          ],
+          [
+            "querer · querré",
+            "I'll want"
+          ],
+          [
+            "poner · pondré",
+            "I'll put"
+          ],
+          [
+            "saber · sabré",
+            "I'll know"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "kind": "spain",
+        "text": "For plans you've already made, Spain mostly says voy a + verb: voy a cenar con Ana. The futuro sounds more certain or a bit more formal. You'll hear it in promises, the weather forecast and the news."
+      },
+      {
+        "type": "twist",
+        "title": "Voy a or llamaré",
+        "a": [
+          "Voy a llamar a Ana.",
+          "I'm going to call Ana."
+        ],
+        "b": [
+          "Te llamaré, te lo prometo.",
+          "I'll call you, I promise."
+        ],
+        "note": "Voy a: a plan. Llamaré: a promise, or something you expect to happen."
+      },
+      {
+        "type": "note",
+        "kind": "warn",
+        "text": "Keep the accent: hablaré, hablará. Every form has one except nosotros: hablaremos."
+      }
+    ]
+  },
+  "phrases": [
+    {
+      "id": "c15-call",
+      "es": "Te llamaré mañana.",
+      "en": "I'll call you tomorrow.",
+      "alts": [
+        "Le llamaré mañana.",
+        "Os llamaré mañana."
+      ],
+      "enAlts": [
+        "I will call you tomorrow.",
+        "I'll ring you tomorrow."
+      ]
+    },
+    {
+      "id": "c15-rain",
+      "es": "Mañana lloverá.",
+      "en": "It will rain tomorrow.",
+      "alts": [
+        "Lloverá mañana."
+      ],
+      "enAlts": [
+        "It's going to rain tomorrow.",
+        "Tomorrow it will rain."
+      ]
+    },
+    {
+      "id": "c15-back",
+      "es": "Volveré pronto.",
+      "en": "I'll be back soon.",
+      "alts": [],
+      "enAlts": [
+        "I will be back soon.",
+        "I'll come back soon."
+      ]
+    },
+    {
+      "id": "c15-party",
+      "es": "¿Vendrás a la fiesta?",
+      "en": "Will you come to the party?",
+      "alts": [
+        "¿Vendrá a la fiesta?",
+        "¿Vendréis a la fiesta?"
+      ],
+      "enAlts": [
+        "Are you coming to the party?",
+        "Will you be coming to the party?"
+      ]
+    },
+    {
+      "id": "c15-do",
+      "es": "Lo haré esta tarde.",
+      "en": "I'll do it this afternoon.",
+      "alts": [],
+      "enAlts": [
+        "I will do it this afternoon.",
+        "I'll do it this evening."
+      ]
+    },
+    {
+      "id": "c15-valencia",
+      "es": "El año que viene viviré en Valencia.",
+      "en": "Next year I'll live in Valencia.",
+      "alts": [],
+      "enAlts": [
+        "Next year I will live in Valencia.",
+        "I'll be living in Valencia next year."
+      ]
+    },
+    {
+      "id": "c15-time",
+      "es": "No tendré tiempo.",
+      "en": "I won't have time.",
+      "alts": [],
+      "enAlts": [
+        "I will not have time.",
+        "I won't have the time."
+      ]
+    },
+    {
+      "id": "c15-see",
+      "es": "Ya veremos.",
+      "en": "We'll see.",
+      "alts": [],
+      "enAlts": [
+        "We will see."
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "type": "mc",
+      "skill": "fut-reg",
+      "q": "Mañana ___ a mi madre.",
+      "sub": "(I'll call my mum tomorrow.)",
+      "options": [
+        "llamaré",
+        "llamé",
+        "he llamado"
+      ],
+      "answer": 0,
+      "why": "Tomorrow, yo: llamaré. Llamé and he llamado are the past."
+    },
+    {
+      "type": "gap",
+      "skill": "fut-reg",
+      "q": "El año que viene ___ en Valencia.",
+      "hint": "vivir",
+      "hintLabel": "Verb",
+      "hintTone": "orange",
+      "answer": [
+        "viviré"
+      ],
+      "why": "The whole verb plus -é: viviré."
+    },
+    {
+      "type": "rapid",
+      "skill": "fut-reg",
+      "prompt": "Rapid fire: future or past?",
+      "choices": [
+        {
+          "key": "fut",
+          "label": "Future"
+        },
+        {
+          "key": "past",
+          "label": "Past"
+        }
+      ],
+      "items": [
+        {
+          "text": "Hablaré con ella.",
+          "full": "Hablaré con ella: I'll speak to her.",
+          "answer": "fut",
+          "skill": "fut-reg",
+          "why": "-é on the whole verb: the future."
+        },
+        {
+          "text": "Hablé con ella.",
+          "full": "Hablé con ella: I spoke to her.",
+          "answer": "past",
+          "skill": "fut-reg",
+          "why": "Hablé, without the -ar: the past."
+        },
+        {
+          "text": "Comeremos a las tres.",
+          "full": "Comeremos a las tres: we'll eat at three.",
+          "answer": "fut",
+          "skill": "fut-reg",
+          "why": "Comer + -emos: the future."
+        },
+        {
+          "text": "Comimos a las tres.",
+          "full": "Comimos a las tres: we ate at three.",
+          "answer": "past",
+          "skill": "fut-reg",
+          "why": "Comimos: the past."
+        },
+        {
+          "text": "Saldrán temprano.",
+          "full": "Saldrán temprano: they'll leave early.",
+          "answer": "fut",
+          "skill": "fut-odd",
+          "why": "Saldr- + -án: the future of salir."
+        },
+        {
+          "text": "Salieron temprano.",
+          "full": "Salieron temprano: they left early.",
+          "answer": "past",
+          "skill": "fut-reg",
+          "why": "Salieron: the past."
+        },
+        {
+          "text": "Lo haré mañana.",
+          "full": "Lo haré mañana: I'll do it tomorrow.",
+          "answer": "fut",
+          "skill": "fut-odd",
+          "why": "Haré: the future of hacer."
+        },
+        {
+          "text": "Lo hice ayer.",
+          "full": "Lo hice ayer: I did it yesterday.",
+          "answer": "past",
+          "skill": "fut-reg",
+          "why": "Hice: the past of hacer."
+        }
+      ]
+    },
+    {
+      "type": "listen",
+      "skill": "fut-plans",
+      "say": "El mes que viene iremos a Granada.",
+      "options": [
+        "We'll go to Granada next month.",
+        "We went to Granada last month.",
+        "We go to Granada every month."
+      ],
+      "answer": 0,
+      "why": "Iremos: we will go. El mes que viene: next month."
+    },
+    {
+      "type": "gap",
+      "skill": "fut-odd",
+      "q": "Esta semana no ___ tiempo.",
+      "hint": "tener",
+      "hintLabel": "Verb",
+      "hintTone": "orange",
+      "answer": [
+        "tendré"
+      ],
+      "why": "Tener is an odd one: tendré, not teneré."
+    },
+    {
+      "type": "fix",
+      "skill": "fut-odd",
+      "prompt": "Tap the word that is wrong.",
+      "sentence": "Mañana haceré la compra.",
+      "wrong": 1,
+      "fixed": "Mañana haré la compra.",
+      "why": "Hacer is an odd one: haré."
+    },
+    {
+      "type": "order",
+      "skill": "fut-reg",
+      "prompt": "Next year we'll live in Valencia.",
+      "words": [
+        "El",
+        "año",
+        "que",
+        "viene",
+        "viviremos",
+        "en",
+        "Valencia"
+      ],
+      "answer": "El año que viene viviremos en Valencia.",
+      "why": "El año que viene: next year. Nosotros: viviremos."
+    },
+    {
+      "type": "match",
+      "skill": "fut-odd",
+      "prompt": "Match the odd ones.",
+      "pairs": [
+        [
+          "haré",
+          "I'll do, I'll make"
+        ],
+        [
+          "tendré",
+          "I'll have"
+        ],
+        [
+          "vendré",
+          "I'll come"
+        ],
+        [
+          "saldré",
+          "I'll go out"
+        ],
+        [
+          "podré",
+          "I'll be able to"
+        ]
+      ]
+    },
+    {
+      "type": "translate",
+      "skill": "fut-reg",
+      "q": "It will rain tomorrow.",
+      "answer": [
+        "mañana lloverá",
+        "lloverá mañana"
+      ],
+      "why": "Llover + -á: lloverá."
+    },
+    {
+      "type": "mc",
+      "skill": "fut-plans",
+      "q": "Tranquila, ___ allí a las ocho, te lo prometo.",
+      "sub": "(Don't worry, I'll be there at eight, I promise.)",
+      "options": [
+        "estaré",
+        "estuve",
+        "estaba"
+      ],
+      "answer": 0,
+      "why": "A promise: estaré. Estuve and estaba are the past."
+    },
+    {
+      "type": "translate",
+      "skill": "fut-odd",
+      "q": "Will you come to the party?",
+      "answer": [
+        "vendrás a la fiesta",
+        "vendrá a la fiesta",
+        "vendrá usted a la fiesta",
+        "vendréis a la fiesta"
+      ],
+      "who": [
+        "tú",
+        "usted",
+        "usted",
+        "vosotros"
+      ],
+      "why": "Venir is an odd one: vendr-. Tú: vendrás."
+    },
+    {
+      "type": "gap",
+      "skill": "fut-reg",
+      "q": "Mis amigos ___ el viernes.",
+      "hint": "llegar",
+      "hintLabel": "Verb",
+      "hintTone": "orange",
+      "answer": [
+        "llegarán"
+      ],
+      "why": "Mis amigos is ellos: llegarán."
+    },
+    {
+      "type": "fix",
+      "skill": "fut-reg",
+      "prompt": "Tap the word that is wrong.",
+      "sentence": "Nosotros comerán en casa.",
+      "wrong": 1,
+      "fixed": "Nosotros comeremos en casa.",
+      "why": "Nosotros: comeremos. Comerán is ellos."
+    },
+    {
+      "type": "translate",
+      "skill": "fut-plans",
+      "q": "I'll call you tomorrow.",
+      "answer": [
+        "te llamaré mañana",
+        "mañana te llamaré",
+        "le llamaré mañana",
+        "mañana le llamaré",
+        "la llamaré mañana",
+        "lo llamaré mañana",
+        "os llamaré mañana",
+        "mañana os llamaré"
+      ],
+      "why": "Te (you) goes before the verb: te llamaré."
+    },
+    {
+      "type": "mc",
+      "skill": "fut-plans",
+      "prompt": "Which one is a plan you've already made?",
+      "q": "",
+      "options": [
+        "Voy a cenar con Ana esta noche.",
+        "Algún día cenaré con Ana.",
+        "Anoche cené con Ana."
+      ],
+      "answer": 0,
+      "why": "Voy a + verb: a plan you've made. Algún día cenaré is more of a maybe."
+    },
+    {
+      "type": "translate",
+      "skill": "fut-odd",
+      "q": "I'll do it this afternoon.",
+      "answer": [
+        "lo haré esta tarde",
+        "esta tarde lo haré"
+      ],
+      "why": "Hacer is an odd one: haré."
+    }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Write a message to a friend about next summer: where you will go, what you will do, and one promise.",
+    "starter": "El verano que viene iré…  Allí…  Te prometo que…",
+    "model": "El verano que viene iré a Galicia con mi familia. Alquilaremos una casa cerca del mar y comeremos mucho marisco. Te mandaré muchas fotos, te lo prometo.",
+    "checklist": [
+      "The whole verb + -é, -ás, -á: iré, comeremos",
+      "An odd one: haré, tendré, vendré",
+      "A promise: te lo prometo"
+    ]
+  },
+  "boss": {
+    "title": "A weekend in Bilbao",
+    "who": "Javier",
+    "skill": "fut-plans",
+    "persona": "You are Javier, a friend who lives in Bilbao. The learner is coming to visit next Friday. On the phone, ask when they will arrive, how they will travel, what they will want to do and whether they will bring a coat. Use tú. Speak European Spanish, using the futuro and voy a.",
+    "turns": [
+      {
+        "npc": "¿Cuándo llegarás a Bilbao?",
+        "en": "When will you get to Bilbao?",
+        "skill": "fut-reg",
+        "choices": [
+          [
+            "Llegaré el viernes por la tarde.",
+            true,
+            ""
+          ],
+          [
+            "Llegué el viernes por la tarde.",
+            false,
+            "Llegué is the past. For a trip still to come: llegaré."
+          ],
+          [
+            "Llegarás el viernes por la tarde.",
+            false,
+            "Llegarás is you. About yourself: llegaré."
+          ]
+        ]
+      },
+      {
+        "npc": "¿Y vendrás en tren o en avión?",
+        "en": "And will you come by train or by plane?",
+        "skill": "fut-odd",
+        "choices": [
+          [
+            "Vendré en tren desde Madrid.",
+            true,
+            ""
+          ],
+          [
+            "Veniré en tren desde Madrid.",
+            false,
+            "Venir is an odd one: vendré."
+          ],
+          [
+            "Vine en tren desde Madrid.",
+            false,
+            "Vine is the past. The trip is still to come: vendré."
+          ]
+        ]
+      },
+      {
+        "npc": "¿Qué te apetece hacer?",
+        "en": "What do you fancy doing?",
+        "skill": "fut-plans",
+        "choices": [
+          [
+            "Iremos al Guggenheim, ¿vale?",
+            true,
+            ""
+          ],
+          [
+            "Fuimos al Guggenheim, ¿vale?",
+            false,
+            "Fuimos is the past. For a plan: iremos, or vamos a ir."
+          ],
+          [
+            "Iremos en el Guggenheim, ¿vale?",
+            false,
+            "Going to a place takes a: al Guggenheim."
+          ]
+        ]
+      },
+      {
+        "npc": "Allí hará frío. ¿Traerás un abrigo?",
+        "en": "It'll be cold there. Will you bring a coat?",
+        "skill": "fut-reg",
+        "choices": [
+          [
+            "Sí, lo traeré, no te preocupes.",
+            true,
+            ""
+          ],
+          [
+            "Sí, lo traje, no te preocupes.",
+            false,
+            "Traje is the past. For a promise: traeré."
+          ],
+          [
+            "Sí, lo traerá, no te preocupes.",
+            false,
+            "Traerá is he, she or usted. About yourself: traeré."
+          ]
+        ]
+      }
+    ],
+    "closing": "¡Genial! Te esperaré en la estación. ¡Hasta el viernes!",
+    "closingEn": "Great! I'll wait for you at the station. See you on Friday!",
+    "chatOpening": "¿Y cuántos días te quedarás?",
+    "chatOpeningEn": "And how many days will you stay?"
+  }
+}

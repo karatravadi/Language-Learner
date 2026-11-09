@@ -95,6 +95,9 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
   "estoy is a form of estar. This one needs ser: soy". `L.formHint` in logic.js; the course's `personNotes` explain
   each "you". So keep tables tidy: one form per cell (or `·` between two), row labels that are persons or plain words.
   An `mc` exercise can add `wrong` (one note per option, "" for the right one) where the tables can't explain it.
+- Other tenses: a table of another tense keeps the verb as its title and adds `"tense"` (past, imperfect, future,
+  subjunctive), e.g. `{ "title": "comer", "tense": "past" }`. The heading shows "comer · past", the hint says "como is the present
+  of comer. This one needs the past: comí", and the verbs.json test (present tense only) skips it. Chapters 13 to 16 use it.
 - Whole verbs (`verbs.json`, Spanish only so far): present tense of 44 verbs, one form per person, with `kind` for the
   irregular ones. Tapping any form offers Save verb; My words shows the table; review asks one random person's form
   (`L.verbIndex`, `L.verbAsk`). A unit test checks every verb against its chapter table, so add new chapter verbs to
@@ -104,7 +107,8 @@ tests/                    unit.js, e2e.js (spawns servers + mock AI), e2e-flow.j
 - Accuracy: the Spanish is written by an AI and checked by tests for consistency, not for correctness.
   Flag anything unusual for the owner. A native speaker reviewing each batch is the best safeguard.
 - Pace: at 45 min a day a learner finishes a chapter every 1 to 2 days. Write chapters in batches of 4, run
-  `npm test` and `npm run e2e`, then hand over. The roadmap in course.json lists the next chapters (13 onwards, towards B1).
+  `npm test` and `npm run e2e`, then hand over. Chapters 13 to 16 (past, imperfect, future, subjunctive) start the way
+  towards B1; the roadmap in course.json lists the next ones (17 onwards).
 - The `boss.persona` text is the AI character's brief. Only the server reads it (from disk), so the page can never
   inject its own prompt.
 

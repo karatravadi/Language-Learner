@@ -114,7 +114,7 @@
   function tableForms(chapters) {
     const out = [];
     (chapters || []).forEach(ch => ((ch.learn && ch.learn.blocks) || []).forEach(b => (b.type === 'tables' ? b.tables : []).forEach(t => t.rows.forEach(([label, cell]) =>
-      String(cell).split('·').map(f => f.trim()).filter(Boolean).forEach(form => out.push({ n: ch.n, table: t.title, rows: t.rows.length, label, form, key: stripAcc(norm(form)) }))))));
+      String(cell).split('·').map(f => f.trim()).filter(Boolean).forEach(form => out.push({ n: ch.n, table: t.title, tense: t.tense || '', rows: t.rows.length, label, form, key: stripAcc(norm(form)) }))))));
     return out;
   }
   // "él / ella / usted" → "él, ella or usted", with a note for each "you" where the course gives one.
@@ -139,14 +139,20 @@
         if (!want.includes(padded(r.key))) continue;
         for (const t of pool) {
           if (t.key === r.key) continue;
-          const sameTable = t.table === r.table;
+          const sameTable = t.table === r.table && t.tense === r.tense;
           // Another verb in the same person (estoy for soy), only between verb tables, which have six persons.
           const otherVerb = !sameTable && t.label === r.label && t.rows === 6 && r.rows === 6;
           if (!sameTable && !otherVerb) continue;
           if (want.replace(padded(r.key), padded(t.key)).trim() !== got) continue;
           // A form that is also right for the wanted person (je prends, tu prends) is not the mistake.
-          if (sameTable && pool.some(x => x.table === t.table && x.key === t.key && x.label === r.label)) continue;
+          if (sameTable && pool.some(x => x.table === t.table && x.tense === t.tense && x.key === t.key && x.label === r.label)) continue;
           const verb = r.rows === 6;
+          // The same person in another tense (como for comí): say which tense each is. A table with no tense is the present.
+          if (otherVerb && t.tense !== r.tense) {
+            const tn = x => x.tense || 'present';
+            const of = verbOf(t.table) === verbOf(r.table) ? ' of ' + verbOf(t.table) : '';
+            return t.form + ' is the ' + tn(t) + of + '. This one needs the ' + tn(r) + (short ? '.' : ': ' + r.form + '.');
+          }
           if (short) {
             if (otherVerb) return t.form + ' is a form of ' + verbOf(t.table) + '. This one needs ' + verbOf(r.table) + '.';
             if (notes) return t.form + (verb ? ' goes with ' : ' is for ') + who(t.label) + '. Which form ' + (verb ? 'goes with ' : 'is for ') + who(r.label) + '?';

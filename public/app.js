@@ -977,7 +977,7 @@
 
   function learnBlock(b) {
     if (b.type === 'tables') {
-      return h('div', { class: 'cols', style: { '--n': String(b.tables.length) } }, b.tables.map(t => h('div', { class: 'conj ' + tone(t.tone) }, h('h3', {}, t.title),
+      return h('div', { class: 'cols', style: { '--n': String(b.tables.length) } }, b.tables.map(t => h('div', { class: 'conj ' + tone(t.tone) }, h('h3', {}, t.title, t.tense ? h('span', { class: 'conj-tense' }, ' · ' + t.tense) : null),
         t.rows.map(([p, f]) => h('button', { class: 'conj-row', type: 'button', onclick: () => say(t.speak === 'form' ? f.replace(/·/g, ',') : p.split(' ')[0].replace(/\/.*/, '') + ' ' + f) },
           h('span', { class: 'pron' }, p), h('span', { class: 'form', lang: TL }, f))))));
     }

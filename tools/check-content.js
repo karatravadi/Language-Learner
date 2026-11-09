@@ -186,6 +186,7 @@ function check(dir = COURSES) {
             if (!isStr(t.title)) err('table needs a title');
             if (t.tone && !TONES.has(t.tone)) err('unknown tone ' + t.tone);
             if (t.speak && !['form', 'both'].includes(t.speak)) err('speak must be form or both');
+            if (t.tense != null && !(isStr(t.tense) && /^[a-z ]+$/.test(t.tense))) err('table "' + t.title + '": tense is a plain lowercase word, such as past');
             if (!Array.isArray(t.rows) || !t.rows.length || !t.rows.every(pair)) err('table "' + t.title + '" rows must be pairs');
           });
         } else if (b.type === 'note') {

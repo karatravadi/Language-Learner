@@ -1,0 +1,855 @@
+{
+  "n": 13,
+  "title": "What happened yesterday",
+  "sub": "fui, comí, vi, hice",
+  "can": "Tell a story about yesterday or last year with the pretérito indefinido: fui, comí, vi.",
+  "mins": 15,
+  "doneText": "You can now say what you did yesterday, last weekend or last year, and when Spain uses he comido instead.",
+  "skills": {
+    "pret-ar": "Past endings for -ar: hablé, habló",
+    "pret-er": "Past endings for -er and -ir: comí, salió",
+    "fui": "Fui, fue: ser and ir in the past",
+    "pret-odd": "The odd ones: hice, estuve, tuve",
+    "pret-or-perf": "Ayer comí or hoy he comido"
+  },
+  "discover": {
+    "intro": "Both colours talk about the past. Look at the time words, then at the verbs.",
+    "groups": [
+      {
+        "label": "A finished time",
+        "tone": "blue",
+        "lines": [
+          [
+            "Ayer comí paella.",
+            "I had paella yesterday."
+          ],
+          [
+            "Anoche hablé con mi madre.",
+            "I spoke to my mum last night."
+          ],
+          [
+            "El sábado fuimos a la playa.",
+            "We went to the beach on Saturday."
+          ]
+        ]
+      },
+      {
+        "label": "Today or this week",
+        "tone": "orange",
+        "lines": [
+          [
+            "Hoy he comido paella.",
+            "I've had paella today."
+          ],
+          [
+            "Esta mañana he hablado con mi madre.",
+            "I spoke to my mum this morning."
+          ],
+          [
+            "Esta semana hemos ido a la playa.",
+            "We've been to the beach this week."
+          ]
+        ]
+      }
+    ],
+    "question": "What decides which past Spain uses?",
+    "options": [
+      "The time: a finished time like ayer takes one word (comí); today or this week takes he comido.",
+      "Whether the sentence is a question.",
+      "Whether the verb ends in -ar or -er."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Look at the first word of each sentence: ayer, anoche, el sábado, then hoy, esta mañana, esta semana.",
+    "reveal": "This is the pretérito indefinido, for things that happened in a time that is over: yesterday, last night, last year. It is one word, with its own endings:",
+    "hooks": [
+      {
+        "title": "One word, its own endings",
+        "tone": "blue",
+        "rows": [
+          [
+            "-é",
+            "yo, -ar",
+            "Ayer hablé con Ana.",
+            "I spoke to Ana yesterday."
+          ],
+          [
+            "-í",
+            "yo, -er and -ir",
+            "Anoche salí con amigos.",
+            "I went out with friends last night."
+          ],
+          [
+            "-ó",
+            "él / ella / usted, -ar",
+            "Mi hermano llamó ayer.",
+            "My brother called yesterday."
+          ],
+          [
+            "-ió",
+            "él / ella / usted, -er and -ir",
+            "Mi hermana salió tarde y volvió a las dos.",
+            "My sister went out late and came back at two."
+          ],
+          [
+            "fui",
+            "ser and ir",
+            "El sábado fui a Toledo.",
+            "I went to Toledo on Saturday."
+          ]
+        ]
+      },
+      {
+        "title": "When Spain uses it",
+        "tone": "orange",
+        "rows": [
+          [
+            "1",
+            "yesterday",
+            "Ayer comí tarde.",
+            "I ate late yesterday."
+          ],
+          [
+            "2",
+            "last night",
+            "Anoche vi una película.",
+            "I watched a film last night."
+          ],
+          [
+            "3",
+            "last week",
+            "La semana pasada fui a Sevilla.",
+            "I went to Seville last week."
+          ],
+          [
+            "4",
+            "last year",
+            "El año pasado viví en Londres.",
+            "I lived in London last year."
+          ],
+          [
+            "5",
+            "ago",
+            "Hace dos años estuve en Madrid.",
+            "I was in Madrid two years ago."
+          ]
+        ]
+      }
+    ]
+  },
+  "learn": {
+    "title": "What you did",
+    "sub": "Tap any row to hear it",
+    "blocks": [
+      {
+        "type": "tables",
+        "tables": [
+          {
+            "title": "hablar",
+            "tense": "past",
+            "tone": "blue",
+            "rows": [
+              [
+                "yo",
+                "hablé"
+              ],
+              [
+                "tú",
+                "hablaste"
+              ],
+              [
+                "él / ella / usted",
+                "habló"
+              ],
+              [
+                "nosotros/as",
+                "hablamos"
+              ],
+              [
+                "vosotros/as",
+                "hablasteis"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "hablaron"
+              ]
+            ]
+          },
+          {
+            "title": "comer",
+            "tense": "past",
+            "tone": "orange",
+            "rows": [
+              [
+                "yo",
+                "comí"
+              ],
+              [
+                "tú",
+                "comiste"
+              ],
+              [
+                "él / ella / usted",
+                "comió"
+              ],
+              [
+                "nosotros/as",
+                "comimos"
+              ],
+              [
+                "vosotros/as",
+                "comisteis"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "comieron"
+              ]
+            ]
+          },
+          {
+            "title": "ser and ir",
+            "tense": "past",
+            "rows": [
+              [
+                "yo",
+                "fui"
+              ],
+              [
+                "tú",
+                "fuiste"
+              ],
+              [
+                "él / ella / usted",
+                "fue"
+              ],
+              [
+                "nosotros/as",
+                "fuimos"
+              ],
+              [
+                "vosotros/as",
+                "fuisteis"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "fueron"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "note",
+        "kind": "tip",
+        "text": "-er and -ir verbs share one set of endings: comí, viví, salí. Ser and ir share theirs too: fui means I went or I was, and the rest of the sentence tells you which."
+      },
+      {
+        "type": "note",
+        "kind": "warn",
+        "text": "The accent matters. Hablo is I speak, now. Habló is he or she spoke, yesterday. Say the last syllable louder: ha-BLÓ."
+      },
+      {
+        "type": "tables",
+        "tables": [
+          {
+            "title": "hacer",
+            "tense": "past",
+            "tone": "blue",
+            "rows": [
+              [
+                "yo",
+                "hice"
+              ],
+              [
+                "tú",
+                "hiciste"
+              ],
+              [
+                "él / ella / usted",
+                "hizo"
+              ],
+              [
+                "nosotros/as",
+                "hicimos"
+              ],
+              [
+                "vosotros/as",
+                "hicisteis"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "hicieron"
+              ]
+            ]
+          },
+          {
+            "title": "estar",
+            "tense": "past",
+            "tone": "orange",
+            "rows": [
+              [
+                "yo",
+                "estuve"
+              ],
+              [
+                "tú",
+                "estuviste"
+              ],
+              [
+                "él / ella / usted",
+                "estuvo"
+              ],
+              [
+                "nosotros/as",
+                "estuvimos"
+              ],
+              [
+                "vosotros/as",
+                "estuvisteis"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "estuvieron"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "list",
+        "title": "More odd ones (yo)",
+        "rows": [
+          [
+            "tener · tuve",
+            "I had"
+          ],
+          [
+            "ver · vi",
+            "I saw"
+          ],
+          [
+            "poder · pude",
+            "I could, I managed to"
+          ],
+          [
+            "venir · vine",
+            "I came"
+          ],
+          [
+            "decir · dije",
+            "I said"
+          ],
+          [
+            "dar · di",
+            "I gave"
+          ]
+        ]
+      },
+      {
+        "type": "note",
+        "kind": "spain",
+        "text": "Spain splits the past by the time: hoy he comido (today, see chapter 10) but ayer comí (yesterday). If the time is over, use the one-word past. Much of Latin America uses comí for both."
+      },
+      {
+        "type": "twist",
+        "title": "Hoy or ayer",
+        "a": [
+          "Hoy he visto a Marta.",
+          "I've seen Marta today."
+        ],
+        "b": [
+          "Ayer vi a Marta.",
+          "I saw Marta yesterday."
+        ],
+        "note": "Same event, different time word. Hoy takes he visto, ayer takes vi."
+      },
+      {
+        "type": "note",
+        "kind": "tip",
+        "text": "Nosotros of -ar and -ir verbs is the same as now: hablamos, vivimos. The time word tells you it's the past: ayer hablamos."
+      }
+    ]
+  },
+  "phrases": [
+    {
+      "id": "c13-did",
+      "es": "¿Qué hiciste ayer?",
+      "en": "What did you do yesterday?",
+      "alts": [
+        "¿Qué hizo ayer?",
+        "¿Qué hicisteis ayer?"
+      ],
+      "enAlts": [
+        "What did you get up to yesterday?",
+        "Yesterday, what did you do?"
+      ]
+    },
+    {
+      "id": "c13-cinema",
+      "es": "Ayer fui al cine.",
+      "en": "I went to the cinema yesterday.",
+      "alts": [
+        "Fui al cine ayer."
+      ],
+      "enAlts": [
+        "Yesterday I went to the cinema.",
+        "I went to the movies yesterday."
+      ]
+    },
+    {
+      "id": "c13-out",
+      "es": "Anoche salí con unos amigos.",
+      "en": "I went out with some friends last night.",
+      "alts": [],
+      "enAlts": [
+        "Last night I went out with some friends.",
+        "I went out with friends last night."
+      ]
+    },
+    {
+      "id": "c13-barcelona",
+      "es": "El año pasado estuve en Barcelona.",
+      "en": "I was in Barcelona last year.",
+      "alts": [],
+      "enAlts": [
+        "Last year I was in Barcelona.",
+        "I went to Barcelona last year."
+      ]
+    },
+    {
+      "id": "c13-trip",
+      "es": "¿Qué tal fue el viaje?",
+      "en": "How was the trip?",
+      "alts": [],
+      "enAlts": [
+        "How did the trip go?",
+        "How was your trip?"
+      ]
+    },
+    {
+      "id": "c13-great",
+      "es": "Fue genial.",
+      "en": "It was great.",
+      "alts": [
+        "Estuvo genial."
+      ],
+      "enAlts": [
+        "It was brilliant.",
+        "It was amazing."
+      ]
+    },
+    {
+      "id": "c13-much",
+      "es": "Comí demasiado.",
+      "en": "I ate too much.",
+      "alts": [],
+      "enAlts": [
+        "I had too much to eat."
+      ]
+    },
+    {
+      "id": "c13-ago",
+      "es": "Hace dos años viví en Madrid.",
+      "en": "I lived in Madrid two years ago.",
+      "alts": [
+        "Viví en Madrid hace dos años."
+      ],
+      "enAlts": [
+        "Two years ago I lived in Madrid."
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "type": "mc",
+      "skill": "pret-ar",
+      "q": "Ayer ___ con mi madre.",
+      "sub": "(I spoke to my mum yesterday.)",
+      "options": [
+        "hablé",
+        "hablo",
+        "habló"
+      ],
+      "answer": 0,
+      "why": "Yo, in a finished time: hablé. Hablo is now, and habló is he or she."
+    },
+    {
+      "type": "gap",
+      "skill": "pret-er",
+      "q": "Anoche ___ en un restaurante japonés.",
+      "hint": "comer",
+      "hintLabel": "Verb",
+      "hintTone": "orange",
+      "answer": [
+        "comí"
+      ],
+      "why": "Comer, yo, in the past: comí, with an accent."
+    },
+    {
+      "type": "rapid",
+      "skill": "pret-or-perf",
+      "prompt": "Rapid fire: ayer or hoy?",
+      "choices": [
+        {
+          "key": "ayer",
+          "label": "Ayer"
+        },
+        {
+          "key": "hoy",
+          "label": "Hoy"
+        }
+      ],
+      "items": [
+        {
+          "blank": "___ he trabajado mucho.",
+          "full": "Hoy he trabajado mucho.",
+          "fill": "Hoy",
+          "answer": "hoy",
+          "skill": "pret-or-perf",
+          "why": "He trabajado goes with a time that isn't over: hoy."
+        },
+        {
+          "blank": "___ trabajé mucho.",
+          "full": "Ayer trabajé mucho.",
+          "fill": "Ayer",
+          "answer": "ayer",
+          "skill": "pret-or-perf",
+          "why": "Trabajé goes with a finished time: ayer."
+        },
+        {
+          "blank": "___ comimos en casa de mi abuela.",
+          "full": "Ayer comimos en casa de mi abuela.",
+          "fill": "Ayer",
+          "answer": "ayer",
+          "skill": "pret-or-perf",
+          "why": "Comimos is the one-word past: ayer."
+        },
+        {
+          "blank": "___ hemos visto una película.",
+          "full": "Hoy hemos visto una película.",
+          "fill": "Hoy",
+          "answer": "hoy",
+          "skill": "pret-or-perf",
+          "why": "Hemos visto goes with hoy."
+        },
+        {
+          "blank": "___ vi una película.",
+          "full": "Ayer vi una película.",
+          "fill": "Ayer",
+          "answer": "ayer",
+          "skill": "pret-or-perf",
+          "why": "Vi is the one-word past: ayer."
+        },
+        {
+          "blank": "___ fuimos a la playa.",
+          "full": "Ayer fuimos a la playa.",
+          "fill": "Ayer",
+          "answer": "ayer",
+          "skill": "pret-or-perf",
+          "why": "Fuimos is the one-word past: ayer."
+        },
+        {
+          "blank": "___ he ido al médico.",
+          "full": "Hoy he ido al médico.",
+          "fill": "Hoy",
+          "answer": "hoy",
+          "skill": "pret-or-perf",
+          "why": "He ido goes with hoy."
+        },
+        {
+          "blank": "___ salí con mis amigos.",
+          "full": "Ayer salí con mis amigos.",
+          "fill": "Ayer",
+          "answer": "ayer",
+          "skill": "pret-or-perf",
+          "why": "Salí is the one-word past: ayer."
+        }
+      ]
+    },
+    {
+      "type": "listen",
+      "skill": "pret-odd",
+      "say": "El verano pasado estuve en Valencia.",
+      "options": [
+        "I was in Valencia last summer.",
+        "I'm in Valencia this summer.",
+        "I'm going to Valencia next summer."
+      ],
+      "answer": 0,
+      "why": "Estuve: I was (somewhere). El verano pasado: last summer."
+    },
+    {
+      "type": "gap",
+      "skill": "fui",
+      "q": "El sábado ___ a la playa con mis amigos.",
+      "hint": "ir",
+      "hintLabel": "Verb",
+      "hintTone": "orange",
+      "answer": [
+        "fui"
+      ],
+      "why": "Ir in the past, yo: fui. Ser has the same form."
+    },
+    {
+      "type": "fix",
+      "skill": "pret-ar",
+      "prompt": "Tap the word that is wrong.",
+      "sentence": "Ayer mi hermano hablé con el profesor.",
+      "wrong": 3,
+      "fixed": "Ayer mi hermano habló con el profesor.",
+      "why": "Mi hermano is él: habló. Hablé is yo."
+    },
+    {
+      "type": "order",
+      "skill": "pret-er",
+      "prompt": "We lived in Seville two years ago.",
+      "words": [
+        "Hace",
+        "dos",
+        "años",
+        "vivimos",
+        "en",
+        "Sevilla"
+      ],
+      "answer": "Hace dos años vivimos en Sevilla.",
+      "why": "Hace dos años means two years ago. It can go first or last."
+    },
+    {
+      "type": "match",
+      "skill": "pret-odd",
+      "prompt": "Match the odd ones.",
+      "pairs": [
+        [
+          "hice",
+          "I did, I made"
+        ],
+        [
+          "estuve",
+          "I was (somewhere)"
+        ],
+        [
+          "tuve",
+          "I had"
+        ],
+        [
+          "vi",
+          "I saw"
+        ],
+        [
+          "dije",
+          "I said"
+        ]
+      ]
+    },
+    {
+      "type": "translate",
+      "skill": "pret-er",
+      "q": "I ate too much.",
+      "answer": [
+        "comí demasiado"
+      ],
+      "why": "Comer, yo, past: comí."
+    },
+    {
+      "type": "mc",
+      "skill": "fui",
+      "q": "¿Qué tal ___ el concierto?",
+      "sub": "(How was the concert?)",
+      "options": [
+        "fue",
+        "fui",
+        "fuiste"
+      ],
+      "answer": 0,
+      "why": "El concierto is él: fue."
+    },
+    {
+      "type": "translate",
+      "skill": "pret-or-perf",
+      "q": "I went to the cinema yesterday.",
+      "answer": [
+        "ayer fui al cine",
+        "fui al cine ayer"
+      ],
+      "why": "Ayer is a finished time, so the one-word past: fui."
+    },
+    {
+      "type": "gap",
+      "skill": "pret-odd",
+      "q": "¿Qué ___ tú el fin de semana?",
+      "hint": "hacer",
+      "hintLabel": "Verb",
+      "hintTone": "orange",
+      "answer": [
+        "hiciste"
+      ],
+      "why": "Hacer is an odd one: hice, hiciste, hizo."
+    },
+    {
+      "type": "fix",
+      "skill": "pret-er",
+      "prompt": "Tap the word that is wrong.",
+      "sentence": "Anoche mis padres salió a cenar.",
+      "wrong": 3,
+      "fixed": "Anoche mis padres salieron a cenar.",
+      "why": "Mis padres is ellos: salieron."
+    },
+    {
+      "type": "translate",
+      "skill": "pret-ar",
+      "q": "Did you call Ana yesterday?",
+      "answer": [
+        "llamaste a ana ayer",
+        "ayer llamaste a ana",
+        "llamó a ana ayer",
+        "ayer llamó a ana",
+        "llamó usted a ana ayer",
+        "llamasteis a ana ayer",
+        "ayer llamasteis a ana"
+      ],
+      "who": [
+        "tú",
+        "tú",
+        "usted",
+        "usted",
+        "usted",
+        "vosotros",
+        "vosotros"
+      ],
+      "why": "Llamar, tú: llamaste. Usted: llamó. Vosotros: llamasteis."
+    },
+    {
+      "type": "mc",
+      "skill": "pret-or-perf",
+      "prompt": "In Spain, which one is right?",
+      "q": "",
+      "options": [
+        "Ayer comí paella.",
+        "Ayer he comido paella.",
+        "Ayer como paella."
+      ],
+      "answer": 0,
+      "why": "Ayer is over, so Spain uses comí. He comido is for today or this week."
+    },
+    {
+      "type": "translate",
+      "skill": "fui",
+      "q": "It was great.",
+      "answer": [
+        "fue genial",
+        "estuvo genial"
+      ],
+      "why": "Ser in the past, for something that's over: fue. Spain also says estuvo genial."
+    }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Write a short message to a friend about last weekend: where you went, what you did and how it was.",
+    "starter": "El sábado fui…  Por la noche…  Fue…",
+    "model": "El sábado fui a Toledo con mi hermana. Vimos la catedral y comimos en un restaurante pequeño. Por la noche volvimos a Madrid en tren. Fue un día genial.",
+    "checklist": [
+      "The one-word past for a finished time: fui, vimos, comimos",
+      "Fue for how it was",
+      "A time word: el sábado, ayer, anoche"
+    ]
+  },
+  "boss": {
+    "title": "Monday at the office",
+    "who": "Lucía",
+    "skill": "pret-or-perf",
+    "persona": "You are Lucía, a friendly colleague at an office in Valencia. It is Monday morning. Ask the learner what they did at the weekend, where they went, who with, and how it was. Use tú, as colleagues do in Spain. Speak European Spanish, using the pretérito indefinido for the weekend.",
+    "turns": [
+      {
+        "npc": "¡Hola! ¿Qué tal el fin de semana? ¿Qué hiciste?",
+        "en": "Hi! How was the weekend? What did you do?",
+        "skill": "fui",
+        "choices": [
+          [
+            "Fui a la playa con unos amigos.",
+            true,
+            ""
+          ],
+          [
+            "Voy a la playa con unos amigos.",
+            false,
+            "Voy is now. The weekend is over: fui."
+          ],
+          [
+            "Fue a la playa con unos amigos.",
+            false,
+            "Fue is he, she or usted. About yourself: fui."
+          ]
+        ]
+      },
+      {
+        "npc": "¡Qué bien! ¿Y a qué playa fuisteis?",
+        "en": "Great! And which beach did you go to?",
+        "skill": "fui",
+        "choices": [
+          [
+            "Fuimos a la Malvarrosa.",
+            true,
+            ""
+          ],
+          [
+            "Fueron a la Malvarrosa.",
+            false,
+            "Fueron is they. You and your friends are nosotros: fuimos."
+          ],
+          [
+            "Fuimos en la Malvarrosa.",
+            false,
+            "Going to a place takes a: fuimos a la Malvarrosa."
+          ]
+        ]
+      },
+      {
+        "npc": "¿Y comisteis allí?",
+        "en": "And did you eat there?",
+        "skill": "pret-er",
+        "choices": [
+          [
+            "Sí, comimos una paella al lado del mar.",
+            true,
+            ""
+          ],
+          [
+            "Sí, comemos una paella al lado del mar.",
+            false,
+            "Comemos is now. In the past: comimos."
+          ],
+          [
+            "Sí, comieron una paella al lado del mar.",
+            false,
+            "Comieron is they. You and your friends: comimos."
+          ]
+        ]
+      },
+      {
+        "npc": "¿Y qué tal fue?",
+        "en": "And how was it?",
+        "skill": "pret-or-perf",
+        "choices": [
+          [
+            "Fue genial, pero llegué a casa muy tarde.",
+            true,
+            ""
+          ],
+          [
+            "Fui genial, pero llegué a casa muy tarde.",
+            false,
+            "Fui is I was. The day was great: fue."
+          ],
+          [
+            "Es genial, pero llegué a casa muy tarde.",
+            false,
+            "Es is now. The weekend is over: fue."
+          ]
+        ]
+      }
+    ],
+    "closing": "¡Qué envidia! Yo me quedé en casa todo el fin de semana.",
+    "closingEn": "I'm so jealous! I stayed at home all weekend.",
+    "chatOpening": "¿Y el domingo qué hiciste?",
+    "chatOpeningEn": "And what did you do on Sunday?"
+  }
+}

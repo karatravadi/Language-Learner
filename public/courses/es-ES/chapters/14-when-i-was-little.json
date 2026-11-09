@@ -1,0 +1,811 @@
+{
+  "n": 14,
+  "title": "When I was little",
+  "sub": "vivía, era, iba, había",
+  "can": "Describe how things used to be with the imperfecto: vivía, era, había.",
+  "mins": 15,
+  "doneText": "You can now talk about your childhood and how things used to be, and choose between iba and fui.",
+  "skills": {
+    "imp-ar": "Used to, for -ar: hablaba, jugaba",
+    "imp-er": "Used to, for -er and -ir: tenía, vivía",
+    "imp-odd": "Era and iba: the odd ones",
+    "habia": "Había: there was, there were",
+    "imp-or-pret": "Used to or did once: iba or fui"
+  },
+  "discover": {
+    "intro": "All six sentences are in the past. Look at what kind of past each colour describes.",
+    "groups": [
+      {
+        "label": "Again and again, or how things were",
+        "tone": "blue",
+        "lines": [
+          [
+            "Todos los veranos íbamos a la playa.",
+            "Every summer we used to go to the beach."
+          ],
+          [
+            "De pequeñ{o} vivía en un pueblo.",
+            "When I was little, I lived in a village."
+          ],
+          [
+            "Mi abuela siempre cocinaba los domingos.",
+            "My grandmother always cooked on Sundays."
+          ]
+        ]
+      },
+      {
+        "label": "Once, and finished",
+        "tone": "orange",
+        "lines": [
+          [
+            "El verano pasado fuimos a la playa.",
+            "Last summer we went to the beach."
+          ],
+          [
+            "En 2020 viví en Londres.",
+            "In 2020 I lived in London."
+          ],
+          [
+            "El domingo mi abuela cocinó una paella.",
+            "On Sunday my grandmother cooked a paella."
+          ]
+        ]
+      }
+    ],
+    "question": "When does Spanish use the blue forms (íbamos, vivía, cocinaba)?",
+    "options": [
+      "For what used to happen again and again, or how things were.",
+      "For one finished event on a known day.",
+      "For plans in the future."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Look at the time words: todos los veranos, de pequeño, siempre. Then el verano pasado, el domingo.",
+    "reveal": "This is the imperfecto, for what used to happen and how things were. -ar verbs take -aba, -er and -ir verbs take -ía:",
+    "hooks": [
+      {
+        "title": "The endings",
+        "tone": "blue",
+        "rows": [
+          [
+            "-aba",
+            "-ar",
+            "Hablaba mucho.",
+            "I used to talk a lot."
+          ],
+          [
+            "-ía",
+            "-er",
+            "Tenía un perro.",
+            "I had a dog."
+          ],
+          [
+            "-ía",
+            "-ir",
+            "Vivía en un pueblo.",
+            "I lived in a village."
+          ],
+          [
+            "era",
+            "ser",
+            "Era muy tímid{o}.",
+            "I was very shy."
+          ],
+          [
+            "iba",
+            "ir",
+            "Iba al colegio andando.",
+            "I used to walk to school."
+          ]
+        ]
+      },
+      {
+        "title": "Words that call for it",
+        "tone": "orange",
+        "rows": [
+          [
+            "1",
+            "when I was little",
+            "De pequeñ{o} jugaba en la calle.",
+            "When I was little I played in the street."
+          ],
+          [
+            "2",
+            "every summer",
+            "Todos los veranos iba al pueblo.",
+            "Every summer I went to the village."
+          ],
+          [
+            "3",
+            "always",
+            "Siempre comíamos juntos.",
+            "We always ate together."
+          ],
+          [
+            "4",
+            "often",
+            "A menudo veía a mis primos.",
+            "I often saw my cousins."
+          ],
+          [
+            "5",
+            "there was",
+            "Había un parque cerca.",
+            "There was a park nearby."
+          ]
+        ]
+      }
+    ]
+  },
+  "learn": {
+    "title": "How things used to be",
+    "sub": "Tap any row to hear it",
+    "blocks": [
+      {
+        "type": "tables",
+        "tables": [
+          {
+            "title": "hablar",
+            "tense": "imperfect",
+            "tone": "blue",
+            "rows": [
+              [
+                "yo",
+                "hablaba"
+              ],
+              [
+                "tú",
+                "hablabas"
+              ],
+              [
+                "él / ella / usted",
+                "hablaba"
+              ],
+              [
+                "nosotros/as",
+                "hablábamos"
+              ],
+              [
+                "vosotros/as",
+                "hablabais"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "hablaban"
+              ]
+            ]
+          },
+          {
+            "title": "vivir",
+            "tense": "imperfect",
+            "tone": "orange",
+            "rows": [
+              [
+                "yo",
+                "vivía"
+              ],
+              [
+                "tú",
+                "vivías"
+              ],
+              [
+                "él / ella / usted",
+                "vivía"
+              ],
+              [
+                "nosotros/as",
+                "vivíamos"
+              ],
+              [
+                "vosotros/as",
+                "vivíais"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "vivían"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "note",
+        "kind": "tip",
+        "text": "Yo and él or ella share a form: hablaba, vivía. Add yo or a name when it isn't clear who: yo vivía en Bilbao, Ana vivía en Vigo."
+      },
+      {
+        "type": "note",
+        "kind": "warn",
+        "text": "Nosotros of -ar verbs has an accent on the first a: hablábamos, jugábamos. -er and -ir verbs have one on every í: vivía, teníamos."
+      },
+      {
+        "type": "tables",
+        "tables": [
+          {
+            "title": "ser",
+            "tense": "imperfect",
+            "tone": "blue",
+            "rows": [
+              [
+                "yo",
+                "era"
+              ],
+              [
+                "tú",
+                "eras"
+              ],
+              [
+                "él / ella / usted",
+                "era"
+              ],
+              [
+                "nosotros/as",
+                "éramos"
+              ],
+              [
+                "vosotros/as",
+                "erais"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "eran"
+              ]
+            ]
+          },
+          {
+            "title": "ir",
+            "tense": "imperfect",
+            "tone": "orange",
+            "rows": [
+              [
+                "yo",
+                "iba"
+              ],
+              [
+                "tú",
+                "ibas"
+              ],
+              [
+                "él / ella / usted",
+                "iba"
+              ],
+              [
+                "nosotros/as",
+                "íbamos"
+              ],
+              [
+                "vosotros/as",
+                "ibais"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "iban"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "list",
+        "title": "Useful for the past",
+        "rows": [
+          [
+            "había",
+            "there was, there were"
+          ],
+          [
+            "tenía",
+            "I had, I used to have"
+          ],
+          [
+            "hacía calor",
+            "it was hot"
+          ],
+          [
+            "veía",
+            "I used to see, I watched"
+          ],
+          [
+            "estaba",
+            "I was (somewhere, or feeling)"
+          ]
+        ]
+      },
+      {
+        "type": "twist",
+        "title": "Iba or fui",
+        "a": [
+          "Iba a la playa.",
+          "I used to go to the beach."
+        ],
+        "b": [
+          "Fui a la playa.",
+          "I went to the beach."
+        ],
+        "note": "Iba: again and again, or the scene. Fui: once, and it's over."
+      },
+      {
+        "type": "note",
+        "kind": "culture",
+        "text": "Many people in Spain spent their childhood summers in el pueblo, the family's home village, with grandparents and cousins. ¿Ibas al pueblo en verano? is a very Spanish question."
+      }
+    ]
+  },
+  "phrases": [
+    {
+      "id": "c14-village",
+      "es": "De pequeñ{o} vivía en un pueblo.",
+      "en": "When I was little, I lived in a village.",
+      "alts": [
+        "Cuando era pequeñ{o} vivía en un pueblo."
+      ],
+      "enAlts": [
+        "As a child I lived in a village.",
+        "When I was a kid I lived in a village."
+      ]
+    },
+    {
+      "id": "c14-summers",
+      "es": "Todos los veranos íbamos a la playa.",
+      "en": "Every summer we used to go to the beach.",
+      "alts": [],
+      "enAlts": [
+        "We went to the beach every summer.",
+        "Every summer we went to the beach."
+      ]
+    },
+    {
+      "id": "c14-cook",
+      "es": "Mi abuela cocinaba muy bien.",
+      "en": "My grandmother used to cook really well.",
+      "alts": [],
+      "enAlts": [
+        "My grandmother cooked very well.",
+        "My grandma was a really good cook."
+      ]
+    },
+    {
+      "id": "c14-park",
+      "es": "Había un parque al lado de mi casa.",
+      "en": "There was a park next to my house.",
+      "alts": [],
+      "enAlts": [
+        "There used to be a park next to my house.",
+        "There was a park beside my house."
+      ]
+    },
+    {
+      "id": "c14-shy",
+      "es": "Era muy tímid{o}.",
+      "en": "I was very shy.",
+      "alts": [],
+      "enAlts": [
+        "I used to be very shy.",
+        "I was really shy."
+      ]
+    },
+    {
+      "id": "c14-before",
+      "es": "¿Dónde vivías antes?",
+      "en": "Where did you live before?",
+      "alts": [
+        "¿Dónde vivía antes?",
+        "¿Dónde vivíais antes?"
+      ],
+      "enAlts": [
+        "Where did you use to live?",
+        "Where were you living before?"
+      ]
+    },
+    {
+      "id": "c14-bank",
+      "es": "Antes trabajaba en un banco.",
+      "en": "I used to work in a bank.",
+      "alts": [],
+      "enAlts": [
+        "I worked in a bank before.",
+        "Before, I worked in a bank."
+      ]
+    },
+    {
+      "id": "c14-hot",
+      "es": "Hacía mucho calor.",
+      "en": "It was very hot.",
+      "alts": [],
+      "enAlts": [
+        "It was really hot."
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "type": "mc",
+      "skill": "imp-ar",
+      "q": "De pequeña, Ana ___ al tenis todos los sábados.",
+      "sub": "(When she was little, Ana played tennis every Saturday.)",
+      "options": [
+        "jugaba",
+        "juega",
+        "jugará"
+      ],
+      "answer": 0,
+      "why": "Every Saturday, when she was little, is a habit in the past: jugaba."
+    },
+    {
+      "type": "gap",
+      "skill": "imp-er",
+      "q": "Cuando era pequeño, ___ un perro.",
+      "hint": "tener",
+      "hintLabel": "Verb",
+      "hintTone": "orange",
+      "answer": [
+        "tenía"
+      ],
+      "why": "Tener, yo, imperfecto: tenía, with an accent on the í."
+    },
+    {
+      "type": "rapid",
+      "skill": "imp-or-pret",
+      "prompt": "Rapid fire: iba (used to) or fui (once)?",
+      "choices": [
+        {
+          "key": "iba",
+          "label": "iba"
+        },
+        {
+          "key": "fui",
+          "label": "fui"
+        }
+      ],
+      "items": [
+        {
+          "blank": "Todos los domingos ___ a misa con mi abuela.",
+          "full": "Todos los domingos iba a misa con mi abuela.",
+          "fill": "iba",
+          "answer": "iba",
+          "skill": "imp-or-pret",
+          "why": "Every Sunday is a habit: iba."
+        },
+        {
+          "blank": "El domingo pasado ___ a misa.",
+          "full": "El domingo pasado fui a misa.",
+          "fill": "fui",
+          "answer": "fui",
+          "skill": "imp-or-pret",
+          "why": "Last Sunday, once: fui."
+        },
+        {
+          "blank": "De pequeño ___ al colegio andando.",
+          "full": "De pequeño iba al colegio andando.",
+          "fill": "iba",
+          "answer": "iba",
+          "skill": "imp-or-pret",
+          "why": "When I was little, a habit: iba."
+        },
+        {
+          "blank": "Ayer ___ al médico.",
+          "full": "Ayer fui al médico.",
+          "fill": "fui",
+          "answer": "fui",
+          "skill": "imp-or-pret",
+          "why": "Yesterday, once: fui."
+        },
+        {
+          "blank": "Siempre ___ al pueblo en verano.",
+          "full": "Siempre iba al pueblo en verano.",
+          "fill": "iba",
+          "answer": "iba",
+          "skill": "imp-or-pret",
+          "why": "Siempre, again and again: iba."
+        },
+        {
+          "blank": "En 2019 ___ a México.",
+          "full": "En 2019 fui a México.",
+          "fill": "fui",
+          "answer": "fui",
+          "skill": "imp-or-pret",
+          "why": "One trip, in a finished year: fui."
+        },
+        {
+          "blank": "A menudo ___ al cine con mi padre.",
+          "full": "A menudo iba al cine con mi padre.",
+          "fill": "iba",
+          "answer": "iba",
+          "skill": "imp-or-pret",
+          "why": "A menudo, often: iba."
+        },
+        {
+          "blank": "Anoche ___ al cine.",
+          "full": "Anoche fui al cine.",
+          "fill": "fui",
+          "answer": "fui",
+          "skill": "imp-or-pret",
+          "why": "Last night, once: fui."
+        }
+      ]
+    },
+    {
+      "type": "listen",
+      "skill": "habia",
+      "say": "Había mucha gente en la plaza.",
+      "options": [
+        "There were lots of people in the square.",
+        "There are lots of people in the square.",
+        "Lots of people are going to the square."
+      ],
+      "answer": 0,
+      "why": "Había: there was or there were. Hay is now."
+    },
+    {
+      "type": "gap",
+      "skill": "imp-odd",
+      "q": "Mi abuelo ___ muy simpático.",
+      "hint": "ser",
+      "hintLabel": "Verb",
+      "hintTone": "orange",
+      "answer": [
+        "era"
+      ],
+      "why": "For what someone was like, use the imperfecto of ser: era."
+    },
+    {
+      "type": "fix",
+      "skill": "imp-ar",
+      "prompt": "Tap the word that is wrong.",
+      "sentence": "Antes mis padres trabajaba en Bilbao.",
+      "wrong": 3,
+      "fixed": "Antes mis padres trabajaban en Bilbao.",
+      "why": "Mis padres is ellos: trabajaban."
+    },
+    {
+      "type": "order",
+      "skill": "habia",
+      "prompt": "There was a park next to my house.",
+      "words": [
+        "Había",
+        "un",
+        "parque",
+        "al",
+        "lado",
+        "de",
+        "mi",
+        "casa"
+      ],
+      "answer": "Había un parque al lado de mi casa.",
+      "why": "Había works like hay: one word for there was and there were."
+    },
+    {
+      "type": "match",
+      "skill": "imp-odd",
+      "prompt": "Match the past forms.",
+      "pairs": [
+        [
+          "era",
+          "I was, it was (what it was like)"
+        ],
+        [
+          "iba",
+          "I used to go"
+        ],
+        [
+          "veía",
+          "I used to watch"
+        ],
+        [
+          "había",
+          "there was, there were"
+        ],
+        [
+          "tenía",
+          "I had, I used to have"
+        ]
+      ]
+    },
+    {
+      "type": "translate",
+      "skill": "imp-ar",
+      "q": "I used to work in a bank.",
+      "answer": [
+        "trabajaba en un banco",
+        "antes trabajaba en un banco",
+        "yo trabajaba en un banco"
+      ],
+      "why": "Used to work: trabajaba. Antes (before) is often added."
+    },
+    {
+      "type": "mc",
+      "skill": "imp-odd",
+      "q": "Nosotros ___ al pueblo todos los veranos.",
+      "sub": "(We used to go to the village every summer.)",
+      "options": [
+        "íbamos",
+        "fuimos",
+        "vamos"
+      ],
+      "answer": 0,
+      "why": "Every summer is a habit: íbamos, with an accent."
+    },
+    {
+      "type": "translate",
+      "skill": "imp-er",
+      "q": "When I was little, I lived in Seville.",
+      "answer": [
+        "de pequeño vivía en sevilla",
+        "de pequeña vivía en sevilla",
+        "cuando era pequeño vivía en sevilla",
+        "cuando era pequeña vivía en sevilla",
+        "de niño vivía en sevilla",
+        "de niña vivía en sevilla",
+        "cuando era niño vivía en sevilla",
+        "cuando era niña vivía en sevilla"
+      ],
+      "why": "De pequeño or cuando era pequeño, then vivía."
+    },
+    {
+      "type": "gap",
+      "skill": "imp-ar",
+      "q": "En el colegio, nosotros ___ mucho en clase.",
+      "hint": "hablar",
+      "hintLabel": "Verb",
+      "hintTone": "orange",
+      "answer": [
+        "hablábamos"
+      ],
+      "why": "Nosotros, -ar: hablábamos, with an accent on the first á."
+    },
+    {
+      "type": "fix",
+      "skill": "imp-er",
+      "prompt": "Tap the word that is wrong.",
+      "sentence": "Cuando era pequeño, tení un gato.",
+      "wrong": 3,
+      "fixed": "Cuando era pequeño, tenía un gato.",
+      "why": "-er verbs take -ía: tenía."
+    },
+    {
+      "type": "translate",
+      "skill": "habia",
+      "q": "There were lots of people.",
+      "answer": [
+        "había mucha gente",
+        "había muchas personas"
+      ],
+      "why": "Había for there were. Gente is singular in Spanish: mucha gente."
+    },
+    {
+      "type": "mc",
+      "skill": "imp-or-pret",
+      "prompt": "Which one is a habit?",
+      "q": "",
+      "options": [
+        "Siempre comíamos en casa de mi abuela.",
+        "Ayer comimos en casa de mi abuela.",
+        "Hoy hemos comido en casa de mi abuela."
+      ],
+      "answer": 0,
+      "why": "Siempre, again and again: comíamos. Ayer is once: comimos. Hoy: hemos comido."
+    },
+    {
+      "type": "translate",
+      "skill": "imp-odd",
+      "q": "I was very shy.",
+      "answer": [
+        "era muy tímido",
+        "era muy tímida",
+        "yo era muy tímido",
+        "yo era muy tímida"
+      ],
+      "why": "What you were like: era."
+    }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Write about where you grew up: where you lived, what it was like, and one thing you used to do every summer.",
+    "starter": "De pequeñ{o} vivía…  Era…  Había…  Todos los veranos…",
+    "model": "De pequeñ{o} vivía en un pueblo cerca del mar. Era un sitio tranquilo y había un parque al lado de mi casa. Todos los veranos íbamos a la playa con mis abuelos.",
+    "checklist": [
+      "-aba and -ía for what used to happen: vivía, íbamos",
+      "Era for what a place or person was like",
+      "Había for there was"
+    ]
+  },
+  "boss": {
+    "title": "Old photos in Asturias",
+    "who": "Carmen",
+    "skill": "imp-or-pret",
+    "persona": "You are Carmen, a warm grandmother of 80 in a village in Asturias, showing the learner (a friend of your grandson) old family photos. Ask about the learner's childhood: where they lived, what it was like, what they did in summer and what they were like as a child. Use tú. Speak European Spanish, mostly in the imperfecto.",
+    "turns": [
+      {
+        "npc": "Mira, esta era mi casa. ¿Y tú dónde vivías de pequeñ{o}?",
+        "en": "Look, this was my house. And where did you live when you were little?",
+        "skill": "imp-er",
+        "choices": [
+          [
+            "Vivía en una ciudad pequeña.",
+            true,
+            ""
+          ],
+          [
+            "Viví en una ciudad pequeña.",
+            false,
+            "For how things were when you were little, use the imperfecto: vivía."
+          ],
+          [
+            "Vivo en una ciudad pequeña.",
+            false,
+            "Vivo is now. When you were little: vivía."
+          ]
+        ]
+      },
+      {
+        "npc": "¿Y cómo era?",
+        "en": "And what was it like?",
+        "skill": "imp-odd",
+        "choices": [
+          [
+            "Era tranquila y había muchos parques.",
+            true,
+            ""
+          ],
+          [
+            "Fue tranquila y había muchos parques.",
+            false,
+            "For what a place was like, use era."
+          ],
+          [
+            "Eras tranquila y había muchos parques.",
+            false,
+            "Eras is you. The city was: era."
+          ]
+        ]
+      },
+      {
+        "npc": "¿Qué hacías en verano?",
+        "en": "What did you do in summer?",
+        "skill": "imp-or-pret",
+        "choices": [
+          [
+            "Iba a la playa con mis primos.",
+            true,
+            ""
+          ],
+          [
+            "Fui a la playa con mis primos.",
+            false,
+            "Every summer is a habit: iba, not fui."
+          ],
+          [
+            "Iban a la playa con mis primos.",
+            false,
+            "Iban is they. About yourself: iba."
+          ]
+        ]
+      },
+      {
+        "npc": "¿Y de pequeñ{o} eras tranquil{o}?",
+        "en": "And were you a calm child?",
+        "skill": "imp-odd",
+        "choices": [
+          [
+            "No, era muy travies{o}.",
+            true,
+            ""
+          ],
+          [
+            "No, fui muy travies{o}.",
+            false,
+            "For what you were like as a child, use era."
+          ],
+          [
+            "No, eras muy travies{o}.",
+            false,
+            "Eras is you. About yourself: era."
+          ]
+        ]
+      }
+    ],
+    "closing": "¡Como mi nieto! Siempre se subía a los árboles.",
+    "closingEn": "Just like my grandson! He was always climbing trees.",
+    "chatOpening": "¿Y qué comías de pequeñ{o}?",
+    "chatOpeningEn": "And what did you eat when you were little?"
+  }
+}

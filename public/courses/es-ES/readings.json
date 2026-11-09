@@ -61,6 +61,26 @@
         { "type": "mc", "q": "Which city is quieter?", "options": ["Bilbao", "Málaga", "They're the same"], "answer": 0 },
         { "type": "short", "q": "What food is Bilbao famous for? In Spanish.", "answer": ["los pintxos", "pintxos"] }
       ]
+    },
+    {
+      "id": "r-pueblo", "after": 14, "title": "El pueblo de mi abuela",
+      "text": "De pequeña pasaba todos los veranos en el pueblo de mi abuela, en Asturias. Era un pueblo muy pequeño, con una iglesia, un bar y una plaza. No había playa, pero había un río.\nPor las mañanas iba al río con mis primos. Por las tardes mi abuela cocinaba y nosotros jugábamos en la plaza hasta muy tarde.\nEl año pasado volví al pueblo después de muchos años. Fui con mi hijo y le enseñé el río y la plaza. El bar todavía estaba allí, pero mi abuela ya no.\nFue un día muy bonito. Mi hijo dijo: «Quiero volver el verano que viene».",
+      "en": "When I was little I spent every summer in my grandmother's village, in Asturias. It was a very small village, with a church, a bar and a square. There was no beach, but there was a river.\nIn the mornings I went to the river with my cousins. In the afternoons my grandmother cooked and we played in the square until very late.\nLast year I went back to the village after many years. I went with my son and showed him the river and the square. The bar was still there, but my grandmother wasn't.\nIt was a lovely day. My son said: \"I want to come back next summer.\"",
+      "questions": [
+        { "type": "mc", "q": "What did she do in the mornings as a child?", "options": ["Went to the river with her cousins", "Cooked with her grandmother", "Went to the beach"], "answer": 0 },
+        { "type": "mc", "q": "Who did she go back with last year?", "options": ["Her son", "Her cousins", "Her grandmother"], "answer": 0 },
+        { "type": "short", "q": "What did the village have instead of a beach? In Spanish.", "answer": ["un río", "el río", "río"] }
+      ]
+    },
+    {
+      "id": "r-sevilla", "after": 16, "title": "Antes de tu viaje",
+      "text": "¡Hola, {name}!\nQué bien que vengas a Sevilla en abril. Te esperaré en la estación el viernes.\nTe doy unos consejos. Es mejor que traigas ropa ligera, porque hará calor. Te recomiendo que pruebes el salmorejo: es una sopa fría de tomate, buenísima. Y es importante que reserves las entradas para el Alcázar, porque siempre hay mucha gente.\nEl sábado iremos a la Feria de Abril. Mi madre quiere que bailes sevillanas con ella. ¡No te preocupes, es fácil!\nOjalá no llueva. Un abrazo,\nLola",
+      "en": "Hi, {name}!\nHow lovely that you're coming to Seville in April. I'll wait for you at the station on Friday.\nHere are a few tips. It's better if you bring light clothes, because it will be hot. I recommend you try salmorejo: it's a cold tomato soup, really good. And it's important that you book the tickets for the Alcázar, because there are always lots of people.\nOn Saturday we'll go to the April Fair. My mum wants you to dance sevillanas with her. Don't worry, it's easy!\nLet's hope it doesn't rain. A hug,\nLola",
+      "questions": [
+        { "type": "mc", "q": "Why should you bring light clothes?", "options": ["It will be hot", "It will rain", "For the dancing"], "answer": 0 },
+        { "type": "mc", "q": "What is salmorejo?", "options": ["A cold tomato soup", "A dance", "A ticket for the Alcázar"], "answer": 0 },
+        { "type": "short", "q": "Where will you go on Saturday? In Spanish.", "answer": ["a la feria de abril", "la feria de abril", "a la feria", "la feria"] }
+      ]
     }
   ]
 }

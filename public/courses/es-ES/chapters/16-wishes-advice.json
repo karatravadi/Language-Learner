@@ -1,0 +1,848 @@
+{
+  "n": 16,
+  "title": "Wishes and advice",
+  "sub": "quiero que vengas, espero que, ojalá",
+  "can": "Give advice and say what you hope for with the subjuntivo: quiero que vengas.",
+  "mins": 15,
+  "doneText": "You can now give advice, say what you want others to do, and wish people well the Spanish way.",
+  "skills": {
+    "subj-form": "Swapped endings: hable, coma",
+    "subj-yo": "From the yo form: tenga, haga, venga",
+    "subj-wish": "Wishes: espero que, ojalá, que lo pases bien",
+    "subj-advice": "Advice: te recomiendo que, es mejor que",
+    "subj-or-inf": "Quiero ir or quiero que vayas"
+  },
+  "discover": {
+    "intro": "Both colours want something. Look at who will do it, and at the verb after it.",
+    "groups": [
+      {
+        "label": "For someone else",
+        "tone": "blue",
+        "lines": [
+          [
+            "Quiero que vengas.",
+            "I want you to come."
+          ],
+          [
+            "Espero que comas bien.",
+            "I hope you eat well."
+          ],
+          [
+            "Prefiero que hables tú.",
+            "I'd rather you spoke."
+          ]
+        ]
+      },
+      {
+        "label": "For yourself",
+        "tone": "orange",
+        "lines": [
+          [
+            "Quiero venir.",
+            "I want to come."
+          ],
+          [
+            "Espero comer bien.",
+            "I hope to eat well."
+          ],
+          [
+            "Prefiero hablar yo.",
+            "I'd rather speak myself."
+          ]
+        ]
+      }
+    ],
+    "question": "When does the verb change to vengas, comas, hables?",
+    "options": [
+      "When you want, hope or prefer something for someone else, after que.",
+      "When the sentence is a question.",
+      "When it happened in the past."
+    ],
+    "answer": 0,
+    "nudge": "Not quite. Look for que in the blue sentences, and who does the second verb.",
+    "reveal": "This is the subjuntivo. After quiero que, espero que and similar, the verb swaps its vowel: -ar verbs take -e, -er and -ir verbs take -a:",
+    "hooks": [
+      {
+        "title": "The swap",
+        "tone": "blue",
+        "rows": [
+          [
+            "-e",
+            "-ar",
+            "Quiero que hables.",
+            "I want you to speak."
+          ],
+          [
+            "-a",
+            "-er",
+            "Espero que comas.",
+            "I hope you eat."
+          ],
+          [
+            "-a",
+            "-ir",
+            "Es mejor que vivas cerca.",
+            "It's better if you live nearby."
+          ],
+          [
+            "-ga",
+            "tengo",
+            "Ojalá tenga suerte.",
+            "I hope I'm lucky."
+          ],
+          [
+            "sea",
+            "ser",
+            "Espero que sea fácil.",
+            "I hope it's easy."
+          ]
+        ]
+      },
+      {
+        "title": "Words that bring it",
+        "tone": "orange",
+        "rows": [
+          [
+            "1",
+            "I want",
+            "Quiero que vengas.",
+            "I want you to come."
+          ],
+          [
+            "2",
+            "I hope",
+            "Espero que te guste.",
+            "I hope you like it."
+          ],
+          [
+            "3",
+            "let's hope",
+            "Ojalá haga sol.",
+            "Let's hope it's sunny."
+          ],
+          [
+            "4",
+            "I recommend",
+            "Te recomiendo que vayas.",
+            "I recommend you go."
+          ],
+          [
+            "5",
+            "it's better",
+            "Es mejor que salgas pronto.",
+            "It's better if you leave early."
+          ]
+        ]
+      }
+    ]
+  },
+  "learn": {
+    "title": "Wanting, hoping, advising",
+    "sub": "Tap any row to hear it",
+    "blocks": [
+      {
+        "type": "tables",
+        "tables": [
+          {
+            "title": "hablar",
+            "tense": "subjunctive",
+            "tone": "blue",
+            "rows": [
+              [
+                "yo",
+                "hable"
+              ],
+              [
+                "tú",
+                "hables"
+              ],
+              [
+                "él / ella / usted",
+                "hable"
+              ],
+              [
+                "nosotros/as",
+                "hablemos"
+              ],
+              [
+                "vosotros/as",
+                "habléis"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "hablen"
+              ]
+            ]
+          },
+          {
+            "title": "comer",
+            "tense": "subjunctive",
+            "tone": "orange",
+            "rows": [
+              [
+                "yo",
+                "coma"
+              ],
+              [
+                "tú",
+                "comas"
+              ],
+              [
+                "él / ella / usted",
+                "coma"
+              ],
+              [
+                "nosotros/as",
+                "comamos"
+              ],
+              [
+                "vosotros/as",
+                "comáis"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "coman"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "note",
+        "kind": "tip",
+        "text": "Start from the yo form now, drop the -o and swap the vowel: hablo becomes hable, como becomes coma, tengo becomes tenga, hago becomes haga."
+      },
+      {
+        "type": "list",
+        "title": "From the yo form",
+        "rows": [
+          [
+            "tengo · tenga",
+            "tener, to have"
+          ],
+          [
+            "hago · haga",
+            "hacer, to do, to make"
+          ],
+          [
+            "vengo · venga",
+            "venir, to come"
+          ],
+          [
+            "salgo · salga",
+            "salir, to go out"
+          ],
+          [
+            "puedo · pueda",
+            "poder, can"
+          ],
+          [
+            "cojo · coja",
+            "coger, to take"
+          ]
+        ]
+      },
+      {
+        "type": "tables",
+        "tables": [
+          {
+            "title": "ser",
+            "tense": "subjunctive",
+            "tone": "blue",
+            "rows": [
+              [
+                "yo",
+                "sea"
+              ],
+              [
+                "tú",
+                "seas"
+              ],
+              [
+                "él / ella / usted",
+                "sea"
+              ],
+              [
+                "nosotros/as",
+                "seamos"
+              ],
+              [
+                "vosotros/as",
+                "seáis"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "sean"
+              ]
+            ]
+          },
+          {
+            "title": "ir",
+            "tense": "subjunctive",
+            "tone": "orange",
+            "rows": [
+              [
+                "yo",
+                "vaya"
+              ],
+              [
+                "tú",
+                "vayas"
+              ],
+              [
+                "él / ella / usted",
+                "vaya"
+              ],
+              [
+                "nosotros/as",
+                "vayamos"
+              ],
+              [
+                "vosotros/as",
+                "vayáis"
+              ],
+              [
+                "ellos / ellas / ustedes",
+                "vayan"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "twist",
+        "title": "Quiero ir or quiero que vayas",
+        "a": [
+          "Quiero ir.",
+          "I want to go."
+        ],
+        "b": [
+          "Quiero que vayas.",
+          "I want you to go."
+        ],
+        "note": "The same person wants and goes: no que, just ir. Someone else goes: que + subjuntivo."
+      },
+      {
+        "type": "note",
+        "kind": "warn",
+        "text": "A very common slip: quiero que tú vienes. After quiero que, use the subjuntivo: quiero que vengas."
+      },
+      {
+        "type": "note",
+        "kind": "culture",
+        "text": "Ojalá comes from Arabic and means something like God willing. Spaniards say it all the time, with the subjuntivo: ¡Ojalá haga sol mañana! Wishes with que are everyday too: que aproveche (enjoy your meal), que te mejores (get well soon)."
+      }
+    ]
+  },
+  "phrases": [
+    {
+      "id": "c16-like",
+      "es": "Espero que te guste.",
+      "en": "I hope you like it.",
+      "alts": [
+        "Espero que le guste.",
+        "Espero que os guste."
+      ],
+      "enAlts": [
+        "I hope you'll like it."
+      ]
+    },
+    {
+      "id": "c16-come",
+      "es": "Quiero que vengas.",
+      "en": "I want you to come.",
+      "alts": [
+        "Quiero que venga.",
+        "Quiero que vengáis."
+      ],
+      "enAlts": [
+        "I'd like you to come."
+      ]
+    },
+    {
+      "id": "c16-sun",
+      "es": "Ojalá haga sol mañana.",
+      "en": "I hope it's sunny tomorrow.",
+      "alts": [],
+      "enAlts": [
+        "Hopefully it'll be sunny tomorrow.",
+        "Let's hope it's sunny tomorrow."
+      ]
+    },
+    {
+      "id": "c16-octopus",
+      "es": "Te recomiendo que pruebes el pulpo.",
+      "en": "I recommend you try the octopus.",
+      "alts": [
+        "Le recomiendo que pruebe el pulpo.",
+        "Os recomiendo que probéis el pulpo."
+      ],
+      "enAlts": [
+        "You should try the octopus.",
+        "I'd recommend trying the octopus."
+      ]
+    },
+    {
+      "id": "c16-metro",
+      "es": "Es mejor que vayas en metro.",
+      "en": "It's better if you go by metro.",
+      "alts": [
+        "Es mejor que vaya en metro.",
+        "Es mejor que vayáis en metro."
+      ],
+      "enAlts": [
+        "You'd better go by metro.",
+        "It's better to go by metro.",
+        "Better to take the metro."
+      ]
+    },
+    {
+      "id": "c16-fun",
+      "es": "Que lo pases bien.",
+      "en": "Have a good time.",
+      "alts": [
+        "Que lo pase bien.",
+        "Que lo paséis bien."
+      ],
+      "enAlts": [
+        "Have fun.",
+        "Enjoy yourself."
+      ]
+    },
+    {
+      "id": "c16-better",
+      "es": "Que te mejores.",
+      "en": "Get well soon.",
+      "alts": [
+        "Que se mejore.",
+        "Que os mejoréis."
+      ],
+      "enAlts": [
+        "I hope you feel better.",
+        "Feel better soon."
+      ]
+    },
+    {
+      "id": "c16-noneed",
+      "es": "No hace falta que vengas.",
+      "en": "You don't need to come.",
+      "alts": [
+        "No hace falta que venga.",
+        "No hace falta que vengáis."
+      ],
+      "enAlts": [
+        "There's no need for you to come.",
+        "You don't have to come."
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "type": "mc",
+      "skill": "subj-form",
+      "q": "Quiero que ___ con tu hermano.",
+      "sub": "(I want you to talk to your brother.)",
+      "options": [
+        "hables",
+        "hablas",
+        "hablar"
+      ],
+      "answer": 0,
+      "why": "After quiero que, the subjuntivo: hables."
+    },
+    {
+      "type": "gap",
+      "skill": "subj-form",
+      "q": "Espero que tú ___ bien en Madrid.",
+      "hint": "comer",
+      "hintLabel": "Verb",
+      "hintTone": "orange",
+      "answer": [
+        "comas"
+      ],
+      "why": "After espero que: -er verbs swap to -a. Comes becomes comas."
+    },
+    {
+      "type": "rapid",
+      "skill": "subj-or-inf",
+      "prompt": "Rapid fire: ir or vayas?",
+      "choices": [
+        {
+          "key": "ir",
+          "label": "ir"
+        },
+        {
+          "key": "vayas",
+          "label": "vayas"
+        }
+      ],
+      "items": [
+        {
+          "blank": "Quiero ___ al cine esta noche.",
+          "full": "Quiero ir al cine esta noche.",
+          "fill": "ir",
+          "answer": "ir",
+          "skill": "subj-or-inf",
+          "why": "Same person wants and goes: ir."
+        },
+        {
+          "blank": "Quiero que ___ al cine conmigo.",
+          "full": "Quiero que vayas al cine conmigo.",
+          "fill": "vayas",
+          "answer": "vayas",
+          "skill": "subj-or-inf",
+          "why": "Que, and someone else goes: vayas."
+        },
+        {
+          "blank": "Prefiero ___ en tren.",
+          "full": "Prefiero ir en tren.",
+          "fill": "ir",
+          "answer": "ir",
+          "skill": "subj-or-inf",
+          "why": "No que: ir."
+        },
+        {
+          "blank": "Prefiero que ___ en tren.",
+          "full": "Prefiero que vayas en tren.",
+          "fill": "vayas",
+          "answer": "vayas",
+          "skill": "subj-or-inf",
+          "why": "Prefiero que: vayas."
+        },
+        {
+          "blank": "Necesito ___ al banco.",
+          "full": "Necesito ir al banco.",
+          "fill": "ir",
+          "answer": "ir",
+          "skill": "subj-or-inf",
+          "why": "No que: ir."
+        },
+        {
+          "blank": "Es mejor que ___ temprano.",
+          "full": "Es mejor que vayas temprano.",
+          "fill": "vayas",
+          "answer": "vayas",
+          "skill": "subj-or-inf",
+          "why": "Es mejor que: vayas."
+        },
+        {
+          "blank": "Espero que ___ a la fiesta.",
+          "full": "Espero que vayas a la fiesta.",
+          "fill": "vayas",
+          "answer": "vayas",
+          "skill": "subj-or-inf",
+          "why": "Espero que: vayas."
+        },
+        {
+          "blank": "Me apetece ___ a la playa.",
+          "full": "Me apetece ir a la playa.",
+          "fill": "ir",
+          "answer": "ir",
+          "skill": "subj-or-inf",
+          "why": "No que: ir."
+        }
+      ]
+    },
+    {
+      "type": "listen",
+      "skill": "subj-wish",
+      "say": "Ojalá haga buen tiempo el sábado.",
+      "options": [
+        "I hope the weather's good on Saturday.",
+        "The weather was good on Saturday.",
+        "The weather is always good on Saturdays."
+      ],
+      "answer": 0,
+      "why": "Ojalá + subjuntivo is a wish: ojalá haga buen tiempo."
+    },
+    {
+      "type": "gap",
+      "skill": "subj-yo",
+      "q": "Espero que tú ___ suerte en el examen.",
+      "hint": "tener",
+      "hintLabel": "Verb",
+      "hintTone": "orange",
+      "answer": [
+        "tengas"
+      ],
+      "why": "From the yo form tengo: tenga, tengas."
+    },
+    {
+      "type": "fix",
+      "skill": "subj-yo",
+      "prompt": "Tap the word that is wrong.",
+      "sentence": "Quiero que tú vienes a cenar.",
+      "wrong": 3,
+      "fixed": "Quiero que tú vengas a cenar.",
+      "why": "After quiero que, the subjuntivo. From vengo: vengas."
+    },
+    {
+      "type": "order",
+      "skill": "subj-advice",
+      "prompt": "I recommend you try the octopus.",
+      "words": [
+        "Te",
+        "recomiendo",
+        "que",
+        "pruebes",
+        "el",
+        "pulpo"
+      ],
+      "answer": "Te recomiendo que pruebes el pulpo.",
+      "why": "Te recomiendo que + subjuntivo: pruebes."
+    },
+    {
+      "type": "match",
+      "skill": "subj-yo",
+      "prompt": "Match each form to its verb.",
+      "pairs": [
+        [
+          "tenga",
+          "to have"
+        ],
+        [
+          "haga",
+          "to do, to make"
+        ],
+        [
+          "venga",
+          "to come"
+        ],
+        [
+          "salga",
+          "to go out"
+        ],
+        [
+          "sea",
+          "to be"
+        ]
+      ]
+    },
+    {
+      "type": "translate",
+      "skill": "subj-wish",
+      "q": "I hope you like it.",
+      "answer": [
+        "espero que te guste",
+        "espero que le guste",
+        "espero que os guste"
+      ],
+      "who": [
+        "tú",
+        "usted",
+        "vosotros"
+      ],
+      "why": "Espero que + subjuntivo: guste."
+    },
+    {
+      "type": "mc",
+      "skill": "subj-advice",
+      "q": "Es mejor que ___ en metro.",
+      "sub": "(It's better if you all go by metro.)",
+      "options": [
+        "vayáis",
+        "vais",
+        "fuisteis"
+      ],
+      "answer": 0,
+      "why": "After es mejor que: vayáis. Vais is now, fuisteis the past."
+    },
+    {
+      "type": "translate",
+      "skill": "subj-or-inf",
+      "q": "I want you to come.",
+      "answer": [
+        "quiero que vengas",
+        "quiero que venga",
+        "quiero que vengáis"
+      ],
+      "who": [
+        "tú",
+        "usted",
+        "vosotros"
+      ],
+      "why": "Someone else comes: quiero que vengas."
+    },
+    {
+      "type": "gap",
+      "skill": "subj-form",
+      "q": "Mis padres quieren que yo ___ más.",
+      "hint": "estudiar",
+      "hintLabel": "Verb",
+      "hintTone": "orange",
+      "answer": [
+        "estudie"
+      ],
+      "why": "-ar verbs swap to -e: estudie."
+    },
+    {
+      "type": "fix",
+      "skill": "subj-wish",
+      "prompt": "Tap the word that is wrong.",
+      "sentence": "Espero que mañana no llueve.",
+      "wrong": 4,
+      "fixed": "Espero que mañana no llueva.",
+      "why": "After espero que, the subjuntivo: llueva."
+    },
+    {
+      "type": "translate",
+      "skill": "subj-advice",
+      "q": "It's better if you go by metro.",
+      "answer": [
+        "es mejor que vayas en metro",
+        "es mejor que vaya en metro",
+        "es mejor que vayáis en metro",
+        "es mejor ir en metro"
+      ],
+      "who": [
+        "tú",
+        "usted",
+        "vosotros",
+        ""
+      ],
+      "why": "Es mejor que + subjuntivo: vayas."
+    },
+    {
+      "type": "mc",
+      "skill": "subj-wish",
+      "prompt": "A friend is ill. What do you say?",
+      "q": "",
+      "options": [
+        "Que te mejores.",
+        "Que te mejoras.",
+        "Que te mejoraste."
+      ],
+      "answer": 0,
+      "why": "Que + subjuntivo is a wish: que te mejores, get well soon."
+    },
+    {
+      "type": "translate",
+      "skill": "subj-wish",
+      "q": "Have a good time.",
+      "answer": [
+        "que lo pases bien",
+        "que lo pase bien",
+        "que lo paséis bien",
+        "que lo pasen bien"
+      ],
+      "who": [
+        "tú",
+        "usted",
+        "vosotros",
+        "ustedes"
+      ],
+      "why": "Que + subjuntivo of pasarlo bien: que lo pases bien."
+    }
+  ],
+  "write": {
+    "title": "Say it in your own words",
+    "task": "Write a message to a friend coming to Spain for the first time: two pieces of advice and one wish.",
+    "starter": "Te recomiendo que…  Es mejor que…  Espero que…",
+    "model": "Te recomiendo que pruebes el pulpo en Galicia. Es mejor que vayas en tren, porque es muy cómodo. Espero que lo pases genial y que haga buen tiempo.",
+    "checklist": [
+      "Que + the swapped vowel: pruebes, vayas",
+      "Advice: te recomiendo que, es mejor que",
+      "A wish: espero que, ojalá"
+    ]
+  },
+  "boss": {
+    "title": "Tips for London",
+    "who": "Isabel",
+    "skill": "subj-advice",
+    "persona": "You are Isabel, a neighbour in Madrid who is going to London for the first time next week. Ask the learner for advice: how to get from the airport, where to eat, whether to take an umbrella, and thank them. Use tú. Speak European Spanish, and encourage the learner to use te recomiendo que and es mejor que.",
+    "turns": [
+      {
+        "npc": "Me voy a Londres el lunes. ¿Cómo voy desde el aeropuerto?",
+        "en": "I'm off to London on Monday. How do I get there from the airport?",
+        "skill": "subj-advice",
+        "choices": [
+          [
+            "Es mejor que cojas el tren.",
+            true,
+            ""
+          ],
+          [
+            "Es mejor que coges el tren.",
+            false,
+            "After es mejor que, the subjuntivo: cojas."
+          ],
+          [
+            "Es mejor que cogiste el tren.",
+            false,
+            "Cogiste is the past. For advice: es mejor que cojas."
+          ]
+        ]
+      },
+      {
+        "npc": "¿Y dónde me recomiendas comer?",
+        "en": "And where do you recommend I eat?",
+        "skill": "subj-form",
+        "choices": [
+          [
+            "Te recomiendo que comas en un pub.",
+            true,
+            ""
+          ],
+          [
+            "Te recomiendo que comes en un pub.",
+            false,
+            "After te recomiendo que, -er verbs swap to -a: comas."
+          ],
+          [
+            "Te recomiendo comes en un pub.",
+            false,
+            "It needs que and the subjuntivo: te recomiendo que comas."
+          ]
+        ]
+      },
+      {
+        "npc": "¿Necesito llevar paraguas?",
+        "en": "Do I need to take an umbrella?",
+        "skill": "subj-form",
+        "choices": [
+          [
+            "Sí, es importante que lleves uno.",
+            true,
+            ""
+          ],
+          [
+            "Sí, es importante que llevas uno.",
+            false,
+            "After es importante que: lleves."
+          ],
+          [
+            "Sí, es importante que lleve uno.",
+            false,
+            "Lleve is for yo, él, ella or usted. To Isabel (tú): lleves."
+          ]
+        ]
+      },
+      {
+        "npc": "¡Gracias por todo!",
+        "en": "Thanks for everything!",
+        "skill": "subj-wish",
+        "choices": [
+          [
+            "De nada. ¡Que lo pases muy bien!",
+            true,
+            ""
+          ],
+          [
+            "De nada. ¡Que lo pasas muy bien!",
+            false,
+            "A wish takes que + subjuntivo: que lo pases bien."
+          ],
+          [
+            "De nada. ¡Que lo pasé muy bien!",
+            false,
+            "Pasé is the past. For a wish: que lo pases bien."
+          ]
+        ]
+      }
+    ],
+    "closing": "¡Gracias! Espero que no llueva mucho.",
+    "closingEn": "Thanks! I hope it doesn't rain too much.",
+    "chatOpening": "¿Y qué me recomiendas ver en Londres?",
+    "chatOpeningEn": "And what do you recommend I see in London?"
+  }
+}

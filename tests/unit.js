@@ -121,6 +121,15 @@ t('merge done keeps the first score', () => assert.equal(
   t('hint: Latin quotes its English labels, with macrons', () => assert.equal(H(la, 'puellae est laetae', ['puellae sunt laetae'], 1), 'est is the form for "he, she or it is". Here you need the one for "they are": sunt.'));
   t('hint: Latin cases', () => assert.equal(H(la, 'puella agricola videt', ['puella agricolam videt'], 2), null, 'agricola is not in a table, so no guess'));
   t('hint, second try: says what the form is for, not the answer', () => { const h = L.formHint(es.F, 'vives aquí', ['vive aquí'], 2, es.cj.personNotes, true); assert.equal(h, 'vives goes with tú. Which form goes with él, ella or usted?'); assert.ok(!/\bvive\b/.test(h)); });
+  {
+    const P = ['yo', 'tú', 'él / ella / usted', 'nosotros/as', 'vosotros/as', 'ellos / ellas / ustedes'];
+    const tb = (title, forms, tense) => Object.assign({ title, rows: P.map((p, i) => [p, forms[i]]) }, tense ? { tense } : {});
+    const TF = L.tableForms([{ n: 1, learn: { blocks: [{ type: 'tables', tables: [tb('comer', ['como', 'comes', 'come', 'comemos', 'coméis', 'comen'])] }] } },
+      { n: 2, learn: { blocks: [{ type: 'tables', tables: [tb('comer', ['comí', 'comiste', 'comió', 'comimos', 'comisteis', 'comieron'], 'past')] }] } }]);
+    t('hint: another tense of the same verb says which tense', () => assert.equal(L.formHint(TF, 'ayer como paella', ['ayer comí paella'], 2, {}), 'como is the present of comer. This one needs the past: comí.'));
+    t('hint, second try: another tense, without the form', () => assert.equal(L.formHint(TF, 'ayer como paella', ['ayer comí paella'], 2, {}, true), 'como is the present of comer. This one needs the past.'));
+    t('hint: a person slip within the past table still names the person', () => assert.equal(L.formHint(TF, 'ayer comió paella', ['ayer comí paella'], 2, {}), 'comió goes with él, ella or usted. For yo, use comí.'));
+  }
   t('hint, second try: the other verb, without the form', () => assert.equal(L.formHint(es.F, 'estamos de inglaterra', ['somos de inglaterra'], 1, es.cj.personNotes, true), 'estamos is a form of estar. This one needs ser.'));
   t('hint, second try: a wrong ending', () => assert.equal(L.tryHint('ella hablo bien', ['ella habla bien']), 'Check the ending of hablo.'));
   t('hint, second try: a different word', () => assert.equal(L.tryHint('tengo un perro', ['tengo un gato']), 'Look again at perro.'));
@@ -148,7 +157,8 @@ t('merge done keeps the first score', () => assert.equal(
   es.chapters.forEach(f => JSON.parse(fs.readFileSync(path.join(__dirname, '../public/courses/es-ES', f), 'utf8')).learn.blocks
     .filter(b => b.type === 'tables').forEach(b => b.tables.forEach(tb => {
       const inf = tb.title.split(/[\s(,]/)[0];
-      if (vb.verbs[inf] && tb.rows.length === 6) { compared++; t('verbs: ' + inf + ' matches its chapter table', () => assert.deepEqual(vb.verbs[inf].forms, tb.rows.map(r => r[1]))); }
+      // verbs.json holds the present tense; a table with a tense (past, future…) is another tense of the verb.
+      if (vb.verbs[inf] && tb.rows.length === 6 && !tb.tense) { compared++; t('verbs: ' + inf + ' matches its chapter table', () => assert.deepEqual(vb.verbs[inf].forms, tb.rows.map(r => r[1]))); }
     })));
   t('verbs: the chapter tables were compared', () => assert.ok(compared >= 12, String(compared)));
 }

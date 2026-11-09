@@ -2,7 +2,7 @@
   "id": "es-ES",
   "title": "Spanish (European)",
   "personNotes": {"tú": "you, one person you know well", "usted": "you, one person, polite", "vosotros": "you all, informal", "ustedes": "you all, polite"},
-  "level": "A1 to A2",
+  "level": "A1 to A2, towards B1",
   "lang": "es-ES",
   "voice": ["^es[-_]ES", "^es"],
   "storageKey": "espanol-trainer-v1",
@@ -20,7 +20,11 @@
     "chapters/09-irregular-favourites.json",
     "chapters/10-what-happened.json",
     "chapters/11-describing.json",
-    "chapters/12-a2-checkpoint.json"
+    "chapters/12-a2-checkpoint.json",
+    "chapters/13-what-happened-yesterday.json",
+    "chapters/14-when-i-was-little.json",
+    "chapters/15-whats-coming.json",
+    "chapters/16-wishes-advice.json"
   ],
   "words": "words.json",
   "glossary": "glossary.json",
@@ -28,9 +32,9 @@
   "drills": "drills.json",
   "readings": "readings.json",
   "roadmap": [
-    { "n": 13, "title": "What happened yesterday", "can": "Tell a story about yesterday or last year with the pretérito indefinido: fui, comí, vi" },
-    { "n": 14, "title": "When I was little", "can": "Describe how things used to be with the imperfecto: vivía, era, había" },
-    { "n": 15, "title": "What's coming", "can": "Talk about the future and make promises: iré, haré, vendré" },
-    { "n": 16, "title": "Wishes and advice", "can": "Give advice and say what you hope for with the subjuntivo: quiero que vengas" }
+    { "n": 17, "title": "Telling a story", "can": "Tell a story with both pasts: estaba en casa cuando sonó el teléfono" },
+    { "n": 18, "title": "At the doctor's", "can": "Say what hurts and follow advice: me duele la cabeza, tengo fiebre" },
+    { "n": 19, "title": "Would you mind?", "can": "Be polite and imagine with the condicional: me gustaría, podría, ¿te importaría?" },
+    { "n": 20, "title": "B1 checkpoint", "can": "Talk about your past, your plans and your opinions in one longer conversation, then check your level" }
   ]
 }
