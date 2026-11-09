@@ -239,6 +239,30 @@ t('flash: merge keeps the latest record per card', () => assert.deepEqual(L.merg
   t('retry: nothing missed, nothing to try', () => assert.deepEqual(L.retryPick([], pool, []), []));
 }
 
+// ---------- error detective ----------
+{
+  const fs = require('fs'); const path = require('path');
+  const dir = path.join(__dirname, '../public/courses/es-ES');
+  const co = JSON.parse(fs.readFileSync(path.join(dir, 'course.json'), 'utf8'));
+  const chs = co.chapters.map(f => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')));
+  const F = L.tableForms(chs);
+  const cases = L.detectiveCases(chs, F, { notes: co.personNotes });
+  const bare = w => w.replace(/^[¿¡]+|[.,?!]+$/g, '');
+  t('detective: the Spanish chapters give enough cases', () => assert.ok(cases.length >= 15, String(cases.length)));
+  t('detective: three different options, the right one among them, never the wrong word', () => cases.forEach(c => {
+    assert.equal(new Set(c.options.map(o => o.toLowerCase())).size, 3, c.words.join(' '));
+    assert.ok(c.options.includes(c.right), c.words.join(' '));
+    assert.ok(!c.options.some(o => L.norm(o) === L.norm(bare(c.words[c.wrong]))), c.words.join(' '));
+  }));
+  t('detective: the fixed sentence has the right word where the mistake is', () => cases.forEach(c => assert.equal(L.norm(bare(c.fixed.split(' ')[c.wrong])), L.norm(c.right), c.fixed)));
+  const P = ['yo', 'tú', 'él / ella / usted', 'nosotros/as', 'vosotros/as', 'ellos / ellas / ustedes'];
+  const hacer = { title: 'hacer', tense: 'future', rows: P.map((p, i) => [p, ['haré', 'harás', 'hará', 'haremos', 'haréis', 'harán'][i]]) };
+  const one = q => { const ch = { n: 1, learn: { blocks: [{ type: 'tables', tables: [hacer] }] }, exercises: [{ type: 'gap', skill: 's', q, answer: ['haré'] }] }; return L.detectiveCases([ch], L.tableForms([ch]), {}); };
+  t('detective: no case when nothing says who (mañana hará la compra is right too)', () => assert.equal(one('Mañana ___ la compra.').length, 0));
+  t('detective: a pronoun says who, so the case is fair', () => { const c = one('Mañana yo ___ la compra.'); assert.equal(c.length, 1); assert.equal(c[0].right, 'haré'); assert.ok(!c[0].options.includes(c[0].words[c[0].wrong])); });
+  t('detective: nosotras counts for nosotros/as', () => assert.equal(L.detectiveCases([{ n: 1, learn: { blocks: [{ type: 'tables', tables: [hacer] }] }, exercises: [{ type: 'gap', skill: 's', q: 'Nosotras ___ la cena.', answer: ['haremos'] }] }], L.tableForms([{ n: 1, learn: { blocks: [{ type: 'tables', tables: [hacer] }] } }]), {}).length, 1));
+}
+
 // ---------- level check ----------
 {
   const chs = [1, 2, 3, 4];

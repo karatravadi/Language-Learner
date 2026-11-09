@@ -454,3 +454,9 @@ select.text { font-family: var(--sans); font-size: 16px; }
 .retry p { margin: 0; font-size: 15px; line-height: 22px; color: var(--ink-2); }
 .level-skip { margin-top: 8px; }
 .conj-tense { color: var(--ink-2); font-weight: 400; }
+/* Error detective (9 Nov 2026): the sentence, then the fix. */
+.detective .words { margin-bottom: 8px; }
+.detective .word:disabled { cursor: default; opacity: 1; color: inherit; }
+.detective .word.good:disabled { color: var(--pen); }
+.det-fix { margin-top: 8px; }
+.detective .feedback { margin-top: 16px; }

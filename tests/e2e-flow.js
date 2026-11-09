@@ -396,6 +396,32 @@ const ok = msg => { steps++; console.log('  ✓ ' + msg); };
   await page.evaluate(() => window.__trainer.home()); await sleep(60);
   ok('mixed review: opens from home, draws from finished chapters, names the skill only after answering ("' + skill0 + '"), lists what to look at again');
 
+  // ---------- error detective (a game) ----------
+  if (await page.evaluate(() => window.__trainer.detectivePool().length >= 5)) {
+    await page.evaluate(() => window.__trainer.home()); await sleep(100);
+    await clickText('.any-row', 'Error detective'); await sleep(120);
+    const skills0 = (await state()).skills;
+    let missedSkill = null;
+    for (let k = 0; k < 5; k++) {
+      const c = await page.evaluate(() => window.__trainer.case);
+      assert.match(await page.evaluate(() => document.querySelector('.detective .counter').innerText), new RegExp('^Case ' + (k + 1) + ' of 5$'));
+      const miss = k === 1;
+      await page.evaluate((c, miss) => document.querySelectorAll('.detective .word')[miss ? (c.wrong === 0 ? 1 : 0) : c.wrong].click(), c, miss); await sleep(60);
+      t = await text(); assert.match(t, miss ? /Not that one/ : /Found it/);
+      assert.equal(await page.evaluate(() => document.querySelectorAll('.det-fix .opt').length), 3, 'three fixes to pick from');
+      await page.evaluate(c => document.querySelectorAll('.det-fix .opt')[c.options.indexOf(c.right)].click(), c); await sleep(80);
+      t = await text(); assert.match(t, miss ? /Right fix, after a wrong guess/ : /Case solved/);
+      assert.ok(await page.$('.feedback .pen-ok'), 'the red pen writes in the fix');
+      if (miss) missedSkill = c.skill;
+      await page.evaluate(() => document.querySelector('.feedback .btn').click()); await sleep(80);
+    }
+    t = await text(); assert.match(t, /4 of 5/); assert.match(t, /cases solved/); assert.match(t, /To look at again/);
+    const sk = (await state()).skills[missedSkill];
+    assert.ok(sk && sk.w > ((skills0[missedSkill] || {}).w || 0), 'a missed case counts towards weak spots');
+    ok('error detective: five cases from finished chapters, tap the word then pick the fix, a wrong guess is not solved, red pen, 4 of 5');
+    await page.evaluate(() => window.__trainer.home()); await sleep(80);
+  }
+
   // ---------- the daily verb drill (backlog 14; courses with drills.json) ----------
   if (COURSE.drills) {
     const VBd = JSON.parse(require('fs').readFileSync(path.join(__dirname, '../public/courses', COURSE.id, COURSE.verbs), 'utf8'));

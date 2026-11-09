@@ -23,6 +23,8 @@ None open. The five bugs found on 3 Nov are fixed and listed under Done.
 
 ## 5. Spot the mistakes in a short paragraph (M)
 
+Partly done: Error detective (item 31) is the one-sentence version. A whole paragraph with 2 or 3 mistakes is still open.
+
 Problem: drills get repetitive, and Kara loses focus on passive formats.
 
 Plan:
@@ -161,6 +163,16 @@ Plan:
 ---
 
 # Done
+
+## 31. Error detective (S) - DONE 9 Nov 2026
+
+Idea from FreeLingo's Error Detective game.
+
+- In Any time: five sentences from finished chapters, one mistake each. Tap the wrong word, then pick the fix from three options. Solved means both steps were right. No timer.
+- Cases come from the chapters' fix exercises, plus gap sentences with a wrong form from the chapter's tables swapped in (`L.detectiveCases`). The two wrong options come from the same table: other persons of a verb, or other genders.
+- A case is only used when the sentence makes clear who it is about (a pronoun, a named subject, or gender agreement). Otherwise a "wrong" option could be right: mañana hará la compra is fine Spanish.
+- Weak skills come up more, and a miss counts towards weak spots. 5 XP per solved case. Free, offline, no tutor calls.
+- Spanish has 19 cases so far and French 14. Latin has 2, so it doesn't offer the game yet.
 
 ## 22. Try these again after a chapter (S) - DONE 5 Nov 2026
 

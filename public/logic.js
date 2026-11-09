@@ -270,6 +270,80 @@
     return shuffle(out, opts.rnd);
   }
 
+  // ----- error detective (a game: find the mistake, then pick the fix) -----
+  // Cases come from two places in the chapters given: fix exercises (a sentence with one wrong word), and gap
+  // exercises with a wrong form from the chapter's tables written into the gap. The fix is picked from three
+  // options: the right word and two others from the same table. Only tables of persons (yo, tú…) or of
+  // genders are used, so the other two are always wrong for the sentence. Words are split on spaces, as in fix.
+  // Returns [{ id, n, skill, words, wrong, right, options, fixed, why }] (options and right without punctuation).
+  const LABEL_OK = /^(yo|tú|tu|él|nosotros|vosotros|ellos|je|j|il|nous|vous|ils|i|you|he|we|they|masculine|feminine)\b/i;
+  const bare = w => String(w).replace(/^[¿¡«"'(]+|[.,;:!?»"')]+$/g, '');
+  // Who the sentence is about must be clear, or another person's form could be right too (mañana hará la compra is
+  // fine Spanish). It is clear when the sentence has a pronoun for the right form's person (nosotros, tú…), or when
+  // the mistake is itself the wrong person (the sentence names its subject: mi hermano hablé), or for gender tables.
+  const GENDER = /masculine|feminine/i;
+  function pronouns(label) {
+    const out = [];
+    String(label).split(/\s*\/\s*|\s*,\s*|\s+or\s+/).map(x => x.trim().toLowerCase()).filter(Boolean).forEach(x => {
+      if (/^(as|os)$/.test(x)) { const last = out[out.length - 1]; if (last) out.push(last.replace(/os$/, x)); } else out.push(x);
+    });
+    return out;
+  }
+  function pinned(words, r, wrongEntry) {
+    if (GENDER.test(r.label)) return true;
+    if (wrongEntry && wrongEntry.label !== r.label) return true;
+    const said = new Set(words.map(w => norm(bare(w))));
+    return pronouns(r.label).some(x => said.has(norm(x)) || (x === 'je' && words.some(w => /^j'/i.test(w))));
+  }
+  function detectiveCases(chapters, forms, opts) {
+    opts = opts || {};
+    const out = [];
+    // The exact word (accents kept: à is not a), from a table of persons or genders.
+    const tableOf = (word, n) => (forms || []).filter(f => f.n <= n && norm(f.form) === norm(word) && !/\s/.test(f.form) && LABEL_OK.test(f.label));
+    // Options written the way the right word is: capitalised at the start of a sentence.
+    const like = (w, model) => (/^\p{Lu}/u.test(model) ? w.charAt(0).toUpperCase() + w.slice(1) : w);
+    // Two other forms from the same table (and tense) as the right word, never the right one or the wrong one.
+    // authored: a fix exercise, whose mistake was chosen by the writer (so a wrong person there means the subject is named).
+    function others(right, wrongWord, n, words, authored) {
+      for (const r of tableOf(right, n)) {
+        const wrongEntry = (forms || []).find(f => f.table === r.table && f.tense === r.tense && f.n === r.n && norm(f.form) === norm(wrongWord));
+        if (!pinned(words, r, authored ? wrongEntry : null)) continue;
+        const pool = (forms || []).filter(f => f.table === r.table && f.tense === r.tense && f.n === r.n && !/\s/.test(f.form) && f.key !== r.key && f.key !== stripAcc(norm(wrongWord)));
+        const uniq = []; pool.forEach(f => { if (!uniq.some(u => u.key === f.key)) uniq.push(f); });
+        if (uniq.length >= 2) return shuffle(uniq, opts.rnd).slice(0, 2).map(f => f.form);
+      }
+      return null;
+    }
+    (chapters || []).forEach(ch => (ch.exercises || []).forEach((e, i) => {
+      if (e.type === 'fix') {
+        const words = String(e.sentence).split(' '); const fixed = String(e.fixed).split(' ');
+        const right = bare(fixed[e.wrong] || ''); const wrongWord = bare(words[e.wrong] || '');
+        const two = right && others(right, wrongWord, ch.n, words, true);
+        if (two) out.push({ id: ch.n + ':' + i, n: ch.n, skill: e.skill, words, wrong: e.wrong, right, options: shuffle([right].concat(two.map(w => like(w, right))), opts.rnd), fixed: e.fixed, why: e.why || '' });
+      }
+      if (e.type === 'gap' && Array.isArray(e.answer) && e.answer.length === 1 && !/\s/.test(e.answer[0])) {
+        const words = String(e.q).split(' ');
+        const at = words.findIndex(w => bare(w) === '___');
+        if (at < 0) return;
+        const first = at === 0; const up = w => (first ? w.charAt(0).toUpperCase() + w.slice(1) : w);
+        const right = e.answer[0];
+        for (const r of tableOf(right, ch.n)) {
+          const cands = shuffle((forms || []).filter(f => f.table === r.table && f.tense === r.tense && f.n === r.n && !/\s/.test(f.form) && f.key !== r.key && f.label !== r.label), opts.rnd);
+          const bad = cands.find(f => judge(f.form, e.answer, { marksOptional: !!opts.marksOptional }) === 'no');
+          if (!bad) continue;
+          const two = others(right, bad.form, ch.n, e.q.split(' '), false);
+          if (!two) continue;
+          const fixed = e.q.replace('___', up(right));
+          const wrongSentence = e.q.replace('___', up(bad.form));
+          const why = formHint(forms, wrongSentence, [fixed], ch.n, opts.notes) || e.why || '';
+          out.push({ id: ch.n + ':' + i, n: ch.n, skill: e.skill, words: wrongSentence.split(' '), wrong: at, right: up(right), options: shuffle([right].concat(two).map(up), opts.rnd), fixed, why });
+          break;
+        }
+      }
+    }));
+    return out;
+  }
+
   // ----- level check (where a learner who knows some already should start) -----
   // chapters: chapter numbers in course order. answers: [{ n, ok }] so far. One question per chapter; a miss gets a
   // second question from the same chapter, and a second miss there means start at that chapter. Returns
@@ -470,5 +544,5 @@
     return out;
   }
 
-  return { retryPick, levelNext, sameWordsEnglish, drillActive, drillRecord, englishAnswers, weightedPick, flashWeight, tryHint, mixedPick, verbIndex, verbAsk, daySecs, judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
+  return { detectiveCases, retryPick, levelNext, sameWordsEnglish, drillActive, drillRecord, englishAnswers, weightedPick, flashWeight, tryHint, mixedPick, verbIndex, verbAsk, daySecs, judge, nearMiss, tableForms, formHint, norm, stripAcc, usedWord, dayKey, daysBetween, updateStreak, liveStreak, INTERVALS, newCard, srsGrade, dueCards, pickWord, shuffle, mergeState, DAY };
 });

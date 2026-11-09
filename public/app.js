@@ -594,6 +594,8 @@
       if (nDone >= 2) open.push(anyRow('Mixed review', '10 questions from ' + nDone + ' finished chapters', () => mixedReview()));
       else locked.push('Mixed review opens after two finished chapters');
     }
+    if (canDetect()) open.push(anyRow('Error detective', 'Five sentences, one mistake each: find it, then fix it', () => detective()));
+    else if (detectiveTotal() >= DETECTIVE_N) locked.push('Error detective opens after a few more chapters');
     open.push(anyRow('My words', nWords ? nWords + (nWords === 1 ? ' word saved' : ' words saved') + ', in your review deck' : 'Tap any ' + (COURSE.languageName || 'Spanish') + ' word in a lesson to save it', wordsScreen));
     const anyCard = h('section', { class: 'card any', 'aria-label': 'Any time' },
       h('div', { class: 'today-h' }, h('b', {}, 'Any time')),
@@ -2032,6 +2034,75 @@
     mount(h('div', { class: 'page lesson' }, backBar('Mixed review', home), content));
   }
 
+  // ---------- error detective (a game) ----------
+  // Five sentences from finished chapters, one mistake each: tap the wrong word, then pick the fix from three. Cases
+  // from weak skills come up more (L.detectiveCases makes them, always with a clear subject so the other two options
+  // are wrong). Solved means both steps right; no timer, and a miss names its skill for weak spots.
+  const DETECTIVE_N = 5;
+  const detectivePool = () => (finishedChapters().length ? L.detectiveCases(finishedChapters(), FORMS, { notes: COURSE.personNotes, marksOptional: !!UI.marksOptional }) : []);
+  const canDetect = () => detectivePool().length >= DETECTIVE_N;
+  // How many cases the whole course has (Latin has too few so far, so it never offers the game).
+  let DETECT_TOTAL = null;
+  const detectiveTotal = () => (DETECT_TOTAL == null ? (DETECT_TOTAL = L.detectiveCases(CHAPTERS, FORMS, { notes: COURSE.personNotes }).length) : DETECT_TOTAL);
+  function detective(pool) {
+    const weak = new Set(weakSkills());
+    const all = pool || detectivePool();
+    const cases = pool || L.weightedPick(all, all.map(c => (weak.has(c.skill) ? 3 : 1)), DETECTIVE_N);
+    if (!cases.length) return home();
+    let k = 0; let solved = 0; const missed = [];
+    const page = h('div', { class: 'step detective' });
+    mount(h('div', { class: 'page lesson' }, backBar('Error detective', home), page));
+    function show() {
+      if (k >= cases.length) return done();
+      const c = cases[k];
+      if (window.__trainer) window.__trainer.case = c; // test hook
+      let found = null;
+      const fb = h('div', { class: 'feedback hidden', 'aria-live': 'polite' });
+      const fixBox = h('div', { class: 'det-fix hidden' });
+      const chips = c.words.map((w, i) => h('button', { class: 'word', type: 'button', lang: TL, onclick: () => tap(i) }, T(w)));
+      function tap(i) {
+        if (found !== null) return;
+        found = i === c.wrong;
+        chips.forEach(b => { b.disabled = true; });
+        chips[c.wrong].classList.add('good');
+        if (!found) chips[i].classList.add('bad');
+        put(fixBox, h('p', { class: 'prompt' }, found ? 'Found it. What should it be?' : 'Not that one: the mistake is ' + T(c.words[c.wrong]) + '. What should it be?'),
+          h('div', { class: 'opts' }, optionButtons(c.options, pick)));
+        fixBox.classList.remove('hidden');
+      }
+      function pick(j) {
+        fixBox.querySelectorAll('.opt').forEach(b => { b.disabled = true; });
+        const fixedOk = c.options[j] === c.right;
+        const ok = found && fixedOk;
+        if (ok) { solved++; addXp(5); } else if (c.skill) missed.push(c.skill);
+        recordSkill(c.skill, ok); save();
+        fb.className = 'feedback ' + (ok ? 'good' : fixedOk ? 'warn' : 'bad');
+        put(fb, h('div', { class: 'fb-head' }, ok ? 'Case solved' : fixedOk ? 'Right fix, after a wrong guess' : 'Not quite'),
+          pen(T(c.words[c.wrong]).replace(/^[¿¡]+|[.,?!]+$/g, ''), T(c.right)),
+          h('div', { class: 'fb-ans', lang: TL }, T(c.fixed)),
+          c.why ? h('div', { class: 'fb-why' }, T(c.why)) : null,
+          h('div', { class: 'row end' }, h('button', { class: 'btn primary big', type: 'button', onclick: () => { k++; show(); } }, k + 1 < cases.length ? 'Next case' : 'See the result')));
+        fb.querySelector('.btn').focus();
+        fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      put(page, h('div', { class: 'counter' }, 'Case ' + (k + 1) + ' of ' + cases.length),
+        h('p', { class: 'prompt' }, 'One word in this sentence is wrong. Tap it'),
+        h('div', { class: 'words' }, chips), fixBox, fb);
+    }
+    function done() {
+      const names = Array.from(new Set(missed)).map(skillName);
+      put(page, h('div', { class: 'result' },
+        h('div', { class: 'result-k' }, 'Error detective'),
+        h('div', { class: 'result-fig' }, solved + ' of ' + cases.length),
+        h('div', { class: 'result-k' }, 'cases solved'),
+        h('p', { class: 'lead', style: { 'margin-top': '24px' } }, names.length ? 'To look at again: ' + names.join(', ') + '. These now count towards your weak spots.' : 'Every case solved.'),
+        h('div', { class: 'row' },
+          h('button', { class: 'btn primary big', onclick: home }, 'Back to today'),
+          h('button', { class: 'btn ghost big', onclick: () => detective() }, 'Five more'))));
+    }
+    show();
+  }
+
   // ---------- review (spaced repetition) ----------
   function reviewFlow() {
     const queue = L.dueCards(S.srs, Date.now()).slice(0, 20);
@@ -2248,7 +2319,7 @@
         h('p', { class: 'meta' }, String(e.message || e))));
       return;
     }
-    window.__trainer = { levelCheck, readingsScreen, readingScreen, drillScreen, flashcards, mixedReview, idleFor: ms => { lastActive = Date.now() - ms; }, state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE, ui: UI };
+    window.__trainer = { detective, detectivePool, levelCheck, readingsScreen, readingScreen, drillScreen, flashcards, mixedReview, idleFor: ms => { lastActive = Date.now() - ms; }, state: () => S, home, wordsScreen, chapterFlow, reviewFlow, wotdScreen, drillWeak, chatScreen, ai: () => AI, chapters: CHAPTERS, words: WORDS, course: COURSE, ui: UI };
     await aiStatus();
     if (SYNC.on) await syncStart();
     applyProfile();
